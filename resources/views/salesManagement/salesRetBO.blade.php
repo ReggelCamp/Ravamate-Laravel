@@ -1,22 +1,35 @@
-<x-index title="Sales Return BO"/>
-<x-report-header-title title="Sales Return BO"/>
+@extends('layout.app')
+@section('content')
 
 <body class="w-full h-full">
-    <div class="w-full flex h-full flex-col">
-        <div class="w-full h-full flex justify-between p-5">
-            <div class="flex w-full h-full gap-5">
-                <button class="w-[100px] bg-blue-500 rounded-xl">
-                    Print
-                </button>
-                <button class="w-[100px] bg-blue-500 rounded-xl">
-                    Excel
-                </button>
-                <button class="w-[100px] bg-blue-500 rounded-xl">
+    <div class="flex w-full h-full flex-col">
+        <div class="flex w-full h-[50px] justify-between p-5 primary_color items-center">
+            <div class="flex w-full ">
+                <x-report-header-title title="Sales Report"/>
+            </div>
+            <div class="flex w-full h-[30px]">
+                <x-datepicker/>
+            </div>
+        </div>
+        <div class="flex flex-col-reverse sm:flex-row w-full justify-between max-h-[150px] p-5 gap-5">
+            <div class="flex w-full sm:max-h-[35px] gap-5">
+                <button class="bg-green-500 w-[150px] h-[30px] rounded-xl">
                     Copy
                 </button>
+                <button class="bg-green-500 w-[150px] h-[30px] rounded-xl">
+                    Excel
+                </button>
+                <button class="bg-green-500 w-[150px] h-[30px] rounded-xl">
+                    Print
+                </button>
             </div>
-            <x-searchbar/> 
+            <div class="w-full h-[50px] flex  sm:pt-0">
+                <x-searchbar/>
+            </div>
         </div>
+        <div class="flex p-5 w-full overflow-auto">
             <x-datatable/>
+        </div>
     </div>
 </body>
+@endsection

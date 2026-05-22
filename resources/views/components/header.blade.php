@@ -15,7 +15,7 @@
 
 
 <aside id="sidenav"
-    class="hidden fixed top-0 left-0 h-full w-[350px] bg-blue-900 text-white flex flex-col p-5 z-30 ">
+    class="hidden fixed top-0 left-0 h-full w-[250px] sm:w-[350px] bg-blue-900 text-white flex flex-col p-5 z-30 ">
     <div class="w-full flex items-center justify-center h-[250px]">
         <img src="/static/images/ravamatedashboard.png" class="w-[145px] h-[115px]  object-cover"/> 
     </div>

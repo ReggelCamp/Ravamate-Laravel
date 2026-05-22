@@ -1,17 +1,23 @@
-<x-index title="Product"/>
-<div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-blue-500">
-    <div class="w-full h-full items-center ">
-        <x-report-header-title title="Product" />
-    </div>
-    <div class="w-fit h-[30px]">
-        <x-datepicker/>
-    </div>
-</div>
+@extends('layout.app')
+@section('content')
 
 <body class="w-full h-full">
+    <div class="flex w-full h-[50px] justify-between items-center pl-5 pr-5 bg-blue-500">
+        <div class="w-full h-full items-center ">
+            <x-report-header-title title="Product" />
+        </div>
+        <div class="w-fit h-[30px]">
+            <x-datepicker/>
+        </div>
+    </div>
     <div class="flex flex-col w-full h-full p-5">
-        <x-searchbar/>
-        <x-datatable/>
+        <div class="flex justify-start sm:justify-end">
+            <x-searchbar/>
+        </div>
+        <div class="overflow-auto">
+            <x-datatable/>
+        </div>
     </div>
 
 </body>
+@endsection

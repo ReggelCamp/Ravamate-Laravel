@@ -3,8 +3,8 @@
 @props([
     'displayOnly' => false
 ])
- <div id="datepicker" class="w-full flex h-full justify-end text-white">
-              <div id="datepicker" class="w-full flex h-full justify-end">
+ <div id="datepicker" class="sm:w-full w-[150px]  flex h-full sm:justify-end overflow-auto">
+              <div id="datepicker" class="w-[150px] flex h-full sm:justify-end">
 
     @if($displayOnly)
 

@@ -45,16 +45,15 @@
 
     
     <div class="w-full h-full flex">
-        <div class="flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center primary_color ">
-            
+        <div class="hidden md:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center primary_color ">
             {{-- RAVAMATE LOGO --}}
-            <div class="w-[200px] h-[150px]">
+            <div class="w-[200px] h-[150px] ">
                 {{-- <img src="/static/images/ravamatedashboard.png" class="object-cover"/> --}}
                 <img src="/${item.logo[0]?.url}" class="object-cover" id="themeLogo"/>
             </div>
             
             {{-- Carousel --}}
-            <div class="w-full max-w-[900px]">
+            <div class="w-full sm:max-w-[900px]">
                <div class="owl-carousel ">
                     <div class="item active">
                         <img src="/static/images/MCP Screen.png" class="w-[650px] h-[300px] object-cover"/>
@@ -87,8 +86,8 @@
 
             {{-- TABLE --}}
             <div class="w-full h-full flex flex-col bg-yellow-500">
-                <div class="w-full flex justify-between p-5">
-                    <div class="gap-5">
+                <div class="w-full flex flex-col-reverse sm:flex-row justify-between p-5">
+                    <div class="gap-5 flex ">
                         <el-dropdown class="inline-block">
                             <button class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-600 text-white px-3 py-2 text-sm font-semibold shadow-sm 0">
                                 Operation type
@@ -130,13 +129,13 @@
                         </el-dropdown>
                     </div>
 
-                    <div class="gap-5">
-                        <button class="bg-blue-500 rounded-md px-4 py-2 text-white"> Expand </button>
-                        <input type="text" class="border rounded p-2" placeholder="Search...">
+                    <div class="gap-5 pb-2 flex flex-col-reverse sm:flex-row">
+                        <button class="w-[100px] bg-blue-500 h-[40px] rounded-md px-4 py-2 text-white"> Expand </button>
+                        <input type="text" class="border rounded p-2 h-[40px]" placeholder="Search...">
                     </div>
                 </div>
 
-                <div class="w-full text-sm p-5">
+                {{-- <div class="w-full text-sm p-5">
                     <table id="myTable" class="w-full">
                         <thead>
                             <tr>   
@@ -175,6 +174,9 @@
                             </tr>
                         </tbody>
                     </table>
+                </div> --}}
+                <div class="overflow-auto">
+                    <x-datatable/>
                 </div>
             </div>
         </div>

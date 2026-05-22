@@ -28,8 +28,8 @@
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
-                    <div class="flex w-full justify-between h-full">
-                        <div class="flex w-full gap-5">
+                    <div class="flex w-full flex-col-reverse sm:flex-row justify-between h-full">
+                        <div class="flex h-full items-center  w-full gap-5">
                             <div class="dropdown">
                                 <div tabindex="0" role="button" class="btn m-1">
                                     Others
@@ -42,13 +42,16 @@
                                         <li><a>Excel</a></li>
                                     </ul>
                             </div>
-                            <div class=" ">
+                            <div class="h-[30px] ">
                                 <x-datepicker/>
                             </div>
                         </div>
-                        <div>
+                        <div class="w-[300px]  sm:max-w-[500px] mb-2 ">
                             <x-searchbar/>
                         </div>
+                    </div>
+                    <div class="overflow-auto">
+                        <x-datatable/>
                     </div>
                 </div>
             </div>

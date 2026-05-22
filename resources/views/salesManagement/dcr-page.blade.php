@@ -3,31 +3,42 @@
 @section('content')
 <body class="w-full h-full">
     <div class="flex flex-col w-full h-full">
-         <div class="flex w-full h-[full] justify-between items-center primary_color">
-            <div class="w-full h-[50px] pl-5">
+         <div class="flex w-full h-[50px] justify-between items-center primary_color p-5">
+            <div class="w-full h-[50px]">
                 <x-report-header-title title="DCR" />
             </div>
             <div class="w-fit h-[30px]">
                 <x-datepicker/>
             </div>
         </div>
-        <div class="w-full p-5 justify-between flex bg-gray-300 max-h-[100px]">
-            <div class="flex w-full h-[40px] gap-5 ">
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">Filter Salesman</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">Print</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">Excel</button>
+       <div class="w-full p-5 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between bg-gray-300">
+            <div class="flex flex-wrap gap-3">
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                    Filter Salesman
+                </button>
+
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                    Print
+                </button>
+
+                <button class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                    Excel
+                </button>
             </div>
-           
-            <div class="relative h-[40px] w-full  justify-end flex">
-                <input type="text"
-                    class="border w-[500px] rounded-2xl pl-10 pr-10 py-2"
-                    placeholder="Search...">
-                    <i class="fa-solid fa-magnifying-glass absolute left-115 top-1/2 -translate-y-1/2 text-gray-500"></i>
+
+            <div class="relative w-full sm:w-[500px]">
+                <input
+                    type="text"
+                    class="border w-[350px] md:w-full rounded-2xl pl-10 pr-4 py-2"
+                    placeholder="Search..."
+                >
+
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
             </div>
         </div>
-         <div class="w-full max-h-96 text-white flex flex-col secondary_color">
+         <div class="w-full max-h-96 text-white flex flex-col secondary_color overflow-auto ">
                 <div class="w-full h-[500px] text-sm p-5">
-                    <table id="myTable" class="w-full">
+                    <table id="myTable" class="w-full header_font">
                         <thead>
                             <tr>   
                                 <th>Salesman Name</th>

@@ -12,26 +12,26 @@
             </div>
             
             {{-- IMAGES OR CONTENT --}}
-            <div class="flex w-full h-full justify-start p-10 gap-5 flex-wrap">
+            <div class="flex w-full h-full flex-col sm:flex-row justify-center p-10 gap-5 flex-wrap">
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
-                <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
-                </figure>
-                <div class="card-body">
-                    <h2 class="card-title w-full flex justify-center">Customer</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="absolute inset-0 flex items-center justify-center">  
-                            <a href={{ route('customer') }} class="btn btn-primary opacity-0 scale-90
-                                            group-hover:opacity-100 group-hover:scale-100
-                                            transition-all duration-300">
-                                    See Details
-                            </a>
-                    </div>  
+            <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
+                    <figure>
+                        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title w-full flex justify-center">Customer</h2>
+                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                        <div class="absolute inset-0 flex items-center justify-center">  
+                                <a href={{ route('customer') }} class="btn btn-primary opacity-0 scale-90
+                                                group-hover:opacity-100 group-hover:scale-100
+                                                transition-all duration-300">
+                                        See Details
+                                </a>
+                        </div>  
+                    </div>
                 </div>
-            </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
                     <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                 </figure>
@@ -48,9 +48,9 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
+                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title w-full flex justify-center">Georeset</h2>
@@ -65,9 +65,9 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
+                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title w-full flex justify-center">Customer Tagging</h2>
@@ -82,9 +82,9 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
+                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title w-full flex justify-center">MCP Layout</h2>
@@ -99,9 +99,9 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
+                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"/>
                 </figure>
                 <div class="card-body">
                     <h2 class="card-title w-full flex justify-center">Channel Mapping</h2>
@@ -116,8 +116,6 @@
                 </div>
             </div>
 
-        
-        
         </div>
             
         
@@ -131,10 +129,10 @@
             </div>
             
             {{-- IMAGES OR CONTENT MAIN DIV --}}
-            <div class="flex w-full h-full justify-start p-10 gap-5 flex-wrap">
+            <div class="flex w-full h-full justify-center p-10 gap-5 flex-wrap">
 
             {{-- SINGLE IMG --}}
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
                     <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                 </figure>
@@ -151,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
                     <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                 </figure>
@@ -168,7 +166,7 @@
                 </div>
             </div>
 
-            <div class="card bg-base-100 image-full w-[300px] shadow-sm group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                 <figure>
                     <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                 </figure>
@@ -197,10 +195,10 @@
             </div>
             
             {{-- IMAGES OR CONTENT --}}
-            <div class="flex w-full h-full justify-start p-10 gap-5 flex-wrap">
+            <div class="flex w-full h-full justify-center p-10 gap-5 flex-wrap">
 
 
-                <div class="card bg-base-100 image-full w-[300px] shadow-sm  group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                     <figure>
                         <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                     </figure>
@@ -220,7 +218,7 @@
                     </div>
                 </div>
 
-                <div class="card bg-base-100 image-full w-[300px] shadow-sm  group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                     <figure>
                         <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                     </figure>
@@ -237,7 +235,7 @@
                     </div>
                 </div>
 
-                 <div class="card bg-base-100 image-full w-[300px] shadow-sm  group">
+        <div class="card bg-base-100 image-full w-full sm:w-96 h-[200px] shadow-sm">
                     <figure>
                         <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" />
                     </figure>
@@ -294,14 +292,5 @@
     </form>
 </dialog>
 
-<script>
-window.onload = function () {
-
-    if (window.location.pathname === "/maintenance") {
-
-        $('#datepicker').remove();
-    }
-};
-</script>
 
 </body>

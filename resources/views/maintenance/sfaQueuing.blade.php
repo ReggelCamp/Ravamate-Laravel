@@ -1,132 +1,149 @@
-<x-index title="SFA QUEUING"/>
+@extends('layout.app')
+@section('content')
 
 <body class="w-full min-h-screen">
 
-    <div class="flex flex-col items-center p-5 gap-5">
+<div class="flex flex-col items-center p-5 gap-5">
 
-        <!-- SAME WIDTH CONTAINER -->
-        <div class="w-fit">
+    <!-- HEADER WRAPPER -->
+    <div class="w-full">
 
-            <!-- HEADER -->
-            <div class="flex justify-between mb-5">
+        <div class="flex w-full justify-between flex-row-reverse sm:flex-row mb-5">
 
-                <button class="bg-blue-500 text-sm rounded-lg text-white p-2">
-                    Dynamic Load Planning
+            <button class="bg-blue-500 text-sm rounded-lg h-[50px] text-white px-4">
+                Dynamic Load Planning
+            </button>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button class="bg-blue-500 text-sm rounded-xl text-white px-4 py-2">
+                    Admin Sync Logs
                 </button>
 
-                <div class="flex gap-5">
-                    <button class="bg-blue-500 text-sm rounded-xl text-white p-2">
-                        Admin Sync Logs
-                    </button>
+                <button class="bg-blue-500 text-sm rounded-xl text-white px-4 py-2">
+                    Refresh
+                </button>
+            </div>
 
-                    <button class="bg-blue-500 text-sm rounded-xl text-white p-2">
-                        Refresh
-                    </button>
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5 w-full">
+
+            <!-- Card 1 -->
+            <div class="bg-blue-500 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
+                onclick="SOtoEric()">
+                <div class="flex justify-between h-full p-5">
+
+                    <div class="flex flex-col justify-between">
+                        <h1>Sync SO to Eric</h1>
+                        <div>
+                            <h1 class="text-2xl">105</h1>
+                            <h1>Pending Records</h1>
+                            <h1>Past Failed Sync Records: 5</h1>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-between items-end">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                    </div>
+
                 </div>
-
             </div>
 
-            <div class="grid grid-cols-2 w-fit mx-auto">
+            <!-- Card 2 -->
+            <div class="bg-blue-500 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
+                onclick="PaymenttoEric()">
+                <div class="flex justify-between h-full p-5">
 
-            <!-- Top Left -->
-            <div class="border-r border-b border-black w-[500px] h-180px bg-blue-500 hover:bg-violet-600" onclick="SOtoEric()">
-                    <div class="flex w-full h-full justify-between p-5">
-                        <div class="flex flex-col w-full h-full">
-                            <h1>Sync SO to Eric</h1>
-                            <div class="flex w-full flex-col ">
-                                <h1 class="text-2xl">105</h1>
-                                <h1>Pending Records</h1>
-                                <h1>Past Failed Sync Records:5</h1>
-                            </div>
-                        </div>
-                        <div class="flex flex-col w-full h-full items-end ">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
+                    <div class="flex flex-col justify-between">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
                     </div>
+
+                    <div class="flex flex-col justify-between items-end">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                    </div>
+
+                </div>
             </div>
 
-            <!-- Top Right -->
-            <div class="border-b border-black w-[500px] h-180px bg-blue-500 hover:bg-violet-600" onclick="PaymenttoEric()">
-                    <div class="flex w-full h-full justify-between p-5">
-                        <div class="flex flex-col w-full h-full">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
-                        <div class="flex flex-col w-full h-full p-5 items-end ">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
+            <!-- Card 3 -->
+            <div class="bg-blue-500 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
+                onclick="ReturntoEric()">
+                <div class="flex justify-between h-full p-5">
+
+                    <div class="flex flex-col justify-between">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
                     </div>
+
+                    <div class="flex flex-col justify-between items-end">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                    </div>
+
+                </div>
             </div>
 
-            <!-- Bottom Left -->
-            <div class="border-r  border-black w-[500px] h-180px bg-blue-500 hover:bg-violet-600 "onclick="ReturntoEric()">
-                    <div class="flex w-full h-full justify-between p-5">
-                        <div class="flex flex-col w-full h-full">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
-                        <div class="flex flex-col w-full h-full justify-end p-5 items-end ">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
-                    </div>
-            </div>
+            <!-- Card 4 -->
+            <div class="bg-blue-500 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
+                onclick="TransfertoEric()">
+                <div class="flex justify-between h-full p-5">
 
-            <!-- Bottom Right -->
-            <div>
-                <div class="bg-blue-500 shadow-sm w-[500px] h-180px p-5 hover:bg-violet-600"onclick="TransfertoEric()">
-                    <div class="flex w-full h-full justify-between  ">
-                        <div class="flex flex-col w-full h-full ">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
-                        <div class="flex flex-col w-full h-full p-5 items-end ">
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                            <h1>dada</h1>
-                        </div>
+                    <div class="flex flex-col justify-between">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
                     </div>
+
+                    <div class="flex flex-col justify-between items-end">
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                        <h1>dada</h1>
+                    </div>
+
                 </div>
             </div>
 
         </div>
-        
-        <div id="myDiv" class="">
+
+        <!-- TABLE -->
+        <div class="overflow-auto mt-5">
             <x-datatable/>
         </div>
 
     </div>
+</div>
 
-    <script>
-        function SOtoEric(){
-            document.getElementById('myDiv').style.backgroundColor = '#ff0000';
-        }
-        function PaymenttoEric(){
-            document.getElementById('myDiv').style.backgroundColor = '#d8d660';
-        }
-        function ReturntoEric(){
-            document.getElementById('myDiv').style.backgroundColor = '#60d873';
-        }
-        function TransfertoEric(){
-            document.getElementById('myDiv').style.backgroundColor = '#d87160';
-        }
-    </script>
+<script>
+    function SOtoEric(){
+        document.getElementById('myDiv').style.backgroundColor = '#ff0000';
+    }
+    function PaymenttoEric(){
+        document.getElementById('myDiv').style.backgroundColor = '#d8d660';
+    }
+    function ReturntoEric(){
+        document.getElementById('myDiv').style.backgroundColor = '#60d873';
+    }
+    function TransfertoEric(){
+        document.getElementById('myDiv').style.backgroundColor = '#d87160';
+    }
+</script>
 
 </body>
 
-
+@endsection

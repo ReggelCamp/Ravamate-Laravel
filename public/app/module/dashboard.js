@@ -19,6 +19,8 @@ function getActive(){
                     "src",
                     activeTheme.logo[0]?.url
                 );
+                $(".header_font").css("font-family",activeTheme.header_font);
+                $(".body_font").css("font-family",activeTheme.body_font);
             }
         }
     });

@@ -170,7 +170,7 @@ Route::get('/bankmaintenance', function () {
 
 //Maintenance Others
 Route::get('/salesman', function () {
-    return view('maintenance.others.salesman-page');
+    return view('maintenance.others.salesman');
 })->name('salesman');
 
 //Maintenance Others

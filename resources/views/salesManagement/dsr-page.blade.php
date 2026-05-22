@@ -11,20 +11,20 @@
 <body class="bg-gray-300">
     <div class="w-full flex flex-col h-full">
         
-        <div class="flex justify-between p-5  w-full h-full">  
-            <div class="w-full flex max-h-[35px] r">
-                <button class="bg-green-500 w-[150px] rounded-xl h-full">
-                    Filter Salesman
-                </button>
+        <div class="flex justify-between p-5 w-full h-full">  
+            <div class="w-full flex max-h-[35px] ">
+                <details class="dropdown">
+                <summary class="btn ">open or close</summary>
+                <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li><a>Item 1</a></li>
+                    <li><a>Item 2</a></li>
+                </ul>
+                </details>
             </div>
 
             <div class="flex w-full max-h-[35px] gap-5 justify-end ">
-                <button class="bg-green-500 w-[200px] h-full rounded-xl">
-                    Filter Salesman
-                </button>
-                <button class="bg-green-500 w-[200px] h-full rounded-xl">
-                    Filter Salesman
-                </button>
+                <button class="btn">Default</button>
+                <button class="btn">Default</button>
             </div>
         </div>
 

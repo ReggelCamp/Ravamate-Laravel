@@ -1,4 +1,5 @@
-<x-index title="Customer Maintenance Form"/>
+@extends('layout.app')
+@section('content')
 <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-blue-500">
     <div class="w-full h-full items-center ">
         <x-report-header-title title="Customer Maintenance Form" />
@@ -10,7 +11,7 @@
 
 <body class="w-full h-full">
     <div class="w-full h-full flex flex-col p-5">
-        <div class="flex w-full h-full justify-between">
+        <div class="flex w-full max-h-[100px] justify-between flex-col-reverse sm:flex-row gap-5">
             <div class="flex w-full gap-5 h-full">  
                 <button class="btn-format">
                     <i class="fa-solid fa-arrow-rotate-right"></i>
@@ -22,8 +23,13 @@
                     CSV
                 </button>
             </div>
-            <x-searchbar/>
+            <div class="flex w-full h-[30px]">
+                <x-searchbar/>
+            </div>
         </div>
-        <x-datatable/>
+        <div class="overflow-auto">
+            <x-datatable/>
+        </div>
     </div>    
 </body>
+@endsection

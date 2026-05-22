@@ -37,6 +37,12 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
+        $json = json_decode($request->input('json'), true);
+
+        $row = $this->model::create($json);
+        FileHandler::upload('logo/img',$row->id,$request->file('logo'));
+        return response()->json($row);
+        
         // $theme = Theme::create([
         //     'theme_name' => $request->theme_name,
         //     'primary_color' => $request->primary_color,
@@ -49,13 +55,6 @@ class ThemeController extends Controller
         //     // 'is_active' => $request->boolean('is_active'),
         // ]);
         // return redirect()->back();
-        
-        $json = json_decode($request->input('json'), true);
-
-        $row = $this->model::create($json);
-        FileHandler::upload('logo/img',$row->id,$request->file('logo'));
-        return response()->json($row);
-       
     }
 
     /**

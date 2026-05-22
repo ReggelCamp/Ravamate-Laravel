@@ -6,6 +6,7 @@
                 searching: false,
                 ordering:  false,
                 lengthChange: false,
+                responsive: true
             });
         });
     </script>
