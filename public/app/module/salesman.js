@@ -1,41 +1,103 @@
 import Api from "../helper/Api.js";
+import MyDataTables from "./dataTable.js";
 
+function getAllSalesman() {
 
-
-function getAllSalesman(){
     Api.get({
-        url:"/getSalesman",
-        onSuccess:(data)=>{
+        url: "/getSalesman",
 
-            $("#table").html("");
-            data.forEach(item => {
-                 $("#tableBody").append(`
-                    <tr>
-                        <td>${item.salesman_name}</td>
-                        <td>${item.attendance}</td>
-                        <td>${item.target_mcp}</td>
-                        <td>${item.productive}</td>
-                        <td>${item.unproductive}</td>
-                        <td>${item.strike_rate}</td>
-                        <td>${item.selling_hrs}</td>
-                        <td>${item.sale}</td>
-                    </tr>
-                `);
-          });
+        onSuccess: (data) => {
             
-            $('#salesmanTable').DataTable({
-                searching: true,
-                ordering: false,
-                dom:'tip',
-                lengthChange: false,
-                responsive: true
-            });
+            MyDataTables.tableData(
+                '#salesmanTable',
+                data,[
+                    {
+                        title:'Salesman Name',
+                        data:'salesman_name'
+                    },
+                    {
+                        title:'Attendance',
+                        data:'attendance'
+                    },
+                    {
+                        title:'Target MCP',
+                        data:'target_mcp'
+                    },
+                    {
+                        title:'Productive',
+                        data:'productive'
+                    },
+                    {
+                        title:'Productive',
+                        data:'productive'
+                    },
+                    {
+                        title:'UnProductive',
+                        data:'unproductive'
+                    },
+                    {
+                        title:'Strike Rate',
+                        data:'strike_rate'
+                    },
+                    {
+                        title:'Selling Hours',
+                        data:'selling_hrs'
+                    },
+                    {
+                        title:'Sale',
+                        data:'sale'
+                    }
+                ]
+            );
         }
-    })
+    });
 }
 
-getAllSalesman();
+document.addEventListener('DOMContentLoaded', function() {
+    getAllSalesman();
+})
 
-document.getElementById('customSearch').addEventListener('input', function () {
-    $('#salesmanTable').DataTable().search(this.value).draw();
+
+// Custom Search
+document.getElementById('customSearch')
+.addEventListener('input', function () {
+
+    $('#salesmanTable')
+        .DataTable()
+        .search(this.value)
+        .draw();
+
+});
+ 
+
+//for copy
+$(document).on("click",".copytBtn", function(){
+    $('#salesmanTable')
+    .DataTable()
+    .button('.buttons-copy')
+    .trigger();
+});
+
+//for dropdown excel
+$(document).on("click",".excelBtn", function(){
+    $('#salesmanTable')
+    .DataTable()
+    .button('.buttons-excel')
+    .trigger();
+});
+
+$(document).on("click",".csvBtn", function(){
+    $('#salesmanTable')
+    .DataTable()
+    .button('.buttons-csv')
+    .trigger();
+});
+
+
+//for print
+$(document).on("click",".printBtn", function(){
+    $('#salesmanTable')
+    .DataTable()
+    .button('.buttons-print')
+    .trigger();
 });

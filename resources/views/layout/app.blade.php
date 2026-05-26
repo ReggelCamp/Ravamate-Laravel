@@ -4,29 +4,35 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>@yield('title', 'Dashboard')</title>
 
-    {{-- Tailwind / CSS --}}
+    {{-- Tailwind --}}
     @vite(['resources/css/app.css'])
+
+    {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('static/css/style.css') }}">
 
-    {{-- Owl Carousel CSS --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-
-    {{-- DataTables CSS (optional but recommended) --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
-   
-     <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script> 
-
-     {{-- Google Font --}}
+    {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+
+    {{-- Owl Carousel CSS --}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    {{-- DataTables CSS --}}
+    <link rel="stylesheet"
+        href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.min.css">
+
+    {{-- Buttons CSS --}}
+    <link rel="stylesheet"
+        href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.min.css">
 
     <style>
         .owl-carousel {
@@ -47,29 +53,45 @@
 </head>
 
 <body class="w-full h-screen">
+
     <x-header/>
-    {{-- MAIN CONTENT --}}
-    @yield('content')
 
+    {{-- jQuery FIRST --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    {{-- 1. jQuery FIRST --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    {{-- 2. Plugins that depend on jQuery --}}
+    {{-- Owl Carousel --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    {{-- DataTables --}}
     <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
 
-    {{-- Moment (if you use it) --}}
+    {{-- Buttons --}}
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.min.js"></script>
+
+    {{-- Excel Dependency --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    {{-- HTML5 Export --}}
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+
+    {{-- Print --}}
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.print.min.js"></script>
+
+    {{-- Tailwind Plus --}}
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+
+    {{-- Moment --}}
     <script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
 
     {{-- DateRangePicker --}}
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    {{-- 3. Your App JS LAST --}}
+    {{-- Your JS --}}
     <script type="module" src="/app/module/dashboard.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
 
     @stack('scripts')
-
+    
+    @yield('content')
 </body>
 </html>

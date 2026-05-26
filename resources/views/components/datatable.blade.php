@@ -1,4 +1,4 @@
-<script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script> --}}
 
 {{-- <script>
     $(document).ready(function () {
@@ -29,7 +29,7 @@
 <div class="w-full text-sm p-5">
     <table id="salesmanTable" class="w-full">
 
-        <thead>
+        {{-- <thead>
             <tr>
                 <th>Salesman Name</th>
                 <th>Attendance</th>
@@ -40,11 +40,11 @@
                 <th>Selling HRS</th>
                 <th>Sale</th>
             </tr>
-        </thead>
+        </thead> --}}
 
-        <tbody id="tableBody">
+        {{-- <tbody id="tableBody">
 
-        </tbody>
+        </tbody> --}}
 
     </table>
 </div>

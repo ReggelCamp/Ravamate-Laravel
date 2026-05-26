@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="h-full w-[100px]">
-                    <x-button>
+                    <x-button class="printBtn">
                         <x-slot:buttonName>
                             Print
                         </x-slot:buttonName>

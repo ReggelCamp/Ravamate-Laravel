@@ -35,10 +35,10 @@
                                         <x-slot:dropdownName>
                                             Export
                                         </x-slot:dropdownName>
-                                            <li><a>Export to Excel</a></li>
-                                            <li><a>Export to CSV</a></li>
-                                            <li><a>Print Records</a></li>
-                                            <li><a>Copy Content</a></li>
+                                            <li><a class="excelBtn">Export to Excel</a></li>
+                                            <li><a class="csvBtn">Export to CSV</a></li>
+                                            <li><a class="printBtn">Print Records</a></li>
+                                            <li><a class="copyBtn">Copy Content</a></li>
                                     </x-dropdown>
                                 </div>
                             <div class="h-[40px]">

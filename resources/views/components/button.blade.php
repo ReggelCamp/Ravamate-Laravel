@@ -6,7 +6,7 @@
 </style>
 
 <div class="w-full flex h-full">
-    <button class="btn rounded-lg">
+    <button {{ $attributes->merge(['class' => 'btn']) }}>
         <span>{{$buttonName}}</span>
     </button>
 </div>

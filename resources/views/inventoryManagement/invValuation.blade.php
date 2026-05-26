@@ -30,7 +30,7 @@
                     </x-dropdown>
                 </div>
                 <div class="flex w-[100px] h-[40px]">
-                    <x-button>
+                    <x-button class="excelBtn">
                         <x-slot:buttonName>
                             Excel
                         </x-slot:buttonName>

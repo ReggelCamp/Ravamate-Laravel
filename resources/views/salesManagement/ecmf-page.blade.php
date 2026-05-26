@@ -34,8 +34,8 @@
                                     <x-slot:dropdownName>
                                         Others
                                     </x-slot:dropdownName>
-                                    <li><a>CSV</a></li>
-                                    <li><a>Excel</a></li>
+                                    <li ><a class="csvBtn">CSV</a></li>
+                                    <li ><a class="excelBtn">Excel</a></li>
                                 </x-dropdown>
                             <div class="h-[40px] ">
                                 <x-datepicker/>

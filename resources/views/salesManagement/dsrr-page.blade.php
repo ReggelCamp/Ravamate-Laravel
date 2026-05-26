@@ -21,13 +21,13 @@
                         <li><a>Item 2</a></li>
                 </x-dropdown>
             </div>
-            <div class="flex justify-end w-full h-[50px] gap-5">
+            <div class="flex justify-end w-[100px] h-[50px] gap-5">
                 <x-button>
                     <x-slot:buttonName>
                         Generate
                     </x-slot:buttonName>
                 </x-button>
-                <x-button>
+                <x-button class="printBtn">
                     <x-slot:buttonName>
                         Print
                     </x-slot:buttonName>

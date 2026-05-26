@@ -16,21 +16,21 @@
         <div class="flex flex-col-reverse sm:flex-row w-full justify-between p-5 background_color">
             <div class="w-full h-full gap-2 items-center flex">
                 <div class="w-[100px] h-[40px] flex ">
-                    <x-button>
+                    <x-button class="excelBtn">
                         <x-slot:buttonName>
                         Excel
                         </x-slot:buttonName>
                     </x-button>
                 </div>
                 <div class="w-[100px] h-[40px] flex">
-                    <x-button>
+                    <x-button class="printBtn">
                         <x-slot:buttonName>
                         Print
                         </x-slot:buttonName>
                     </x-button>
                 </div>
                 <div class="w-[100px] h-[40px] flex">
-                    <x-button>
+                    <x-button class="copyBtn">
                         <x-slot:buttonName>
                         Copy
                         </x-slot:buttonName>

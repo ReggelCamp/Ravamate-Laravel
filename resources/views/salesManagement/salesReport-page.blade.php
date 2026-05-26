@@ -23,7 +23,7 @@
                 <x-searchbar/>
             </div>
         </div>
-        <div class="flex w-full h-full gap-5 pl-5">
+        <div class="flex w-full h-[50px] gap-5 pl-5">
             <div class="flex h-[40px]">
                 <x-dropdown> 
                     <x-slot:dropdownName>
@@ -47,10 +47,10 @@
                             Export
                         </x-slot:dropdownName>
             
-                        <li><a>Print</a></li>
-                        <li><a>CSV</a></li>
-                        <li><a>Excel</a></li>
-                        <li><a>Copy</a></li>
+                        <li><a class="printBtn">Print</a></li>
+                        <li><a class="csvBtn">CSV</a></li>
+                        <li><a class="excelBtn">Excel</a></li>
+                        <li><a class="copyBtn">Copy</a></li>
                 </x-dropdown>
             </div>
         </div>
