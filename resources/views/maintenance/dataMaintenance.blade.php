@@ -34,7 +34,13 @@
                     A card component has a figure, a body part, and inside body there are title and actions parts
                 </p>
                 <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
+                    <div class="w-[100px] h-[40px] flex">
+                        <x-button>
+                            <x-slot:buttonName>
+                                Details
+                            </x-slot:buttonName>
+                        </x-button>
+                    </div>
                 </div>
             </div>
 
@@ -56,7 +62,13 @@
                     A card component has a figure, a body part, and inside body there are title and actions parts
                 </p>
                 <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
+                    <div class="w-[100px] h-[40px] flex">
+                        <x-button>
+                            <x-slot:buttonName>
+                                Details
+                            </x-slot:buttonName>
+                        </x-button>
+                    </div>
                 </div>
             </div>
         </div>

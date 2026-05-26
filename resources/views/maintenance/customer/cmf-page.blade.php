@@ -23,7 +23,7 @@
                     CSV
                 </button>
             </div>
-            <div class="flex w-full h-[30px]">
+            <div class="flex w-full ">
                 <x-searchbar/>
             </div>
         </div>

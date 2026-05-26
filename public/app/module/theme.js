@@ -283,8 +283,8 @@ $(document).on("click", "#executeSavebtn", function(){
     Api.post({
         url: `/customize_theme`,
         data:form,
-        processData: false,  // IMPORTANT
-        contentType: false ,  // IMPORTANT
+        processData: false, 
+        contentType: false , 
         onSuccess:(data)=> {
             getAll();
             AddThemeModal.close();

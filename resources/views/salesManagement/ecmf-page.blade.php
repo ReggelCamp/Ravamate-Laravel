@@ -28,25 +28,20 @@
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
-                    <div class="flex w-full flex-col-reverse sm:flex-row justify-between h-full">
-                        <div class="flex h-full items-center  w-full gap-5">
-                            <div class="dropdown">
-                                <div tabindex="0" role="button" class="btn m-1">
-                                    Others
-                                    <div class="flex w-full justify-end">
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </div>
-                                </div>
-                                    <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                        <li><a>CSV</a></li>
-                                        <li><a>Excel</a></li>
-                                    </ul>
-                            </div>
-                            <div class="h-[30px] ">
+                    <div class="flex w-full flex-col-reverse sm:flex-row justify-between items-center gap-2 h-full">
+                        <div class="flex  items-center h-[40px]  w-full gap-5">
+                            <x-dropdown> 
+                                    <x-slot:dropdownName>
+                                        Others
+                                    </x-slot:dropdownName>
+                                    <li><a>CSV</a></li>
+                                    <li><a>Excel</a></li>
+                                </x-dropdown>
+                            <div class="h-[40px] ">
                                 <x-datepicker/>
                             </div>
                         </div>
-                        <div class="w-[300px]  sm:max-w-[500px] mb-2 ">
+                        <div class="w-[300px]  sm:max-w-[500px]  ">
                             <x-searchbar/>
                         </div>
                     </div>

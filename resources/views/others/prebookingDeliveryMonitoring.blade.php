@@ -11,19 +11,31 @@
                 <x-datepicker/>
             </div>
         </div>
-         <div class="flex w-full justify-between p-5 background_color flex-col-reverse sm:flex-row gap-5">
-            <div class="w-full h-[30px] gap-5  items-center flex">
-                <button class=" w-[80px]  rounded-2xl border">
-                    Excel
-                </button>
-                 <button class=" w-[80px]  rounded-2xl border">
-                    Print
-                </button>
-                 <button class=" w-[80px]  rounded-2xl border">
-                    Copy
-                </button>
+        <div class="flex flex-col-reverse sm:flex-row w-full justify-between gap-5 p-5 background_color">
+            <div class="w-full h-full gap-2 items-center flex">
+                <div class="w-[100px] h-[40px] flex ">
+                    <x-button>
+                        <x-slot:buttonName>
+                        Excel
+                        </x-slot:buttonName>
+                    </x-button>
+                </div>
+                <div class="w-[100px] h-[40px] flex">
+                    <x-button>
+                        <x-slot:buttonName>
+                        Print
+                        </x-slot:buttonName>
+                    </x-button>
+                </div>
+                <div class="w-[100px] h-[40px] flex">
+                    <x-button>
+                        <x-slot:buttonName>
+                        Copy
+                        </x-slot:buttonName>
+                    </x-button>
+                </div>
             </div>
-            <div class="flex w-full h-[30px]">
+            <div class="flex w-full h-[40px]">
                 <x-searchbar/>
             </div>
         </div>

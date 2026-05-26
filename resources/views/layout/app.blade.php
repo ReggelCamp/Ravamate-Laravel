@@ -67,6 +67,7 @@
 
     {{-- 3. Your App JS LAST --}}
     <script type="module" src="/app/module/dashboard.js"></script>
+    <script type="module" src="/app/module/salesman.js"></script>
 
     @stack('scripts')
 

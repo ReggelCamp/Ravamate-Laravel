@@ -19,38 +19,40 @@
                   </h1>
                 </div>
             </div>
-            <div class="w-full sm:h-[50px] flex justify-end ">
+            <div class="w-full sm:h-[40px] flex justify-end ">
                 <x-searchbar/>
             </div>
         </div>
-        <div class="flex w-full gap-5 pl-5">
-            <details class="dropdown">
-            <summary class="btn m-1">Other Reports
-                <i class="fa-solid fa-angle-down"></i>
-            </summary>
-            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                <li><a>Sales Summary</a></li>
-                <li><a>Range Summary</a></li>
-                <li><a>Range Monitoring</a></li>
-                <li><a>Geocall Rate</a></li>
-                <li><a>strike Rate</a></li>
-                <li><a>Salesrep SKU Details</a></li>
-                <li><a>Unproductive</a></li>
-                <li><a>Sosyo Transaction</a></li>
-                <li><a>Voucher History</a></li>
-            </ul>
-            </details>
-            <details class="dropdown">
-            <summary class="btn m-1">Export
-                <i class="fa-solid fa-angle-down"></i>
-            </summary>
-            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                <li><a>Print</a></li>
-                <li><a>Excel</a></li>
-                <li><a>CSV</a></li>
-                <li><a>Copy</a></li>
-            </ul>
-            </details>
+        <div class="flex w-full h-full gap-5 pl-5">
+            <div class="flex h-[40px]">
+                <x-dropdown> 
+                    <x-slot:dropdownName>
+                            Other Reports
+                        </x-slot:dropdownName>
+            
+                        <li><a>Sales Summary</a></li>
+                        <li><a>Range Summary</a></li>
+                        <li><a>Range Monitoring</a></li>
+                        <li><a>Geocall Rate</a></li>
+                        <li><a>Strike Rate</a></li>
+                        <li><a>Salesrep SKU Details</a></li>
+                        <li><a>Unproductive</a></li>
+                        <li><a>Sosyo Transaction</a></li>
+                        <li><a>Voucher History</a></li>
+                </x-dropdown>
+            </div>
+            <div class="flex  h-[40px]">
+                <x-dropdown> 
+                    <x-slot:dropdownName>
+                            Export
+                        </x-slot:dropdownName>
+            
+                        <li><a>Print</a></li>
+                        <li><a>CSV</a></li>
+                        <li><a>Excel</a></li>
+                        <li><a>Copy</a></li>
+                </x-dropdown>
+            </div>
         </div>
         <div class="flex p-5 w-full overflow-auto">
             <x-datatable/>

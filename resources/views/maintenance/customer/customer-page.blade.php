@@ -11,7 +11,7 @@
 
 <body class="w-full h-full">
     <div class="flex flex-col w-full h-full p-5">
-        <div class="flex h-[30px] justify-start sm:justify-end">
+        <div class="flex justify-start sm:justify-end">
             <x-searchbar/>
         </div>
         <div class="overflow-auto">

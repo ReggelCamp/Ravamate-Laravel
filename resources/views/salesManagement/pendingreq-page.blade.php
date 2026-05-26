@@ -28,21 +28,20 @@
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
-                    <div class="flex sm:flex-row flex-col-reverse w-full justify-between h-full ">
+                    <div class="flex sm:flex-row gap-2 flex-col-reverse w-full justify-between h-full ">
                         <div class="flex w-full items-center gap-5">
-                            <div class="dropdown">
-                                <div tabindex="0" role="button" class="btn m-1">
-                                    Others
-                                    <div class="flex w-full justify-end">
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </div>
+                           <div class="w-[150px] h-[40px]">
+                                    <x-dropdown> 
+                                        <x-slot:dropdownName>
+                                            Export
+                                        </x-slot:dropdownName>
+                                            <li><a>Export to Excel</a></li>
+                                            <li><a>Export to CSV</a></li>
+                                            <li><a>Print Records</a></li>
+                                            <li><a>Copy Content</a></li>
+                                    </x-dropdown>
                                 </div>
-                                    <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                        <li><a>CSV</a></li>
-                                        <li><a>Excel</a></li>
-                                    </ul>
-                            </div>
-                            <div class="h-[30px]">
+                            <div class="h-[40px]">
                                 <x-datepicker/>
                             </div>
                         </div>

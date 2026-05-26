@@ -11,31 +11,33 @@
                 <x-datepicker/>
             </div>
         </div>
-        <div class="flex w-full items-center  sm:justify-between h-[100px] p-5 flex-col-reverse sm:flex-row ">
-            <div class="flex w-full items-center gap-10 h-full ">
-                <details class="dropdown flex w-full sm:w-auto justify-between">
-                    <summary class="btn m-1">Other Reports
-                        <i class="fa-solid fa-angle-down"></i>
-                    </summary>
-                    <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+        <div class="flex flex-col-reverse sm:flex-row w-full justify-between p-5 background_color">
+            <div class="w-full h-full gap-2 items-center flex ">
+                <div class="flex w-[150px] h-[40px]">
+                    <x-dropdown> 
+                        <x-slot:dropdownName>
+                             Other Reports
+                        </x-slot:dropdownName>
                         <li><a>Sales Summary</a></li>
                         <li><a>Range Summary</a></li>
                         <li><a>Range Monitoring</a></li>
                         <li><a>Geocall Rate</a></li>
-                        <li><a>strike Rate</a></li>
+                        <li><a>Strike Rate</a></li>
                         <li><a>Salesrep SKU Details</a></li>
                         <li><a>Unproductive</a></li>
                         <li><a>Sosyo Transaction</a></li>
                         <li><a>Voucher History</a></li>
-                    </ul>
-                </details>
-                <div class="w-full h-[30px] flex justify-end sm:justify-start sm:items-center">
-                    <button class="flex border justify-center  w-[80px] rounded-2xl">
-                        Excel
-                    </button>
+                    </x-dropdown>
+                </div>
+                <div class="flex w-[100px] h-[40px]">
+                    <x-button>
+                        <x-slot:buttonName>
+                            Excel
+                        </x-slot:buttonName>
+                    </x-button>
                 </div>
             </div>
-            <div class="w-full h-[30px] flex justify-end">
+            <div class="flex w-full h-[40px]">
                 <x-searchbar/>
             </div>
         </div>

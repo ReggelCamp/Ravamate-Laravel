@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<div class="flex w-full h-[80px] p-5 items-center bg-blue-800 justify-between border">
-    <div class="justify-start flex w-full">
+<div class="flex w-full h-[80px] p-5 items-center bg-blue-800 justify-between border ">
+    <div class="justify-start flex w-full ">
         <button class="hover:bg-blue-700 rounded p-1" onclick="toggleSidebar()">
             <i class="fa-solid fa-bars text-white text-xl"></i>
         </button>

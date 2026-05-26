@@ -12,7 +12,7 @@ class SalesmanModelController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -61,5 +61,10 @@ class SalesmanModelController extends Controller
     public function destroy(SalesmanModel $salesmanModel)
     {
         //
+    }
+
+    public function getSalesman(){
+         $salesman = SalesmanModel::all();
+        return response()->json($salesman);
     }
 }

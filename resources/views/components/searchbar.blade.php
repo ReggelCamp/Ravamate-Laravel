@@ -1,3 +1,16 @@
-<div class="w-full h-full sm:h-[30px] flex sm:justify-end">
-     <input type="text" class="border rounded-lg p-2 flex w-full sm:w-[300px]" placeholder="Search...">
+<div class="w-full flex sm:justify-end">
+    
+    <div class="relative w-full h-full items-center sm:w-[300px]">
+        
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+        
+        <input 
+            type="text" 
+            id="customSearch"
+            class="border rounded-lg w-full h-[40px] pl-10 pr-3"
+            placeholder="Search..."
+        >
+        
+    </div>
+
 </div>

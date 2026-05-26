@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
@@ -194,3 +195,6 @@ Route::get('/customize_theme/getAll',[ThemeController::class,'getAll']);
 
 //api get active
 Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
+
+//getsalesman
+Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
