@@ -49,6 +49,11 @@ export default class Api {
                     if (data.onSuccess) data.onSuccess(response.data);
                 } 
                 else {
+                    switch (response.data.status) {
+                        case 422:
+                            if (data.on422) data.on422(response.data);
+                            break;   
+                    }
                     if (data.onError) data.onError(response.data);
                 }
                 if (data.onComplete) data.onComplete(response);

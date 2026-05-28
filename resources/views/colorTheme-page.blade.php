@@ -14,7 +14,7 @@
 <body class="w-full h-full">
     <div class="flex flex-col w-full h-full">
         <div class="flex w-full h--full justify-between p-5">
-            <div class="w-full h-full primary_color">
+            <div class="w-full h-full">
                 <h1 class="text-lg">
                     Color Theme
                 </h1>
@@ -57,7 +57,8 @@
 
                 <div class="flex flex-col w-full h-full pt-5">
                         <label>Upload Logo </label>
-                        <input type="file" class="file-input w-full" id="logo_id" />
+                        <input type="file" class="file-input w-full" id="logo_id" name="logo" accept="image/*" />
+                        <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>
 
                 <div class="flex flex-wrap gap-6 ">
@@ -170,45 +171,132 @@
             </div>
 
             <div class="flex flex-col w-[400px] h-full pt-5 gap-5">
-                    <label class="">Select Body Font</label>
-                    <select id="body_font" name="body_font" class="select w-full">
-                        <option disabled selected>Pick a font</option>
-                        <option value="Inter" style="font-family: Inter;">Inter</option>
-                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                        <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
-                    </select>
+                    <div class="flex items-center gap-6 w-full h-full">
 
-                    <label class="">Select Header Font</label>
-                    <select id="header_font"name='header_font' class="select w-full">
-                        <option disabled selected>Pick a font</option>
-                        <option value="Inter" style="font-family: Inter;">Inter</option>
-                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                        <option value="Courier New" style="font-family: 'Courier New';">Courier New</option>
-                    </select>
+                        <!-- Font Selector -->
+                        <div class="flex flex-col gap-2 w-full">
+                            <label>Select Body Font</label>
+
+                            <select id="body_font" name="body_font" class="select w-full">
+                                <option disabled selected>Pick a font</option>
+
+                                <option value="Inter" style="font-family: Inter;">Inter</option>
+                                <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                                <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                                <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                                <option value="Courier New" style="font-family: 'Courier New';">
+                                    Courier New
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Color Picker -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-700">
+                                Body Font Color
+                            </label>
+
+                            <div class="flex items-center gap-3">
+                                
+                                <input
+                                    type="color"
+                                    id="body_color"
+                                    name="body_color"
+                                    value="#3b82f6"
+                                    class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
+                                />
+
+                                <input
+                                    type="text"
+                                    id="accentColorHex"
+                                    value="#3b82f6"
+                                    readonly
+                                    class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+                  
+                    <div class="flex items-center gap-6 w-full h-full">
+
+                        <!-- Font Selector -->
+                        <div class="flex flex-col gap-2 w-full">
+                            <label>Select Header Font</label>
+
+                            <select id="header_font" name="header_font" class="select w-full">
+                                <option disabled selected>Pick a font</option>
+
+                                <option value="Inter" style="font-family: Inter;">Inter</option>
+                                <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                                <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                                <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                                <option value="Courier New" style="font-family: 'Courier New';">
+                                    Courier New
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Color Picker -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-medium text-gray-700">
+                                Header Font Color
+                            </label>
+
+                            <div class="flex items-center gap-3">
+                                
+                                <input
+                                    type="color"
+                                    id="header_color"
+                                    name="header_color"
+                                    value="#3b82f6"
+                                    class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
+                                />
+
+                                <input
+                                    type="text"
+                                    id="headerColorHex"
+                                    value="#3b82f6"
+                                    readonly
+                                    class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
+                                />
+                            </div>
+                        </div>
+
+                    </div>
             </div>
             
-         
-
             <div class="flex flex-col w-full h-full pt-5">
                 <label>Report Header </label>
                 <input type="text" class="file-input w-full" id="report_header" />
             </div>
 
-            <div class="flex flex-col w-full h-full pt-5">
+            {{-- <div class="flex flex-col w-full h-full pt-5">
                 <label>Report Header Title </label>
                 <input type="text" class="file-input w-full" />
-            </div>
+            </div> --}}
+
+            {{-- Carousel --}}
+            {{-- <div class="flex justify-between w-full h-full pt-5">
+                <label>Upload Carousel Image</label>
+
+                <button class="btn" id="addImg">
+                    Add more Image
+                </button>
+            </div> --}}
             
-                <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
-                    Save
-                </button>
-                <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeEditbtn">
-                    Edit
-                </button>
+            {{-- Carousel images --}}
+            {{-- <div class="flex flex-col w-full h-full pt-5 " id="imgContainer">
+                <input type="file" class="file-input" id="caroselImg" />
+            </div> --}}
+
+            
+            <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
+                Save
+            </button>
+            <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeEditbtn">
+                Edit
+            </button>
             
            
             </div>

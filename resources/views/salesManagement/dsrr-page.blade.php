@@ -2,11 +2,11 @@
 @section('content')
 
 <body class="bg-gray-300">
-    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-blue-500">
+    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 no-hover bg-primary">
         <div class="w-full h-full items-center ">
             <x-report-header-title title="DSRR" />
         </div>
-        <div class="w-fit h-[30px]">
+        <div class="w-fit h-[30px] text-accent">
             <x-datepicker/>
         </div>
     </div>

@@ -3,11 +3,11 @@
 
 <body class="w-full h-full">
     <div class="flex w-full h-full flex-col">
-        <div class="flex w-full h-[50px] justify-between p-5 primary_color items-center">
+        <div class="flex w-full h-[50px] justify-between p-5 bg-primary items-center">
             <div class="flex w-full ">
                 <x-report-header-title title="Sales Audit"/>
             </div>
-            <div class="flex w-full h-[30px] justify-end">
+            <div class="flex w-full h-[30px] justify-end text-accent">
                 <x-datepicker/>
             </div>
         </div>

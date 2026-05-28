@@ -17,7 +17,7 @@
     }
 </style>
 
-<div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-blue-500">
+<div class="flex w-full h-[50px] justify-between items-center p-2 bg-primary">
     <div class="w-full h-full items-center ">
         <x-report-header-title title="Pending Request" />
     </div>

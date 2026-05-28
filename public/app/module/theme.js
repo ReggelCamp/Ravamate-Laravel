@@ -1,6 +1,7 @@
 import Api from "../helper/Api.js";
 
 let array = [];
+let carImg = [];
 let updateId;
 
 //for switch
@@ -49,16 +50,17 @@ function getAll(){
         array = data;
 
         let activeTheme = array.find(item=>item.is_active);
-        if(activeTheme){
-            $(".primary_color").css("background",activeTheme.primary_color);
-        }
+        // if(activeTheme){
+        //     $(".primary_color").css("background",activeTheme.primary_color);
+        // }
 
         $("#table").html("");
 
         data.forEach((item) => {
+           let isActive = item.is_active ? "border-green-500 bg-green-50" : "bg-base-100";
             $("#table").append(
                 `
-                        <div id= "themeCard"class="card bg-base-100 w-96 shadow-sm border">
+                        <div id= "themeCard"class="card bg-base-100 w-96 shadow-sm border-4 border-double ${isActive}">
 
                             <div class="card-body">
 
@@ -149,22 +151,50 @@ function getAll(){
 
                                 </div>
 
-                                <!-- FONT INFO -->
-                                <div class="flex flex-col  w-full h-full mt-3">
-                                    <div class="w-full h-full flex flex-col">
-                                        <h1>
+                                    <!-- FONT INFO -->
+                                    <div class="flex flex-col  w-full h-full mt-3">
+                                        <div class="w-full flex flex-col gap-3">
+
+                                        <!-- Report Header -->
+                                        <div>
                                             <span class="text-gray-500 text-sm">Report Header:</span>
-                                            ${item.report_header}
-                                        </h1>
-                                        <h1>
-                                            <span class="text-gray-500 text-sm">Body Font:</span>
-                                            ${item.body_font}
-                                        </h1>
-                        
-                                        <h1>
-                                            <span class="text-gray-500 text-sm">Header Font:</span>
-                                            ${item.header_font}
-                                        </h1>
+                                            <div>${item.report_header}</div>
+                                        </div>
+
+                                        <!-- Body Font -->
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-gray-500 text-sm">Body Font:</span>
+                                                <div>${item.body_font}</div>
+                                            </div>
+
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-gray-500 text-sm">Color:</span>
+                                                <div
+                                                    class="w-6 h-6 rounded border border-gray-300"
+                                                    style="background-color: ${item.body_color};"
+                                                    title="${item.body_color}"
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Header Font -->
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <span class="text-gray-500 text-sm">Header Font:</span>
+                                                <div>${item.header_font}</div>
+                                            </div>
+
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-gray-500 text-sm">Color:</span>
+                                                <div
+                                                    class="w-6 h-6 rounded border border-gray-300"
+                                                    style="background-color: ${item.header_color};"
+                                                    title="${item.header_color}"
+                                                ></div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                      <div class w-full flex>
                                         <button class="bg-green-400 w-fit p-2.5 items-center rounded-xl text-white" data-id="${item.id}"id="updatebtn">
@@ -235,6 +265,8 @@ $(document).on("click", "#updatebtn", function () {
     $("#secondary_colorr").val(row.secondary_color);
     $("#accent_colorr").val(row.accent_color);
     $("#background_color").val(row.background_color);
+    $("#body_color").val(row.body_color);
+    $("#font_color").val(row.font_color);
     $("#body_font").val(row.body_font);
     $("#header_font").val(row.header_font);
     $("#report_header").val(row.report_header);
@@ -266,7 +298,9 @@ $(document).on("click", "#addbtn", function () {
 
 //for executing the save btn
 $(document).on("click", "#executeSavebtn", function(){
+        
     let form = new FormData();
+    
     form.append("logo[]", $("#logo_id")[0].files[0]);
     form.append("json", JSON.stringify({
              theme_name: $("#theme_name").val(),
@@ -274,6 +308,8 @@ $(document).on("click", "#executeSavebtn", function(){
              secondary_color: $("#secondary_color").val(),
              accent_color: $("#accent_color").val(),
              background_color: $("#background_color").val(),
+             body_color: $("#body_color").val(),
+             header_color: $("#header_color").val(),
              body_font: $("#body_font").val(),
              header_font: $("#header_font").val(),        
              report_header: $("#report_header").val(),        
@@ -288,7 +324,10 @@ $(document).on("click", "#executeSavebtn", function(){
         onSuccess:(data)=> {
             getAll();
             AddThemeModal.close();
-        }
+        },
+        // on422: data => {
+        //     console.log(data.responseJSON.message);
+        // }
     });
 });
 
@@ -305,6 +344,8 @@ $(document).on("click", "#executeEditbtn", function () {
         secondary_color: $("#secondary_color").val(),
         accent_color: $("#accent_color").val(),
         background_color: $("#background_color").val(),
+        body_color: $("#body_color").val(),
+        header_color: $("#header_color").val(),
         body_font: $("#body_font").val(),
         header_font: $("#header_font").val(),
         report_header: $("#report_header").val(),
@@ -327,26 +368,59 @@ $(document).on("click", "#executeEditbtn", function () {
 });
 
 $("#accent_color").on("input", function () {
-
     $("#accentColorHex").val($(this).val());
-
 });
 
 $("#primary_color").on("input", function () {
-
     $("#primaryColorHex").val($(this).val());
-
 });
 
 $("#secondary_color").on("input", function () {
-
     $("#secondaryColorHex").val($(this).val());
-
 });
 
 $("#background_color").on("input", function () {
-
     $("#backgroundColorHex").val($(this).val());
-
 });
 
+$("#logo_id").on("change", function(){
+    const file = this.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!file) return;
+
+    // Wrong file type
+    if (!allowedTypes.includes(file.type)) {
+        $("#logo-error")
+            .text("Invalid file type. Only JPG, PNG, and WEBP are allowed.")
+            .removeClass("hidden");
+
+        $(this).val(""); // clear the input
+        return;
+    }
+
+    // Optional: file size check
+    if (file.size > maxSize) {
+        $("#logo-error")
+            .text("File is too large. Maximum size is 2MB.")
+            .removeClass("hidden");
+
+        $(this).val(""); // clear the input
+        return;
+    }
+
+    // All good — clear error
+    $("#logo-error").text("").addClass("hidden");
+});
+
+$("#addImg").on("click", function(){
+    let html = `
+         <div class="flex w-full gap-0.5 h-full pt-5">
+            <input type="file" class="file-input" id="caroselImg" />
+            <button class = "btn" >
+                Remove
+            </button>
+        </div>
+    `
+    $("#imgContainer").append(html);
+});

@@ -12,7 +12,7 @@
     <body class="w-full h-full">
     
             <div class="flex w-full justify-between">
-                <div class="flex w-full h-full justify-between items-center primary_color">
+                <div class="flex w-full h-full justify-between items-center no-hover bg-primary">
                     <div class="w-full h-[50px] pl-5">
                         <x-report-header-title title="Offsite Transaction" />
                     </div>

@@ -2,8 +2,8 @@
 @section('content')
 
 <body class="bg-gray-300">
-    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-blue-500">
-        <div class="w-full h-full items-center ">
+    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-primary no-hover text-background">
+        <div class="w-full h-full text-background items-center ">
             <x-report-header-title title="DSR" />
         </div>
         <div class="w-fit h-[30px]">

@@ -4,7 +4,7 @@
 <body class="w-full h-full">
     <div class="w-full h-full flex flex-col">
         <div class="flex w-full justify-between">
-           <div class="flex w-full h-full justify-between items-center primary_color">
+           <div class="flex w-full h-full justify-between items-center bg-primary">
                 <div class="w-full h-[50px] pl-5">
                     <x-report-header-title title="Missed Call" />
                 </div>
@@ -13,7 +13,7 @@
                 </div>
             </div> 
         </div>
-        <div class="flex flex-col-reverse sm:flex-row w-full justify-between gap-5 p-5 background_color">
+        <div class="flex flex-col-reverse sm:flex-row w-full justify-between gap-5 p-5 bg-background">
             <div class="w-full h-full gap-2 items-center flex">
                 <div class="w-[100px] h-[40px] flex ">
                     <x-button class="excelBtn">

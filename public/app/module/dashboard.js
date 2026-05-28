@@ -1,26 +1,30 @@
 import Api from "../helper/Api.js";
 
-let array = [];
-
-function getActive(){
+function getActive() {
     Api.get({
-        url:"/customize_theme/getActive",
+        url: "/customize_theme/getActive",
         onSuccess: (data) => {
 
-            let activeTheme = data; 
+            let activeTheme = data;
 
-            if(activeTheme){
-                $(".primary_color").css("background",activeTheme.primary_color);
-                $(".secondary_color").css("background",activeTheme.secondary_color);
-                $(".accent_color").css("background",activeTheme.accent_color);
-                $(".background_color").css("background",activeTheme.background_color);
+            if (activeTheme) {
+
+            
+                document.documentElement.style.setProperty('--primary', activeTheme.primary_color);
+                document.documentElement.style.setProperty('--secondary', activeTheme.secondary_color);
+                document.documentElement.style.setProperty('--accent', activeTheme.accent_color);
+                document.documentElement.style.setProperty('--background', activeTheme.background_color);
+
+                
+                document.documentElement.style.setProperty('--header-font', activeTheme.header_font);
+                document.documentElement.style.setProperty('--body-font', activeTheme.body_font);
+                document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
+                document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
+
+
+                
+                $("#themeLogo").attr("src", activeTheme.logo[0]?.url);
                 $(".report_header").text(activeTheme.report_header);
-                $("#themeLogo").attr(
-                    "src",
-                    activeTheme.logo[0]?.url
-                );
-                $(".header_font").css("font-family",activeTheme.header_font);
-                $(".body_font").css("font-family",activeTheme.body_font);
             }
         }
     });

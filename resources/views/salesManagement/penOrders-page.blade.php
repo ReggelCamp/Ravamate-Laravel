@@ -4,11 +4,11 @@
 <body class="w-full h-full">
     <div class="w-full h-full flex flex-col">
         <div class="flex w-full justify-between">
-           <div class="flex w-full h-full justify-between items-center primary_color">
+           <div class="flex w-full h-full justify-between items-center bg-primary">
                 <div class="w-full h-[50px] pl-5">
                     <x-report-header-title title="Unprocessed Orders" />
                 </div>
-                <div class="w-fit h-[30px] pr-5">
+                <div class="w-fit h-[30px] pr-5 text-accent">
                     <x-datepicker/>
                 </div>
             </div> 

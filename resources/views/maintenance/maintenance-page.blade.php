@@ -283,13 +283,13 @@
 
         <form method="dialog">
             <button 
-                class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 items-center h-full text-white hover:bg-red-500 hover:text-black">
+                class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 items-center h-full hover:text-black text-white">
                 ✕
             </button>
         </form>
 
         {{-- Header --}}
-        <div class="w-full h-full bg-blue-500 text-white p-5">
+        <div class="w-full h-full no-hover bg-primary text-white p-5">
             <x-report-header-title title="GEORESET"/>
         </div>
 

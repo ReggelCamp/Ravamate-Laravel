@@ -37,24 +37,22 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
+            $request->validate([
+                'logo' => 'required',
+                'logo.*' => 'image|mimes:jpg,jpeg,png,webp'
+            ],[
+                'logo.required' => 'Please upload a logo.',
+                'logo.*.image' => 'Logo must be an image.',
+                'logo.*.mimes' => 'Only JPG, JPEG, PNG, and WEBP files are allowed.',
+            ]);
+        
         $json = json_decode($request->input('json'), true);
 
         $row = $this->model::create($json);
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
+        
         return response()->json($row);
         
-        // $theme = Theme::create([
-        //     'theme_name' => $request->theme_name,
-        //     'primary_color' => $request->primary_color,
-        //     'secondary_color' => $request->secondary_color,
-        //     'background_color' => $request->background_color,
-        //     'accent_color' => $request->accent_color,
-        //     'header_font' => $request->header_font,
-        //     'body_font' => $request->body_font,
-        //     'activate_switch' => $request->is_active
-        //     // 'is_active' => $request->boolean('is_active'),
-        // ]);
-        // return redirect()->back();
     }
 
     /**
@@ -78,17 +76,6 @@ class ThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-    //       $theme->update([
-    //      'theme_name'       => $request->theme_name,
-    //      'primary_color'    => $request->primary_color,
-    //      'secondary_color'  => $request->secondary_color,
-    //      'background_color' => $request->background_color,
-    //      'accent_color'     => $request->accent_color,
-    //      'header_font'      => $request->header_font,
-    //      'body_font'        => $request->body_font,
-    //  ]);
-
-    //  return redirect()->back();
         $json = json_decode($request->input('json'), true);
         $this->model::find($id)->update($json);
 

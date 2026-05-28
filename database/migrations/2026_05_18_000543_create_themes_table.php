@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('secondary_color', 9)->nullable();
             $table->string('accent_color', 9)->nullable();
             $table->string('background_color', 9)->nullable();
+            $table->string('body_color', 9)->nullable();
+            $table->string('header_color', 9)->nullable();
             $table->string('report_header', 255)->nullable();
             $table->string('header_title', 9)->nullable();
             $table->boolean('is_active')->default(false)->nullable();

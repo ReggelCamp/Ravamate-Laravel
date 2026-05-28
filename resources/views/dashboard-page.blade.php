@@ -73,7 +73,7 @@
 
 
         <div class="w-full h-full flex">
-            <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center primary_color ">
+            <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center no-hover bg-primary ">
                 {{-- RAVAMATE LOGO --}}
                 <div class="w-[150px] h-[150px]">
                     {{-- <img src="/static/images/ravamatedashboard.png" class="object-cover"/> --}}
@@ -119,18 +119,18 @@
 
                 {{-- MAP --}}
                 <div class="w-full h-full">
-                    <div class="w-full h-[50px] flex justify-between items-center bg-blue-500 p-2 border-1">
-                        <div class="w-full h-[30px] items-center">
+                    <div class="w-full h-[50px] flex justify-between items-center primary_color  border-1">
+                        <div class="w-full h-[50px] items-center">
                             <x-report-header-title title="Dashboard"/>
                         </div>
-                        <div class="flex w-fit h-[30px]  whitespace-nowrap gap-2 ">
+                        <div class="flex w-full h-[50px] bg-primary whitespace-nowrap gap-2 ">
                             <x-datepicker displayOnly="true"/>
                         </div>
                     </div>
                 </div>
 
                 {{-- TABLE --}}
-                <div class="w-full h-full flex flex-col bg-yellow-500">
+                <div class="w-full h-full flex flex-col bg-primary">
                     <div class="w-full flex flex-col-reverse md:flex-row justify-between gap-5 p-5">  
                         <div class="flex flex-col sm:flex-row gap-5 w-full md:w-auto">
 
@@ -175,7 +175,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-auto">
+                    <div class="overflow-auto w-full h-full">
                         <x-datatable/>
                     </div>
                 </div>

@@ -8,8 +8,7 @@
     align-items: center;
     justify-content: center;
 
-    background-color: #3b82f6;
-    color: white;
+  
 }
 
 .page-format{
@@ -83,4 +82,71 @@ th{
 
 .dt-layout-cell .dt-info{
     margin-top: 20px !important;
+}
+
+/* Apply to headers */
+h1, .report_header {
+    font-family: var(--header-font);
+}
+
+/* Apply to body text */
+body {
+    font-family: var(--body-font);
+}
+
+/* Primary */
+.bg-primary {
+    background: var(--primary);
+}
+.text-primary {
+    color: var(--primary);
+}
+.bg-primary:hover {
+    filter: brightness(90%);
+}
+.bg-primary.no-hover:hover {
+    filter: none;
+    background: var(--primary);
+}
+/* Secondary */
+.bg-secondary {
+    background: var(--secondary);
+}
+.text-secondary{
+      color: var(--secondary);
+}
+.bg-secondary:hover {
+    filter: brightness(90%);
+}
+.bg-secondary.no-hover:hover {
+    filter: none;
+    background: var(--secondary);
+}
+/* Accent */
+.bg-accent {
+    background: var(--accent);
+}
+.text-accent{
+      color: var(--accent);
+} 
+.bg-accent:hover {
+    filter: brightness(90%);
+}
+/* Background */
+.bg-background {
+    background: var(--background);
+}
+.text-background {
+    color: var(--background);
+}
+.bg-background:hover {
+    background: var(--background);
+}
+
+
+.headerColor{
+    color: var(--header-color);
+}
+.bodyColor{
+    color: var(--body-color);
 }

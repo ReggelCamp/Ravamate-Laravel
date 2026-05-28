@@ -15,6 +15,8 @@ class Theme extends Model
         'secondary_color',
         'background_color',
         'accent_color',
+        'body_color',
+        'header_color',
         'header_font',
         'report_header',
         'body_font',

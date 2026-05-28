@@ -3,7 +3,7 @@
 @section('content')
 <body class="w-full h-full">
     <div class="flex flex-col w-full h-full">
-         <div class="flex w-full h-[50px] justify-between items-center primary_color p-5">
+         <div class="flex w-full h-[50px] justify-between items-center no-hover bg-primary p-5">
             <div class="w-full h-[50px]">
                 <x-report-header-title title="DCR" />
             </div>
@@ -11,7 +11,7 @@
                 <x-datepicker/>
             </div>
         </div>
-       <div class="w-full p-5 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between bg-gray-300">
+       <div class="w-full text-background p-5 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between bg-secondary">
             <div class="flex flex-wrap gap-3">
                 <div class="w-full h-[50px] flex gap-5">
                     {{-- dropdown --}}
@@ -39,7 +39,7 @@
                 <x-searchbar/>
             </div>
         </div>
-         <div class="w-full max-h-96 text-white flex flex-col secondary_color overflow-auto ">
+         <div class="w-full max-h-96 text-background flex flex-col secondary_color overflow-auto ">
             <x-datatable/>
          </div>
     </div>

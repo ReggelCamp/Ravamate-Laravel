@@ -26,8 +26,8 @@
     }
 </style>
 
-<div class="w-full text-sm p-5">
-    <table id="salesmanTable" class="w-full">
+<div class="w-full text-sm ">
+    <table id="salesmanTable" class="w-full bg-gray-400 bodyColor">
 
         {{-- <thead>
             <tr>
