@@ -23,12 +23,12 @@
                 <input type="radio" name="my_tabs_3" class="tab" aria-label="Pending BO" />
                 <div class="tab-content bg-base-100 border-base-300 p-6 ">
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">
-                        <div class="flex gap-2 sm:items-center sm:flex-row flex-col-reverse justify-start sm:justify-end  w-full h-full p-2">
+                        <div class="flex gap-5 sm:items-center sm:flex-row flex-col-reverse justify-start sm:justify-end w-full h-full p-2">
                             <div class="flex w-full gap-2 items-center sm:flex-row justify-between sm:justify-end">
-                                <div class="h-[40px]  datepicker">
+                                <div class="h-[30px]  datepicker">
                                     <x-datepicker/>
                                 </div>
-                                <div class="w-[150px] h-[40px]">
+                                <div class="w-[150px] h-[30px]">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             Export
@@ -40,13 +40,13 @@
                                     </x-dropdown>
                                 </div>
                             </div>
-                            <div >
+                            <div class="w-[250px] h-[30px]">
                                 <x-searchbar/>
                             </div>
                         </div>
                     </div>
                     <div class="overflow-auto">
-                        <x-datatable/>
+                        <x-datatable id="pendingBo"/>
                     </div>
                 </div>
 
@@ -55,10 +55,10 @@
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">
                         <div class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full p-2">
                             <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
-                                <div class="h-[40px]  datepicker">
+                                <div class="h-[30px]  datepicker">
                                     <x-datepicker/>
                                 </div>
-                                <div class="w-[150px] h-[40px]">
+                                <div class="w-[150px] h-[30px]">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             Export
@@ -70,13 +70,13 @@
                                     </x-dropdown>
                                 </div>
                             </div>
-                            <div >
+                            <div class="w-[250px] h-[30px]">
                                 <x-searchbar/>
                             </div>
                         </div>
                     </div>
                     <div class="overflow-auto">
-                        <x-datatable/>
+                        <x-datatable id="rejectedBo"/>
                     </div>
                 </div>
 
@@ -85,10 +85,10 @@
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">
                         <div class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end  w-full h-full p-2">
                             <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
-                                <div class="h-[40px]  datepicker">
+                                <div class="h-[30px]  datepicker">
                                     <x-datepicker/>
                                 </div>
-                               <div class="w-[150px] h-[40px]">
+                               <div class="w-[150px] h-[30px]">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             Export
@@ -100,13 +100,13 @@
                                     </x-dropdown>
                                 </div>
                             </div>
-                            <div >
+                            <div class="w-[250px] h-[30px]">
                                 <x-searchbar/>
                             </div>
                         </div>
                     </div>
                     <div class="overflow-auto">
-                        <x-datatable/>
+                        <x-datatable id="approveB0"/>
                     </div>
                 </div>
             </div>

@@ -55,6 +55,7 @@
 <body class="w-full h-screen">
 
     <x-header/>
+    
 
     {{-- jQuery FIRST --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -87,7 +88,8 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     {{-- Your JS --}}
-    <script type="module" src="/app/module/dashboard.js"></script>
+    {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
+    <script type="module" src="/app/helper/theme_state.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
 
     @stack('scripts')

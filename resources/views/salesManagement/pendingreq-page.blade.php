@@ -23,14 +23,14 @@
     </div>
 </div>
 <body class="w-full h-full ">
-    <div class="w-full p-5 background_color">
+    <div class="w-full h-screen bg-background p-5 ">
         <div class="tabs tabs-lift ">
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
                     <div class="flex sm:flex-row gap-2 flex-col-reverse w-full justify-between h-full ">
                         <div class="flex w-full items-center gap-5">
-                           <div class="w-[150px] h-[40px]">
+                           <div class="w-[150px] h-[30px]">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             Export
@@ -41,7 +41,7 @@
                                             <li><a class="copyBtn">Copy Content</a></li>
                                     </x-dropdown>
                                 </div>
-                            <div class="h-[40px]">
+                            <div class="h-[30px]">
                                 <x-datepicker/>
                             </div>
                         </div>

@@ -6,13 +6,13 @@
         <div class="w-full h-full items-center ">
             <x-report-header-title title="DSRR" />
         </div>
-        <div class="w-fit h-[30px] text-accent">
+        <div class="w-fit h-[30px] ">
             <x-datepicker/>
         </div>
     </div>
-    <div class="w-full flex flex-col h-full">       
-        <div class="flex justify-between p-5 w-full h-full">  
-            <div class="w-full h-[50px] flex">
+    <div class="w-full flex flex-col h-screen bg-background">       
+        <div class="flex justify-between p-5 w-full max-h-[100px]">  
+            <div class="w-full h-[30px] flex">
                 <x-dropdown>
                     <x-slot:dropdownName>
                         Filter by Salesman
@@ -21,19 +21,27 @@
                         <li><a>Item 2</a></li>
                 </x-dropdown>
             </div>
-            <div class="flex justify-end w-[100px] h-[50px] gap-5">
+            <div class="flex justify-end w-[100px] h-[30px] gap-5">
                 <x-button>
                     <x-slot:buttonName>
                         Generate
                     </x-slot:buttonName>
                 </x-button>
-                <x-button class="printBtn">
-                    <x-slot:buttonName>
-                        Print
-                    </x-slot:buttonName>
-                </x-button>
+                <div class="flex  h-[30px]">
+                <x-dropdown> 
+                    <x-slot:dropdownName>
+                            Export
+                        </x-slot:dropdownName>
+            
+                        <li><a class="printBtn">Print</a></li>
+                        <li><a class="csvBtn">CSV</a></li>
+                        <li><a class="excelBtn">Excel</a></li>
+                        <li><a class="copyBtn">Copy</a></li>
+                </x-dropdown>
+            </div>
             </div>
         </div>
+        <x-datatable/>
     </div>
 </body>
 @endsection

@@ -23,21 +23,26 @@
     </div>
 </div>
 <body class="w-full h-full ">
-    <div class="w-full p-5">
+    <div class="w-full h-screen p-5">
         <div class="tabs tabs-lift">
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
                     <div class="flex w-full flex-col-reverse sm:flex-row justify-between items-center gap-2 h-full">
-                        <div class="flex  items-center h-[40px]  w-full gap-5">
-                            <x-dropdown> 
+                        <div class="flex  items-center h-[30px]  w-full gap-5">
+                            <div class="flex  h-[30px]">
+                                <x-dropdown> 
                                     <x-slot:dropdownName>
-                                        Others
-                                    </x-slot:dropdownName>
-                                    <li ><a class="csvBtn">CSV</a></li>
-                                    <li ><a class="excelBtn">Excel</a></li>
+                                            Export
+                                        </x-slot:dropdownName>
+                            
+                                        <li><a class="printBtn">Print</a></li>
+                                        <li><a class="csvBtn">CSV</a></li>
+                                        <li><a class="excelBtn">Excel</a></li>
+                                        <li><a class="copyBtn">Copy</a></li>
                                 </x-dropdown>
-                            <div class="h-[40px] ">
+                            </div>
+                            <div class="h-[30px]">
                                 <x-datepicker/>
                             </div>
                         </div>

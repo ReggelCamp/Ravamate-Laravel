@@ -7,33 +7,22 @@
             <div class="flex w-full ">
                 <x-report-header-title title="Sync Report"/>
             </div>
-            <div class="flex w-full h-[30px] justify-end text-accent">
+            <div class="flex w-full h-[30px] justify-end">
                 <x-datepicker/>
             </div>
         </div>
         <div class="flex flex-col-reverse sm:flex-row w-full justify-between gap-5 p-5 background_color">
-            <div class="w-full h-full gap-2 items-center flex">
-                <div class="w-[100px] h-[40px] flex ">
-                    <x-button class="excelBtn">
-                        <x-slot:buttonName>
-                        Excel
-                        </x-slot:buttonName>
-                    </x-button>
-                </div>
-                <div class="w-[100px] h-[40px] flex">
-                    <x-button class="printBtn">
-                        <x-slot:buttonName>
-                        Print
-                        </x-slot:buttonName>
-                    </x-button>
-                </div>
-                <div class="w-[100px] h-[40px] flex">
-                    <x-button class="copyBtn">
-                        <x-slot:buttonName>
-                        Copy
-                        </x-slot:buttonName>
-                    </x-button>
-                </div>
+            <div class="flex  h-[30px]">
+                <x-dropdown> 
+                    <x-slot:dropdownName>
+                            Export
+                        </x-slot:dropdownName>
+            
+                        <li><a class="printBtn">Print</a></li>
+                        <li><a class="csvBtn">CSV</a></li>
+                        <li><a class="excelBtn">Excel</a></li>
+                        <li><a class="copyBtn">Copy</a></li>
+                </x-dropdown>
             </div>
             <div class="flex w-full h-[40px]">
                 <x-searchbar/>

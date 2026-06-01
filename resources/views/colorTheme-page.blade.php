@@ -8,6 +8,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script  src="/app/helper/sweetalert.js"></script>
+    <link rel="stylesheet" href="{{ asset('static/css/style.css') }}">
+
 
     
 </head>
@@ -50,10 +52,15 @@
                 </h1>
 
                 <label class="text-sm font-medium text-gray-700">
-                           Input Theme Name
+                     Input Theme Name
                 </label>
                 
                 <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="theme_name" id="theme_name">
+
+                <label class="text-sm font-medium text-gray-700">
+                     Input Company Name
+                </label>
+                <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="company_name" id="company_name">
 
                 <div class="flex flex-col w-full h-full pt-5">
                         <label>Upload Logo </label>
@@ -274,21 +281,24 @@
             {{-- <div class="flex flex-col w-full h-full pt-5">
                 <label>Report Header Title </label>
                 <input type="text" class="file-input w-full" />
-            </div> --}}
+            </div>  --}}
 
             {{-- Carousel --}}
-            {{-- <div class="flex justify-between w-full h-full pt-5">
+            <div class="flex justify-between w-full h-full pt-5">
                 <label>Upload Carousel Image</label>
 
-                <button class="btn" id="addImg">
+                {{-- <button class="btn" id="addImg">
                     Add more Image
-                </button>
-            </div> --}}
+                </button> --}}
+            </div>
             
             {{-- Carousel images --}}
-            {{-- <div class="flex flex-col w-full h-full pt-5 " id="imgContainer">
-                <input type="file" class="file-input" id="caroselImg" />
-            </div> --}}
+             <div class="flex flex-col gap-1.5 w-full h-full pt-5 " id="imgContainer">
+                {{-- <input type="file" class="file-input" id="carouselImg" name="carouselName" multiple /> --}}
+                <input type="file" class="file-input w-full" id="carouselImg1" name="carouselName1" />
+                <input type="file" class="file-input w-full" id="carouselImg2" name="carouselName2" />
+                <input type="file" class="file-input w-full" id="carouselImg3" name="carouselName3" />
+            </div> 
 
             
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
@@ -304,5 +314,6 @@
     </dialog>
 
 <script type="module" src="/app/module/theme.js"></script>
+<script type="module" src="/app/helper/theme_state.js"></script>
 </html>
 

@@ -1,270 +1,482 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<div class="flex w-full h-[80px] p-5 items-center headers no-hover justify-between border ">
-    <div class="justify-start flex w-full ">
-        <button class=" rounded p-1 " onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars text-primary text-xl"></i>
-        </button>
-    </div>
-    <h1 class="report_header">RAVAMATE</h1>
-    <div class="flex w-full text-primary justify-end gap-7">
-        <i class="fa-solid fa-bell text-lg"></i>
-        <i class="fa-solid fa-circle-user text-lg"></i>
-    </div>
-</div>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<div class="flex w-full h-[70px] px-6 items-center justify-between border-b gradient2">
 
 
+    <div class="flex items-center w-1/3">
 
-<aside id="sidenav"
-    class="hidden fixed top-0 left-0 h-full w-[250px] sm:w-[350px] bg-secondary text-background flex flex-col p-5 z-30 ">
-    <div class="w-full flex items-center justify-center h-[250px]">
-        <img src="/static/images/ravamatedashboard.png" class="w-[145px] h-[115px]  object-cover"/> 
-    </div>
+        <label for="my-drawer-1"
+               class="rounded-lg p-2 cursor-pointer hover:bg-base-200 transition-all duration-200">
 
-  <nav class="flex w-full flex-col gap-2 accent_color">
-
-    {{-- DASHBOARD --}}
-    <a href="{{ route('dashboard') }}"
-        class="bg-secondary px-4 py-2 rounded transition">
-        Dashboard
-    </a>
-
-    {{-- ANALYTICS --}}
-    <a href="{{ route('analytics') }}"
-       class="bg-secondary px-4 py-2 rounded transition">
-        Analytics
-    </a>
-
-    {{-- REPORTS --}}
-    <div>
-
-        <input id="stock-toggle" type="checkbox" class="peer hidden" />
-
-        <label for="stock-toggle"
-               class="flex items-center justify-between cursor-pointer bg-secondary px-4 py-2 rounded transition">
-
-            <span>Reports</span>
-
-            <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-                 xmlns="http://www.w3.org/2000/svg"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M19 9l-7 7-7-7" />
-            </svg>
+            <i class="fa-solid fa-bars headerColor text-xl"></i>
 
         </label>
 
-        <!-- dropdown content -->
-        <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
+    </div>
 
-            <ul class="bg-secondary mt-1 rounded p-2 space-y-1">
+    <div class="flex justify-center w-1/3">
 
-                <!-- Sales Management sub-collapse -->
+        <h1 class="report_header company_name text-2xl font-semibold truncate">
+        </h1>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center justify-end gap-5 w-1/3">
+
+        <i class="fa-solid fa-bell headerColor text-lg cursor-pointer"></i>
+
+        <i class="fa-solid fa-circle-user headerColor text-2xl cursor-pointer"></i>
+
+    </div>
+
+</div>
+
+
+<div class="drawer">
+
+    <!-- TOGGLE -->
+    <input id="my-drawer-1"
+           type="checkbox"
+           class="drawer-toggle" />
+
+    <!-- PAGE CONTENT -->
+    <div class="drawer-content">
+
+    </div>
+
+  
+    <div class="drawer-side z-50">
+
+        <label for="my-drawer-1"
+               aria-label="close sidebar"
+               class="drawer-overlay">
+        </label>
+
+        
+        <div class="bg-base-200 min-h-full w-[300px] shadow-2xl overflow-y-auto">
+
+            
+            <div class="flex items-center justify-center h-[180px] px-6 border-b">
+
+                <img src="/${item.logo[0]?.url}" class="w-[140px] object-contain themeLogo"  id=""/>                    
+
+            </div>
+
+            
+            <ul class="menu p-4 gap-2 w-full">
+
+                
                 <li>
 
-                    <div>
+                    <a href="{{ route('dashboard') }}"
+                       class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                        <input id="sales-toggle" type="checkbox" class="peer hidden" />
+                        <i class="fa-solid fa-house"></i>
 
-                        <label for="sales-toggle"
-                               class="flex justify-between cursor-pointer px-4 py-2 rounded bg-secondary">
+                        Dashboard
 
-                            <span>Sales Management</span>
-
-                            <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-
-                        </label>
-
-                        <div class="max-h-0 overflow-auto transition-all duration-300 peer-checked:max-h-40">
-
-                            <a href="{{ route('dcr') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Daily Collection Report
-                            </a>
-                           
-                            <a href="{{ route('dsr') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Daily sales Report
-                            </a>
-
-                            <a href="{{ route('dsrr') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Daily sales Remmitance Report
-                            </a>
-
-                            <a href="{{ route('ecmf') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Electronic CMF
-                            </a>
-                           
-                            <a href="{{ route('pendingbo') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Hold Bad Orders
-                            </a>
-                           
-                            <a href="{{ route('pendingrequest') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Hold Sales Orders
-                            </a>
-                           
-                            <a href="{{ route('missedcall') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Missed Calls
-                            </a>
-                            
-                            <a href="{{ route('offsitetransaction') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Offsite Transactions
-                            </a>
-                            
-                            <a href="{{ route('pendingorders') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Pending Orders
-                            </a>
-                            
-                            <a href="{{ route('salesreport') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Sales Report
-                            </a>
-                            
-                            <a href="{{ route('salesreturnBO') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Sales Return (BO)
-                            </a>
-                            
-                            <a href="{{ route('salesreturnRGS') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Sales Return (RGS)
-                            </a>
-                            
-                            <a href="{{ route('salessummary') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Sales Summary
-                            </a>
-                        </div>
-
-                    </div>
+                    </a>
 
                 </li>
 
-                 <!-- Inventory Management sub-collapse -->
+                <!-- ANALYTICS -->
                 <li>
 
-                    <div>
+                    <a href="{{ route('analytics') }}"
+                       class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                        <input id="inventory-toggle" type="checkbox" class="peer hidden" />
+                        <i class="fa-solid fa-chart-line"></i>
 
-                        <label for="inventory-toggle"
-                               class="flex justify-between cursor-pointer px-4 py-2 rounded bg-secondary">
+                        Analytics
 
-                            <span>Inventory Management</span>
-
-                            <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-
-                        </label>
-
-                        <div class="max-h-0 overflow-auto transition-all duration-300 peer-checked:max-h-40">
-
-                            <a href="{{ route('invValuation') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Inventory Valuation
-                            </a>
-                           
-                            <a href="{{ route('placementCheck') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Placement Check
-                            </a>
-
-                            <a href="{{ route('stockcheck') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Store Inventory
-                            </a>
-
-                        </div>
-
-                    </div>
+                    </a>
 
                 </li>
 
-                  <!-- Audit Trail sub-collapse -->
+                <!-- REPORTS -->
                 <li>
 
-                    <div>
+                    <details>
 
-                        <input id="Audit-toggle" type="checkbox" class="peer hidden" />
+                        <summary class="bg-background customHover headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                        <label for="Audit-toggle"
-                               class="flex justify-between cursor-pointer px-4 py-2 rounded bg-secondary">
+                            <div class="flex items-center gap-3 ">
 
-                            <span>Audit Trail</span>
+                                <i class="fa-solid fa-file-lines"></i>
 
-                            <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
+                                <span>Reports</span>
 
-                        </label>
+                            </div>
 
-                        <div class="max-h-0 overflow-auto transition-all duration-300 peer-checked:max-h-40">
+                        </summary>
 
-                            <a href="{{ route('syncReport') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Sales man Data sync
-                            </a>
+                        <ul class="mt-2 space-y-1">
 
-                        </div>
+                            <!-- SALES MANAGEMENT -->
+                            <li>
 
-                    </div>
+                                <details>
+
+                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                        Sales Management
+
+                                    </summary>
+
+                                    <ul class="mt-1 space-y-1">
+
+                                        <li>
+                                            <a href="{{ route('dcr') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Daily Collection Report
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('dsr') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Daily Sales Report
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('dsrr') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Daily Sales Remittance Report
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('ecmf') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Electronic CMF
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('pendingbo') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Hold Bad Orders
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('pendingrequest') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Hold Sales Orders
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('missedcall') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Missed Calls
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('offsitetransaction') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Offsite Transactions
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('pendingorders') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Pending Orders
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('salesreport') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Sales Report
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('salesreturnBO') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Sales Return (BO)
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('salesreturnRGS') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Sales Return (RGS)
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('salessummary') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Sales Summary
+
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </details>
+
+                            </li>
+
+                            <!-- INVENTORY -->
+                            <li>
+
+                                <details>
+
+                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                        Inventory Management
+
+                                    </summary>
+
+                                    <ul class="mt-1 space-y-1">
+
+                                        <li>
+                                            <a href="{{ route('invValuation') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Inventory Valuation
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('placementCheck') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Placement Check
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('stockcheck') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Store Inventory
+
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </details>
+
+                            </li>
+
+                            <!-- AUDIT -->
+                            <li>
+
+                                <details>
+
+                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                        Audit Trail
+
+                                    </summary>
+
+                                    <ul class="mt-1 space-y-1">
+
+                                        <li>
+                                            <a href="{{ route('syncReport') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Salesman Data Sync
+
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </details>
+
+                            </li>
+
+                            <!-- OTHERS -->
+                            <li>
+
+                                <details>
+
+                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                        Others
+
+                                    </summary>
+
+                                    <ul class="mt-1 space-y-1">
+
+                                        <li>
+                                            <a href="{{ route('deliveryMonitoring') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Delivery Monitoring
+
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('deliveryMonitoring') }}"
+                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                                Prebooking Delivery Monitoring
+
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                </details>
+
+                            </li>
+
+                        </ul>
+
+                    </details>
 
                 </li>
 
-                  <!-- Change Site sub-collapse -->
+                <!-- MAINTENANCE -->
                 <li>
 
-                    <div>
+                    <details>
 
-                        <input id="other-toggle" type="checkbox" class="peer hidden" />
+                        <summary class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                        <label for="other-toggle"
-                               class="flex justify-between cursor-pointer px-4 py-2 rounded bg-secondary">
+                            <div class="flex items-center gap-3">
 
-                            <span>Others</span>
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
 
-                            <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
+                                <span>Maintenance</span>
 
-                        </label>
+                            </div>
 
-                        <div class="max-h-0 overflow-auto transition-all duration-300 peer-checked:max-h-40">
+                        </summary>
 
-                            <a href="{{ route('deliveryMonitoring') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Delivery Monitoring
-                            </a>
+                        <ul class="mt-2 space-y-1">
 
-                            <a href="{{ route('deliveryMonitoring') }}"
-                               class="block px-6 py-2 bg-secondary rounded">
-                                Prebooking Delivery Monitoring
-                            </a>
+                            <li>
+                                <a href="{{ route('maintenance') }}"
+                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
-                        </div>
+                                    Data Maintenance
 
-                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('datamaintenance') }}"
+                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                    Eric Data Alignment
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('sfaqueuing') }}"
+                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+
+                                    SFA Queuing
+
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </details>
+
+                </li>
+
+                <!-- CHANGE SITES -->
+                <li>
+
+                    <details>
+
+                        <summary class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+
+                            <div class="flex items-center gap-3">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                <span>Change Sites</span>
+
+                            </div>
+
+                        </summary>
+
+                        <ul class="mt-2 space-y-1 max-h-[300px] overflow-y-auto">
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Cebu</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Bohol</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC PDB</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC SYL</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC MCM</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC RAC</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC DCI</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC NVM</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC ABRI CAVITE</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP CALBAYOG</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP TACLOBAN</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP ORMOC</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MEM</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchants P.O.D</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DGV</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">SMI</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DBV</a></li>
+
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DCMI</a></li>
+
+                        </ul>
+
+                    </details>
 
                 </li>
 
@@ -274,242 +486,4 @@
 
     </div>
 
-    {{-- MAINTENANCE --}}
-     <div>
-
-    <!-- checkbox -->
-    <input id="maintenance-toggle" type="checkbox" class="peer hidden" />
-
-    <!-- header -->
-    <label for="maintenance-toggle"
-           class="flex items-center justify-between cursor-pointer bg-secondary px-4 py-2 rounded transition">
-
-        <span>Maintenance</span>
-
-        <!-- arrow -->
-        <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-             xmlns="http://www.w3.org/2000/svg"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-            <path stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-
-        </svg>
-
-    </label>
-
-    <!-- dropdown content -->
-    <div class="max-h-0 overflow-hidden transition-all duration-300 peer-checked:max-h-96">
-
-        <ul class="bg-secondary mt-1 rounded p-2 space-y-1">
-
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    Data Maintenance
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('datamaintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    Eric Data Alignment
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('sfaqueuing') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    SFA Queuing
-                </a>
-            </li>
-
-        </ul>
-
-    </div>
-
-    </div>
-
-     {{-- Change Sites --}}
-     <div >
-
-    <!-- checkbox -->
-    <input id="changesite-toggle" type="checkbox" class="peer hidden" />
-
-    <!-- header -->
-    <label for="changesite-toggle"
-           class="flex items-center justify-between cursor-pointer bg-secondary px-4 py-2 rounded transition">
-
-        <span>Change Sites</span>
-
-        <!-- arrow -->
-        <svg class="w-4 h-4 transition-transform peer-checked:rotate-180"
-             xmlns="http://www.w3.org/2000/svg"
-             fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-            <path stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
-
-        </svg>
-
-    </label>
-
-    <!-- dropdown content -->
-    <div class="max-h-0 overflow-y-auto transition-all duration-300 peer-checked:max-h-96">
-
-        <ul class="primary_color mt-1 rounded p-2 space-y-1">
-
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    Fast Unimerchant Cebu
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    Fast Unimerchant Bohol
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC PDB
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC SYL
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC MCM
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC RAC
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC DCI
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC NVM
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MNC ABRI CAVITE
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    IMDC GROUP CALBAYOG
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    IMDC GROUP TACLOBAN
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    IMDC GROUP ORMOC
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    MEM
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    Fast Unimerchants P.O.D 
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    DGV
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    SMI
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    DBV
-                </a>
-            </li>
-           
-            <li>
-                <a href="{{ route('maintenance') }}"
-                   class="block px-6 py-2 bg-secondary rounded">
-                    DCMI
-                </a>
-            </li>
-
-
-        </ul>
-
-    </div>
-
-    </div>
-
-</nav>
-
-</aside>
-
-<script>
-    function toggleSidebar() {
-        document.getElementById('sidenav').classList.toggle('hidden');
-
-        document.addEventListener('click', function(e) {
-    const sidebar = document.getElementById('sidenav');
-    if (!sidebar.contains(e.target) && !e.target.closest('button')) {
-        sidebar.classList.add('hidden');
-    }
-});
-    }
-</script>
-
+</div>

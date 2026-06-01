@@ -8,14 +8,14 @@
                 <div class="w-full h-[50px] pl-5">
                     <x-report-header-title title="Unprocessed Orders" />
                 </div>
-                <div class="w-fit h-[30px] pr-5 text-accent">
+                <div class="w-fit h-[30px] pr-5 ">
                     <x-datepicker/>
                 </div>
             </div> 
         </div>
         <div class="flex flex-col-reverse sm:flex-row w-full justify-between p-5 background_color">
             <div class="w-full h-full gap-5 items-center flex ">
-                <div class="flex w-[200px] h-[40px]">
+                <div class="flex w-[200px] h-[30px]">
                     <x-dropdown> 
                         <x-slot:dropdownName>
                                 Filter Transaction
@@ -27,7 +27,7 @@
                             <li><a>Move</a></li>
                     </x-dropdown>
                 </div>
-                <div class="flex w-[100px] h-[40px]">
+                <div class="flex w-[100px] h-[30px]">
                     <x-button>
                         <x-slot:buttonName>
                             Expand

@@ -48,49 +48,24 @@
 
         </script>
 
-        {{-- <script>
-            $(document).ready(function () {
-                $(".owl-carousel").owlCarousel({
-                    loop: true,
-                    margin: 10,
-                    center: true,
-                    nav: true,
-                    dots: true,
-                    autoplay: true,
-                    autoplayTimeout: 3000,
-                    autoplayHoverPause: true,
-                    responsive: {
-                        0: { items: 1 },
-                        768: { items: 1 },
-                        1024: { items: 1 }
-                    }
-                });
-
-                $('#dateButton').text(moment().format('LLL'));
-            });
-        </script> --}}
-
-
-
         <div class="w-full h-full flex">
             <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center no-hover bg-primary ">
                 {{-- RAVAMATE LOGO --}}
                 <div class="w-[150px] h-[150px]">
-                    {{-- <img src="/static/images/ravamatedashboard.png" class="object-cover"/> --}}
-                    <img src="/${item.logo[0]?.url}" class="object-cover" id="themeLogo"/>
+                    <img src="/${item.logo[0]?.url}" class="object-cover themeLogo"/>
                 </div>
 
                 {{-- Carousel --}}
-                <div class="w-full sm:max-w-[900px]">
-                   <div class="owl-carousel ">
+                <div class="w-full sm:max-w-[900px] ">
+                   <div class="owl-carousel">
                         <div class="item ">
-                            <img src="/static/images/MCP Screen.png" style="overflow: visible;" class="w-[650px] h-[300px]  object-cover"/>
+                            <img id="carouselImg1" style="overflow: visible;" class="w-[650px] h-[300px] carouselImg1 object-cover"/>
                         </div>
                         <div class="item ">
-                            <img src="/static/images/Product List.png"style="overflow: visible; z-index:1000" class="w-[650px] h-[300px] object-cover"/>
+                            <img id="carouselImg2" style="overflow: visible; z-index:1000" class="w-[650px] h-[300px] carouselImg2 object-cover"/>
                         </div>
                         <div class="item ">
-                            <img src="/static/images/MTD Overview.png"style="overflow: visible;" class="w-[650px] h-[300px] object-cover"/>
+                            <img id="carouselImg3" style="overflow: visible;" class="w-[650px] h-[300px] carouselImg3 object-cover"/>
                         </div>
                     </div>
                 </div>
@@ -119,11 +94,11 @@
 
                 {{-- MAP --}}
                 <div class="w-full h-full">
-                    <div class="w-full h-[50px] flex justify-between items-center primary_color  border-1">
+                    <div class="w-full h-[50px] flex justify-between items-center  bg-primary">
                         <div class="w-full h-[50px] items-center">
                             <x-report-header-title title="Dashboard"/>
                         </div>
-                        <div class="flex w-full h-[50px] bg-primary whitespace-nowrap gap-2 ">
+                        <div class="flex w-full h-[50px]  whitespace-nowrap gap-2 ">
                             <x-datepicker displayOnly="true"/>
                         </div>
                     </div>

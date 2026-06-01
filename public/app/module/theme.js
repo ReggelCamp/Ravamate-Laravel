@@ -50,17 +50,14 @@ function getAll(){
         array = data;
 
         let activeTheme = array.find(item=>item.is_active);
-        // if(activeTheme){
-        //     $(".primary_color").css("background",activeTheme.primary_color);
-        // }
-
+   
         $("#table").html("");
 
         data.forEach((item) => {
-           let isActive = item.is_active ? "border-green-500 bg-green-50" : "bg-base-100";
+           let isActive = item.is_active ? "shine-pulse" : "bg-base-100";
             $("#table").append(
                 `
-                        <div id= "themeCard"class="card bg-base-100 w-96 shadow-sm border-4 border-double ${isActive}">
+                        <div id= "themeCard"class="card bg-base-100 w-96 shadow-sm border-4 border-solid ${isActive}">
 
                             <div class="card-body">
 
@@ -106,10 +103,13 @@ function getAll(){
                                 </div>
 
                                 <div class = "w-full h-full ">
-                                    <img src="${item.logo[0]?.url}" class = "w-full h-[200px]">
-                                            
+                                    <img src="${item.logo[0]?.url}" class = "w-full h-[200px]">  
                                     </img>
                                 </div>
+
+                                   <h2 class="card-title">
+                                        Company Name: ${item.company_name}
+                                    </h2>
 
                                 <!-- COLORS -->
                                 <div class="flex justify-start w-full gap-5 mt-4">
@@ -157,14 +157,14 @@ function getAll(){
 
                                         <!-- Report Header -->
                                         <div>
-                                            <span class="text-gray-500 text-sm">Report Header:</span>
+                                            <span class="text-gray-500 text-sm report_Header">Report Header:</span>
                                             <div>${item.report_header}</div>
                                         </div>
 
                                         <!-- Body Font -->
                                         <div class="flex justify-between items-center">
                                             <div>
-                                                <span class="text-gray-500 text-sm">Body Font:</span>
+                                                <span class="text-gray-500 text-sm bodyFont">Body Font:</span>
                                                 <div>${item.body_font}</div>
                                             </div>
 
@@ -300,10 +300,31 @@ $(document).on("click", "#addbtn", function () {
 $(document).on("click", "#executeSavebtn", function(){
         
     let form = new FormData();
+
+    // let uploaded_img = $("#carouselImg1")[0].files;
+    // let uploaded_img = $("#carouselImg2")[0].files;
+    // let uploaded_img = $("#carouselImg3")[0].files;
+
+    // let carousel_img = [];
+
+    // for (let i = 0; i < uploaded_img.length; i++) {
+
+    //     carousel_img.push(uploaded_img[i]);
+
+    //     form.append("carouselName[]", uploaded_img[i]);
+        
+    //    console.log($("#carouselImg")[0].files);
+    //    console.log($("#carouselImg")[0].files.length);
+    // }
+
     
+    form.append("carouselImg1[]", $("#carouselImg1")[0].files[0]);
+    form.append("carouselImg2[]", $("#carouselImg2")[0].files[0]);
+    form.append("carouselImg3[]", $("#carouselImg3")[0].files[0]);
     form.append("logo[]", $("#logo_id")[0].files[0]);
     form.append("json", JSON.stringify({
              theme_name: $("#theme_name").val(),
+             company_name: $("#company_name").val(),
              primary_color: $("#primary_color").val(),
              secondary_color: $("#secondary_color").val(),
              accent_color: $("#accent_color").val(),
@@ -337,9 +358,13 @@ $(document).on("click", "#executeEditbtn", function () {
     let form = new FormData();
 
     form.append("logo[]", $("#logo_id")[0].files[0]);
+    form.append("carouselImg1[]", $("#carouselImg1")[0].files[0]);
+    form.append("carouselImg2[]", $("#carouselImg2")[0].files[0]);
+    form.append("carouselImg3[]", $("#carouselImg3")[0].files[0]);
 
     form.append("json", JSON.stringify({
         theme_name: $("#theme_name").val(),
+        company_name: $("#company_name").val(),
         primary_color: $("#primary_color").val(),
         secondary_color: $("#secondary_color").val(),
         accent_color: $("#accent_color").val(),
@@ -413,14 +438,18 @@ $("#logo_id").on("change", function(){
     $("#logo-error").text("").addClass("hidden");
 });
 
-$("#addImg").on("click", function(){
-    let html = `
-         <div class="flex w-full gap-0.5 h-full pt-5">
-            <input type="file" class="file-input" id="caroselImg" />
-            <button class = "btn" >
-                Remove
-            </button>
-        </div>
-    `
-    $("#imgContainer").append(html);
-});
+// $("#addImg").on("click", function(){
+//     let html = `
+//          <div class="flex w-full gap-0.5 h-full pt-5">
+            
+//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
+//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
+//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
+           
+//             <button class = "btn" >
+//                 Remove
+//             </button>
+//         </div>
+//     `
+//     $("#imgContainer").append(html);
+// });

@@ -1,49 +1,48 @@
-{{-- <x-index title="DCR"/> --}}
 @extends('layout.app')
 @section('content')
-<body class="w-full h-full">
-    <div class="flex flex-col w-full h-full">
-         <div class="flex w-full h-[50px] justify-between items-center no-hover bg-primary p-5">
-            <div class="w-full h-[50px]">
-                <x-report-header-title title="DCR" />
-            </div>
-            <div class="w-fit h-[30px]">
-                <x-datepicker/>
-            </div>
+
+<body class="bg-gray-300">
+    <div class="flex w-full h-[50px] justify-between items-center  bg-primary">
+        <div class="w-full h-full items-center ">
+            <x-report-header-title title="DCR" />
         </div>
-       <div class="w-full text-background p-5 flex flex-col-reverse gap-4 sm:flex-row sm:justify-between bg-secondary">
-            <div class="flex flex-wrap gap-3">
-                <div class="w-full h-[50px] flex gap-5">
-                    {{-- dropdown --}}
+        <div class="w-fit h-[30px] ">
+            <x-datepicker/>
+        </div>
+    </div>
+
+    <div class="w-full flex flex-col h-screen bg-background">
+        
+        <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-stretch gap-5 p-5 w-full">
+            <div class="flex gap-5 sm:flex-row flex-col-reverse w-full items-center justify-between">
+                <div class="w-full flex sm:flex-row flex-row justify-between sm:w-[300px] h-[30px]">
                     <x-dropdown>
                         <x-slot:dropdownName>
                             Filter by Salesman
                         </x-slot:dropdownName>
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 2</a></li>
+                        <x-searchbar/>
+                        <ul class="filterSalesMan">
+                            <li><a>Salesman 1</a></li>
+                            <li><a>Salesman 2</a></li>
+                        </ul>
+                    </x-dropdown> 
+                    <x-dropdown> 
+                        <x-slot:dropdownName>
+                                Export
+                            </x-slot:dropdownName>
+                
+                            <li><a class="printBtn">Print</a></li>
+                            <li><a class="csvBtn">CSV</a></li>
+                            <li><a class="excelBtn">Excel</a></li>
+                            <li><a class="copyBtn">Copy</a></li>
                     </x-dropdown>
-                    {{-- Btn --}}
-                     <x-button class="printBtn">
-                        <x-slot:buttonName>
-                        Print
-                        </x-slot:buttonName>
-                    </x-button>
-                    <x-button class="copyBtn">
-                        <x-slot:buttonName>
-                            Copy
-                        </x-slot:buttonName>
-                    </x-button>
-                </div>                
-            </div>
-            <div class="relative w-full sm:w-[500px]">
-                <x-searchbar/>
+                </div> 
+                <div class=" justify-start w-full sm:w-auto">
+                    <x-searchbar/>
+                </div>
             </div>
         </div>
-         <div class="w-full max-h-96 text-background flex flex-col secondary_color overflow-auto ">
-            <x-datatable/>
-         </div>
+        <x-datatable/>
     </div>
 </body>
-</html>
 @endsection
-

@@ -61,10 +61,6 @@
     height: 30px;
 }
 
-.btn-primary {
-  /* base btn-primary styles */
-}
-
 .btn-animated {
   opacity: 0;
   transform: scale(0.9);
@@ -85,12 +81,12 @@ th{
 }
 
 /* Apply to headers */
-h1, .report_header {
+head,h1, .report_header {
     font-family: var(--header-font);
 }
 
 /* Apply to body text */
-body {
+body,.bodyFont {
     font-family: var(--body-font);
 }
 
@@ -98,55 +94,74 @@ body {
 .bg-primary {
     background: var(--primary);
 }
-.text-primary {
-    color: var(--primary);
+a:hover,summary:hover{
+    /* filter: brightness(90%); */
+     background: var(--primary);
 }
-.bg-primary:hover {
-    filter: brightness(90%);
+button:hover,.dp:hover{
+     filter: brightness(90%);
 }
-.bg-primary.no-hover:hover {
-    filter: none;
-    background: var(--primary);
-}
+
 /* Secondary */
 .bg-secondary {
     background: var(--secondary);
 }
-.text-secondary{
-      color: var(--secondary);
-}
-.bg-secondary:hover {
-    filter: brightness(90%);
-}
-.bg-secondary.no-hover:hover {
-    filter: none;
-    background: var(--secondary);
-}
+
 /* Accent */
 .bg-accent {
     background: var(--accent);
 }
-.text-accent{
-      color: var(--accent);
-} 
-.bg-accent:hover {
-    filter: brightness(90%);
-}
+
 /* Background */
 .bg-background {
     background: var(--background);
 }
-.text-background {
-    color: var(--background);
-}
-.bg-background:hover {
-    background: var(--background);
-}
 
-
+/* Text Color*/
 .headerColor{
     color: var(--header-color);
 }
 .bodyColor{
     color: var(--body-color);
+}
+
+.gradient1{
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+    background-size: 200% auto;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+.gradient2{
+    background: linear-gradient(90deg, var(--background), var(--primary), var(--accent), var(--secondary));
+    background-size: 200% auto;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+.gradient3{
+    background: linear-gradient(90deg, var(--secondary), var(--primary), var(--background), var(--accent));
+    background-size: 200% auto;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+
+/* for glowing border animation */
+.shine-pulse {
+       border: 2px solid var(--primary);
+    animation: border-pulse-glow 1.8s ease-in-out infinite;
+}
+@keyframes border-pulse-glow {
+     0%, 100% { box-shadow: 0 0 6px var(--primary), 0 0 16px var(--secondary); border-color: var(--primary); }
+    50%       { box-shadow: 0 0 14px var(--primary), 0 0 32px var(--secondary); border-color: var(--accent); }
+
+}
+
+/* for shimmering text animation */
+.shine-shimmer {
+    background: linear-gradient(105deg, #6366f1 30%, #a5b4fc 45%, #e0e7ff 50%, #a5b4fc 55%, #6366f1 70%);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer {
+    0%   { background-position: 100% center; }
+    100% { background-position: -100% center; }
 }

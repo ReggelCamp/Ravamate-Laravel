@@ -2,20 +2,20 @@
 @section('content')
 
 <body class="bg-gray-300">
-    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 bg-primary no-hover text-background">
-        <div class="w-full h-full text-background items-center ">
+    <div class="flex w-full h-[50px] justify-between items-center  bg-primary">
+        <div class="w-full h-full items-center ">
             <x-report-header-title title="DSR" />
         </div>
-        <div class="w-fit h-[30px]">
+        <div class="w-fit h-[30px] ">
             <x-datepicker/>
         </div>
     </div>
 
-    <div class="w-full flex flex-col h-full">
+    <div class="w-full flex flex-col h-screen bg-background">
         
         <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-stretch gap-5 p-5 w-full">
 
-            <div class="w-full sm:w-[200px] h-[50px]">
+            <div class="w-full sm:w-[250px] h-[30px]">
                 <x-dropdown>
                     <x-slot:dropdownName>
                         Filter by Salesman
@@ -26,25 +26,31 @@
                 </x-dropdown>
             </div>
 
-            <div class="flex gap-5 sm:justify-end h-[50px] w-full sm:w-auto">
+            <div class="flex h-[30px] gap-5 sm:justify-end w-full sm:w-auto">
 
-                <div class="h-full w-[100px]">
+                {{-- <div class="h-full w-[100px]">
                     <x-button>
                         <x-slot:buttonName>
                             Generate
                         </x-slot:buttonName>
                     </x-button>
-                </div>
+                </div> --}}
 
-                <div class="h-full w-[100px]">
-                    <x-button class="printBtn">
-                        <x-slot:buttonName>
-                            Print
-                        </x-slot:buttonName>
-                    </x-button>
-                </div>
+                <div class="flex  h-[30px]">
+                <x-dropdown> 
+                    <x-slot:dropdownName>
+                            Export
+                        </x-slot:dropdownName>
+            
+                        <li><a class="printBtn">Print</a></li>
+                        <li><a class="csvBtn">CSV</a></li>
+                        <li><a class="excelBtn">Excel</a></li>
+                        <li><a class="copyBtn">Copy</a></li>
+                </x-dropdown>
+            </div>
             </div>
         </div>
+        <x-datatable/>
     </div>
 </body>
 @endsection

@@ -22,7 +22,7 @@
 
 <div class="w-[150px] sm:w-full flex h-full sm:justify-end overflow-auto pr-2">
 
-    <div class="w-[150px] flex items-center h-full sm:justify-end">
+    <div class="w-[150px] flex items-center h-full sm:justify-end ">
 
         @if($displayOnly)
 

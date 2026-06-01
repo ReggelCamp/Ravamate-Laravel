@@ -11,6 +11,7 @@ class Theme extends Model
 
       protected $fillable = [
         'theme_name',
+        'company_name',
         'primary_color',
         'secondary_color',
         'background_color',

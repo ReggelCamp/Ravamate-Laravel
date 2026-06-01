@@ -18,7 +18,7 @@ class ThemeController extends Controller
      */
     public function index()
     {
-         return view('colorTheme-page');
+         return view('colorTheme-page',compact('company'));
     }
 
     /**
@@ -47,9 +47,12 @@ class ThemeController extends Controller
             ]);
         
         $json = json_decode($request->input('json'), true);
-
+     
         $row = $this->model::create($json);
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
+        FileHandler::upload('carousel/img1',$row->id,$request->file('carouselImg1'));
+        FileHandler::upload('carousel/img2',$row->id,$request->file('carouselImg2'));
+        FileHandler::upload('carousel/img3',$row->id,$request->file('carouselImg3'));
         
         return response()->json($row);
         
@@ -80,6 +83,9 @@ class ThemeController extends Controller
         $this->model::find($id)->update($json);
 
         FileHandler::replaceFilesByID('logo/img',$id,$request->file('logo'));
+        FileHandler::replaceFilesByID('carousel/img1',$id,$request->file('carouselImg1'));
+        FileHandler::replaceFilesByID('carousel/img2',$id,$request->file('carouselImg2'));
+        FileHandler::replaceFilesByID('carousel/img3',$id,$request->file('carouselImg3'));
     }
 
     /**
@@ -115,6 +121,9 @@ class ThemeController extends Controller
     public function getAll(){
         return response()->json($this->model::all()->map(function($row){
             $row['logo'] = FileHandler::getFilesByID('logo/img',$row['id']);
+            $row['carouselImg1'] = FileHandler::getFilesByID('carousel/img1',$row['id']);
+            $row['carouselImg2'] = FileHandler::getFilesByID('carousel/img2',$row['id']);
+            $row['carouselImg3'] = FileHandler::getFilesByID('carousel/img3',$row['id']);
             return $row;
         }));
     }
@@ -124,6 +133,9 @@ class ThemeController extends Controller
         // return response()->json($activeTheme);
         if ($activeTheme) {
             $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
+            $activeTheme['carouselImg1'] = FileHandler::getFilesByID('carousel/img1', $activeTheme->id);
+            $activeTheme['carouselImg2'] = FileHandler::getFilesByID('carousel/img2', $activeTheme->id);
+            $activeTheme['carouselImg3'] = FileHandler::getFilesByID('carousel/img3', $activeTheme->id);
         }
 
         return response()->json($activeTheme);

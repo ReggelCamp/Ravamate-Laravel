@@ -66,7 +66,6 @@ document.getElementById('customSearch')
         .DataTable()
         .search(this.value)
         .draw();
-
 });
  
 
@@ -100,4 +99,20 @@ $(document).on("click",".printBtn", function(){
     .DataTable()
     .button('.buttons-print')
     .trigger();
+});
+
+$(document).on("keyup", "#customSearch", function() {
+    let value = $(this).val().toLowerCase();
+
+    $("#otherReports li").each(function() {
+        $(this).toggle(
+            $(this).text().toLowerCase().includes(value)
+        );
+    });
+
+     $("#actions li").each(function() {
+        $(this).toggle(
+            $(this).text().toLowerCase().includes(value)
+        );
+    });
 });

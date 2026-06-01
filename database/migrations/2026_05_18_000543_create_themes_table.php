@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('theme_name')->nullable();
+            $table->string('company_name')->nullable();
             $table->string('header_font')->nullable();
             $table->string('body_font')->nullable();
             $table->string('primary_color', 9)->nullable();
