@@ -3,7 +3,7 @@
 
 <body class="w-full min-h-screen">
 
-<div class="flex flex-col items-center p-5 gap-5">
+<div class="flex flex-col bodyBg bodyFont items-center p-5 gap-5">
 
     <!-- HEADER WRAPPER -->
     <div class="w-full">

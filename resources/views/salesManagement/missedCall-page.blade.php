@@ -2,9 +2,9 @@
 @section("content")
 
 <body class="w-full h-full">
-    <div class="w-full h-full flex flex-col">
+    <div class="w-full h-full flex flex-col carouselBg">
         <div class="flex w-full justify-between">
-           <div class="flex w-full h-full justify-between items-center bg-primary">
+           <div class="flex w-full h-full justify-between items-center report_title">
                 <div class="w-full h-[50px] pl-5">
                     <x-report-header-title title="Missed Call" />
                 </div>

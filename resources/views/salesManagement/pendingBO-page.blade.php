@@ -12,14 +12,14 @@
     <body class="w-full h-full">
     
             <div class="flex w-full justify-between">
-                <div class="flex w-full h-full justify-between items-center no-hover bg-primary">
+                <div class="flex w-full h-full justify-between items-center no-hover report_title pl-5 pr-5">
                     <div class="w-full h-[50px] pl-5">
                         <x-report-header-title title="Offsite Transaction" />
                     </div>
                 </div> 
             </div>
 
-            <div class="tabs tabs-lift p-5">
+            <div class="tabs tabs-lift p-5 carouselBg">
                 <input type="radio" name="my_tabs_3" class="tab" aria-label="Pending BO" />
                 <div class="tab-content bg-base-100 border-base-300 p-6 ">
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">

@@ -1,7 +1,48 @@
 {{-- Date Range Picker --}}
 <style>
-    .daterangepicker .drp-calendar{
-        overflow: scroll;
+    .daterangepicker{
+        width: 860px;
+        height: 330px;
+        color: black;
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        background-size: 200% auto;
+        animation: gradientShift 3s ease-in-out infinite;
+    }
+    .daterangepicker .drp-calendar.left {
+        width: 350px;
+        max-width: 350px;
+        background-color: var(--primary);
+        color: black;
+    }
+    .daterangepicker .drp-calendar.right {
+        width: 350px;
+        max-width: 350px;
+        background-color: var(--primary);
+        color: black;
+    }
+    .daterangepicker .drp-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        height: 45px;
+    }
+    .daterangepicker .ranges{
+        background-color:var(--primary);
+        color: var(--body-color);
+    }
+    .daterangepicker .ranges ul li:hover,
+    .daterangepicker .ranges li:hover,
+    .daterangepicker .ranges li.active {
+        background-color: var(--secondary) !important;
+        color: var(--body-color) !important;
+    }
+    .cancelBtn{
+        background-color: var(--secondary);
+    }
+    .applyBtn{
+        background-color: var(--primary);
+        border: 1px solid #555 !important;
+        box-shadow: none !important;
     }
 </style>
 

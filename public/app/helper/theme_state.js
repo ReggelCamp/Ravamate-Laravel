@@ -29,7 +29,7 @@ function getActive() {
                 
                 $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
                 $(".report_header").text(activeTheme.report_header);
-                $(".company_name").text(activeTheme.company_name);
+                $("#company_name").text(activeTheme.company_name);
             }
         }
     });
@@ -37,4 +37,19 @@ function getActive() {
 
 $(document).ready(function () {
     getActive();
+});
+
+$(document).ready(function () {
+    const savedTheme = localStorage.getItem("theme") || "light";
+
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    $("#theme-toggle").prop("checked", savedTheme === "dark");
+});
+
+$(document).on("change", "#theme-toggle", function () {
+    const theme = this.checked ? "dark" : "light";
+
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
 });

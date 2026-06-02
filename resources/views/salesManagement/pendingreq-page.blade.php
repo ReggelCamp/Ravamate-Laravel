@@ -17,13 +17,13 @@
     }
 </style>
 
-<div class="flex w-full h-[50px] justify-between items-center p-2 bg-primary">
+<div class="flex w-full h-[50px] justify-between items-center p-2 report_title ">
     <div class="w-full h-full items-center ">
         <x-report-header-title title="Pending Request" />
     </div>
 </div>
 <body class="w-full h-full ">
-    <div class="w-full h-screen bg-background p-5 ">
+    <div class="w-full h-screen carouselBg p-5 ">
         <div class="tabs tabs-lift ">
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">

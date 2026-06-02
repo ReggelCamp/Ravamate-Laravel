@@ -6,8 +6,8 @@
     }
 </style>
 
-<div class="w-full flex h-full">
-    <button {{ $attributes->merge(['class' => 'btn bg-secondary bodyColor rounded-lg']) }}>
-        <span>{{$buttonName}}</span>
+<div class="w-full flex h-full dropdownTrigger rounded-lg">
+    <button {{ $attributes->merge(['class' => 'btn  shine-shimmer ']) }}>
+        <span class="bodyFont">{{$buttonName}}</span>
     </button>
 </div>

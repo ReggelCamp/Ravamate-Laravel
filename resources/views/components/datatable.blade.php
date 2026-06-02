@@ -13,8 +13,8 @@
     }
 </style>
 
-<div class="w-full h-full text-sm ">
-    <table id="salesmanTable" class="w-full bg-background bodyFont headerColor">
+<div class="w-full h-full text-sm bodyFont ">
+    <table id="salesmanTable" class="w-full bg-background bodyFont headerColor tableBg">
 
     </table>
 </div>

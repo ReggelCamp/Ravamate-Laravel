@@ -17,13 +17,13 @@
     }
 </style>
 
-<div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 no-hover bg-primary">
+<div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 no-hover report_title ">
     <div class="w-full h-full items-center ">
         <x-report-header-title title="Electronic CMF" />
     </div>
 </div>
 <body class="w-full h-full ">
-    <div class="w-full h-screen p-5">
+    <div class="w-full carouselBg h-screen p-5">
         <div class="tabs tabs-lift">
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">

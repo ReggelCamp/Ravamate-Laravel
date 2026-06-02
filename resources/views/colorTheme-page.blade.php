@@ -13,7 +13,7 @@
 
     
 </head>
-<body class="w-full h-full">
+<body class="w-full h-full gradient1">
     <div class="flex flex-col w-full h-full">
         <div class="flex w-full h--full justify-between p-5">
             <div class="w-full h-full">
@@ -28,9 +28,12 @@
             </div>
         </div>
 
-        <div id="table" class="flex w-full h-full p-5 gap-5 flex-wrap">
-
-</div>
+        <div id="table" class="flex w-full h-full p-5 gap-5 flex-wrap overflow-auto">
+        </div>
+        {{-- <div class="w-full flex items-center">
+            <button>Next</button>
+            <button>Next</button>
+        </div> --}}
     </div>
 </body>
 
@@ -186,14 +189,6 @@
 
                             <select id="body_font" name="body_font" class="select w-full">
                                 <option disabled selected>Pick a font</option>
-
-                                <option value="Inter" style="font-family: Inter;">Inter</option>
-                                <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                                <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                                <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                                <option value="Courier New" style="font-family: 'Courier New';">
-                                    Courier New
-                                </option>
                             </select>
                         </div>
 
@@ -233,14 +228,6 @@
 
                             <select id="header_font" name="header_font" class="select w-full">
                                 <option disabled selected>Pick a font</option>
-
-                                <option value="Inter" style="font-family: Inter;">Inter</option>
-                                <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                                <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                                <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                                <option value="Courier New" style="font-family: 'Courier New';">
-                                    Courier New
-                                </option>
                             </select>
                         </div>
 

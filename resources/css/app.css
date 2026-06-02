@@ -6,5 +6,6 @@
 @source "../../storage/framework/views/*.php";
 
 @plugin "daisyui" {
-    themes: light --default;
+    themes: light --default, synthwave;
 }
+

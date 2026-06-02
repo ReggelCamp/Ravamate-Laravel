@@ -8,7 +8,7 @@
         <span  class="report_header shine-shimmer"> </span>
         <span > |</span>
 
-        <span>{{ $title }}</span>
+        <span class="bodyFont">{{ $title }}</span>
 
     </div>
      <script type="module" src="/app/module/dashboard.js"></script>

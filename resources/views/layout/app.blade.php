@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  
     <title>@yield('title', 'Dashboard')</title>
 
     {{-- Tailwind --}}
@@ -47,9 +47,34 @@
         .owl-carousel .owl-item.center .item {
             transform: scale(1.1) rotateX(8deg) rotateY(-8deg);
         }
+
+        /* Light mode (default) */
+        /* :root {
+        --card: #f1f1f1;
+        --salesmanTable: #f1f1f1;
+        background: var(--background);
+        color: var(--header-color);
+        } */
+
+        /* Dark mode */
+        /* [data-theme="dark"] {
+        --bg: #111111;
+        --text: #f1f1f1;
+        --card: #1e1e1e;
+        --salesmanTable: #1e1e1e;
+        } */
+
     </style>
 
     @stack('styles')
+
+    <script>
+    document.documentElement.setAttribute(
+        "data-theme",
+        localStorage.getItem("theme") || "light"
+    );
+</script>
+
 </head>
 
 <body class="w-full h-screen">
@@ -95,5 +120,6 @@
     @stack('scripts')
     
     @yield('content')
+</label>
 </body>
 </html>

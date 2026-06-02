@@ -3,7 +3,7 @@
 
 <body class="w-full min-h-screen">
 
-<div class="flex flex-col w-full px-5 gap-5">
+<div class="flex flex-col w-full px-5 gap-5 bodyBg">
 
     <!-- TITLE -->
     <h1 class="text-2xl text-center py-5">

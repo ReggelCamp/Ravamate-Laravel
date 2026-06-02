@@ -49,7 +49,7 @@
         </script>
 
         <div class="w-full h-full flex">
-            <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center no-hover bg-primary ">
+            <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center no-hover carouselBg">
                 {{-- RAVAMATE LOGO --}}
                 <div class="w-[150px] h-[150px]">
                     <img src="/${item.logo[0]?.url}" class="object-cover themeLogo"/>
@@ -69,24 +69,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="w-full max-w-5xl mx-auto">
-                    <div class="owl-carousel">
-
-                        <div class="item flex justify-center items-center">
-                            <img src="/static/images/MCP Screen.png" class="w-full h-auto max-h-[400px]  object-contain" />
-                        </div>
-
-                        <div class="item flex justify-center items-center">
-                            <img src="/static/images/Product List.png" class="w-full h-auto max-h-[400px] object-contain" />
-                        </div>
-
-                        <div class="item flex justify-center items-center">
-                            <img src="/static/images/MTD Overview.png" class="w-full h-auto max-h-[400px] object-contain" />
-                        </div>
-                    </div>
-                </div> --}}
-
             </div>
 
 
@@ -94,7 +76,7 @@
 
                 {{-- MAP --}}
                 <div class="w-full h-full">
-                    <div class="w-full h-[50px] flex justify-between items-center  bg-primary">
+                    <div class="w-full h-[50px] flex justify-between report_title items-center  ">
                         <div class="w-full h-[50px] items-center">
                             <x-report-header-title title="Dashboard"/>
                         </div>
@@ -105,13 +87,13 @@
                 </div>
 
                 {{-- TABLE --}}
-                <div class="w-full h-full flex flex-col bg-primary">
+                <div class="w-full bodyFont h-full flex flex-col tableSec">
                     <div class="w-full flex flex-col-reverse md:flex-row justify-between gap-5 p-5">  
                         <div class="flex flex-col sm:flex-row gap-5 w-full md:w-auto">
 
                             <div class="w-full sm:w-[170px] h-[40px]">
                                 <x-dropdown> 
-                                    <x-slot:dropdownName>
+                                    <x-slot:dropdownName >
                                         Operation Type
                                     </x-slot:dropdownName>
 

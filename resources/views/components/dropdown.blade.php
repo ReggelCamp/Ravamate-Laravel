@@ -5,14 +5,14 @@
     }
 </style>
 
-<div class="dropdown flex justify-between h-full">
+<div class="dropdown dropdownTrigger bodyFont rounded-lg flex justify-between h-full">
     
     <div 
         tabindex="0" 
         role="button" 
-        class="btn w-full h-full bg-secondary bodyColor rounded-lg dp flex justify-between items-center rounded-lg"
+        class="btn w-full h-full  shine-shimmer rounded-lg dp flex justify-between items-center"
     >
-        <span>{{$dropdownName}}</span>
+        <span class=" text-black">{{$dropdownName}}</span>
 
         <i class="fa-solid fa-angle-down text-sm"></i>
     </div>

@@ -2,7 +2,7 @@
 @section('content')
 
 <body class="bg-gray-300">
-    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 no-hover bg-primary">
+    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 no-hover report_title ">
         <div class="w-full h-full items-center ">
             <x-report-header-title title="DSRR" />
         </div>
@@ -10,7 +10,7 @@
             <x-datepicker/>
         </div>
     </div>
-    <div class="w-full flex flex-col h-screen bg-background">       
+    <div class="w-full flex flex-col h-screen carouselBg ">       
         <div class="flex justify-between p-5 w-full max-h-[100px]">  
             <div class="w-full h-[30px] flex">
                 <x-dropdown>

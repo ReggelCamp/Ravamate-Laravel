@@ -2,7 +2,7 @@
 @section('content')
 
 <body class="bg-gray-300">
-    <div class="flex w-full h-[50px] justify-between items-center  bg-primary">
+    <div class="flex w-full h-[50px] justify-between items-center  report_title ">
         <div class="w-full h-full items-center ">
             <x-report-header-title title="DSR" />
         </div>
@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="w-full flex flex-col h-screen bg-background">
+    <div class="w-full flex flex-col h-screen carouselBg ">
         
         <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-stretch gap-5 p-5 w-full">
 
@@ -36,7 +36,7 @@
                     </x-button>
                 </div> --}}
 
-                <div class="flex  h-[30px]">
+            <div class="flex  h-[30px]">
                 <x-dropdown> 
                     <x-slot:dropdownName>
                             Export

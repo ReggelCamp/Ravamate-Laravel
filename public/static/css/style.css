@@ -1,4 +1,4 @@
-.btn-format{
+.btn-format {
     display: flex;
     width: fit-content;
     height: 40px;
@@ -7,11 +7,9 @@
     border-radius: 12px;
     align-items: center;
     justify-content: center;
-
-  
 }
 
-.page-format{
+.page-format {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -26,7 +24,8 @@
     overflow: hidden;
     border-radius: 12px;
     background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* shadow-sm */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* shadow-sm */
 }
 
 /* image-full effect */
@@ -50,11 +49,9 @@
     right: 0;
     padding: 16px;
     color: white;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.7),
-        rgba(0,0,0,0)
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0));
 }
 
 .btn {
@@ -62,80 +59,54 @@
 }
 
 .btn-animated {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms ease, transform 300ms ease;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms ease, transform 300ms ease;
 }
 
 .group:hover .btn-animated {
-  opacity: 1;
-  transform: scale(1);
+    opacity: 1;
+    transform: scale(1);
 }
 
-th{
+th {
     padding: 5px 15px;
 }
 
-.dt-layout-cell .dt-info{
+.dt-layout-cell .dt-info {
     margin-top: 20px !important;
-}
-
-/* Apply to headers */
-head,h1, .report_header {
-    font-family: var(--header-font);
-}
-
-/* Apply to body text */
-body,.bodyFont {
-    font-family: var(--body-font);
 }
 
 /* Primary */
 .bg-primary {
     background: var(--primary);
 }
-a:hover,summary:hover{
+
+a:hover,
+summary:hover {
     /* filter: brightness(90%); */
-     background: var(--primary);
-}
-button:hover,.dp:hover{
-     filter: brightness(90%);
+    background: var(--primary);
 }
 
-/* Secondary */
-.bg-secondary {
-    background: var(--secondary);
+button:hover,
+.dp:hover {
+    filter: brightness(90%);
 }
 
-/* Accent */
-.bg-accent {
-    background: var(--accent);
-}
-
-/* Background */
-.bg-background {
-    background: var(--background);
-}
-
-/* Text Color*/
-.headerColor{
-    color: var(--header-color);
-}
-.bodyColor{
-    color: var(--body-color);
-}
-
-.gradient1{
+/* for gradient */
+.gradient1 {
     background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
     background-size: 200% auto;
     animation: gradientShift 3s ease-in-out infinite;
 }
-.gradient2{
+
+.gradient2 {
     background: linear-gradient(90deg, var(--background), var(--primary), var(--accent), var(--secondary));
     background-size: 200% auto;
     animation: gradientShift 3s ease-in-out infinite;
 }
-.gradient3{
+
+.gradient3 {
     background: linear-gradient(90deg, var(--secondary), var(--primary), var(--background), var(--accent));
     background-size: 200% auto;
     animation: gradientShift 3s ease-in-out infinite;
@@ -143,12 +114,22 @@ button:hover,.dp:hover{
 
 /* for glowing border animation */
 .shine-pulse {
-       border: 2px solid var(--primary);
+    border: 2px solid var(--primary);
     animation: border-pulse-glow 1.8s ease-in-out infinite;
 }
+
 @keyframes border-pulse-glow {
-     0%, 100% { box-shadow: 0 0 6px var(--primary), 0 0 16px var(--secondary); border-color: var(--primary); }
-    50%       { box-shadow: 0 0 14px var(--primary), 0 0 32px var(--secondary); border-color: var(--accent); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px var(--primary), 0 0 16px var(--primary);
+        border-color: var(--primary);
+    }
+
+    50% {
+        box-shadow: 0 0 14px var(--primary), 0 0 32px var(--primary);
+        border-color: var(--primary);
+    }
 
 }
 
@@ -159,9 +140,130 @@ button:hover,.dp:hover{
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 2s ease-in-out infinite;
+    animation: shimmer 3s ease-in-out infinite;
 }
+
 @keyframes shimmer {
-    0%   { background-position: 100% center; }
-    100% { background-position: -100% center; }
+    0% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: -100% center;
+    }
 }
+
+/* Light mode (default) */
+
+:root {
+    .tableBg {
+        background-color: var(--background);
+        color: var(--header-color);
+    }
+    .report_title{
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        background-size: 200% auto;
+        animation: gradientShift 3s ease-in-out infinite;
+        /* background-color: var(--background); */
+        color: var(--header-color);
+    }
+     .headerTheme {
+        /* background: linear-gradient(90deg, var(--background), var(--primary), var(--accent), var(--secondary));
+        background-size: 200% auto;
+        animation: gradientShift 3s ease-in-out infinite; */
+        background-color: var(--background);
+        color: var(--header-color);
+    }
+    .carouselBg{
+        background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        background-size: 200% auto;
+        animation: gradientShift 3s ease-in-out infinite;
+        color: var(--header-color);
+    }
+    .tableSec{
+        background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        background-size: 200% auto;
+        animation: gradientShift 3s ease-in-out infinite;
+        /* background-color: var(--background); */
+        color: var(--header-color);
+    }
+    .dropdownTrigger{
+        background-color: var(--primary);
+        color: var(--header-color);
+    }
+    .searchBar{
+        background-color:white;
+        color: black;
+    }
+    .bodyBg{
+       background: linear-gradient(
+        180deg,
+        var(--primary),
+        var(--secondary),
+        var(--accent),
+        var(--primary)
+    );
+
+    background-size: 200% auto;
+    animation: gradientShift 3s ease-in-out infinite;
+
+    color: var(--header-color);
+    min-height: 100vh; /* IMPORTANT */
+    }
+    .report_header {
+        font-family: var(--header-font);
+    }
+    .bodyFont {
+        font-family: var(--body-font);
+    }
+}
+
+
+/* Dark mode */
+
+[data-theme="dark"] {
+    --bg: #111111;
+    --text: #f1f1f1;
+    --card: #120b3d;
+    .tableBg {
+        background-color: #120b3d;
+        color: white;
+    }
+    .report_title{
+       background-color: #120b3d;
+        color: white;
+    }
+    .headerTheme {
+        background-color: #120b3d;
+        color: white;
+    }
+    .carouselBg{
+        background-color: #120b3d;
+        color: white;
+    }
+     .tableSec{
+        background-color: #120b3d;
+        color: white;
+    }
+    .sidenav {
+        /* background-color: #120b3d; */
+        color: white;
+    }
+    .dropdownTrigger{
+        background-color: #120b3d;
+        color: white;
+    }
+     .searchBar{
+        background-color: #120b3d;
+        color: white;
+    }
+    .report_header {
+        font-family: var(--header-font);
+    }
+    .bodyFont {
+        font-family: var(--body-font);
+    }
+}
+
+
+

@@ -1,7 +1,7 @@
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<div class="flex w-full h-[70px] px-6 items-center justify-between border-b gradient2">
+<div class="flex w-full h-[70px] px-6 items-center justify-between border-b headerTheme">
 
 
     <div class="flex items-center w-1/3">
@@ -9,7 +9,7 @@
         <label for="my-drawer-1"
                class="rounded-lg p-2 cursor-pointer hover:bg-base-200 transition-all duration-200">
 
-            <i class="fa-solid fa-bars headerColor text-xl"></i>
+            <i class="fa-solid fa-bars  text-xl"></i>
 
         </label>
 
@@ -17,7 +17,7 @@
 
     <div class="flex justify-center w-1/3">
 
-        <h1 class="report_header company_name text-2xl font-semibold truncate">
+        <h1 class="report_header text-2xl font-semibold truncate" id="company_name">
         </h1>
 
     </div>
@@ -25,16 +25,16 @@
     <!-- RIGHT -->
     <div class="flex items-center justify-end gap-5 w-1/3">
 
-        <i class="fa-solid fa-bell headerColor text-lg cursor-pointer"></i>
+        <i class="fa-solid fa-bell  text-lg cursor-pointer"></i>
 
-        <i class="fa-solid fa-circle-user headerColor text-2xl cursor-pointer"></i>
+        <i class="fa-solid fa-circle-user  text-2xl cursor-pointer"></i>
 
     </div>
 
 </div>
 
 
-<div class="drawer">
+<div class="drawer sidenav">
 
     <!-- TOGGLE -->
     <input id="my-drawer-1"
@@ -64,6 +64,37 @@
 
             </div>
 
+            <div class="flex w-full justify-start p-2">    
+                <label class="flex cursor-pointer gap-2">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5" />
+                    <path
+                    d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+                <input type="checkbox" id="theme-toggle" value="synthwave" class="toggle theme-controller" />
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                </label>
+            </div>
             
             <ul class="menu p-4 gap-2 w-full">
 
@@ -71,7 +102,7 @@
                 <li>
 
                     <a href="{{ route('dashboard') }}"
-                       class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                       class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                         <i class="fa-solid fa-house"></i>
 
@@ -85,7 +116,7 @@
                 <li>
 
                     <a href="{{ route('analytics') }}"
-                       class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                       class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                         <i class="fa-solid fa-chart-line"></i>
 
@@ -100,7 +131,7 @@
 
                     <details>
 
-                        <summary class="bg-background customHover headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                        <summary class="bg-background customHover  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                             <div class="flex items-center gap-3 ">
 
@@ -372,7 +403,7 @@
 
                     <details>
 
-                        <summary class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                        <summary class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                             <div class="flex items-center gap-3">
 
@@ -424,7 +455,7 @@
 
                     <details>
 
-                        <summary class="bg-background headerColor rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                        <summary class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                             <div class="flex items-center gap-3">
 

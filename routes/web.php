@@ -198,3 +198,6 @@ Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
 
 //getsalesman
 Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
+
+//for the fonts
+Route::get('/fonts',[ThemeController::class,'getFonts']);
