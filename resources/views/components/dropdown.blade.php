@@ -10,9 +10,9 @@
     <div 
         tabindex="0" 
         role="button" 
-        class="btn w-full h-full  shine-shimmer rounded-lg dp flex justify-between items-center"
+        class="btn w-full h-full  shine-bg rounded-lg dp flex justify-between items-center"
     >
-        <span class=" text-black">{{$dropdownName}}</span>
+        <span class="dropdownName">{{$dropdownName}}</span>
 
         <i class="fa-solid fa-angle-down text-sm"></i>
     </div>

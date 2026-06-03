@@ -50,14 +50,37 @@ function getAll() {
             let activeTheme = array.find((item) => item.is_active);
 
             $("#table").html(`
-    <div class="carousel w-full space-x-4 p-4">
-    </div>
-`);
+                <div class="flex justify-center w-full gap-2 mb-4">
+                    <button id="prevBtn" class="btn bg-amber-100 text-black btn-sm btn-outline">
+                        ❮ Prev
+                    </button>
+
+                    <button id="nextBtn" class="btn btn-sm btn-outline bg-amber-100 text-black">
+                        Next ❯
+                    </button>
+                </div>
+
+                <div class="carousel w-full space-x-4 overflow-x-auto">
+                </div>
+            `);
 
             const $carousel = $("#table .carousel");
 
             data.forEach((item) => {
-                let isActive = item.is_active ? "shine-pulse" : "bg-base-100";
+
+                $("#nextBtn").on("click", function () {
+                    $carousel.animate({
+                        scrollLeft: $carousel.scrollLeft() + 370
+                    }, 300);
+                });
+
+                $("#prevBtn").on("click", function () {
+                    $carousel.animate({
+                        scrollLeft: $carousel.scrollLeft() - 370
+                    }, 300);
+                });
+
+                let isActive = item.is_active ? " shine-pulse " : "bg-base-100";
 
                 $carousel.append(`
         <div class="carousel-item">
@@ -73,7 +96,7 @@ function getAll() {
                             ${item.theme_name}
                         </h2>
 
-                        <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500" : ""}">
+                        <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500 " : ""}">
                             <input type="checkbox"
                                 data-id="${item.id}"
                                 class="flipswitch"
@@ -439,9 +462,9 @@ $.ajax({
             "<option disabled selected>Pick a font</option>",
         );
 
-        const randomFonts = fonts.sort(() => Math.random() - 0.5).slice(0, 100);
+        const Fonts = fonts.slice(0, 100);
 
-        randomFonts.forEach((font) => {
+        Fonts.forEach((font) => {
             $("#header_font").append(`
         <option value="${font.family}">
             ${font.family}

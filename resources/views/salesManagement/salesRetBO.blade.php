@@ -25,10 +25,10 @@
                 </x-dropdown>
             </div>
             <div class="w-full h-[40px] flex  sm:pt-0">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
-        <div class="flex p-5 w-full overflow-auto">
+        <div class="flex pt-5 w-full overflow-auto">
             <x-datatable/>
         </div>
     </div>

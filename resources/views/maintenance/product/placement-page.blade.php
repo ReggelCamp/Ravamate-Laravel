@@ -25,7 +25,7 @@
                 </x-dropdown>
             </div>
             <div class="flex w-full h-[50px]">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
         <x-datatable/>

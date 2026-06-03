@@ -7,7 +7,7 @@
 </style>
 
 <div class="w-full flex h-full dropdownTrigger rounded-lg">
-    <button {{ $attributes->merge(['class' => 'btn  shine-shimmer ']) }}>
+    <button {{ $attributes->merge(['class' => 'btn  shine-bg ']) }}>
         <span class="bodyFont">{{$buttonName}}</span>
     </button>
 </div>

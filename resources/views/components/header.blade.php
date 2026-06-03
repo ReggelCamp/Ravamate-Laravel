@@ -24,15 +24,39 @@
 
     <!-- RIGHT -->
     <div class="flex items-center justify-end gap-5 w-1/3">
-
-        <i class="fa-solid fa-bell  text-lg cursor-pointer"></i>
+        <div class="indicator">
+            <span class="indicator-item  badge badge-xs badge-secondary">12</span>
+            <i class="fa-solid fa-bell  text-lg cursor-pointer" onclick="notif.showModal()"></i>
+        </div>
+        {{-- <i class="fa-solid fa-bell  text-lg cursor-pointer"></i> --}}
 
         <i class="fa-solid fa-circle-user  text-2xl cursor-pointer"></i>
 
     </div>
 
-</div>
+     {{-- modal for notif --}}
+    <dialog id="notif" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Notifiications</h3>
+            <div tabindex="0" class="collapse bg-base-100 border-base-300 border">
+            <div class="collapse-title font-semibold">How do I create an account?</div>
+                <div class="collapse-content text-sm">
+                    Click the "Sign Up" button in the top right corner and follow the registration process.
+                </div>
+            </div>
+            <div tabindex="0" class="collapse bg-base-100 border-base-300 border">
+            <div class="collapse-title font-semibold">How do I create an account?</div>
+                <div class="collapse-content text-sm">
+                    Click the "Sign Up" button in the top right corner and follow the registration process.
+                </div>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
 
+</div>
 
 <div class="drawer sidenav">
 
@@ -102,7 +126,7 @@
                 <li>
 
                     <a href="{{ route('dashboard') }}"
-                       class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                       class="bg-background shine-bg  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                         <i class="fa-solid fa-house"></i>
 
@@ -116,7 +140,7 @@
                 <li>
 
                     <a href="{{ route('analytics') }}"
-                       class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                       class="bg-background shine-bg  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
                         <i class="fa-solid fa-chart-line"></i>
 
@@ -130,19 +154,14 @@
                 <li>
 
                     <details>
-
-                        <summary class="bg-background customHover  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
-
-                            <div class="flex items-center gap-3 ">
-
-                                <i class="fa-solid fa-file-lines"></i>
-
-                                <span>Reports</span>
-
-                            </div>
-
-                        </summary>
-
+                     
+                            <summary class=" shine-bg customHover rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                                <div class="flex items-center  gap-3 ">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                    <span>Reports</span>
+                                </div>
+                            </summary>
+                   
                         <ul class="mt-2 space-y-1">
 
                             <!-- SALES MANAGEMENT -->
@@ -150,7 +169,7 @@
 
                                 <details>
 
-                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                    <summary class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                         Sales Management
 
@@ -160,7 +179,7 @@
 
                                         <li>
                                             <a href="{{ route('dcr') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Daily Collection Report
 
@@ -169,7 +188,7 @@
 
                                         <li>
                                             <a href="{{ route('dsr') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Daily Sales Report
 
@@ -178,7 +197,7 @@
 
                                         <li>
                                             <a href="{{ route('dsrr') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Daily Sales Remittance Report
 
@@ -187,7 +206,7 @@
 
                                         <li>
                                             <a href="{{ route('ecmf') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Electronic CMF
 
@@ -196,7 +215,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingbo') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Hold Bad Orders
 
@@ -205,7 +224,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingrequest') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Hold Sales Orders
 
@@ -214,7 +233,7 @@
 
                                         <li>
                                             <a href="{{ route('missedcall') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Missed Calls
 
@@ -223,7 +242,7 @@
 
                                         <li>
                                             <a href="{{ route('offsitetransaction') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Offsite Transactions
 
@@ -232,7 +251,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingorders') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Pending Orders
 
@@ -241,7 +260,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreport') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Sales Report
 
@@ -250,7 +269,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnBO') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Sales Return (BO)
 
@@ -259,7 +278,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnRGS') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Sales Return (RGS)
 
@@ -268,7 +287,7 @@
 
                                         <li>
                                             <a href="{{ route('salessummary') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Sales Summary
 
@@ -286,7 +305,7 @@
 
                                 <details>
 
-                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                    <summary class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                         Inventory Management
 
@@ -296,7 +315,7 @@
 
                                         <li>
                                             <a href="{{ route('invValuation') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Inventory Valuation
 
@@ -305,7 +324,7 @@
 
                                         <li>
                                             <a href="{{ route('placementCheck') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Placement Check
 
@@ -314,7 +333,7 @@
 
                                         <li>
                                             <a href="{{ route('stockcheck') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Store Inventory
 
@@ -332,7 +351,7 @@
 
                                 <details>
 
-                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                    <summary class="rounded-lg  shine-bg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                         Audit Trail
 
@@ -342,7 +361,7 @@
 
                                         <li>
                                             <a href="{{ route('syncReport') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Salesman Data Sync
 
@@ -360,7 +379,7 @@
 
                                 <details>
 
-                                    <summary class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                    <summary class="rounded-lg shine-bg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                         Others
 
@@ -370,7 +389,7 @@
 
                                         <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Delivery Monitoring
 
@@ -379,7 +398,7 @@
 
                                         <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
-                                               class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                               class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                                 Prebooking Delivery Monitoring
 
@@ -403,9 +422,9 @@
 
                     <details>
 
-                        <summary class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                        <summary class="bg-background shine-bg  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                            <div class="flex items-center gap-3">
+                            <div class="flex shine-bg  items-center gap-3">
 
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
 
@@ -419,7 +438,7 @@
 
                             <li>
                                 <a href="{{ route('maintenance') }}"
-                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                   class="rounded-lg shine-bg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                     Data Maintenance
 
@@ -428,7 +447,7 @@
 
                             <li>
                                 <a href="{{ route('datamaintenance') }}"
-                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                   class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                     Eric Data Alignment
 
@@ -437,7 +456,7 @@
 
                             <li>
                                 <a href="{{ route('sfaqueuing') }}"
-                                   class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
+                                   class="rounded-lg shine-bg  px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">
 
                                     SFA Queuing
 
@@ -455,9 +474,9 @@
 
                     <details>
 
-                        <summary class="bg-background  rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
+                        <summary class="bg-background shine-bg   rounded-xl px-4 py-3 text-sm font-medium hover:bg-base-300 transition-all duration-200">
 
-                            <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-3 ">
 
                                 <i class="fa-solid fa-location-dot"></i>
 
@@ -469,41 +488,41 @@
 
                         <ul class="mt-2 space-y-1 max-h-[300px] overflow-y-auto">
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Cebu</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Cebu</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Bohol</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchant Bohol</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC PDB</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC PDB</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC SYL</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC SYL</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC MCM</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC MCM</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC RAC</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC RAC</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC DCI</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC DCI</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC NVM</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC NVM</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC ABRI CAVITE</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MNC ABRI CAVITE</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP CALBAYOG</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP CALBAYOG</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP TACLOBAN</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP TACLOBAN</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP ORMOC</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">IMDC GROUP ORMOC</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">MEM</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">MEM</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchants P.O.D</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">Fast Unimerchants P.O.D</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DGV</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">DGV</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">SMI</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">SMI</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DBV</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">DBV</a></li>
 
-                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 py-2 text-sm hover:bg-base-300 transition-all duration-200">DCMI</a></li>
+                            <li><a href="{{ route('maintenance') }}" class="rounded-lg px-4 shine-bg  py-2 text-sm hover:bg-base-300 transition-all duration-200">DCMI</a></li>
 
                         </ul>
 

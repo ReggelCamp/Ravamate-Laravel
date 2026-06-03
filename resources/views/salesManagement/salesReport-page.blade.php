@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="w-full sm:h-[40px] flex justify-end ">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
         <div class="flex w-full h-[50px] gap-5 pl-5">
@@ -30,7 +30,7 @@
                         Other Reports
                     </x-slot:dropdownName>
                         
-                        <x-searchbar/>
+                        <x-searchbar id="salesRepSearch"/>
                         <ul id="otherReports">
                             <li><a>Sales Summary</a></li>
                             <li><a>Range Summary</a></li>
@@ -59,7 +59,7 @@
                 </x-dropdown>
             </div>
         </div>
-        <div class="flex p-5 w-full overflow-auto">
+        <div class="flex p-5 w-full pt-5 overflow-auto">
             <x-datatable/>
         </div>
     </div>

@@ -18,15 +18,18 @@
                         <x-slot:dropdownName>
                              Other Reports
                         </x-slot:dropdownName>
-                        <li><a>Sales Summary</a></li>
-                        <li><a>Range Summary</a></li>
-                        <li><a>Range Monitoring</a></li>
-                        <li><a>Geocall Rate</a></li>
-                        <li><a>Strike Rate</a></li>
-                        <li><a>Salesrep SKU Details</a></li>
-                        <li><a>Unproductive</a></li>
-                        <li><a>Sosyo Transaction</a></li>
-                        <li><a>Voucher History</a></li>
+                        <x-searchbar id="invValSearch"/>
+                        <ul id="invValItems">
+                            <li><a>Sales Summary</a></li>
+                            <li><a>Range Summary</a></li>
+                            <li><a>Range Monitoring</a></li>
+                            <li><a>Geocall Rate</a></li>
+                            <li><a>Strike Rate</a></li>
+                            <li><a>Salesrep SKU Details</a></li>
+                            <li><a>Unproductive</a></li>
+                            <li><a>Sosyo Transaction</a></li>
+                            <li><a>Voucher History</a></li>
+                        </ul>
                     </x-dropdown>
                 </div>
                 <div class="flex h-[30px]">
@@ -43,7 +46,7 @@
             </div>
             </div>
             <div class="flex w-full h-[40px]">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
         <div class="flex w-full overflow-auto">

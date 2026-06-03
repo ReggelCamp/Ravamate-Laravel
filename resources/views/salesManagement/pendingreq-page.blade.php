@@ -46,10 +46,10 @@
                             </div>
                         </div>
                         <div>
-                            <x-searchbar/>
+                            <x-searchbar id="customSearch"/>
                         </div>
                     </div>
-                    <div class="overflow-auto">
+                    <div class="overflow-auto pt-5">
                         <x-datatable/>
                     </div>
                 </div>

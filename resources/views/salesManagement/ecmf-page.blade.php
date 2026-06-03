@@ -28,7 +28,7 @@
             <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked/>
             <div class="tab-content bg-base-100 border-base-300 p-6">
                 <div class="flex w-full justify-between h-full flex-col">
-                    <div class="flex w-full flex-col-reverse sm:flex-row justify-between items-center gap-2 h-full">
+                    <div class="flex w-full flex-col-reverse sm:flex-row justify-between items-center h-full">
                         <div class="flex  items-center h-[30px]  w-full gap-5">
                             <div class="flex  h-[30px]">
                                 <x-dropdown> 
@@ -47,10 +47,10 @@
                             </div>
                         </div>
                         <div class="w-[300px]  sm:max-w-[500px]  ">
-                            <x-searchbar/>
+                            <x-searchbar id="customSearch"/>
                         </div>
                     </div>
-                    <div class="overflow-auto">
+                    <div class="overflow-auto pt-5">
                         <x-datatable/>
                     </div>
                 </div>

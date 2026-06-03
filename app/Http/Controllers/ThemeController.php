@@ -146,6 +146,7 @@ class ThemeController extends Controller
     public function getFonts(){
         $response = Http::get('https://www.googleapis.com/webfonts/v1/webfonts', [
             'key' => env('GOOGLE_FONTS_API_KEY'),
+            'sort' => 'popularity',
         ]);
 
         return response()->json($response->json()['items']);

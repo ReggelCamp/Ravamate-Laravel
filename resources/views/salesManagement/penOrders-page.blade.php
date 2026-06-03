@@ -36,10 +36,10 @@
                 </div>
             </div>
             <div class="flex w-full h-[40px]">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
-        <div class="w-full h-full overflow-auto">
+        <div class="w-full h-full pt-5 overflow-auto">
             <x-datatable/>
         </div>
    </div>

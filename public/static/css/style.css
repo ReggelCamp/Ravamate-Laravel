@@ -1,22 +1,3 @@
-.btn-format {
-    display: flex;
-    width: fit-content;
-    height: 40px;
-    padding: 0 12px;
-
-    border-radius: 12px;
-    align-items: center;
-    justify-content: center;
-}
-
-.page-format {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    /* padding: 20px; */
-}
-
 .card {
     /* width: 265px; */
     /* width: 500px; */
@@ -26,6 +7,14 @@
     background-color: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     /* shadow-sm */
+}
+
+summary {
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
 }
 
 /* image-full effect */
@@ -54,45 +43,6 @@
             rgba(0, 0, 0, 0));
 }
 
-.btn {
-    height: 30px;
-}
-
-.btn-animated {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 300ms ease, transform 300ms ease;
-}
-
-.group:hover .btn-animated {
-    opacity: 1;
-    transform: scale(1);
-}
-
-th {
-    padding: 5px 15px;
-}
-
-.dt-layout-cell .dt-info {
-    margin-top: 20px !important;
-}
-
-/* Primary */
-.bg-primary {
-    background: var(--primary);
-}
-
-a:hover,
-summary:hover {
-    /* filter: brightness(90%); */
-    background: var(--primary);
-}
-
-button:hover,
-.dp:hover {
-    filter: brightness(90%);
-}
-
 /* for gradient */
 .gradient1 {
     background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
@@ -116,6 +66,7 @@ button:hover,
 .shine-pulse {
     border: 2px solid var(--primary);
     animation: border-pulse-glow 1.8s ease-in-out infinite;
+    background-color: rgb(187, 241, 187);
 }
 
 @keyframes border-pulse-glow {
@@ -134,13 +85,14 @@ button:hover,
 }
 
 /* for shimmering text animation */
-.shine-shimmer {
+.shine-text {
     background: linear-gradient(105deg, #6366f1 30%, #a5b4fc 45%, #e0e7ff 50%, #a5b4fc 55%, #6366f1 70%);
+    /* background: linear-gradient(105deg, var(--background), var(--primary), var(--accent), var(--secondary)); */
     background-size: 300% auto;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 2s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -153,8 +105,9 @@ button:hover,
     }
 }
 
-/* Light mode (default) */
 
+
+/* Light mode (default) */
 :root {
     .tableBg {
         background-color: var(--background);
@@ -191,6 +144,11 @@ button:hover,
         background-color: var(--primary);
         color: var(--header-color);
     }
+    .dropdown-content{
+        background-color: var(--primary);
+        color: var(--body-color);
+        z-index: 999;
+    }
     .searchBar{
         background-color:white;
         color: black;
@@ -210,14 +168,54 @@ button:hover,
     color: var(--header-color);
     min-height: 100vh; /* IMPORTANT */
     }
-    .report_header {
+    .headerFont {
         font-family: var(--header-font);
     }
     .bodyFont {
         font-family: var(--body-font);
     }
+
+    .shine-bg {
+        position: relative;
+        overflow: hidden;
+        background: var(--primary);
+        color: var(--body-color);
+    }
+
+      #salesmanTable_info{
+        color: var(--body-color);
+    }
+
+    .dropdownName{
+        color: var(--body-color);
+    }
+
+    .dateColor{
+        color: var(--body-color);
+    }
+
+    .header_title{
+        color: var(--body-color);
+    }
+
+    #salesmanTable_info{
+        color: var(--body-color);
+    }
+
+    .dt-paging .button{
+        color: var(--body-color);
+    }
 }
 
+@keyframes sheen {
+    0% {
+        left: -150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
 
 /* Dark mode */
 
@@ -241,7 +239,7 @@ button:hover,
         background-color: #120b3d;
         color: white;
     }
-     .tableSec{
+    .tableSec{
         background-color: #120b3d;
         color: white;
     }
@@ -263,7 +261,65 @@ button:hover,
     .bodyFont {
         font-family: var(--body-font);
     }
+    .shine-bg {
+        position: relative;
+        overflow: clip;
+        background: var(--primary);
+        color: var(--body-color);
+        z-index: 0;
+    }
+
+    #salesmanTable_info{
+        color: white;
+    }
+
+    .dropdownName{
+        color: white;
+    }
+    .dateColor{
+        color: white;
+    }
+
+    .headerColor{
+        color: white;
+    }
+
+    .header_title{
+        color: white;
+    }
+
+    .dt-paging .button{
+        color: white;
+    }
 }
 
+/* for the sheen */
+.shine-bg > * {
+    position: relative;
+    z-index: 2;
+}
 
+/* Sheen layer */
+.shine-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    z-index: 1;
 
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+    );
+
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+
+.shine-bg:hover::after {
+    animation: sheen 0.8s ease-in-out forwards;
+}

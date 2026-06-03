@@ -27,7 +27,7 @@
                     Filter Result
                 </button>
             </div>
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
         </div>
         <div class="overflow-auto pt-5">
             <x-datatable/>

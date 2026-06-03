@@ -12,7 +12,7 @@
 <body class="w-full h-full">
     <div class="flex flex-col w-full h-full p-5 gap-5 bodyBg">
         <div class="flex justify-start sm:justify-end">
-            <x-searchbar/>
+            <x-searchbar id="customSearch"/>
         </div>
         <div class="overflow-auto">
             <x-datatable/>

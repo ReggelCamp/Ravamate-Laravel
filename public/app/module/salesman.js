@@ -67,7 +67,16 @@ document.getElementById('customSearch')
         .search(this.value)
         .draw();
 });
- 
+
+//for dropdown search
+// document.getElementById('dcrSearch').addEventListener('input', function () {
+//     const search = this.value.toLowerCase();
+
+//     document.querySelectorAll('#dcrItems li').forEach(li => {
+//         const text = li.textContent.toLowerCase();
+//         li.hidden = !text.includes(search);
+//     });
+// });
 
 //for copy
 $(document).on("click",".copytBtn", function(){
@@ -116,3 +125,5 @@ $(document).on("keyup", "#customSearch", function() {
         );
     });
 });
+
+console.log(document.getElementById('dsrSearch'));

@@ -11,10 +11,16 @@
     #salesmanTable td:first-child {
         text-align: left !important;
     }
+    /* #salesmanTable_info{
+        color: white;
+    } */
+    /* .dt-paging .button{
+        color: white;
+    } */
 </style>
 
 <div class="w-full h-full text-sm bodyFont ">
-    <table id="salesmanTable" class="w-full bg-background bodyFont headerColor tableBg">
+    <table id="salesmanTable" class="w-full bodyFont headerColor tableBg">
 
     </table>
 </div>

@@ -20,8 +20,8 @@
                         <x-slot:dropdownName>
                             Filter by Salesman
                         </x-slot:dropdownName>
-                        <x-searchbar/>
-                        <ul class="filterSalesMan">
+                        <x-searchbar id="dcrSearch"/>
+                        <ul class="dropdown_item" id="dcrItems">
                             <li><a>Salesman 1</a></li>
                             <li><a>Salesman 2</a></li>
                         </ul>
@@ -38,7 +38,7 @@
                     </x-dropdown>
                 </div> 
                 <div class=" justify-start w-full sm:w-auto">
-                    <x-searchbar/>
+                    <x-searchbar id="customSearch"/>
                 </div>
             </div>
         </div>

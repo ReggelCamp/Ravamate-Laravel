@@ -2,11 +2,12 @@
 <style>
     .daterangepicker{
         width: 860px;
-        height: 330px;
+        height: 350px;
         color: black;
         background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
         background-size: 200% auto;
         animation: gradientShift 3s ease-in-out infinite;
+        /* background-color: black; */
     }
     .daterangepicker .drp-calendar.left {
         width: 350px;
@@ -27,8 +28,8 @@
         height: 45px;
     }
     .daterangepicker .ranges{
-        background-color:var(--primary);
-        color: var(--body-color);
+        background-color:var(--background);
+        color: var(--header-color);
     }
     .daterangepicker .ranges ul li:hover,
     .daterangepicker .ranges li:hover,
@@ -37,12 +38,28 @@
         color: var(--body-color) !important;
     }
     .cancelBtn{
-        background-color: var(--secondary);
+        background-color: var(--primary);
+        color: var(--body-color);
+        border: 1px solid var(--background) !important;
+
     }
     .applyBtn{
-        background-color: var(--primary);
+        background-color: var(--accent);
         border: 1px solid #555 !important;
         box-shadow: none !important;
+        color: var(--body-color);
+        border: 1px solid var(--background) !important;
+
+    }
+     .daterangepicker .month{
+       color: var(--primary);
+    }
+    .daterangepicker .today.active{
+       background-color: var(--accent);
+    }
+     .daterangepicker .drp-selected {
+        color: var(--body-color);
+        height: 25px;
     }
 </style>
 
@@ -63,7 +80,7 @@
 
 <div class="w-[150px] sm:w-full flex h-full sm:justify-end overflow-auto pr-2">
 
-    <div class="w-[150px] flex items-center h-full sm:justify-end ">
+    <div class="w-[150px] dateColor flex items-center h-full sm:justify-end ">
 
         @if($displayOnly)
 

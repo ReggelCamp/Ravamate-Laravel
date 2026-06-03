@@ -18,7 +18,7 @@
                     </div>
                 </div> 
             </div>
-
+      
             <div class="tabs tabs-lift p-5 carouselBg">
                 <input type="radio" name="my_tabs_3" class="tab" aria-label="Pending BO" />
                 <div class="tab-content bg-base-100 border-base-300 p-6 ">
@@ -41,11 +41,11 @@
                                 </div>
                             </div>
                             <div class="w-[250px] h-[30px]">
-                                <x-searchbar/>
+                                <x-searchbar id="customSearch"/>
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-auto">
+                    <div class="overflow-auto pt-5">
                         <x-datatable id="pendingBo"/>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="w-[250px] h-[30px]">
-                                <x-searchbar/>
+                                <x-searchbar id="customSearch"/>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <div class="w-[250px] h-[30px]">
-                                <x-searchbar/>
+                                <x-searchbar id="customSearch"/>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,5 @@
                     </div>
                 </div>
             </div>
-
     </body>
 @endsection

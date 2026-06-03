@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\UserModelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -201,3 +202,8 @@ Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
 
 //for the fonts
 Route::get('/fonts',[ThemeController::class,'getFonts']);
+
+// for the profile
+Route::get('/profile',function(){
+    return view("profile-page");
+})->name('profile');

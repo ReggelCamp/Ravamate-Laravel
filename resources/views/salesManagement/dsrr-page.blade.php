@@ -17,8 +17,11 @@
                     <x-slot:dropdownName>
                         Filter by Salesman
                     </x-slot:dropdownName>
-                        <li><a>Item 1</a></li>
-                        <li><a>Item 2</a></li>
+                    <x-searchbar id="dsrrSearch"/>
+                        <ul id="dsrrItems" class="dsrrItems">
+                            <li><a>Item 1</a></li>
+                            <li><a>Item 2</a></li>
+                        </ul>
                 </x-dropdown>
             </div>
             <div class="flex justify-end w-[100px] h-[30px] gap-5">

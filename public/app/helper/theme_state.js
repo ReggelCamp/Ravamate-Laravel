@@ -28,7 +28,7 @@ function getActive() {
                 $(".carouselImg3").attr("src", activeTheme.carouselImg3[0]?.url);
                 
                 $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
-                $(".report_header").text(activeTheme.report_header);
+                $("#report_header").text(activeTheme.report_header);
                 $("#company_name").text(activeTheme.company_name);
             }
         }

@@ -25,7 +25,7 @@
                 </x-dropdown>
             </div>
             <div class="flex w-full ">
-                <x-searchbar/>
+                <x-searchbar id="customSearch"/>
             </div>
         </div>
         <div class="overflow-auto pt-5">

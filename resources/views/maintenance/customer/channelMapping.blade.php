@@ -24,7 +24,7 @@
                         <li><a class="copyBtn">Copy</a></li>
                 </x-dropdown>
             </div>
-            <x-searchbar/>
+            <x-searchbar id="customSearch"/>
         </div>
         <div class="overflow-auto pt-5">
             <x-datatable/>
