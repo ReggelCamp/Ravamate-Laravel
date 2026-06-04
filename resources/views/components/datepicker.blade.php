@@ -93,7 +93,7 @@
 
             <button
                 id="dateButton"
-                class="border text-xs md:text-base w-[150px] h-full  rounded-2xl flex items-center justify-center hover:bg-base-200 transition">
+                class="border text-xs md:text-base w-[150px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition">
 
                 Filter by Date
 

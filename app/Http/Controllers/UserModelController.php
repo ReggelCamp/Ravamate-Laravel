@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserModelController extends Controller
@@ -34,7 +34,7 @@ class UserModelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserModel $userModel)
+    public function show(User $userModel)
     {
         //
     }
@@ -42,7 +42,7 @@ class UserModelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserModel $userModel)
+    public function edit(User $userModel)
     {
         //
     }
@@ -50,7 +50,7 @@ class UserModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserModel $userModel)
+    public function update(Request $request, User $userModel)
     {
         //
     }
@@ -58,8 +58,15 @@ class UserModelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserModel $userModel)
+    public function destroy(User $userModel)
     {
         //
+    }
+
+    public function getUser(){
+        $user = User::first();
+
+        return response()->json($user);
+        
     }
 }

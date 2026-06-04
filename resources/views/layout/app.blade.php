@@ -116,7 +116,8 @@
     {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
-    <script type="module" src="/app/module/dropdown_search.js"></script>
+    <script type="module" src="/app/module/dropdown.js"></script>
+    <script type="module" src="/app/module/user.js"></script>
 
     @stack('scripts')
     

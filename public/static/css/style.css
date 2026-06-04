@@ -149,7 +149,7 @@ summary::-webkit-details-marker {
         color: var(--body-color);
         z-index: 999;
     }
-    .searchBar{
+    .searchBar {
         background-color:white;
         color: black;
     }
@@ -182,7 +182,13 @@ summary::-webkit-details-marker {
         color: var(--body-color);
     }
 
-      #salesmanTable_info{
+    /* .shine-bg {
+        position: relative;
+        background: var(--primary);
+        color: var(--body-color);
+    } */
+
+    #salesmanTable_info{
         color: var(--body-color);
     }
 
@@ -202,8 +208,8 @@ summary::-webkit-details-marker {
         color: var(--body-color);
     }
 
-    .dt-paging .button{
-        color: var(--body-color);
+    div.dt-container div.dt-paging nav button.dt-paging-button {
+        color: var(--body-color) !important;
     }
 }
 
@@ -322,4 +328,8 @@ summary::-webkit-details-marker {
 
 .shine-bg:hover::after {
     animation: sheen 0.8s ease-in-out forwards;
+}
+
+div.dt-container div.dt-paging nav button.dt-paging-button:hover {
+    color: red !important;
 }

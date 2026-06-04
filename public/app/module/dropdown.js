@@ -7,3 +7,13 @@ Dropdown.search('#dcrSearch','#dcrItems');
 Dropdown.search('#dsrrSearch','#dsrrItems');
 Dropdown.search('#salesRepSearch','#otherReports');
 Dropdown.search('#invValSearch','#invValItems');
+
+// dropdown icon
+$(document).on("click", ".dropdownIcon", function () {
+
+    $(this)
+        .find(".arrowIcon i")
+        .toggleClass("fa-angle-down fa-angle-up");
+
+        console.log(this);
+});

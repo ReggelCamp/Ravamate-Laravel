@@ -207,3 +207,6 @@ Route::get('/fonts',[ThemeController::class,'getFonts']);
 Route::get('/profile',function(){
     return view("profile-page");
 })->name('profile');
+
+//getting the user account
+Route::get('/getUser',[UserModelController::class,'getUser']);
