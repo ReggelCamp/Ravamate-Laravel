@@ -182,6 +182,10 @@ summary::-webkit-details-marker {
         color: var(--body-color);
     }
 
+    .primaryBg{
+        background-color: var(--primary);
+    }
+
     /* .shine-bg {
         position: relative;
         background: var(--primary);
@@ -201,7 +205,15 @@ summary::-webkit-details-marker {
     }
 
     .header_title{
-        color: var(--body-color);
+        color: var(--header-color);
+    }
+
+    .headerColor{
+        color: var(--header-color);
+    }
+
+    .bodyColor{
+        color: var(--header-color);
     }
 
     #salesmanTable_info{
@@ -211,6 +223,56 @@ summary::-webkit-details-marker {
     div.dt-container div.dt-paging nav button.dt-paging-button {
         color: var(--body-color) !important;
     }
+
+    #salesmanTable th{
+        color: var(--header-color) !important;
+    }
+
+    /* daterange picker */
+    .daterangepicker .drp-calendar.left .calendar-table{
+        background-color: var(--background);
+        color: black !important; 
+    }
+    .daterangepicker .drp-calendar.right .calendar-table{
+        background-color: var(--background);
+        color: black !important; 
+    }
+   .daterangepicker td.available{
+        background-color:var(--background);
+        color: black !important;
+   }
+
+   .daterangepicker .today.active{
+       background-color: var(--primary);
+       color: var(--body-color);
+    }
+
+        /* Previous arrow < */
+    .daterangepicker th.prev.available span {
+        border-color: var(--primary) !important;
+    
+    }
+
+    /* Next arrow > */
+    .daterangepicker th.next.available span {
+        border-color: var(--primary) !important;
+    
+    }
+
+
+    /* Days from previous/next month */
+    .daterangepicker td.off {
+        background-color: transparent; /* or your desired color */
+        color: #999;
+        opacity: 0.5;
+    }
+
+    /* To completely hide them */
+    .daterangepicker td.off {
+        visibility: hidden;
+    }
+
+    /* end of date range picker */
 }
 
 @keyframes sheen {
@@ -277,6 +339,11 @@ summary::-webkit-details-marker {
 
     #salesmanTable_info{
         color: white;
+    
+    }
+
+    #salesmanTable th{
+        color: white !important;
     }
 
     .dropdownName{
@@ -297,6 +364,60 @@ summary::-webkit-details-marker {
     .dt-paging .button{
         color: white;
     }
+
+    .bodyColor{
+        color: white;
+    }
+
+        /* daterange picker */
+    .daterangepicker .drp-calendar.left .calendar-table{
+        background-color: #120b3d;
+        color: white !important; 
+    }
+    .daterangepicker .drp-calendar.right .calendar-table{
+        background-color: #120b3d;
+        color: white !important; 
+    }
+   .daterangepicker td.available{
+        background-color:#120b3d;
+        color: white !important;
+   }
+
+    .daterangepicker .today.active{
+       background-color: var(--primary);
+       color: var(--body-color);
+    }
+
+    .daterangepicker td.off, .daterangepicker td:hover{
+        background-color: var(--secondary) !important;
+        color: var(--body-color);
+    }
+
+    /* Previous arrow < */
+    .daterangepicker th.prev.available span {
+        border-color: white !important;
+    
+    }
+
+    /* Next arrow > */
+    .daterangepicker th.next.available span {
+        border-color: white !important;
+    
+    }
+
+    /* Days from previous/next month */
+    .daterangepicker td.off {
+        background-color: transparent;
+        color: #999;
+        opacity: 0.5;
+    }
+
+    /* To completely hide them */
+    .daterangepicker td.off {
+        visibility: hidden;
+    }
+
+    /* end of date rangepicker */
 }
 
 /* for the sheen */
@@ -330,6 +451,17 @@ summary::-webkit-details-marker {
     animation: sheen 0.8s ease-in-out forwards;
 }
 
-div.dt-container div.dt-paging nav button.dt-paging-button:hover {
-    color: red !important;
+
+div.dt-container .dt-paging .dt-paging-button.current,
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    background: var(--primary) !important;
+    /* color: red !important; */
+    border: 1px solid var(--accent) !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button.disabled,
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    background: var(--primary) !important;
+    /* color: red !important; */
+    border: 1px solid var(--accent) !important;
 }

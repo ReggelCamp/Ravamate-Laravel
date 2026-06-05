@@ -265,29 +265,16 @@
                 <input type="text" class="file-input w-full" id="report_header" />
             </div>
 
-            {{-- <div class="flex flex-col w-full h-full pt-5">
-                <label>Report Header Title </label>
-                <input type="text" class="file-input w-full" />
-            </div>  --}}
-
             {{-- Carousel --}}
             <div class="flex justify-between w-full h-full pt-5">
                 <label>Upload Carousel Image</label>
-
-                {{-- <button class="btn" id="addImg">
-                    Add more Image
-                </button> --}}
             </div>
             
             {{-- Carousel images --}}
-             <div class="flex flex-col gap-1.5 w-full h-full pt-5 " id="imgContainer">
-                {{-- <input type="file" class="file-input" id="carouselImg" name="carouselName" multiple /> --}}
-                <input type="file" class="file-input w-full" id="carouselImg1" name="carouselName1" />
-                <input type="file" class="file-input w-full" id="carouselImg2" name="carouselName2" />
-                <input type="file" class="file-input w-full" id="carouselImg3" name="carouselName3" />
+             <div class="flex flex-col gap-1.5 w-full h-full pt-2 " id="imgContainer">
+                <input type="file" class="file-input" id="carouselImg" name="carouselName" multiple />
             </div> 
 
-            
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
                 Save
             </button>

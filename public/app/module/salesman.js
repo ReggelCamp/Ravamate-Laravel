@@ -68,16 +68,6 @@ document.getElementById('customSearch')
         .draw();
 });
 
-//for dropdown search
-// document.getElementById('dcrSearch').addEventListener('input', function () {
-//     const search = this.value.toLowerCase();
-
-//     document.querySelectorAll('#dcrItems li').forEach(li => {
-//         const text = li.textContent.toLowerCase();
-//         li.hidden = !text.includes(search);
-//     });
-// });
-
 //for copy
 $(document).on("click",".copytBtn", function(){
     $('#salesmanTable')

@@ -10,6 +10,10 @@
     {{-- Tailwind --}}
     @vite(['resources/css/app.css'])
 
+    {{-- Fontawesome --}}
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('static/css/style.css') }}">
 
@@ -113,7 +117,6 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     {{-- Your JS --}}
-    {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
     <script type="module" src="/app/module/dropdown.js"></script>

@@ -7,6 +7,10 @@ Api.get({
     onSuccess: (data) => {
         let res = data;
         $("#name").text(res.name);
+        $("#email").text(res.email);
+        $("#contact_number").text(res.contact_number);
+        $("#account").text(res.account);
+        
     }
 
     })

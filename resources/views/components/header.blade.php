@@ -15,7 +15,7 @@
 
     <div class="flex justify-center w-1/3">
 
-        <h1 class="report_header text-2xl font-semibold truncate" id="company_name">
+        <h1 class="report_header animate__backInLeft text-2xl font-semibold truncate" id="company_name">
         </h1>
 
     </div>

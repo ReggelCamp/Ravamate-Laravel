@@ -11,15 +11,8 @@
     #salesmanTable td:first-child {
         text-align: left !important;
     }
-    /* #salesmanTable_info{
-        color: white;
-    } */
-    /* .dt-paging .button{
-        color: white;
-    } */
-    /* div.dt-container div.dt-paging nav button.dt-paging-button:hover {
-        color: red !important; 
-    } */
+ 
+    
 </style>
 
 <div class="w-full h-full text-sm bodyFont ">

@@ -1,7 +1,3 @@
-/*!
- * sweetalert2 v11.26.24
- * Released under the MIT License.
- */
 (!(function (e, t) {
     "object" == typeof exports && "undefined" != typeof module
         ? (module.exports = t())

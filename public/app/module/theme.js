@@ -50,160 +50,129 @@ function getAll() {
             let activeTheme = array.find((item) => item.is_active);
 
             $("#table").html(`
-                <div class="flex justify-center w-full gap-2 mb-4">
-                    <button id="prevBtn" class="btn bg-amber-100 text-black btn-sm btn-outline">
-                        ❮ Prev
-                    </button>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+    </div>
+`);
 
-                    <button id="nextBtn" class="btn btn-sm btn-outline bg-amber-100 text-black">
-                        Next ❯
-                    </button>
-                </div>
-
-                <div class="carousel w-full space-x-4 overflow-x-auto">
-                </div>
-            `);
-
-            const $carousel = $("#table .carousel");
+            const $grid = $("#table .grid");
 
             data.forEach((item) => {
+                let isActive = item.is_active ? "shine-pulse" : "bg-base-100";
 
-                $("#nextBtn").on("click", function () {
-                    $carousel.animate({
-                        scrollLeft: $carousel.scrollLeft() + 370
-                    }, 300);
-                });
+                $grid.append(`
+        <div id="themeCard"
+            class="card bg-base-100 shadow-sm border-4 border-solid ${isActive}">
 
-                $("#prevBtn").on("click", function () {
-                    $carousel.animate({
-                        scrollLeft: $carousel.scrollLeft() - 370
-                    }, 300);
-                });
+            <div class="card-body">
 
-                let isActive = item.is_active ? " shine-pulse " : "bg-base-100";
-
-                $carousel.append(`
-        <div class="carousel-item">
-            <div id="themeCard"
-                class="card bg-base-100 w-[350px] h-[600px] shadow-sm border-4 border-solid ${isActive}">
-
-                <div class="card-body">
-
-                    <!-- HEADER -->
-                    <div class="flex w-full justify-between items-center">
-
-                        <h2 class="card-title">
-                            ${item.theme_name}
-                        </h2>
-
-                        <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500 " : ""}">
-                            <input type="checkbox"
-                                data-id="${item.id}"
-                                class="flipswitch"
-                                id="flipswitch"
-                                ${item.is_active ? "checked" : ""}/>
-
-                            <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 6 6 18" />
-                                <path d="m6 6 12 12" />
-                            </svg>
-
-                            <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24">
-                                <g stroke-linejoin="round" stroke-linecap="round"
-                                    stroke-width="4" fill="none" stroke="currentColor">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </g>
-                            </svg>
-                        </label>
-
-                    </div>
-
-                    <!-- IMAGE -->
-                    <div class="flex justify-center items-center h-48 bg-base-200 rounded-xl mt-2">
-                        <img src="${item.logo[0]?.url}"
-                            class="max-h-40 max-w-full object-contain">
-                    </div>
+                <!-- HEADER -->
+                <div class="flex w-full justify-between items-center">
 
                     <h2 class="card-title">
-                        Company Name: ${item.company_name}
+                        ${item.theme_name}
                     </h2>
 
-                    <!-- COLORS -->
-                    <div class="flex justify-start w-full gap-5 mt-4">
+                    <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500" : ""}">
+                        <input type="checkbox"
+                            data-id="${item.id}"
+                            class="flipswitch"
+                            ${item.is_active ? "checked" : ""}/>
 
-                        <div class="flex flex-col">
-                            <h1>Primary</h1>
-                            <div class="w-[30px] h-[30px] border" style="background:${item.primary_color}"></div>
-                        </div>
+                        <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
 
-                        <div class="flex flex-col">
-                            <h1>Secondary</h1>
-                            <div class="w-[30px] h-[30px] border" style="background:${item.secondary_color}"></div>
-                        </div>
+                        <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24">
+                            <g stroke-linejoin="round" stroke-linecap="round"
+                                stroke-width="4" fill="none" stroke="currentColor">
+                                <path d="M20 6 9 17l-5-5"></path>
+                            </g>
+                        </svg>
+                    </label>
 
-                        <div class="flex flex-col">
-                            <h1>Accent</h1>
-                            <div class="w-[30px] h-[30px] border" style="background:${item.accent_color}"></div>
-                        </div>
+                </div>
 
-                        <div class="flex flex-col">
-                            <h1>BG</h1>
-                            <div class="w-[30px] h-[30px] border" style="background:${item.background_color}"></div>
-                        </div>
+                <!-- IMAGE -->
+                <div class="flex justify-center items-center h-48 bg-base-200 rounded-xl mt-2">
+                    <img src="${item.logo?.[0]?.url || ""}"
+                        class="max-h-40 max-w-full object-contain">
+                </div>
 
+                <h2 class="card-title">
+                    Company Name: ${item.company_name}
+                </h2>
+
+                <!-- COLORS -->
+                <div class="flex justify-between w-full gap-2 mt-4 flex-wrap">
+
+                    <div class="flex flex-col">
+                        <h1>Primary</h1>
+                        <div class="w-[30px] h-[30px] border" style="background:${item.primary_color}"></div>
                     </div>
 
-                    <!-- FONT INFO -->
-                    <div class="flex flex-col w-full mt-3">
-
-                        <div>
-                            <span class="text-gray-500 text-sm">Report Header:</span>
-                            <div>${item.report_header}</div>
-                        </div>
-
-                        <div class="flex justify-between items-center mt-2">
-                            <div>
-                                <span class="text-gray-500 text-sm">Body Font:</span>
-                                <div>${item.body_font}</div>
-                            </div>
-
-                            <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded border"
-                                    style="background:${item.body_color}"></div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center mt-2">
-                            <div>
-                                <span class="text-gray-500 text-sm">Header Font:</span>
-                                <div>${item.header_font}</div>
-                            </div>
-
-                            <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded border"
-                                    style="background:${item.header_color}"></div>
-                            </div>
-                        </div>
-
+                    <div class="flex flex-col">
+                        <h1>Secondary</h1>
+                        <div class="w-[30px] h-[30px] border" style="background:${item.secondary_color}"></div>
                     </div>
 
-                    <!-- BUTTONS -->
-                    <div class="flex gap-2">
-                        <button class="bg-green-400 p-2 rounded-xl text-white"
-                            data-id="${item.id}" id="updatebtn">
-                            Edit
-                        </button>
+                    <div class="flex flex-col">
+                        <h1>Accent</h1>
+                        <div class="w-[30px] h-[30px] border" style="background:${item.accent_color}"></div>
+                    </div>
 
-                        <button class="bg-red-500 p-2 text-white rounded-lg"
-                            data-id="${item.id}" id="deletebtn">
-                            Delete
-                        </button>
+                    <div class="flex flex-col">
+                        <h1>BG</h1>
+                        <div class="w-[30px] h-[30px] border" style="background:${item.background_color}"></div>
                     </div>
 
                 </div>
+
+                <!-- FONT INFO -->
+                <div class="flex flex-col w-full mt-3">
+
+                    <div>
+                        <span class="text-gray-500 text-sm">Report Header:</span>
+                        <div>${item.report_header}</div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-2">
+                        <div>
+                            <span class="text-gray-500 text-sm">Body Font:</span>
+                            <div>${item.body_font}</div>
+                        </div>
+
+                        <div class="w-6 h-6 rounded border"
+                            style="background:${item.body_color}"></div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-2">
+                        <div>
+                            <span class="text-gray-500 text-sm">Header Font:</span>
+                            <div>${item.header_font}</div>
+                        </div>
+
+                        <div class="w-6 h-6 rounded border"
+                            style="background:${item.header_color}"></div>
+                    </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="flex gap-2 mt-3">
+                    <button class="bg-green-400 p-2 rounded-xl text-white"
+                        data-id="${item.id}" id="updatebtn">
+                        Edit
+                    </button>
+
+                    <button class="bg-red-500 p-2 text-white rounded-lg"
+                        data-id="${item.id}" id="deletebtn"> Delete 
+                    </button>
+                </div>
+
             </div>
         </div>
     `);
@@ -293,26 +262,17 @@ $(document).on("click", "#addbtn", function () {
 //for executing the save btn
 $(document).on("click", "#executeSavebtn", function () {
     let form = new FormData();
+    const input = document.querySelector('input[type="file"]');
+    const files = input.files;
 
-    // let uploaded_img = $("#carouselImg1")[0].files;
-    // let uploaded_img = $("#carouselImg2")[0].files;
-    // let uploaded_img = $("#carouselImg3")[0].files;
+    let ImgList = [];
+    
 
-    // let carousel_img = [];
+    for (let i = 0; i < files.length; i++) {
 
-    // for (let i = 0; i < uploaded_img.length; i++) {
+        form.append("ImgList[]", files[i]);
+    }
 
-    //     carousel_img.push(uploaded_img[i]);
-
-    //     form.append("carouselName[]", uploaded_img[i]);
-
-    //    console.log($("#carouselImg")[0].files);
-    //    console.log($("#carouselImg")[0].files.length);
-    // }
-
-    form.append("carouselImg1[]", $("#carouselImg1")[0].files[0]);
-    form.append("carouselImg2[]", $("#carouselImg2")[0].files[0]);
-    form.append("carouselImg3[]", $("#carouselImg3")[0].files[0]);
     form.append("logo[]", $("#logo_id")[0].files[0]);
     form.append(
         "json",
@@ -436,21 +396,54 @@ $("#logo_id").on("change", function () {
     $("#logo-error").text("").addClass("hidden");
 });
 
-// $("#addImg").on("click", function(){
-//     let html = `
-//          <div class="flex w-full gap-0.5 h-full pt-5">
+$("#carouselImg").on("change", function (event) {
+    const files = event.target.files;
 
-//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
-//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
-//                 <input type="file" class="file-input" id="carouselImg" name="carouselName" />
+    $("#imgContainer").empty(); // optional: clear previous cards
 
-//             <button class = "btn" >
-//                 Remove
-//             </button>
-//         </div>
-//     `
-//     $("#imgContainer").append(html);
-// });
+    Array.from(files).forEach((file) => {
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            $("#imgContainer").append(`
+                <div class="card bg-base-100 w-full shadow-sm ">
+                    <div class="card-body">
+
+                        <div class="flex justify-end">
+                           <button class="btn btn-square btn-sm" id="DeleteCarousel">
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <img src="${e.target.result}"
+                             class="w-full h-40 object-cover rounded">
+
+                        <p class="text-sm text-gray-500">
+                            ${file.name}
+                        </p>
+
+                    </div>
+                </div>
+            `);
+        };
+
+        reader.readAsDataURL(file);
+    });
+    
+});
 
 $.ajax({
     url: "/fonts",

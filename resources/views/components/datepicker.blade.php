@@ -6,7 +6,7 @@
         color: black;
         background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
         background-size: 200% auto;
-        animation: gradientShift 3s ease-in-out infinite;
+        /* animation: gradientShift 3s ease-in-out infinite; */
         /* background-color: black; */
     }
     .daterangepicker .drp-calendar.left {
@@ -51,16 +51,19 @@
         border: 1px solid var(--background) !important;
 
     }
-     .daterangepicker .month{
+    .daterangepicker .month{
        color: var(--primary);
     }
-    .daterangepicker .today.active{
-       background-color: var(--accent);
-    }
-     .daterangepicker .drp-selected {
+    /* .daterangepicker .today.active{
+       background-color: aqua;
+       color: black;
+    } */
+    .daterangepicker .drp-selected {
         color: var(--body-color);
         height: 25px;
     }
+
+    
 </style>
 
 <script 
@@ -78,7 +81,7 @@
     'displayOnly' => false
 ])
 
-<div class="w-[150px] sm:w-full flex h-full sm:justify-end overflow-auto pr-2">
+<div class="w-[150px] sm:w-full flex h-full sm:justify-end pr-2">
 
     <div class="w-[150px] dateColor flex items-center h-full sm:justify-end ">
 

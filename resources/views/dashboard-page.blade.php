@@ -80,7 +80,7 @@
                         <div class="w-full h-[50px] items-center">
                             <x-report-header-title title="Dashboard"/>
                         </div>
-                        <div class="flex w-full h-[50px]  whitespace-nowrap gap-2 ">
+                        <div class="flex w-[150px] sm:w-full h-[50px]  whitespace-nowrap gap-2 ">
                             <x-datepicker displayOnly="true"/>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                                 </x-button>
                             </div>
                             <div class="w-full sm:w-auto">
-                                <x-searchbar/>
+                                <x-searchbar id="customSearch"/>
                             </div>
                         </div>
                     </div>

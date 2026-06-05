@@ -38,15 +38,6 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
-            $request->validate([
-                'logo' => 'required',
-                'logo.*' => 'image|mimes:jpg,jpeg,png,webp'
-            ],[
-                'logo.required' => 'Please upload a logo.',
-                'logo.*.image' => 'Logo must be an image.',
-                'logo.*.mimes' => 'Only JPG, JPEG, PNG, and WEBP files are allowed.',
-            ]);
-        
         $json = json_decode($request->input('json'), true);
      
         $row = $this->model::create($json);
