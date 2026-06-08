@@ -42,12 +42,9 @@ class ThemeController extends Controller
      
         $row = $this->model::create($json);
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
-        FileHandler::upload('carousel/img1',$row->id,$request->file('carouselImg1'));
-        FileHandler::upload('carousel/img2',$row->id,$request->file('carouselImg2'));
-        FileHandler::upload('carousel/img3',$row->id,$request->file('carouselImg3'));
-        
+        FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
+
         return response()->json($row);
-        
     }
 
     /**
@@ -75,9 +72,10 @@ class ThemeController extends Controller
         $this->model::find($id)->update($json);
 
         FileHandler::replaceFilesByID('logo/img',$id,$request->file('logo'));
-        FileHandler::replaceFilesByID('carousel/img1',$id,$request->file('carouselImg1'));
-        FileHandler::replaceFilesByID('carousel/img2',$id,$request->file('carouselImg2'));
-        FileHandler::replaceFilesByID('carousel/img3',$id,$request->file('carouselImg3'));
+    
+        if ($request->hasFile('carouselImgList')) {
+            FileHandler::replaceFilesByID('carousel',$id,$request->file('carouselImgList'));
+        }    
     }
 
     /**
@@ -113,11 +111,9 @@ class ThemeController extends Controller
     public function getAll(){
         return response()->json($this->model::all()->map(function($row){
             $row['logo'] = FileHandler::getFilesByID('logo/img',$row['id']);
-            $row['carouselImg1'] = FileHandler::getFilesByID('carousel/img1',$row['id']);
-            $row['carouselImg2'] = FileHandler::getFilesByID('carousel/img2',$row['id']);
-            $row['carouselImg3'] = FileHandler::getFilesByID('carousel/img3',$row['id']);
+            $row['carouselImg'] = FileHandler::getFilesByID('carousel',$row['id']);
             return $row;
-        }));
+        }));    
     }
 
     public function getActive(){
@@ -125,13 +121,10 @@ class ThemeController extends Controller
         // return response()->json($activeTheme);
         if ($activeTheme) {
             $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
-            $activeTheme['carouselImg1'] = FileHandler::getFilesByID('carousel/img1', $activeTheme->id);
-            $activeTheme['carouselImg2'] = FileHandler::getFilesByID('carousel/img2', $activeTheme->id);
-            $activeTheme['carouselImg3'] = FileHandler::getFilesByID('carousel/img3', $activeTheme->id);
+            $activeTheme['carouselImg'] = FileHandler::getFilesByID('carousel', $activeTheme->id);
         }
 
-        return response()->json($activeTheme);
-        
+        return response()->json($activeTheme); 
     }
 
     public function getFonts(){

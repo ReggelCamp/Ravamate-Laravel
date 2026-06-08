@@ -59,15 +59,18 @@
                 </label>
                 
                 <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="theme_name" id="theme_name">
+                <span id="ThemeName-error" class="text-red-500 text-sm mt-1 hidden"></span>
 
                 <label class="text-sm font-medium text-gray-700">
                      Input Company Name
                 </label>
                 <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="company_name" id="company_name">
+                <span id="CompanyName-error" class="text-red-500 text-sm mt-1 hidden"></span>
 
                 <div class="flex flex-col w-full h-full pt-5">
+
                         <label>Upload Logo </label>
-                        <input type="file" class="file-input w-full" id="logo_id" name="logo" accept="image/*" />
+                        <input type="file" class="file-input w-full" required id="logo_id" name="logo" accept="image/*" />
                         <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>
 
@@ -271,8 +274,8 @@
             </div>
             
             {{-- Carousel images --}}
-             <div class="flex flex-col gap-1.5 w-full h-full pt-2 " id="imgContainer">
-                <input type="file" class="file-input" id="carouselImg" name="carouselName" multiple />
+            <input type="file" class="file-input" id="carouselImg" name="carouselImg" multiple />
+            <div class="flex flex-col gap-1.5 w-full h-full pt-2 " id="imgContainer">
             </div> 
 
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">

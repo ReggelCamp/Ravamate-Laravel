@@ -261,60 +261,70 @@ $(document).on("click", "#addbtn", function () {
 
 //for executing the save btn
 $(document).on("click", "#executeSavebtn", function () {
+    const logoFile = $("#logo_id")[0]?.files[0];
+    const theme_name = $("#theme_name").val();
+    const company_name = $("#company_name").val();
+
+    // clear previous errors
+    $("#CompanyName-error, #ThemeName-error, #logo-error").text("").addClass("hidden");
+
+    // validate individually
+    if (!theme_name) $("#ThemeName-error").text("This field is required").removeClass("hidden");
+    if (!company_name) $("#CompanyName-error").text("This field is required").removeClass("hidden");
+    if (!logoFile) $("#logo-error").text("This field is required").removeClass("hidden");
+
+    if (!theme_name || !company_name || !logoFile) return;
+
     let form = new FormData();
-    const input = document.querySelector('input[type="file"]');
-    const files = input.files;
 
-    let ImgList = [];
-    
+    form.append("logo[]", logoFile);
 
-    for (let i = 0; i < files.length; i++) {
+    const carouselInput = $("#carouselImg")[0];
 
-        form.append("ImgList[]", files[i]);
+    if (carouselInput && carouselInput.files.length > 0) {
+        console.log("entering loop"); 
+        Array.from(carouselInput.files).forEach(file => {
+            form.append("CarouselImgList[]", file);
+        });
     }
 
-    form.append("logo[]", $("#logo_id")[0].files[0]);
-    form.append(
-        "json",
-        JSON.stringify({
-            theme_name: $("#theme_name").val(),
-            company_name: $("#company_name").val(),
-            primary_color: $("#primary_color").val(),
-            secondary_color: $("#secondary_color").val(),
-            accent_color: $("#accent_color").val(),
-            background_color: $("#background_color").val(),
-            body_color: $("#body_color").val(),
-            header_color: $("#header_color").val(),
-            body_font: $("#body_font").val(),
-            header_font: $("#header_font").val(),
-            report_header: $("#report_header").val(),
-        }),
-    );
+    form.append("json", JSON.stringify({
+        theme_name,
+        company_name,
+        primary_color: $("#primary_color").val(),
+        secondary_color: $("#secondary_color").val(),
+        accent_color: $("#accent_color").val(),
+        background_color: $("#background_color").val(),
+        body_color: $("#body_color").val(),
+        header_color: $("#header_color").val(),
+        body_font: $("#body_font").val(),
+        header_font: $("#header_font").val(),
+        report_header: $("#report_header").val(),
+    }));
 
     Api.post({
         url: `/customize_theme`,
         data: form,
         processData: false,
         contentType: false,
-        onSuccess: (data) => {
+        onSuccess: () => {
             getAll();
             AddThemeModal.close();
         },
-        // on422: data => {
-        //     console.log(data.responseJSON.message);
-        // }
     });
 });
-
 //for updating tha card
 $(document).on("click", "#executeEditbtn", function () {
     let form = new FormData();
 
     form.append("logo[]", $("#logo_id")[0].files[0]);
-    form.append("carouselImg1[]", $("#carouselImg1")[0].files[0]);
-    form.append("carouselImg2[]", $("#carouselImg2")[0].files[0]);
-    form.append("carouselImg3[]", $("#carouselImg3")[0].files[0]);
-
+    const carouselInput = $("#carouselImg")[0];
+    if (carouselInput && carouselInput.files.length > 0) {
+        Array.from(carouselInput.files).forEach(file => {
+            form.append("carouselImgList[]", file);
+        });
+    }
+   
     form.append(
         "json",
         JSON.stringify({
@@ -334,8 +344,8 @@ $(document).on("click", "#executeEditbtn", function () {
 
     Api.post({
         url: `/customize_theme/update/${updateId}`,
-        processData: false, // IMPORTANT
-        contentType: false, // IMPORTANT
+        processData: false,
+        contentType: false,
         headers: {
             "X-HTTP-Method-Override": "PUT",
             "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
@@ -371,6 +381,7 @@ $("#logo_id").on("change", function () {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
     if (!file) return;
+    
 
     // Wrong file type
     if (!allowedTypes.includes(file.type)) {
@@ -399,7 +410,7 @@ $("#logo_id").on("change", function () {
 $("#carouselImg").on("change", function (event) {
     const files = event.target.files;
 
-    $("#imgContainer").empty(); // optional: clear previous cards
+    $("#imgContainer").empty();
 
     Array.from(files).forEach((file) => {
 
@@ -408,11 +419,11 @@ $("#carouselImg").on("change", function (event) {
         reader.onload = function (e) {
 
             $("#imgContainer").append(`
-                <div class="card bg-base-100 w-full shadow-sm ">
+                <div class="card bg-base-100 h-[250px] w-[150px] shadow-sm carouseltemp ">
                     <div class="card-body">
 
-                        <div class="flex justify-end">
-                           <button class="btn btn-square btn-sm" id="DeleteCarousel">
+                        <div class="flex justify-end ">
+                           <button class="btn btn-square btn-sm DeleteCarousel" data-id="">
                                 <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -503,4 +514,22 @@ $("#body_font").on("change", function () {
     `);
 
     $(".body-preview").css("font-family", `'${font}', sans-serif`);
+});
+
+$(document).on("click", ".DeleteCarousel", function () {
+    const button = $(this);
+    console.log(button.closest(".carouseltemp"));
+    const id = button.data("id");
+
+    if (!id) {
+        button.closest(".carouseltemp").remove();
+        return;
+    }
+
+    Api.delete({
+        url: `/carousel/${id}`,
+        onSuccess: function () {
+            button.closest(".carouseltemp").remove();
+        },
+    });
 });

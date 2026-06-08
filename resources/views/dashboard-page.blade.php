@@ -4,13 +4,13 @@
     <html lang="en">
     <head>
 
-        <style>
+        {{-- <style>
 
             .owl-item.active.center{
                 z-index: 10000 !important;
             }
 
-        </style>
+        </style> --}}
 
     </head>
 
@@ -28,19 +28,19 @@
 
         <script>
             $(document).ready(function(){
-            $(".owl-carousel").owlCarousel({
-                loop: true,
-                margin: 0,
-                center: true,
-                nav: true,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                responsive: {
-                    0: { items: 1 },
-                    768: { items: 2 },
-                    1024: { items: 3 }
-                }
-            });
+            // $(".owl-carousel").owlCarousel({
+            //     loop: true,
+            //     margin: 0,
+            //     center: true,
+            //     nav: true,
+            //     autoplay: true,
+            //     autoplayTimeout: 3000,
+            //     responsive: {
+            //         0: { items: 1 },
+            //         768: { items: 2 },
+            //         1024: { items: 3 }
+            //     }
+            // });
 
             $('#dateButton').text(moment().format('LLL'));
             });
@@ -57,16 +57,8 @@
 
                 {{-- Carousel --}}
                 <div class="w-full sm:max-w-[900px] ">
-                   <div class="owl-carousel">
-                        <div class="item ">
-                            <img id="carouselImg1" style="overflow: visible;" class="w-[650px] h-[300px] carouselImg1 object-cover"/>
-                        </div>
-                        <div class="item ">
-                            <img id="carouselImg2" style="overflow: visible; z-index:1000" class="w-[650px] h-[300px] carouselImg2 object-cover"/>
-                        </div>
-                        <div class="item ">
-                            <img id="carouselImg3" style="overflow: visible;" class="w-[650px] h-[300px] carouselImg3 object-cover"/>
-                        </div>
+                   <div class="owl-carousel" id="carouselContainer">
+                       
                     </div>
                 </div>
             </div>

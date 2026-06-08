@@ -20,20 +20,49 @@ function getActive() {
                 document.documentElement.style.setProperty('--body-font', activeTheme.body_font);
                 document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
                 document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
-
-              
-                
-                $(".carouselImg1").attr("src", activeTheme.carouselImg1[0]?.url);
-                $(".carouselImg2").attr("src", activeTheme.carouselImg2[0]?.url);
-                $(".carouselImg3").attr("src", activeTheme.carouselImg3[0]?.url);
                 
                 $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
-                $("#report_header").text(activeTheme.report_header);
-                $("#company_name").text(activeTheme.company_name);
-            }
-        }
-    });
-}
+               
+                const container = document.getElementById("carouselContainer");
+                if (container) {
+                    // if ($(container).data("owl.carousel")) {
+                    //     $(container).trigger("destroy.owl.carousel");
+                    // }
+
+                    const html = activeTheme.carouselImg
+                        ?.map((img,index) => `
+                                <div class="item w-[1150px] h-[300px]">
+                                    <img
+                                        src="${img.url}"
+                                        class="w-full h-full object-contain" 
+                                        style="${index == 1 ? 'z-index:1000' : ""}" 
+                                    />
+                            </div>
+                        `)
+                        .join("") ?? "";
+
+                    container.innerHTML = html;
+
+                    $(container).owlCarousel({
+                        loop: true,
+                        margin: 0,
+                        center: true,
+                        nav: true,
+                        autoplay: true,
+                        autoplayTimeout: 3000,
+                        responsive: {
+                            0: { items: 1 },
+                            768: { items: 2 },
+                            1024: { items: 3 }
+                        }
+                    });
+                }
+                                $("#report_header").text(activeTheme.report_header);
+                                $("#company_name").text(activeTheme.company_name);
+                            }
+                        }
+                    });
+                }
 
 $(document).ready(function () {
     getActive();
