@@ -211,5 +211,4 @@ Route::get('/profile',function(){
 //getting the user account
 Route::get('/getUser',[UserModelController::class,'getUser']);
 
-//delete carousel content
-Route::delete('/carousel{id}', [ThemeController::class, 'destroy']);
+Route::post('/SavePostion',[ThemeController::class,'SortCarousel']);

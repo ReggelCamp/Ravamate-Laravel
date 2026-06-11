@@ -1,15 +1,40 @@
-/* inactive items */
-/* .owl-item {
-    width: 350px;
-    transition: all 0.3s ease;
-    z-index: 1;
-} */
-
-/* center/active item */
-.owl-item.center {
-    transform: scale(1);
-    z-index: 10000 !important;
+.owl-carousel .owl-stage-outer {
+    overflow: hidden !important;
+    /* overflow: visible !important; */
 }
+
+.owl-carousel .owl-item.cloned {
+    display: block;
+    overflow: hidden !important;
+
+}
+
+.owl-item.active{
+    transform: scale(0.80);
+    transition: 0.3s;
+    /* overflow: visible !important; */
+}
+
+.owl-item.center {
+    transform: scale(1.05);
+    z-index: 10000;
+}
+.owl-item .item {
+    /* width: 650; */
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: visible !important; */
+}
+
+.owl-item .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    overflow: visible !important;
+}
+
 
 .card {
     /* width: 265px; */

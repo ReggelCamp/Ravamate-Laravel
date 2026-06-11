@@ -23,31 +23,30 @@ function getActive() {
                 
                 $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
                
-                const container = document.getElementById("carouselContainer");
-                if (container) {
-                    // if ($(container).data("owl.carousel")) {
-                    //     $(container).trigger("destroy.owl.carousel");
-                    // }
+                const $container = $("#carouselContainer");
 
-                    const html = activeTheme.carouselImg
-                        ?.map((img,index) => `
-                                <div class="item w-[1150px] h-[300px]">
-                                    <img
-                                        src="${img.url}"
-                                        class="w-full h-full object-contain" 
-                                        style="${index == 1 ? 'z-index:1000' : ""}" 
-                                    />
+                if ($container.length) {
+                    let html = "";
+                    
+                    activeTheme.carouselImg?.forEach(img => {
+                        html += `
+                            <div class="item ">
+                                <img src="${img.url}" class="w-650px h-300px " id="${img.id}" />
                             </div>
-                        `)
-                        .join("") ?? "";
+                        `;
+                    });
 
-                    container.innerHTML = html;
+                    $container.html(html);
 
-                    $(container).owlCarousel({
+                    if ($container.data("owl.carousel")) {
+                        $container.trigger("destroy.owl.carousel");
+                    }
+
+                    $container.owlCarousel({
                         loop: true,
-                        margin: 0,
+                        margin: 20,
                         center: true,
-                        nav: true,
+                        nav: false,
                         autoplay: true,
                         autoplayTimeout: 3000,
                         responsive: {

@@ -1,15 +1,20 @@
 {{-- Date Range Picker --}}
 <style>
     .daterangepicker{
-        width: 860px;
+        /* width: 860px;
         height: 350px;
         color: black;
         background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        background-size: 200% auto; */
+        width: auto;
+        max-width: 500px;
+        /* margin-right: 20px; */
+        height: auto !important;
+        color: black;
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
         background-size: 200% auto;
-        /* animation: gradientShift 3s ease-in-out infinite; */
-        /* background-color: black; */
     }
-    .daterangepicker .drp-calendar.left {
+    /* .daterangepicker .drp-calendar.left {
         width: 350px;
         max-width: 350px;
         background-color: var(--primary);
@@ -20,16 +25,26 @@
         max-width: 350px;
         background-color: var(--primary);
         color: black;
+        padding-right: 8px !important;
+    } */
+   
+    .daterangepicker .drp-calendar.left,
+    .daterangepicker .drp-calendar.right {
+    padding-right: 3px !important;
     }
+
     .daterangepicker .drp-buttons {
         display: flex;
         justify-content: center;
         gap: 5px;
-        height: 45px;
+        height: auto !important;
+        padding-bottom: 20px !important;
+        padding-right: 20px !important;
     }
     .daterangepicker .ranges{
         background-color:var(--background);
         color: var(--header-color);
+        
     }
     .daterangepicker .ranges ul li:hover,
     .daterangepicker .ranges li:hover,
@@ -65,6 +80,7 @@
 
     
 </style>
+
 
 <script 
     type="text/javascript"

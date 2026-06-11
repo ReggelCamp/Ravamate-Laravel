@@ -56,7 +56,7 @@
                 </div>
 
                 {{-- Carousel --}}
-                <div class="w-full sm:max-w-[900px] ">
+                <div class="w-full max-w-[2000px] mx-auto">
                    <div class="owl-carousel" id="carouselContainer">
                        
                     </div>

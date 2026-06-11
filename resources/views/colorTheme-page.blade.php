@@ -10,7 +10,8 @@
     <script  src="/app/helper/sweetalert.js"></script>
     <link rel="stylesheet" href="{{ asset('static/css/style.css') }}">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
     
 </head>
 <body class="w-full h-full gradient1">
@@ -274,15 +275,24 @@
             </div>
             
             {{-- Carousel images --}}
-            <input type="file" class="file-input" id="carouselImg" name="carouselImg" multiple />
-            <div class="flex flex-col gap-1.5 w-full h-full pt-2 " id="imgContainer">
-            </div> 
+            <div class="flex w-full gap-1 ">
+                <input type="file" class="file-input" id="carouselImg" name="carouselImg" multiple />
+                <input type="file" id="IndividualImg" name="IndividualCarouselImg" class="hidden IndividualCarouselImg" />
+
+                <label for="IndividualImg" id="IndividualImg" class="btn btn-primary IndividualImg">
+                    Add Image
+                </label>
+            </div>
+            <div class="w-full flex ">
+                <div class="flex flex-col items-center gap-1.5 w-full h-full pt-2 " id="imgContainer">
+                </div> 
+            </div>
 
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
                 Save
             </button>
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeEditbtn">
-                Edit
+                Confirm
             </button>
             
            

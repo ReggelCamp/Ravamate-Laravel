@@ -116,6 +116,10 @@
     {{-- DateRangePicker --}}
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
+    {{-- Sortabble-js --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
     {{-- Your JS --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>

@@ -21,6 +21,7 @@ class Theme extends Model
         'header_font',
         'report_header',
         'body_font',
+        'position',
         'is_active',
     ];
 
