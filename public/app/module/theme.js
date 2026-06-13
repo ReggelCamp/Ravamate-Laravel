@@ -4,6 +4,7 @@ let array = [];
 let carImg = [];
 let CarouselOrder = [];
 let DeleteCarouselImg = [];
+let ImgArray = [];
 let updateId;
 
 //for switch
@@ -296,19 +297,17 @@ $(document).on("click", "#executeSavebtn", function () {
     form.append("logo[]", logoFile);
     
     CarouselOrder = [];
-    const carouselInput = $("#carouselImg")[0];
-
-    //for the carousel images
-    if (carouselInput && carouselInput.files.length > 0) {
-            Array.from(carouselInput.files).forEach((file, index) => {
+    if (ImgArray.length > 0) {
+        ImgArray.forEach((file, index) => {
             form.append("CarouselImgList[]", file);
-                CarouselOrder.push({
-                id:index,
+
+            CarouselOrder.push({
+                id: index,
                 position: index + 1
-                });
+            });
         });
-            
     }
+    
     form.append("carousel_order", JSON.stringify(CarouselOrder));
 
     form.append("json", JSON.stringify({
@@ -367,11 +366,15 @@ $(document).on("click", "#executeEditbtn", function () {
     }
     
     CarouselOrder = [];
-    const carouselInput = $("#carouselImg")[0];
+  
+    if(ImgArray.length > 0){
+        ImgArray.forEach((file,index) => {
+             form.append("CarouselImgList[]", file);
 
-    if (carouselInput && carouselInput.files.length > 0) {
-        Array.from(carouselInput.files).forEach(file => {
-            form.append("CarouselImgList[]", file);
+            CarouselOrder.push({
+                id: index,
+                position: index + 1
+            });
         });
     }
 
@@ -464,11 +467,48 @@ $("#logo_id").on("change", function () {
 });
 
 function renderCarouselPreviews(files) {
-    $("#imgContainer").empty();
+    // $("#imgContainer").empty();
     // let carouselFiles = Array.from(files);
 
     Array.from(files).forEach((file, index) => {
+        ImgArray.push(file);
+        const imgIndex = ImgArray.length - 1;
         const reader = new FileReader();
+        reader.onload = function (e) {
+            $("#imgContainer").append(`
+                <div class="card bg-base-100 h-[300px] w-[150px] ImgContent shadow-sm carouseltemp">
+                    <div class="flex justify-end">
+                        <button class="btn btn-square btn-sm DeleteCarousel" data-index="${imgIndex}">
+                            X
+                        </button>
+                    </div>
+                    <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
+                    <p class="text-sm text-gray-500">${file.name}</p>
+                </div>
+            `);
+        };
+        
+        reader.readAsDataURL(file);
+    });
+    console.log(ImgArray.length,"dada");
+}
+
+// displaying Img when adding img
+$("#carouselImg").on("change", function () {
+    renderCarouselPreviews(this.files);
+});
+
+// Deleting carousel when add modal
+$(document).on("click", ".DeleteCarousel", function () {
+    const targetIndex = Number($(this).data("index"));
+
+    ImgArray.splice(targetIndex, 1);
+
+    $("#imgContainer").empty();
+
+    ImgArray.forEach((file, index) => {
+        const reader = new FileReader();
+
         reader.onload = function (e) {
             $("#imgContainer").append(`
                 <div class="card bg-base-100 h-[300px] w-[150px] ImgContent shadow-sm carouseltemp">
@@ -485,27 +525,6 @@ function renderCarouselPreviews(files) {
 
         reader.readAsDataURL(file);
     });
-}
-
-// displaying Img when adding img
-$("#carouselImg").on("change", function () {
-    renderCarouselPreviews(this.files);
-});
-
-// Deleting carousel when add modal
-$(document).on("click", ".DeleteCarousel", function () {
-    const targetIndex = Number($(this).data("index"));
-    const input = $("#carouselImg")[0];
-    const dt = new DataTransfer();
-
-    Array.from(input.files).forEach((file, index) => {
-        if (index !== targetIndex) {
-            dt.items.add(file);
-        }
-    });
-
-    input.files = dt.files;
-    renderCarouselPreviews(input.files);
 });
 
 $.ajax({

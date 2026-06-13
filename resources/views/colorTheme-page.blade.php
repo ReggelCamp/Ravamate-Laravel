@@ -277,11 +277,11 @@
             {{-- Carousel images --}}
             <div class="flex w-full gap-1 ">
                 <input type="file" class="file-input" id="carouselImg" name="carouselImg" multiple />
-                <input type="file" id="IndividualImg" name="IndividualCarouselImg" class="hidden IndividualCarouselImg" />
+                {{-- <input type="file" id="IndividualImg" name="IndividualImg" multiple class="hidden IndividualImg" />
 
-                <label for="IndividualImg" id="IndividualImg" class="btn btn-primary IndividualImg">
+                <label for="IndividualImg" id="IndividualImg" class="btn btn-primary w-full IndividualImg">
                     Add Image
-                </label>
+                </label> --}}
             </div>
             <div class="w-full flex ">
                 <div class="flex flex-col items-center gap-1.5 w-full h-full pt-2 " id="imgContainer">
