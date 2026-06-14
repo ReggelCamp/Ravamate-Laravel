@@ -6,6 +6,7 @@ let CarouselOrder = [];
 let DeleteCarouselImg = [];
 let ImgArray = [];
 let updateId;
+//  let ImgPostion = [];
 
 //for switch
 $(document).on("change", ".flipswitch", function () {
@@ -245,10 +246,15 @@ $(document).on("click", "#updatebtn", function () {
     $("#modalTitle").text("Update Theme");
 
     
+    ImgArray = [];
+    DeleteCarouselImg = [];
+    CarouselOrder = [];
+    $("#carouselImg").val("");
+
+    ClearImgContainer();
+
     if (row.carouselImg && row.carouselImg.length > 0) {
         DisplayCarouselImg(row.carouselImg);
-    } else {
-        ClearImgContainer();
     }
     AddThemeModal.showModal();
 });
@@ -366,21 +372,17 @@ $(document).on("click", "#executeEditbtn", function () {
     }
     
     CarouselOrder = [];
-  
-    if(ImgArray.length > 0){
-        ImgArray.forEach((file,index) => {
-             form.append("CarouselImgList[]", file);
 
-            CarouselOrder.push({
-                id: index,
-                position: index + 1
-            });
-        });
-    }
+    ImgArray.forEach((file) => {
+        if (!file) return;
+        form.append("CarouselImgList[]", file);
+    });
 
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
-            id: el.dataset.id,
+            type: el.dataset.type || "existing",
+            id: el.dataset.id || null,
+            temp_index: el.dataset.index || null,
             position: index + 1
         });
     });
@@ -467,30 +469,34 @@ $("#logo_id").on("change", function () {
 });
 
 function renderCarouselPreviews(files) {
-    // $("#imgContainer").empty();
-    // let carouselFiles = Array.from(files);
-
-    Array.from(files).forEach((file, index) => {
+    Array.from(files).forEach((file) => {
         ImgArray.push(file);
         const imgIndex = ImgArray.length - 1;
+        // const imgPostion = ImgArray.length;
+
         const reader = new FileReader();
+
         reader.onload = function (e) {
             $("#imgContainer").append(`
-                <div class="card bg-base-100 h-[300px] w-[150px] ImgContent shadow-sm carouseltemp">
-                    <div class="flex justify-end">
-                        <button class="btn btn-square btn-sm DeleteCarousel" data-index="${imgIndex}">
-                            X
-                        </button>
+                <div class="uploaderSort newCarouselImage" data-type="new" data-index="${imgIndex}">
+                    <div class="card bg-base-100 border black h-[300px] w-[250px] ImgContent shadow-sm carouseltemp">
+                        <div class="relative ">
+                            <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel" data-index="${imgIndex}">
+                                X
+                            </button>
+                        </div>
+                        <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
+                        <div class=" w-full p-2 bg-gray-100">
+                            <p class="text-sm text-black">File name: ${file.name}</p>
+                        </div>
                     </div>
-                    <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
-                    <p class="text-sm text-gray-500">${file.name}</p>
                 </div>
             `);
         };
-        
+
         reader.readAsDataURL(file);
+        console.log(file,"file");
     });
-    console.log(ImgArray.length,"dada");
 }
 
 // displaying Img when adding img
@@ -499,32 +505,15 @@ $("#carouselImg").on("change", function () {
 });
 
 // Deleting carousel when add modal
-$(document).on("click", ".DeleteCarousel", function () {
+$(document).on("click", ".DeleteCarousel", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     const targetIndex = Number($(this).data("index"));
 
-    ImgArray.splice(targetIndex, 1);
+    ImgArray[targetIndex] = null;
 
-    $("#imgContainer").empty();
-
-    ImgArray.forEach((file, index) => {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            $("#imgContainer").append(`
-                <div class="card bg-base-100 h-[300px] w-[150px] ImgContent shadow-sm carouseltemp">
-                    <div class="flex justify-end">
-                        <button class="btn btn-square btn-sm DeleteCarousel" data-index="${index}">
-                            X
-                        </button>
-                    </div>
-                    <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
-                    <p class="text-sm text-gray-500">${file.name}</p>
-                </div>
-            `);
-        };
-
-        reader.readAsDataURL(file);
-    });
+    $(this).closest(".uploaderSort").remove();
 });
 
 $.ajax({
@@ -590,17 +579,20 @@ $("#body_font").on("change", function () {
 // displaying img when edit btn is click
 function DisplayCarouselImg(images){
     $("#imgContainer").empty();
+    
 
     images.forEach((img,index) => {
+        const ImgPositon = index + 1; 
         $("#imgContainer").append(`
-            <div class="uploaderSort" data-id="${img.url}">
-                <div class="card bg-base-100 h-[250px] w-[150px] border border-red-600 shadow-sm">
-                         <div class="flex justify-end">
-                            <button class="btn btn-square btn-sm DeleteExistingCarousel" data-index="${index}">
+            <div class="uploaderSort" data-type="existing" data-id="${img.url}">
+                <div class="card  h-[250px] w-[250px]  shadow-sm">
+                         <div class="relative">
+                            <button class="btn btn-square btn-sm absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 DeleteExistingCarousel" data-index="${index}">
                                 X
                             </button>
-                        </div>     
+                        </div>  
                         <img src="${img.url}"class="w-full h-40 object-cover rounded skeleton">
+                        <p>${index}</p>
                 </div>
             </div>
         `);

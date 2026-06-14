@@ -98,9 +98,9 @@ class ThemeController extends Controller
 
         FileHandler::replaceFilesByID('logo/img',$id,$request->file('logo'));
     
-        if ($request->hasFile('CarouselImgList')) {
-            FileHandler::replaceFilesByID('carousel',$id,$request->file('CarouselImgList'));
-        }
+        // if ($request->hasFile('CarouselImgList')) {
+        //     FileHandler::replaceFilesByID('carousel',$id,$request->file('CarouselImgList'));
+        // }
 
         Theme::where('id', $id)->update(['position' => json_encode($order)]);
 
