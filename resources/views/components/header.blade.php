@@ -5,7 +5,7 @@
 
     <div class="flex items-center w-1/3">
 
-        <label for="my-drawer-1" class="rounded-lg p-2 cursor-pointer hover:bg-base-200 transition-all duration-200">
+        <label for="my-drawer-1" class="rounded-lg p-2 cursor-pointer hover-primary hover:scale-110 transition-transform duration-200">
 
             <i class="fa-solid fa-bars  text-xl"></i>
 
@@ -110,7 +110,7 @@
                 <li>
 
                     <a href="{{ route('dashboard') }}"
-                        class="shine-bg  rounded-xl px-4 py-3 text-sm font-medium">
+                        class="shine-bg headerFont rounded-xl px-4 py-3 text-sm font-medium">
 
                         <i class="fa-solid fa-house"></i>
 
@@ -124,7 +124,7 @@
                 <li>
 
                     <a href="{{ route('analytics') }}"
-                        class="shine-bg  rounded-xl px-4 py-3 text-sm font-medium">
+                        class="shine-bg  rounded-xl headerFont px-4 py-3 text-sm font-medium">
 
                         <i class="fa-solid fa-chart-line"></i>
 
@@ -140,7 +140,7 @@
                     <details>
                         <summary class="shine-bg w-full rounded-xl px-4 py-3 text-sm font-medium dropdownIcon">
                             <div class="items-center gap-3 ">
-                                <i class="fa-solid fa-file-lines"></i>
+                                <i class="fa-solid headerFont fa-file-lines"></i>
                                 <span>Reports</span>
                             </div>
                             <div class="flex w-full arrowIcon justify-end">
@@ -155,7 +155,7 @@
                                 <details>
 
                                     <summary
-                                        class="dropdownIcon rounded-lg shine-bg  px-4 py-2 text-sm">
+                                        class="dropdownIcon rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                         Sales Management
                                         <div class="flex w-full arrowIcon justify-end">
@@ -167,7 +167,7 @@
 
                                         <li>
                                             <a href="{{ route('dcr') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Daily Collection Report
 
@@ -176,7 +176,7 @@
 
                                         <li>
                                             <a href="{{ route('dsr') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Daily Sales Report
 
@@ -185,7 +185,7 @@
 
                                         <li>
                                             <a href="{{ route('dsrr') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Daily Sales Remittance Report
 
@@ -194,7 +194,7 @@
 
                                         <li>
                                             <a href="{{ route('ecmf') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Electronic CMF
 
@@ -203,7 +203,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingbo') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Hold Bad Orders
 
@@ -212,7 +212,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingrequest') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Hold Sales Orders
 
@@ -221,7 +221,7 @@
 
                                         <li>
                                             <a href="{{ route('missedcall') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Missed Calls
 
@@ -230,16 +230,16 @@
 
                                         <li>
                                             <a href="{{ route('offsitetransaction') }}"
-                                                class="rounded-lg px-4 shine-bg py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont py-2 text-sm">
 
                                                 Offsite Transactions
-
+ headerFont
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ route('pendingorders') }}"
-                                                class="rounded-lg px-4 shine-bg  py-2 text-sm">
+                                                class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">
 
                                                 Pending Orders
 
@@ -248,7 +248,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreport') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Sales Report
 
@@ -257,7 +257,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnBO') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Sales Return (BO)
 
@@ -266,7 +266,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnRGS') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont shine-bg  px-4 py-2 text-sm">
 
                                                 Sales Return (RGS)
 
@@ -275,7 +275,7 @@
 
                                         <li>
                                             <a href="{{ route('salessummary') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont shine-bg  px-4 py-2 text-sm">
 
                                                 Sales Summary
 
@@ -294,7 +294,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon shine-bg  px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont shine-bg  px-4 py-2 text-sm">
                                         Inventory Management
                                         <div class="flex w-full arrowIcon justify-end">
                                             <i class="fa-solid fa-angle-down"></i>
@@ -305,7 +305,7 @@
 
                                         <li>
                                             <a href="{{ route('invValuation') }}"
-                                                class="rounded-lg shine-bg px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont px-4 py-2 text-sm">
 
                                                 Inventory Valuation
 
@@ -314,7 +314,7 @@
 
                                         <li>
                                             <a href="{{ route('placementCheck') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Placement Check
 
@@ -323,7 +323,7 @@
 
                                         <li>
                                             <a href="{{ route('stockcheck') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Store Inventory
 
@@ -342,7 +342,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon  shine-bg px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont  shine-bg px-4 py-2 text-sm">
 
                                         Audit Trail
                                         <div class="flex w-full arrowIcon justify-end">
@@ -355,7 +355,7 @@
 
                                         <li>
                                             <a href="{{ route('syncReport') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont shine-bg  px-4 py-2 text-sm">
 
                                                 Salesman Data Sync
 
@@ -374,7 +374,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon shine-bg px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont shine-bg px-4 py-2 text-sm">
 
                                         Others
                                         <div class="flex w-full arrowIcon justify-end">
@@ -386,7 +386,7 @@
 
                                         <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Delivery Monitoring
 
@@ -395,7 +395,7 @@
 
                                         <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
-                                                class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                                class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                                 Prebooking Delivery Monitoring
 
@@ -421,7 +421,7 @@
 
                         <summary class="w-full shine-bg dropdownIcon rounded-xl px-4 py-3 text-sm font-medium">
 
-                            <div class="flex shine-bg w-full items-center gap-3">
+                            <div class="flex shine-bg w-full headerFont items-center gap-3">
 
                                 <i class="fa-solid fa-screwdriver-wrench"></i>
 
@@ -438,7 +438,7 @@
 
                             <li>
                                 <a href="{{ route('maintenance') }}"
-                                    class="rounded-lg shine-bg px-4 py-2 text-sm">
+                                    class="rounded-lg shine-bg headerFont px-4 py-2 text-sm">
 
                                     Data Maintenance
 
@@ -447,7 +447,7 @@
 
                             <li>
                                 <a href="{{ route('datamaintenance') }}"
-                                    class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                    class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                     Eric Data Alignment
 
@@ -456,7 +456,7 @@
 
                             <li>
                                 <a href="{{ route('sfaqueuing') }}"
-                                    class="rounded-lg shine-bg  px-4 py-2 text-sm">
+                                    class="rounded-lg shine-bg headerFont  px-4 py-2 text-sm">
 
                                     SFA Queuing
 
@@ -477,7 +477,7 @@
                         <summary
                             class="shine-bg dropdownIcon rounded-xl px-4 py-3 text-sm font-medium">
 
-                            <div class="flex items-center gap-3 ">
+                            <div class="flex items-center headerFont gap-3 ">
 
                                 <i class="fa-solid fa-location-dot"></i>
 
@@ -491,75 +491,75 @@
                         <ul class="mt-2 space-y-1 max-h-[300px] overflow-y-auto">
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">Fast
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">Fast
                                     Unimerchant Cebu</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">Fast
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">Fast
                                     Unimerchant Bohol</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     PDB</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     SYL</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     MCM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     RAC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     DCI</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     NVM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MNC
                                     ABRI CAVITE</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">IMDC
                                     GROUP CALBAYOG</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">IMDC
                                     GROUP TACLOBAN</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">IMDC
                                     GROUP ORMOC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">MEM</a>
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">MEM</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">Fast
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">Fast
                                     Unimerchants P.O.D</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">DGV</a>
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">DGV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">SMI</a>
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">SMI</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">DBV</a>
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">DBV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bg  py-2 text-sm">DCMI</a>
+                                    class="rounded-lg px-4 shine-bg headerFont  py-2 text-sm">DCMI</a>
                             </li>
 
                         </ul>

@@ -9,6 +9,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script  src="/app/helper/sweetalert.js"></script>
     <link rel="stylesheet" href="{{ asset('static/css/style.css') }}">
+     {{-- Google Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
@@ -18,7 +23,10 @@
     <div class="flex flex-col w-full h-full">
         <div class="flex w-full h--full justify-between p-5">
             <div class="w-full h-full">
-                <h1 class="text-lg">
+                <h1 class="text-2xl headerFont">
+                    Color Theme
+                </h1>
+                <h1 class="text-2xl bodyFont">
                     Color Theme
                 </h1>
             </div>
@@ -39,10 +47,10 @@
 </body>
 
     <dialog id="AddThemeModal" class="modal">
-    <div class="modal-box w-fit max-w-[90vw]">
+    <div class="modal-box w-[450px] max-w-[90vw]">
 
         <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 p-5">
+            <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 absolute right-2 top-2 p-5">
                 ✕
             </button>
         </form>
@@ -55,24 +63,35 @@
                 <h1 id="modalTitle" class="w-full text-2xl text-center">    
                 </h1>
 
-                <label class="text-sm font-medium text-gray-700">
-                     Input Theme Name
-                </label>
+                <div class="flex w-fit">
+                    <label class="text-sm font-medium text-gray-700">
+                         Input Theme Name
+                    </label>
+                    <span class="text-red-500">*</span>
+                </div>
                 
-                <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="theme_name" id="theme_name">
+                <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="theme_name" id="theme_name">
                 <span id="ThemeName-error" class="text-red-500 text-sm mt-1 hidden"></span>
 
-                <label class="text-sm font-medium text-gray-700">
-                     Input Company Name
-                </label>
-                <input type="text" class="w-full border rounded-lg pl-2.5 " required  name="company_name" id="company_name">
+               <div class="flex w-fit">
+                    <label class="text-sm font-medium  text-gray-700">
+                         Input Company Name
+                    </label>
+                    <span class="text-red-500">*</span>
+                </div>
+
+                <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="company_name" id="company_name">
                 <span id="CompanyName-error" class="text-red-500 text-sm mt-1 hidden"></span>
 
                 <div class="flex flex-col w-full h-full pt-5">
-
-                        <label>Upload Logo </label>
-                        <input type="file" class="file-input w-full" required id="logo_id" name="logo" accept="image/*" />
-                        <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
+                    <div class="flex w-fit">
+                        <label class="text-sm font-medium text-gray-700">
+                            Upload Logo
+                        </label>
+                        <span class="text-red-500">*</span>
+                    </div>
+                    <input type="file" class="file-input w-full" required id="logo_id" name="logo" accept="image/*" />
+                    <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>
 
                 <div class="flex flex-wrap gap-6 ">
@@ -214,7 +233,7 @@
 
                                 <input
                                     type="text"
-                                    id="accentColorHex"
+                                    id="BodyColorHex"
                                     value="#3b82f6"
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
@@ -253,7 +272,7 @@
 
                                 <input
                                     type="text"
-                                    id="headerColorHex"
+                                    id="HeaderColorHex"
                                     value="#3b82f6"
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
@@ -276,15 +295,14 @@
             
             {{-- Carousel images --}}
             <div class="flex w-full gap-1 ">
-                <input type="file" class="file-input" id="carouselImg" name="carouselImg" multiple />
-                {{-- <input type="file" id="IndividualImg" name="IndividualImg" multiple class="hidden IndividualImg" />
-
-                <label for="IndividualImg" id="IndividualImg" class="btn btn-primary w-full IndividualImg">
+                <input type="file" class="file-input hidden" id="carouselImg" name="carouselImg" multiple />
+             
+                <label for="carouselImg" id="addImg" class="btn btn-primary w-full addImg">
                     Add Image
-                </label> --}}
+                </label> 
             </div>
-            <div class="w-full flex ">
-                <div class="flex flex-col items-center gap-1.5 w-full h-full pt-2 " id="imgContainer">
+            <div class="w-full flex max-h-96 overflow-x-scroll">
+                <div class="flex flex-col items-center carousel overflow-x-auto scroll-smooth gap-5 w-full h-full pt-2 " id="imgContainer">
                 </div> 
             </div>
 

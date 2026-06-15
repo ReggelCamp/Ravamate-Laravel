@@ -49,15 +49,15 @@
         </script>
 
         <div class="w-full h-full flex">
-            <div class="hidden lg:flex flex-col w-[500px] p-5 h-screen justify-center gap-20 items-center no-hover carouselBg">
+            <div class="hidden lg:flex flex-col w-[500px] h-screen justify-center gap-20 items-center no-hover carouselBg">
                 {{-- RAVAMATE LOGO --}}
                 <div class="w-[150px] h-[150px]">
                     <img src="/${item.logo[0]?.url}" class="object-cover themeLogo"/>
                 </div>
 
                 {{-- Carousel --}}
-                <div class="w-full max-w-[2000px] mx-auto">
-                   <div class="owl-carousel" id="carouselContainer">
+                <div class="w-full max-w-[2000px] mx-auto overflow-hidden">
+                   <div class="owl-carousel " id="carouselContainer">
                        
                     </div>
                 </div>

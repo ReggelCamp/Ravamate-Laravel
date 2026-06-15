@@ -31,7 +31,7 @@ function getActive() {
                     activeTheme.carouselImg?.forEach(img => {
                         html += `
                             <div class="item ">
-                                <img src="${img.url}" class="w-650px h-300px " id="${img.id}" />
+                                <img src="${img.url}" class=" " id="${img.id}" />
                             </div>
                         `;
                     });
@@ -44,7 +44,7 @@ function getActive() {
 
                     $container.owlCarousel({
                         loop: true,
-                        margin: 20,
+                        margin:-20,
                         center: true,
                         nav: false,
                         autoplay: true,
