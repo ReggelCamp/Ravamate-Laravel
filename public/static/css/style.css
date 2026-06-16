@@ -13,11 +13,11 @@
 }
 
 .owl-item .item {
-    width: 300px;
+    width: 2000px !important;
     height: 400px;
     margin: 0 auto;
 
-    transform: scale(0.95);
+    transform: scale(1.1);
     transition: transform 0.3s ease;
 
     display: flex;

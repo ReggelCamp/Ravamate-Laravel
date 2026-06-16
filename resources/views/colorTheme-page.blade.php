@@ -90,9 +90,9 @@
                         <span class="text-red-500">*</span>
                     </div>
                     <input type="file" class="file-input w-full hidden" required id="logo_id" name="logo" accept="image/*" />
-                     <label for="logo_id" id="LogoImg" class="btn btn-primary w-full addImg">
-                        <i class="fa-solid fa-upload"></i> Add Image
-                    </label> 
+                        <label for="logo_id" id="LogoImg" class="btn btn-primary w-full addImg">
+                            <i class="fa-solid fa-upload"></i> Add Image
+                        </label> 
                     <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>
 
@@ -228,15 +228,17 @@
                                 <input
                                     type="color"
                                     id="BodyFont_color"
+                                    name="BodyFont_color"
                                     name="body_color"
-                                    value="#3b82f6"
+                                    value="#ffffff"
                                     class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
                                 />
 
                                 <input
                                     type="text"
                                     id="BodyFontColorHex"
-                                    value="#3b82f6"
+                                    name="BodyFontColorHex"
+                                    value="#ffffff"
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
                                 />
@@ -267,15 +269,16 @@
                                 <input
                                     type="color"
                                     id="HeaderFont_color"
-                                    name="header_color"
-                                    
+                                    name="HeaderFont_color"
+                                    value="#000000"
                                     class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
                                 />
 
                                 <input
                                     type="text"
                                     id="HeaderFontColorHex"
-                                    
+                                    name="HeaderFontColorHex"
+                                    value="#000000"
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
                                 />

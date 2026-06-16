@@ -232,6 +232,7 @@ $(document).on("click", "#updatebtn", function () {
 
     updateId = $(this).data().id;
 
+    $("#logo_id").val("");
     $("#CarouselError").text("").addClass("hidden");
     $("#logo-error").text("").addClass("hidden");
 
@@ -241,12 +242,13 @@ $(document).on("click", "#updatebtn", function () {
     $("#secondary_color").val(row.secondary_color);
     $("#accent_color").val(row.accent_color);
     $("#background_color").val(row.background_color);
-    $("#body_color").val(row.body_color);
-    $("#header_color").val(row.header_color);
+    $("#BodyFont_color").val(row.body_color);
+    $("#HeaderFont_color").val(row.header_color);
     $("#body_font").val(row.body_font);
     $("#header_font").val(row.header_font);
     $("#report_header").val(row.report_header);
     
+    console.log("dasd",row);
     const logoUrl = row.logo[0].url;
     const filename = logoUrl.split("/").pop();
 
@@ -258,10 +260,10 @@ $(document).on("click", "#updatebtn", function () {
     $("#modalTitle").text("Update Theme");
 
     
-    ImgArray = [];
-    DeleteCarouselImg = [];
-    CarouselOrder = [];
-    $("#carouselImg").val("");
+    // ImgArray = [];
+    // DeleteCarouselImg = [];
+    // CarouselOrder = [];
+    // $("#carouselImg").val("");
 
     ClearImgContainer();
 
@@ -270,7 +272,6 @@ $(document).on("click", "#updatebtn", function () {
     }
     AddThemeModal.showModal();
 
-    console.log(row,"daadf");
 });
 
 //for add
@@ -285,10 +286,10 @@ $(document).on("click", "#addbtn", function () {
     $("#logo_id").val("");
     $("#primary_color").val(" #3b82f6");
     $("#secondary_color").val("#3b82f6");
-    $("#accent_color").val(" #3b82f6");
-    $("#background_color").val(" #3b82f6");
-    $("#BodyFont_color").val(" #ffffff");
-    $("#HeaderFont_color").val(" #000000");
+    $("#accent_color").val("#3b82f6");
+    $("#background_color").val("#3b82f6");
+    $("#BodyFont_color").val("#ffffff");
+    $("#HeaderFont_color").val("#000000");
     $("#body_font").val("Roboto");
     $("#header_font").val("Roboto");
     $("#report_header").val("");
@@ -345,8 +346,8 @@ $(document).on("click", "#executeSavebtn", function () {
         secondary_color: $("#secondary_color").val(),
         accent_color: $("#accent_color").val(),
         background_color: $("#background_color").val(),
-        body_color: $("#body_color").val(),
-        header_color: $("#header_color").val(),
+        body_color: $("#BodyFont_color").val(),
+        header_color: $("#HeaderFont_color").val(),
         body_font: $("#body_font").val(),
         header_font: $("#header_font").val(),
         report_header: $("#report_header").val(),
@@ -366,7 +367,7 @@ $(document).on("click", "#executeSavebtn", function () {
 
 //for updating tha card
 $(document).on("click", "#executeEditbtn", function () {
-
+    
     const logoFile = $("#logo_id")[0]?.files[0];
 
     const theme_name = $("#theme_name").val();
@@ -395,10 +396,10 @@ $(document).on("click", "#executeEditbtn", function () {
     
     CarouselOrder = [];
 
-    ImgArray.forEach((file) => {
-        if (!file) return;
-        form.append("CarouselImgList[]", file);
-    });
+    // ImgArray.forEach((file) => {
+    //     if (!file) return;
+    //     form.append("CarouselImgList[]", file);
+    // });
 
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
@@ -419,8 +420,8 @@ $(document).on("click", "#executeEditbtn", function () {
         secondary_color: $("#secondary_color").val(),
         accent_color: $("#accent_color").val(),
         background_color: $("#background_color").val(),
-        body_color: $("#body_color").val(),
-        header_color: $("#header_color").val(),
+        body_color: $("#BodyFont_color").val(),
+        header_color: $("#HeaderFont_color").val(),
         body_font: $("#body_font").val(),
         header_font: $("#header_font").val(),
         report_header: $("#report_header").val(),
@@ -573,6 +574,14 @@ $(document).on("click", ".DeleteCarousel", function (e) {
     reindexCarousel();
     Filecount();
 
+    if(ImgArray.length == 0){
+        ClearImgContainer();
+    }
+    
+    console.log("Iac",ImgArray.length);
+    console.log("Iacqq",ImgArray);
+    console.log("llplp",targetIndex);
+
 });
 
 $.ajax({
@@ -636,6 +645,7 @@ $("#body_font").on("change", function () {
 
 // displaying img when edit btn is click
 function DisplayCarouselImg(images){
+    carouselSortable.option("disabled", true);
     $("#imgContainer").empty();
     
     images.forEach((img, index) => {
@@ -757,4 +767,5 @@ function Filecount() {
     } else {
         $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
     }
+    console.log("dd",count);
 }
