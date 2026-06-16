@@ -65,7 +65,10 @@ function getAll() {
 
                 $grid.append(`
         <div id="themeCard"
-            class="card bg-base-100  shadow-sm border-4 border-solid ${isActive}">
+            class="card bg-base-100  transition-all duration-300 ease-out cursor-pointer
+                    hover:-translate-y-2
+                    hover:shadow-2xl
+                    hover:scale-105  shadow-sm border-4 border-solid ${isActive}">
 
             <div class="card-body">
 
@@ -101,9 +104,9 @@ function getAll() {
                 </div>
 
                 <!-- IMAGE -->
-                <div class="flex justify-center items-center skeleton h-48 bg-base-200 rounded-xl mt-2">
+                <div class="flex justify-center items-center h-48 rounded-xl mt-2">
                     <img src="${item.logo?.[0]?.url || ""}"
-                        class="max-h-40 max-w-full  object-contain">
+                        class="max-h-48 max-w-full skeleton  object-contain">
                 </div>
 
                 <h2 class="card-title">
@@ -140,7 +143,7 @@ function getAll() {
 
                     <div>
                         <span class="text-gray-500 text-sm">Report Header:</span>
-                        <div>${item.report_header}</div>
+                        <div>${item.report_header? item.report_header : "NULL"}</div>
                     </div>
 
                     <div class="flex justify-between items-center mt-2">
@@ -229,6 +232,9 @@ $(document).on("click", "#updatebtn", function () {
 
     updateId = $(this).data().id;
 
+    $("#CarouselError").text("").addClass("hidden");
+    $("#logo-error").text("").addClass("hidden");
+
     $("#theme_name").val(row.theme_name);
     $("#company_name").val(row.company_name);
     $("#primary_color").val(row.primary_color);
@@ -240,6 +246,12 @@ $(document).on("click", "#updatebtn", function () {
     $("#body_font").val(row.body_font);
     $("#header_font").val(row.header_font);
     $("#report_header").val(row.report_header);
+    
+    const logoUrl = row.logo[0].url;
+    const filename = logoUrl.split("/").pop();
+
+    $("#LogoImg").text("Current File " + filename);
+    
 
     $("#executeSavebtn").hide();
     $("#executeEditbtn").show();
@@ -257,11 +269,16 @@ $(document).on("click", "#updatebtn", function () {
         DisplayCarouselImg(row.carouselImg);
     }
     AddThemeModal.showModal();
+
+    console.log(row,"daadf");
 });
 
 //for add
 $(document).on("click", "#addbtn", function () {
     carouselSortable.option("disabled", true);
+
+    $("#CarouselError").text("").addClass("hidden");
+    $("#logo-error").text("").addClass("hidden");
 
     $("#theme_name").val("");
     $("#company_name").val("");
@@ -270,13 +287,18 @@ $(document).on("click", "#addbtn", function () {
     $("#secondary_color").val("#3b82f6");
     $("#accent_color").val(" #3b82f6");
     $("#background_color").val(" #3b82f6");
-    $("#body_font").val("");
-    $("#header_font").val("");
+    $("#BodyFont_color").val(" #ffffff");
+    $("#HeaderFont_color").val(" #000000");
+    $("#body_font").val("Roboto");
+    $("#header_font").val("Roboto");
     $("#report_header").val("");
     $("#carouselImg").val("");
     $("#executeSavebtn").show();
     $("#executeEditbtn").hide();
     $("#modalTitle").text("Add Theme");
+    $("#LogoImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+    $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+
 
     ClearImgContainer();
     AddThemeModal.showModal();
@@ -438,6 +460,15 @@ $("#background_color").on("input", function () {
     $("#backgroundColorHex").val($(this).val());
 });
 
+$("#BodyFont_color").on("input", function () {
+    $("#BodyFontColorHex").val($(this).val());
+});
+
+$("#HeaderFont_color").on("input", function () {
+    $("#HeaderFontColorHex").val($(this).val());
+});
+
+
 $("#logo_id").on("change", function () {
     const file = this.files[0];
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
@@ -455,55 +486,79 @@ $("#logo_id").on("change", function () {
         return;
     }
 
-    // if (file.size > maxSize) {
-    //     $("#logo-error")
-    //         .text("File is too large. Maximum size is 2MB.")
-    //         .removeClass("hidden");
-
-    //     $(this).val(""); // clear the input
-    //     return;
-    // }
-
-    // All good — clear error
+    // clear error
     $("#logo-error").text("").addClass("hidden");
 });
 
 function renderCarouselPreviews(files) {
-    
+
     Array.from(files).forEach((file) => {
+
         ImgArray.push(file);
+
         const imgIndex = ImgArray.length - 1;
-        //const imgPostion = ImgArray.length;
 
         const reader = new FileReader();
 
         reader.onload = function (e) {
             $("#imgContainer").append(`
-                <div class="uploaderSort newCarouselImage" data-type="new" data-index="${imgIndex}">
+                <div class="uploaderSort newCarouselImage"
+                     data-type="new"
+                     data-index="${imgIndex}">
+
                     <div class="card bg-base-100 border black h-[300px] w-[250px] ImgContent shadow-sm carouseltemp">
-                        <div class="relative ">
-                            <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel" data-index="${imgIndex}">
+
+                        <div class="relative">
+                            <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel"
+                                    data-index="${imgIndex}">
                                 X
                             </button>
                         </div>
+
                         <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
-                        <div class=" w-full p-2 bg-gray-100">
+
+                        <div class="w-full p-2 bg-gray-100">
                             <p class="text-sm text-black">File name: ${file.name}</p>
-                        
                         </div>
+
                     </div>
                 </div>
             `);
+            Filecount();
         };
         reader.readAsDataURL(file);
-        console.log(imgIndex,"dad");
-        console.log(ImgArray.length,"dada");
     });
+ 
 }
 
 // displaying Img when adding img
 $("#carouselImg").on("change", function () {
-    renderCarouselPreviews(this.files);
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    const files = Array.from(this.files);
+
+    const acceptedFiles = files.filter(
+        file => allowedTypes.includes(file.type)
+    );
+
+    const rejectedFiles = files.filter(
+        file => !allowedTypes.includes(file.type)
+    );
+
+    // for invalid files
+    if (rejectedFiles.length > 0) {
+        const names = rejectedFiles.map(file => file.name).join(", ");
+
+        $("#CarouselError")
+            .text(`Rejected files: ${names}. Only JPG, PNG, WEBP are allowed.`)
+            .removeClass("hidden");
+    } else {
+        $("#CarouselError").text("").addClass("hidden");
+    }
+
+    if (acceptedFiles.length > 0) {
+        renderCarouselPreviews(acceptedFiles);
+    }
 });
 
 // Deleting carousel when add modal
@@ -511,23 +566,22 @@ $(document).on("click", ".DeleteCarousel", function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const targetIndex = Number($(this).data("index"));
+    const targetIndex = Number($(this).attr("data-index"));
 
-    ImgArray[targetIndex] = null;
-
+    ImgArray.splice(targetIndex, 1);
     $(this).closest(".uploaderSort").remove();
+    reindexCarousel();
+    Filecount();
 
-    // renumber visible positions after delete (no refresh)
-    renumberPositions();
 });
 
 $.ajax({
     url: "/fonts",
     type: "GET",
     success: function (fonts) {
-        $("#header_font","#body_font").empty();
+        $("#header_font, #body_font").empty();
 
-        $("#header_font", "#body_font").append(
+        $("#header_font, #body_font").append(
             "<option disabled selected>Pick a font</option>",
         );
 
@@ -535,17 +589,16 @@ $.ajax({
 
         Fonts.forEach((font) => {
             $("#header_font").append(`
-        <option value="${font.family}">
-            ${font.family}
-        </option>
-        `);
+                <option value="${font.family}">${font.family}</option>
+            `);
             $("#body_font").append(`
-                <option value="${font.family}">
-                    ${font.family}
-                </option>
+                <option value="${font.family}">${font.family}</option>
             `);
         });
 
+        // Set defaults after options are loaded
+        $("#header_font").val("Roboto");
+        $("#body_font").val("Roboto");
     },
 });
 
@@ -589,18 +642,27 @@ function DisplayCarouselImg(images){
         const ImgPosition = getImagePosition(index);
 
         $("#imgContainer").append(`
-            <div class="flex w-full justify-between">
-                <div class="img-position">${ImgPosition}</div>
-            
+            <div class="flex w-full justify-center">
                 <div class="uploaderSort" data-type="existing" data-id="${img.url}">
-                    <div class="card h-[250px] w-[250px] shadow-sm">
+                    <div class="card h-[250px] w-[250px] shadow-xl  transition-all duration-300 ease-out cursor-pointer
+                    hover:-translate-y-2
+                    hover:shadow-2xl
+                    hover:scale-105">
                         <div class="relative">
                             <button class="btn btn-square btn-sm absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 DeleteExistingCarousel" data-index="${index}">
                             X
                             </button>
                         </div>  
-                        
-                        <img src="${img.url}" class="w-full h-40 object-cover rounded skeleton">
+                     
+                        <img src="${img.url}" class="w-full h-40 object-cover rounded skeleton"
+                            onload="this.classList.remove('skeleton')"
+                            onerror="this.classList.remove('skeleton')"
+                        >
+                        <div class="w-full flex justify-center p-2 bg-gray-100">
+                            <p>Carousel Position: </p>
+                            <div class="img-position ">${ImgPosition}</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -623,7 +685,7 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
         position: index + 1,
         });
 
-        // update visible position without refresh
+       
         const position = el.closest(".flex").querySelector(".img-position");
         if (position) position.textContent = index + 1;
     });
@@ -637,43 +699,36 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
     e.stopPropagation();
 
     const delete_id = $(this).closest(".uploaderSort").data("id");
-    
+
     DeleteCarouselImg.push(delete_id);
-    
-    $(this).closest(".uploaderSort").remove();
+
+    $(this).closest(".flex").remove();
+
     renumberPositions();
 });
 
 function ClearImgContainer(){
     $("#imgContainer").empty();
     $("#carouselImg").val("");
-    $(".ImgContent").val("");
-    $(".uploaderSort").val("");
+
+    ImgArray = [];
+    CarouselOrder = [];
+    DeleteCarouselImg = [];
+
+    $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
 }
 
 function getImagePosition(index) {
     return index + 1;
 }
 
-// $("#carouselImg").on("change",function(){
-//     if(ImgArray.length > 0){
-//         $("#addImg").text(`${ImgArray.length} files selected`);
-//     }
-//     else{
-//         $("#addImg").text("Add Images");
-//     }
-// });
-
 function renumberPositions() {
-    // uploaderSort is inside <div class="flex w-full justify-between">
-    // position element is a sibling within that same flex row.
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, i) => {
         const parentRow = el.closest(".flex.w-full.justify-between");
         const posEl = parentRow ? parentRow.querySelector(".img-position") : null;
         if (posEl) posEl.textContent = i + 1;
     });
 
-    // also update the carousel order array for new order (if needed)
     CarouselOrder = [];
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
@@ -682,7 +737,24 @@ function renumberPositions() {
         });
     });
 
-    // (optional) update the label for selected files
-    const selectedCount = ImgArray.filter(Boolean).length;
-    $("#addImg").text(selectedCount > 0 ? `${selectedCount} files selected` : "Add Images");
+    Filecount(); 
+}
+
+function reindexCarousel() {
+    $(".uploaderSort").each(function (i) {
+        $(this)
+            .find(".DeleteCarousel")
+            .attr("data-index", i)
+            .data("index", i);
+    });
+}
+
+function Filecount() {
+    const count = document.querySelectorAll('#imgContainer .uploaderSort[data-type="new"]').length;
+
+    if (count > 0) {
+        $("#addImg").text(`${count} files selected`);
+    } else {
+        $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+    }
 }

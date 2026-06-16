@@ -17,6 +17,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     
 </head>
 <body class="w-full h-full gradient1">
@@ -39,10 +42,6 @@
 
         <div id="table" class="flex w-full h-full p-5 gap-5 flex-wrap overflow-auto">
         </div>
-        {{-- <div class="w-full flex items-center">
-            <button>Next</button>
-            <button>Next</button>
-        </div> --}}
     </div>
 </body>
 
@@ -90,7 +89,10 @@
                         </label>
                         <span class="text-red-500">*</span>
                     </div>
-                    <input type="file" class="file-input w-full" required id="logo_id" name="logo" accept="image/*" />
+                    <input type="file" class="file-input w-full hidden" required id="logo_id" name="logo" accept="image/*" />
+                     <label for="logo_id" id="LogoImg" class="btn btn-primary w-full addImg">
+                        <i class="fa-solid fa-upload"></i> Add Image
+                    </label> 
                     <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>
 
@@ -225,7 +227,7 @@
                                 
                                 <input
                                     type="color"
-                                    id="body_color"
+                                    id="BodyFont_color"
                                     name="body_color"
                                     value="#3b82f6"
                                     class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
@@ -233,7 +235,7 @@
 
                                 <input
                                     type="text"
-                                    id="BodyColorHex"
+                                    id="BodyFontColorHex"
                                     value="#3b82f6"
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
@@ -264,16 +266,16 @@
                                 
                                 <input
                                     type="color"
-                                    id="header_color"
+                                    id="HeaderFont_color"
                                     name="header_color"
-                                    value="#3b82f6"
+                                    
                                     class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
                                 />
 
                                 <input
                                     type="text"
-                                    id="HeaderColorHex"
-                                    value="#3b82f6"
+                                    id="HeaderFontColorHex"
+                                    
                                     readonly
                                     class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
                                 />
@@ -289,21 +291,23 @@
             </div>
 
             {{-- Carousel --}}
-            <div class="flex justify-between w-full h-full pt-5">
+            <div class="flex flex-col w-full h-full pt-5">
                 <label>Upload Carousel Image</label>
+                <span class="text-red-500 text-sm mt-1 hidden" id="CarouselError"></span> 
             </div>
             
             {{-- Carousel images --}}
             <div class="flex w-full gap-1 ">
                 <input type="file" class="file-input hidden" id="carouselImg" name="carouselImg" multiple />
-             
-                <label for="carouselImg" id="addImg" class="btn btn-primary w-full addImg">
-                    Add Image
-                </label> 
+                    <label for="carouselImg" id="addImg" class="btn btn-primary w-full addImg">
+                        <i class="fa-solid fa-upload"> </i>Add Image
+                    </label> 
             </div>
+
             <div class="w-full flex max-h-96 overflow-x-scroll">
                 <div class="flex flex-col items-center carousel overflow-x-auto scroll-smooth gap-5 w-full h-full pt-2 " id="imgContainer">
                 </div> 
+                
             </div>
 
             <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">

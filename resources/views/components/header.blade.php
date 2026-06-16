@@ -5,7 +5,7 @@
 
     <div class="flex items-center w-1/3">
 
-        <label for="my-drawer-1" class="rounded-lg p-2 cursor-pointer hover-primary hover:scale-110 transition-transform duration-200">
+        <label for="my-drawer-1" class="rounded-lg p-2 cursor-pointer hover-secondary hover:scale-110 transition-transform duration-200">
 
             <i class="fa-solid fa-bars  text-xl"></i>
 
