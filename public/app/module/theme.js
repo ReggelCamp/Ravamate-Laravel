@@ -232,8 +232,11 @@ $(document).on("click", "#updatebtn", function () {
     updateId = $(this).data().id;
 
     $("#logo_id").val("");
+
     $("#CarouselError").text("").addClass("hidden");
     $("#logo-error").text("").addClass("hidden");
+    $("#CompanyName-error").text("").addClass("hidden");
+    $("#ThemeName-error").text("").addClass("hidden");
 
     $("#theme_name").val(row.theme_name);
     $("#company_name").val(row.company_name);
@@ -279,6 +282,8 @@ $(document).on("click", "#addbtn", function () {
 
     $("#CarouselError").text("").addClass("hidden");
     $("#logo-error").text("").addClass("hidden");
+    $("#CompanyName-error").text("").addClass("hidden");
+    $("#ThemeName-error").text("").addClass("hidden");
 
     $("#theme_name").val("");
     $("#company_name").val("");
@@ -314,10 +319,30 @@ $(document).on("click", "#executeSavebtn", function () {
     $("#CompanyName-error, #ThemeName-error, #logo-error").text("").addClass("hidden");
 
     // validate individually
-    if (!theme_name) $("#ThemeName-error").text("This field is required").removeClass("hidden");
-    if (!company_name) $("#CompanyName-error").text("This field is required").removeClass("hidden");
-    if (!logoFile) $("#logo-error").text("This field is required").removeClass("hidden");
+   if (!theme_name || !company_name || !logoFile) {
 
+        if (!theme_name) {
+            $("#ThemeName-error")
+                .text("Theme name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        if (!company_name) {
+            $("#CompanyName-error")
+                .text("Company name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        if (!logoFile) {
+            $("#logo-error")
+                .text("Logo is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+   
     if (!theme_name || !company_name || !logoFile) return;
 
     let form = new FormData();
@@ -379,7 +404,6 @@ $(document).on("click", "#executeSavebtn", function () {
 
 //for updating tha card
 $(document).on("click", "#executeEditbtn", function () {
-    
     const logoFile = $("#logo_id")[0]?.files[0];
 
     const theme_name = $("#theme_name").val();
@@ -389,12 +413,29 @@ $(document).on("click", "#executeEditbtn", function () {
         .text("")
         .addClass("hidden");
 
-    if (!theme_name) {
-        $("#ThemeName-error").text("This field is required").removeClass("hidden");
-    }
+     // validate individually
+   if (!theme_name || !company_name || !logoFile) {
 
-    if (!company_name) {
-        $("#CompanyName-error").text("This field is required").removeClass("hidden");
+        if (!theme_name) {
+            $("#ThemeName-error")
+                .text("Theme name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        if (!company_name) {
+            $("#CompanyName-error")
+                .text("Company name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        if (!logoFile) {
+            $("#logo-error")
+                .text("Logo is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
     }
 
     if (!theme_name || !company_name) return;
@@ -588,27 +629,25 @@ $("#carouselImg").on("change", function () {
 
     
    if (acceptedFiles.length > 0) {
-    const duplicates = [];
+    // const duplicates = [];
 
-    acceptedFiles.forEach((file) => {
-        const name = file.name;
-        nameCount[name] = (nameCount[name] || 0) + 1;
+    // acceptedFiles.forEach((file) => {
+    //     const name = file.name;
+    //     nameCount[name] = (nameCount[name] || 0) + 1;
 
-        if (nameCount[name] > 1) {
-            duplicates.push(name);
-        }
-    });
+    //     if (nameCount[name] > 1) {
+    //         duplicates.push(name);
+    //     }
+    // });
 
-    if (duplicates.length > 0) {
-        $("#CarouselError")
-            .text(`Duplicate files: ${duplicates.join(", ")}`)
-            .removeClass("hidden");
-    } else {
-        $("#CarouselError").text("").addClass("hidden");
+    // if (duplicates.length > 0) {
+    //     $("#CarouselError")
+    //         .text(`Duplicate files: ${duplicates.join(", ")}`)
+    //         .removeClass("hidden");
+    // } else {
+    //     $("#CarouselError").text("").addClass("hidden");
         renderCarouselPreviews(acceptedFiles);
     }
-}
-
     
 });
 

@@ -70,7 +70,7 @@
                 </div>
                 
                 <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="theme_name" id="theme_name">
-                <span id="ThemeName-error" class="text-red-500 text-sm mt-1 hidden"></span>
+                <span id="ThemeName-error" role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
 
                <div class="flex w-fit">
                     <label class="text-sm font-medium  text-gray-700">
@@ -80,7 +80,7 @@
                 </div>
 
                 <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="company_name" id="company_name">
-                <span id="CompanyName-error" class="text-red-500 text-sm mt-1 hidden"></span>
+                <span id="CompanyName-error"role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
 
                 <div class="flex flex-col w-full h-full pt-5">
                     <div class="flex w-fit">
@@ -93,7 +93,7 @@
                         <label for="logo_id" id="LogoImg" class="btn btn-primary rounded-lg w-full addImg">
                             <i class="fa-solid fa-upload "></i> Add Image
                         </label> 
-                    <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
+                    <span id="logo-error" role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
                 </div>
 
                 <div class="flex flex-wrap gap-6 ">
