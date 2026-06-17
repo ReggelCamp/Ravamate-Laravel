@@ -168,14 +168,14 @@ function getAll() {
                 </div>
 
                 <!-- BUTTONS -->
-                <div class="flex gap-2 mt-3">
-                    <button class="bg-green-400 p-2 rounded-xl text-white"
-                        data-id="${item.id}" id="updatebtn">
+                <div class="flex w-full gap-2 mt-3">
+                    <button class="bg-blue-700 w-full rounded-xl text-white"
+                        data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
                         Edit
                     </button>
 
-                    <button class="bg-red-500 p-2 text-white rounded-lg"
-                        data-id="${item.id}" id="deletebtn"> Delete 
+                    <button class="bg-red-500 p-2 w-[40px] text-white rounded-lg"
+                        data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
 
@@ -225,10 +225,13 @@ $(document).on("click", "#deletebtn", function () {
 //for displaying the current data into the modal
 $(document).on("click", "#updatebtn", function () {
     carouselSortable.option("disabled", false);
+    
     let row = array.find((item) => {
         return item.id == $(this).data().id;
     });
 
+    const logoUrl = row.logo[0].url;
+    const filename = logoUrl.split("/").pop();
     updateId = $(this).data().id;
 
     $("#logo_id").val("");
@@ -251,8 +254,7 @@ $(document).on("click", "#updatebtn", function () {
     $("#report_header").val(row.report_header);
     
     console.log("dasd",row);
-    const logoUrl = row.logo[0].url;
-    const filename = logoUrl.split("/").pop();
+    
 
     $("#LogoImg").text("Current File " + filename);
     
@@ -405,6 +407,7 @@ $(document).on("click", "#executeSavebtn", function () {
 //for updating tha card
 $(document).on("click", "#executeEditbtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
+    const isEdit = $("#executeEditbtn").is(":visible"); 
 
     const theme_name = $("#theme_name").val();
     const company_name = $("#company_name").val();
@@ -414,7 +417,7 @@ $(document).on("click", "#executeEditbtn", function () {
         .addClass("hidden");
 
      // validate individually
-   if (!theme_name || !company_name || !logoFile) {
+   if (!theme_name || !company_name || (!logoFile && !isEdit)) {
 
         if (!theme_name) {
             $("#ThemeName-error")
@@ -430,15 +433,16 @@ $(document).on("click", "#executeEditbtn", function () {
                 .scrollIntoView({ behavior: "smooth", block: "center" });
         }
 
-        if (!logoFile) {
-            $("#logo-error")
-                .text("Logo is required")
-                .removeClass("hidden")[0]
-                .scrollIntoView({ behavior: "smooth", block: "center" });
+       if (!logoFile && !isEdit) {
+        $("#logo-error")
+            .text("Logo is required")
+            .removeClass("hidden")[0]
+            .scrollIntoView({ behavior: "smooth", block: "center" });
         }
+        return;
     }
 
-    if (!theme_name || !company_name) return;
+    //if (!theme_name || !company_name || !logoFile) return;
 
     let form = new FormData();
 
