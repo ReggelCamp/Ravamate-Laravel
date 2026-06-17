@@ -34,7 +34,7 @@
                 </h1>
             </div>
             <div class="flex w-full h-full justify-end">
-                <button class="bg-blue-400 w-fit p-2 rounded-lg text-white"id='addbtn'>
+                <button class="bg-blue-400 w-fit p-2 rounded-lg text-white "id='addbtn'>
                     <i class="fa-solid fa-plus"></i> Add Theme
                 </button>
             </div>
@@ -91,7 +91,7 @@
                     </div>
                     <input type="file" class="file-input w-full hidden" required id="logo_id" name="logo" accept="image/*" />
                         <label for="logo_id" id="LogoImg" class="btn btn-primary rounded-lg w-full addImg">
-                            <i class="fa-solid fa-upload"></i> Add Image
+                            <i class="fa-solid fa-upload "></i> Add Image
                         </label> 
                     <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
                 </div>

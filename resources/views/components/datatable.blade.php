@@ -16,7 +16,7 @@
 </style>
 
 <div class="w-full h-full text-sm bodyFont ">
-    <table id="salesmanTable" class="w-full bodyFont headerColor tableBg">
+    <table id="salesmanTable" class="w-full bodyFont salesmanTable headerColor tableBg">
 
     </table>
 </div>

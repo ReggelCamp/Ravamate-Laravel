@@ -6,7 +6,6 @@ let CarouselOrder = [];
 let DeleteCarouselImg = [];
 let ImgArray = [];
 let updateId;
-//  let ImgPostion = [];
 
 //for switch
 $(document).on("change", ".flipswitch", function () {
@@ -561,6 +560,7 @@ function renderCarouselPreviews(files) {
  
 }
 
+const nameCount = {};
 // displaying Img when adding img
 $("#carouselImg").on("change", function () {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
@@ -586,9 +586,30 @@ $("#carouselImg").on("change", function () {
         $("#CarouselError").text("").addClass("hidden");
     }
 
-    if (acceptedFiles.length > 0) {
+    
+   if (acceptedFiles.length > 0) {
+    const duplicates = [];
+
+    acceptedFiles.forEach((file) => {
+        const name = file.name;
+        nameCount[name] = (nameCount[name] || 0) + 1;
+
+        if (nameCount[name] > 1) {
+            duplicates.push(name);
+        }
+    });
+
+    if (duplicates.length > 0) {
+        $("#CarouselError")
+            .text(`Duplicate files: ${duplicates.join(", ")}`)
+            .removeClass("hidden");
+    } else {
+        $("#CarouselError").text("").addClass("hidden");
         renderCarouselPreviews(acceptedFiles);
     }
+}
+
+    
 });
 
 // Deleting carousel when add modal

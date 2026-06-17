@@ -59,9 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Custom Search
-document.getElementById('customSearch')
-.addEventListener('input', function () {
-
+$(document).on('input', '#customSearch', function () {
     $('#salesmanTable')
         .DataTable()
         .search(this.value)
@@ -69,7 +67,7 @@ document.getElementById('customSearch')
 });
 
 //for copy
-$(document).on("click",".copytBtn", function(){
+$(document).on("click",".copyBtn", function(){
     $('#salesmanTable')
     .DataTable()
     .button('.buttons-copy')

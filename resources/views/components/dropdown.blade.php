@@ -22,6 +22,8 @@
         class="dropdown-content menu bg-base-100 rounded-box z-[1] w-full p-2 shadow-sm"
     >
         {{$slot}}
+        <div id="noRec" class="p-5 noRec" hidden>
+            No Recrds found</div>
     </ul>
 
 </div>
