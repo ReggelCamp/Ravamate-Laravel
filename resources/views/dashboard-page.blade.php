@@ -14,7 +14,7 @@
 
     </head>
 
-    <body class="w-full h-screen">
+    <body class="w-full h-full">
 
         <script>
             $(document).ready(function () {

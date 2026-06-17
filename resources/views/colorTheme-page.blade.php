@@ -34,8 +34,8 @@
                 </h1>
             </div>
             <div class="flex w-full h-full justify-end">
-                <button class="bg-blue-400 w-fit p-1 rounded-xl text-white"id='addbtn'>
-                    Add Theme
+                <button class="bg-blue-400 w-fit p-2 rounded-lg text-white"id='addbtn'>
+                    <i class="fa-solid fa-plus"></i> Add Theme
                 </button>
             </div>
         </div>
@@ -90,7 +90,7 @@
                         <span class="text-red-500">*</span>
                     </div>
                     <input type="file" class="file-input w-full hidden" required id="logo_id" name="logo" accept="image/*" />
-                        <label for="logo_id" id="LogoImg" class="btn btn-primary w-full addImg">
+                        <label for="logo_id" id="LogoImg" class="btn btn-primary rounded-lg w-full addImg">
                             <i class="fa-solid fa-upload"></i> Add Image
                         </label> 
                     <span id="logo-error" class="text-red-500 text-sm mt-1 hidden"></span>
@@ -302,7 +302,7 @@
             {{-- Carousel images --}}
             <div class="flex w-full gap-1 ">
                 <input type="file" class="file-input hidden" id="carouselImg" name="carouselImg" multiple />
-                    <label for="carouselImg" id="addImg" class="btn btn-primary w-full addImg">
+                    <label for="carouselImg" id="addImg" class="btn btn-primary w-full rounded-lg addImg">
                         <i class="fa-solid fa-upload"> </i>Add Image
                     </label> 
             </div>
@@ -313,13 +313,15 @@
                 
             </div>
 
-            <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeSavebtn">
-                Save
-            </button>
-            <button  class="mt-4 bg-blue-500 p-2 text-white rounded-lg" id="executeEditbtn">
-                Confirm
-            </button>
-            
+            <div class="w-full flex justify-center">
+                <button  class="mt-4 w-full btn btn-dash btn-primary p-2  rounded-lg" id="executeSavebtn">
+                    Save
+                </button>
+                
+                <button  class="mt-4 w-full btn btn-dash btn-primary p-2  rounded-lg" id="executeEditbtn">
+                    Confirm
+                </button>
+            </div>
            
             </div>
     </div>

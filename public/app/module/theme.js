@@ -353,15 +353,28 @@ $(document).on("click", "#executeSavebtn", function () {
         report_header: $("#report_header").val(),
     }));
 
+    $("#executeSavebtn")
+    .prop("disabled", true)
+    .html('<span class="loading loading-spinner text-primary"></span>');
+
     Api.post({
-        url: `/customize_theme`,
+        url: "/customize_theme",
         data: form,
         processData: false,
         contentType: false,
         onSuccess: () => {
-            getAll();
+            $("#executeSavebtn")
+                .prop("disabled", false)
+                .html("Save");
             AddThemeModal.close();
+            getAll();
         },
+        onFail: (error) => {
+            $("#executeSavebtn")
+                .prop("disabled", false)
+                .html("Save");
+            Swal.fire("Error", error?.message ?? "Something went wrong.", "error");
+        }
     });
 });
 
@@ -396,10 +409,10 @@ $(document).on("click", "#executeEditbtn", function () {
     
     CarouselOrder = [];
 
-    // ImgArray.forEach((file) => {
-    //     if (!file) return;
-    //     form.append("CarouselImgList[]", file);
-    // });
+    ImgArray.forEach((file) => {
+        if (!file) return;
+        form.append("CarouselImgList[]", file);
+    });
 
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
@@ -427,7 +440,10 @@ $(document).on("click", "#executeEditbtn", function () {
         report_header: $("#report_header").val(),
     }));
     
-    
+    $("#executeEditbtn")
+    .prop("disabled", true)
+    .html('<span class="loading loading-spinner text-primary"></span>');
+
     Api.post({
         url: `/customize_theme/update/${updateId}`,
         processData: false,
@@ -438,10 +454,19 @@ $(document).on("click", "#executeEditbtn", function () {
         },
         data: form,
 
-        onSuccess: () => {
-            getAll();
+       onSuccess: () => {
+            $("#executeEditbtn")
+                .prop("disabled", false)
+                .html("Confirm");
             AddThemeModal.close();
+            getAll();
         },
+        onFail: (error) => {
+            $("#executeEditbtn")
+                .prop("disabled", false)
+                .html("Confirm");
+            Swal.fire("Error", error?.message ?? "Something went wrong.", "error");
+        }
     });
 });
 
@@ -472,6 +497,7 @@ $("#HeaderFont_color").on("input", function () {
 
 $("#logo_id").on("change", function () {
     const file = this.files[0];
+    const FileName = this.files[0].name;
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
     if (!file) return;
@@ -488,10 +514,13 @@ $("#logo_id").on("change", function () {
     }
 
     // clear error
+    $("#LogoImg").text(FileName);
     $("#logo-error").text("").addClass("hidden");
+    console.log("file",FileName);
 });
 
 function renderCarouselPreviews(files) {
+    carouselSortable.option("disabled", true);
 
     Array.from(files).forEach((file) => {
 
@@ -645,7 +674,7 @@ $("#body_font").on("change", function () {
 
 // displaying img when edit btn is click
 function DisplayCarouselImg(images){
-    carouselSortable.option("disabled", true);
+    
     $("#imgContainer").empty();
     
     images.forEach((img, index) => {
@@ -715,6 +744,8 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
     $(this).closest(".flex").remove();
 
     renumberPositions();
+
+    console.log("Del",delete_id);
 });
 
 function ClearImgContainer(){
@@ -734,12 +765,15 @@ function getImagePosition(index) {
 
 function renumberPositions() {
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, i) => {
-        const parentRow = el.closest(".flex.w-full.justify-between");
-        const posEl = parentRow ? parentRow.querySelector(".img-position") : null;
-        if (posEl) posEl.textContent = i + 1;
+        const posEl = el.querySelector(".img-position");
+
+        if (posEl) {
+            posEl.textContent = i + 1;
+        }
     });
 
     CarouselOrder = [];
+
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
             id: el.dataset.id,
@@ -747,7 +781,7 @@ function renumberPositions() {
         });
     });
 
-    Filecount(); 
+    Filecount();
 }
 
 function reindexCarousel() {

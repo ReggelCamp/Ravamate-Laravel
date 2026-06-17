@@ -49,7 +49,8 @@
         }
 
         .owl-carousel .owl-item.center .item {
-            transform: scale(1.8);
+            transform: scale(1.9) rotateX(5deg) rotateY(-10deg);
+            
         }
 
         /* Light mode (default) */
