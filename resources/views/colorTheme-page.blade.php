@@ -45,287 +45,179 @@
     </div>
 </body>
 
-    <dialog id="AddThemeModal" class="modal">
-    <div class="modal-box w-[450px] max-w-[90vw]">
+  <dialog id="AddThemeModal" class="modal">
+    <div class="modal-box w-[700px] max-w-[95vw] max-h-[90vh] overflow-y-auto p-6">
 
+        {{-- Close button --}}
         <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 absolute right-2 top-2 p-5">
-                ✕
-            </button>
+            <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 absolute right-3 top-3">✕</button>
         </form>
 
-        <div>
-          
-            <div class="flex flex-col w-full">
+        {{-- Title --}}
+        <h1 id="modalTitle" class="text-xl font-medium text-center mb-6"></h1>
 
-                
-                <h1 id="modalTitle" class="w-full text-2xl text-center">    
-                </h1>
+        <div class="flex flex-col gap-5">
 
-                <div class="flex w-fit">
-                    <label class="text-sm font-medium text-gray-700">
-                         Input Theme Name
+            {{-- Row 1: Theme Name + Company Name --}}
+            <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium text-gray-600">
+                        Theme name <span class="text-red-500">*</span>
                     </label>
-                    <span class="text-red-500">*</span>
+                    <input type="text" name="theme_name" id="theme_name" required
+                        placeholder="e.g. Corporate Blue"
+                        class="input input-bordered input-sm w-full rounded-lg" />
+                    <span id="ThemeName-error" role="alert" class="text-red-500 text-xs mt-0.5 hidden animate-bounce"></span>
                 </div>
-                
-                <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="theme_name" id="theme_name">
-                <span id="ThemeName-error" role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
 
-               <div class="flex w-fit">
-                    <label class="text-sm font-medium  text-gray-700">
-                         Input Company Name
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium text-gray-600">
+                        Company name <span class="text-red-500">*</span>
                     </label>
-                    <span class="text-red-500">*</span>
-                </div>
-
-                <input type="text" class="w-full border rounded-lg pl-2.5 h-[40px] " required  name="company_name" id="company_name">
-                <span id="CompanyName-error"role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
-
-                <div class="flex flex-col w-full h-full pt-5">
-                    <div class="flex w-fit">
-                        <label class="text-sm font-medium text-gray-700">
-                            Upload Logo
-                        </label>
-                        <span class="text-red-500">*</span>
-                    </div>
-                    <input type="file" class="file-input w-full hidden" required id="logo_id" name="logo" accept="image/*" />
-                        <label for="logo_id" id="LogoImg" class="btn btn-primary rounded-lg w-full addImg">
-                            <i class="fa-solid fa-upload "></i> Add Image
-                        </label> 
-                    <span id="logo-error" role="alert" class="text-red-500 text-sm mt-1 hidden animate-bounce"></span>
-                </div>
-
-                <div class="flex flex-wrap gap-6 ">
-                    <!-- Primary Color -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-medium text-gray-700">
-                            Primary Color
-                        </label>
-
-                        <div class="flex items-center gap-3">
-                            <input 
-                                type="color"
-                                id="primary_color"
-                                name="primary_color"
-                                value="#3b82f6"
-                                class="w-12 h-12 rounded-lg cursor-pointer border border-gray-300 p-1"
-                            />
-
-                            <input 
-                                type="text"
-                                id="primaryColorHex"
-                                name="primaryColorHex"
-                                class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32"
-                                value="#3b82f6"
-                                readonly
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Secondary Color -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-medium text-gray-700">
-                            Secondary Color
-                        </label>
-
-                        <div class="flex items-center gap-3">
-                            <input 
-                                type="color"
-                                id="secondary_color"
-                                name="secondary_color"
-                                value="#3b82f6"
-                                class="w-12 h-12 rounded-lg cursor-pointer border border-gray-300 p-1"
-                            />
-
-                            <input 
-                                type="text"
-                                id="secondaryColorHex"
-                                class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32 "
-                                value="#3b82f6"
-                                readonly
-                            />
-                        </div>
-                    </div>
+                    <input type="text" name="company_name" id="company_name" required
+                        placeholder="e.g. Acme Corp"
+                        class="input input-bordered input-sm w-full rounded-lg" />
+                    <span id="CompanyName-error" role="alert" class="text-red-500 text-xs mt-0.5 hidden animate-bounce"></span>
                 </div>
             </div>
 
-            <div class="flex flex-col w-full">
-                <div class="flex flex-wrap gap-6">
-                    <!-- Accent Color -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-medium text-gray-700">
-                            Accent Color
-                        </label>
+            {{-- Row 2: Logo Upload + Report Header --}}
+            <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium text-gray-600">
+                        Logo <span class="text-red-500">*</span>
+                    </label>
+                    <input type="file" id="logo_id" name="logo" accept="image/*" required class="hidden" />
+                    <label for="logo_id" id="LogoImg"
+                        class="btn btn-outline btn-primary btn-sm w-full rounded-lg border-dashed addImg">
+                        <i class="fa-solid fa-upload"></i> Choose logo
+                    </label>
+                    <span id="logo-error" role="alert" class="text-red-500 text-xs mt-0.5 hidden animate-bounce"></span>
+                </div>
 
-                        <div class="flex items-center gap-3">
-                            <input 
-                                type="color"
-                                id="accent_color"
-                                name="accent_color"
-                                value="#3b82f6"
-                                class="w-12 h-12 rounded-lg cursor-pointer border border-gray-300 p-1"
-                            />
-
-                            <input 
-                                type="text"
-                                id="accentColorHex"
-                                class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32"
-                                value="#3b82f6"
-                                readonly
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Background Color -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-sm font-medium text-gray-700">
-                            Background Color
-                        </label>
-
-                        <div class="flex items-center gap-3">
-                            <input 
-                                type="color"
-                                id="background_color"
-                                name="background_color"
-                                value="#3b82f6"
-                                class="w-12 h-12 rounded-lg cursor-pointer border border-gray-300 p-1"
-                            />
-
-                            <input 
-                                type="text"
-                                id="backgroundColorHex"
-                                name="backgroundColorHex"
-                                class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-32"
-                                value="#3b82f6"
-                                readonly
-                            />
-                        </div>
-                    </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-sm font-medium text-gray-600">Report header</label>
+                    <input type="text" id="report_header"
+                        placeholder="Report header text"
+                        class="input input-bordered input-sm w-full rounded-lg" />
                 </div>
             </div>
 
-            <div class="flex flex-col w-[400px] h-full pt-5 gap-5">
-                    <div class="flex items-center gap-6 w-full h-full">
+            {{-- Row 3: Colors (2x2 grid) --}}
+            <div class="border-t border-base-300 pt-4">
+                <p class="text-sm font-medium text-gray-500 mb-3">Colors</p>
+                <div class="grid grid-cols-4 gap-2">
 
-                        <!-- Font Selector -->
-                        <div class="flex flex-col gap-2 w-full">
-                            <label>Select Body Font</label>
-
-                            <select id="body_font" name="body_font" class="select w-full">
-                                <option disabled selected>Pick a font</option>
-                            </select>
+                    <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                        <input type="color" id="primary_color" name="primary_color" value="#3b82f6"
+                            class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-xs text-gray-400">Primary</span>
+                            <input type="text" id="primaryColorHex" name="primaryColorHex" value="#3b82f6" readonly
+                                class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
                         </div>
+                    </div>
 
-                        <!-- Color Picker -->
-                        <div class="flex flex-col gap-2">
-                            <label class="text-sm font-medium text-gray-700">
-                                Body Font Color
-                            </label>
+                    <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                        <input type="color" id="secondary_color" name="secondary_color" value="#3b82f6"
+                            class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-xs text-gray-400">Secondary</span>
+                            <input type="text" id="secondaryColorHex" value="#3b82f6" readonly
+                                class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
+                        </div>
+                    </div>
 
-                            <div class="flex items-center gap-3">
-                                
-                                <input
-                                    type="color"
-                                    id="BodyFont_color"
-                                    name="BodyFont_color"
-                                    name="body_color"
-                                    value="#ffffff"
-                                    class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
-                                />
+                    <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                        <input type="color" id="accent_color" name="accent_color" value="#3b82f6"
+                            class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-xs text-gray-400">Accent</span>
+                            <input type="text" id="accentColorHex" value="#3b82f6" readonly
+                                class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
+                        </div>
+                    </div>
 
-                                <input
-                                    type="text"
-                                    id="BodyFontColorHex"
-                                    name="BodyFontColorHex"
-                                    value="#ffffff"
-                                    readonly
-                                    class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                                />
+                    <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                        <input type="color" id="background_color" name="background_color" value="#3b82f6"
+                            class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-xs text-gray-400">Background</span>
+                            <input type="text" id="backgroundColorHex" name="backgroundColorHex" value="#3b82f6" readonly
+                                class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- Row 4: Typography (2 columns side by side) --}}
+            <div class="border-t border-base-300 pt-4">
+                <p class="text-sm font-medium text-gray-500 mb-3">Typography</p>
+                <div class="grid grid-cols-2 gap-4">
+
+                    {{-- Body Font --}}
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-gray-600">Body font</label>
+                        <select id="body_font" name="body_font" class="select select-bordered select-sm w-full rounded-lg">
+                            <option disabled selected>Pick a font</option>
+                        </select>
+                        <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                            <input type="color" id="BodyFont_color" name="BodyFont_color" value="#ffffff"
+                                class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs text-gray-400">Font color</span>
+                                <input type="text" id="BodyFontColorHex" name="BodyFontColorHex" value="#ffffff" readonly
+                                    class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
                             </div>
                         </div>
-
                     </div>
-                  
-                    <div class="flex items-center gap-6 w-full h-full">
 
-                        <!-- Font Selector -->
-                        <div class="flex flex-col gap-2 w-full">
-                            <label>Select Header Font</label>
-
-                            <select id="header_font" name="header_font" class="select w-full">
-                                <option disabled selected>Pick a font</option>
-                            </select>
-                        </div>
-
-                        <!-- Color Picker -->
-                        <div class="flex flex-col gap-2">
-                            <label class="text-sm font-medium text-gray-700">
-                                Header Font Color
-                            </label>
-
-                            <div class="flex items-center gap-3">
-                                
-                                <input
-                                    type="color"
-                                    id="HeaderFont_color"
-                                    name="HeaderFont_color"
-                                    value="#000000"
-                                    class="w-12 h-12 p-1 border border-gray-300 rounded-lg cursor-pointer"
-                                />
-
-                                <input
-                                    type="text"
-                                    id="HeaderFontColorHex"
-                                    name="HeaderFontColorHex"
-                                    value="#000000"
-                                    readonly
-                                    class="w-32 px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                                />
+                    {{-- Header Font --}}
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-gray-600">Header font</label>
+                        <select id="header_font" name="header_font" class="select select-bordered select-sm w-full rounded-lg">
+                            <option disabled selected>Pick a font</option>
+                        </select>
+                        <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
+                            <input type="color" id="HeaderFont_color" name="HeaderFont_color" value="#000000"
+                                class="w-8 h-8 rounded-md cursor-pointer border-0 bg-transparent p-0" />
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs text-gray-400">Font color</span>
+                                <input type="text" id="HeaderFontColorHex" name="HeaderFontColorHex" value="#000000" readonly
+                                    class="text-xs font-medium bg-transparent border-0 p-0 w-full" />
                             </div>
                         </div>
-
                     </div>
-            </div>
-            
-            <div class="flex flex-col w-full h-full pt-5">
-                <label>Report Header </label>
-                <input type="text" class="file-input w-full" id="report_header" />
+
+                </div>
             </div>
 
-            {{-- Carousel --}}
-            <div class="flex flex-col w-full h-full pt-5">
-                <label>Upload Carousel Image</label>
-                <span class="text-red-500 text-sm mt-1 hidden" id="CarouselError"></span> 
-            </div>
-            
-            {{-- Carousel images --}}
-            <div class="flex w-full gap-1 ">
-                <input type="file" class="file-input hidden" id="carouselImg" name="carouselImg" multiple />
-                    <label for="carouselImg" id="addImg" class="btn btn-primary w-full rounded-lg addImg">
-                        <i class="fa-solid fa-upload"> </i>Add Image
-                    </label> 
+            {{-- Row 5: Carousel --}}
+            <div class="border-t border-base-300 pt-4">
+                <p class="text-sm font-medium text-gray-500 mb-3">Carousel images</p>
+                <span id="CarouselError" class="text-red-500 text-xs mb-2 hidden"></span>
+
+                <input type="file" id="carouselImg" name="carouselImg" multiple class="hidden" />
+                <label for="carouselImg" id="addImg"
+                    class="btn btn-outline btn-primary btn-sm w-full rounded-lg border-dashed addImg">
+                    <i class="fa-solid fa-upload"></i> Add carousel images
+                </label>
+
+                <div class="w-full overflow-x-scroll p-5 mt-3">
+                    <div id="imgContainer" class="flex gap-5"></div>
+                </div>
             </div>
 
-            <div class="w-full flex max-h-96 overflow-x-scroll">
-                <div class="flex flex-col items-center carousel overflow-x-auto scroll-smooth gap-5 w-full h-full pt-2 " id="imgContainer">
-                </div> 
-                
+            {{-- Action Buttons --}}
+            <div class="w-full flex pt-1">
+                <button id="executeSavebtn" class="btn btn-outline btn-primary rounded-lg w-full">Save</button>
+                <button id="executeEditbtn" class="btn btn-primary rounded-lg w-full">Confirm</button>
             </div>
 
-            <div class="w-full flex justify-center">
-                <button  class="mt-4 w-full btn btn-dash btn-primary p-2  rounded-lg" id="executeSavebtn">
-                    Save
-                </button>
-                
-                <button  class="mt-4 w-full btn btn-dash btn-primary p-2  rounded-lg" id="executeEditbtn">
-                    Confirm
-                </button>
-            </div>
-           
-            </div>
+        </div>
     </div>
-    </dialog>
+</dialog>
 
 <script type="module" src="/app/module/theme.js"></script>
 <script type="module" src="/app/helper/theme_state.js"></script>

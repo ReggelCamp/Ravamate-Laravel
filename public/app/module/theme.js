@@ -15,27 +15,35 @@ $(document).on("change", ".flipswitch", function () {
 
     toggle.checked = !toggle.checked;
 
+    if (status === 0) {
+        Swal.fire({
+            title: "A theme must remain active",
+            icon: "warning",
+        });
+
+        return;
+    }
+
     Swal.fire({
-        title: "Are you sure?",
-        icon: "warning",
+        title: "Activate this theme?",
+        icon: "question",
         showCancelButton: true,
         confirmButtonText: "Confirm",
     }).then((result) => {
         if (result.isConfirmed) {
-            toggle.checked = !toggle.checked;
-
-            let finalStatus = toggle.checked ? 1 : 0;
+            toggle.checked = true;
 
             Api.put({
                 url: `/customize_theme/${$(toggle).data("id")}`,
                 data: JSON.stringify({
-                    is_active: finalStatus,
+                    is_active: 1,
                 }),
                 onSuccess: () => {
                     Swal.fire({
                         title: "Updated",
                         icon: "success",
                     });
+
                     getAll();
                 },
             });
@@ -51,137 +59,139 @@ function getAll() {
             array = data;
 
             let activeTheme = array.find((item) => item.is_active);
+            //console.log("pola",array);
+            
+            const defaultTheme = array[0]?.id;
+            
+            //console.log("def",defaultTheme);
+            
 
             $("#table").html(`
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-    </div>
-`);
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4">
+            `);
 
             const $grid = $("#table .grid");
 
             data.forEach((item) => {
                 let isActive = item.is_active ? "shine-pulse" : "bg-base-100";
-
+                const isDefaultTheme = item.id === defaultTheme;
+                // console.log("defl",isDefaultTheme);
+                // console.log("item",item.id);
+                // console.log("theme",defaultTheme);
                 $grid.append(`
-        <div id="themeCard"
-            class="card bg-base-100  transition-all duration-300 ease-out cursor-pointer
-                    hover:-translate-y-2
-                    hover:shadow-2xl
-                    hover:scale-105  shadow-sm border-4 border-solid ${isActive}">
+                    <div id="themeCard"
+                        class="card bg-base-100  transition-all duration-300 ease-out
+                            hover:-translate-y-2
+                            hover:shadow-2xl
+                            hover:scale-105  shadow-sm border-4 border-solid ${isActive}">
 
-            <div class="card-body">
+                        <div class="card-body">
 
-                <!-- HEADER -->
-                <div class="flex w-full justify-between items-center">
+                            <!-- HEADER -->
+                            <div class="flex w-full justify-between items-center">
 
-                    <h2 class="card-title">
-                        ${item.theme_name}
-                    </h2>
+                                <h2 class="card-title">
+                                    ${item.theme_name}
+                                </h2>
 
-                    <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500" : ""}">
-                        <input type="checkbox"
-                            data-id="${item.id}"
-                            class="flipswitch"
-                            ${item.is_active ? "checked" : ""}/>
+                                <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500" : ""}">
+                                    <input type="checkbox"
+                                        data-id="${item.id}"
+                                        class="flipswitch"
+                                        ${item.is_active ? "checked" : ""}/>
 
-                        <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 6 6 18" />
-                            <path d="m6 6 12 12" />
-                        </svg>
+                                    <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 6 6 18" />
+                                        <path d="m6 6 12 12" />
+                                    </svg>
 
-                        <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24">
-                            <g stroke-linejoin="round" stroke-linecap="round"
-                                stroke-width="4" fill="none" stroke="currentColor">
-                                <path d="M20 6 9 17l-5-5"></path>
-                            </g>
-                        </svg>
-                    </label>
+                                    <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24">
+                                        <g stroke-linejoin="round" stroke-linecap="round"
+                                            stroke-width="4" fill="none" stroke="currentColor">
+                                            <path d="M20 6 9 17l-5-5"></path>
+                                        </g>
+                                    </svg>
+                                </label>
+                            </div>
 
-                </div>
+                            <!-- IMAGE -->
+                            <div class="flex justify-center items-center h-48 rounded-xl mt-2">
+                                <img src="${item.logo?.[0]?.url || ""}"
+                                    class="max-h-48 max-w-full skeleton  object-contain">
+                            </div>
 
-                <!-- IMAGE -->
-                <div class="flex justify-center items-center h-48 rounded-xl mt-2">
-                    <img src="${item.logo?.[0]?.url || ""}"
-                        class="max-h-48 max-w-full skeleton  object-contain">
-                </div>
+                            <h2 class="card-title">
+                                Company Name: ${item.company_name}
+                            </h2>
 
-                <h2 class="card-title">
-                    Company Name: ${item.company_name}
-                </h2>
+                            <!-- COLORS -->
+                            <div class="flex justify-between w-full gap-2 mt-4 flex-wrap">
 
-                <!-- COLORS -->
-                <div class="flex justify-between w-full gap-2 mt-4 flex-wrap">
+                                <div class="flex flex-col">
+                                    <h1>Primary</h1>
+                                    <div class="w-[30px] h-[30px] border" style="background:${item.primary_color}"></div>
+                                </div>
 
-                    <div class="flex flex-col">
-                        <h1>Primary</h1>
-                        <div class="w-[30px] h-[30px] border" style="background:${item.primary_color}"></div>
-                    </div>
+                            <div class="flex flex-col">
+                                <h1>Secondary</h1>
+                                <div class="w-[30px] h-[30px] border" style="background:${item.secondary_color}"></div>
+                            </div>
 
-                    <div class="flex flex-col">
-                        <h1>Secondary</h1>
-                        <div class="w-[30px] h-[30px] border" style="background:${item.secondary_color}"></div>
-                    </div>
+                            <div class="flex flex-col">
+                                <h1>Accent</h1>
+                                <div class="w-[30px] h-[30px] border" style="background:${item.accent_color}"></div>
+                            </div>
 
-                    <div class="flex flex-col">
-                        <h1>Accent</h1>
-                        <div class="w-[30px] h-[30px] border" style="background:${item.accent_color}"></div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <h1>BG</h1>
-                        <div class="w-[30px] h-[30px] border" style="background:${item.background_color}"></div>
-                    </div>
-
-                </div>
-
-                <!-- FONT INFO -->
-                <div class="flex flex-col w-full mt-3">
-
-                    <div>
-                        <span class="text-gray-500 text-sm">Report Header:</span>
-                        <div>${item.report_header? item.report_header : "NULL"}</div>
-                    </div>
-
-                    <div class="flex justify-between items-center mt-2">
-                        <div>
-                            <span class="text-gray-500 text-sm">Body Font:</span>
-                            <div>${item.body_font}</div>
+                            <div class="flex flex-col">
+                                <h1>BG</h1>
+                                <div class="w-[30px] h-[30px] border" style="background:${item.background_color}"></div>
+                            </div>
                         </div>
 
-                        <div class="w-6 h-6 rounded border"
-                            style="background:${item.body_color}"></div>
-                    </div>
+                        <!-- FONT INFO -->
+                        <div class="flex flex-col w-full mt-3">
 
-                    <div class="flex justify-between items-center mt-2">
-                        <div>
-                            <span class="text-gray-500 text-sm">Header Font:</span>
-                            <div>${item.header_font}</div>
+                            <div>
+                                <span class="text-gray-500 text-sm">Report Header:</span>
+                                <div>${item.report_header? item.report_header : "NULL"}</div>
+                            </div>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <div>
+                                    <span class="text-gray-500 text-sm">Body Font:</span>
+                                    <div>${item.body_font}</div>
+                                </div>
+
+                                <div class="w-6 h-6 rounded border" style="background:${item.body_color}"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <div>
+                                    <span class="text-gray-500 text-sm">Header Font:</span>
+                                    <div>${item.header_font}</div>
+                                </div>
+
+                                <div class="w-6 h-6 rounded border" style="background:${item.header_color}"></div>
+                            </div>
                         </div>
 
-                        <div class="w-6 h-6 rounded border"
-                            style="background:${item.header_color}"></div>
+                        <!-- BUTTONS -->
+                        <div class="flex w-full gap-2 mt-3">
+                            <button class="bg-blue-700 w-full rounded-xl h-[30px] text-white cursor-pointer"
+                                data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
+                                Edit
+                            </button>
+
+                            <button class="bg-red-500 p-2 w-[40px] h-[30px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden":"flex justify-center"}"
+                                data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
-
                 </div>
-
-                <!-- BUTTONS -->
-                <div class="flex w-full gap-2 mt-3">
-                    <button class="bg-blue-700 w-full rounded-xl text-white"
-                        data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
-                        Edit
-                    </button>
-
-                    <button class="bg-red-500 p-2 w-[40px] text-white rounded-lg"
-                        data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    `);
+                `);
             });
         },
     });
@@ -205,7 +215,7 @@ $(document).on("click", "#deletebtn", function () {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
+      
         if (result.isConfirmed) {
             Api.delete({
                 url: `/customize_theme/delete/${$(this).data("id")}`,
@@ -290,7 +300,7 @@ $(document).on("click", "#addbtn", function () {
     $("#theme_name").val("");
     $("#company_name").val("");
     $("#logo_id").val("");
-    $("#primary_color").val(" #3b82f6");
+    $("#primary_color").val("#3b82f6");
     $("#secondary_color").val("#3b82f6");
     $("#accent_color").val("#3b82f6");
     $("#background_color").val("#3b82f6");
