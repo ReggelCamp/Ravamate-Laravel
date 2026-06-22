@@ -1,4 +1,5 @@
 import Api from "../helper/Api.js";
+import getActive from "../helper/theme_state.js"
 
 let array = [];
 let carImg = [];
@@ -44,7 +45,10 @@ $(document).on("change", ".flipswitch", function () {
                         icon: "success",
                     });
 
-                    getAll();
+                    getAll(); 
+                    //window.getActive();
+                    getActive();
+                    localStorage.setItem("themeUpdated", Date.now());             
                 },
             });
         }
@@ -120,7 +124,10 @@ function getAll() {
                             <!-- IMAGE -->
                             <div class="flex justify-center items-center h-48 rounded-xl mt-2">
                                 <img src="${item.logo?.[0]?.url || ""}"
-                                    class="max-h-48 max-w-full skeleton  object-contain">
+                                    class="max-h-48 max-w-full skeleton  object-contain"
+                                        onload="this.classList.remove('skeleton')"
+                                        onerror="this.classList.remove('skeleton')"    
+                                >
                             </div>
 
                             <h2 class="card-title">
@@ -590,7 +597,7 @@ function renderCarouselPreviews(files) {
                      data-type="new"
                      data-index="${imgIndex}">
 
-                    <div class="card bg-base-100 border black h-[300px] w-[250px] ImgContent shadow-sm carouseltemp">
+                    <div class="card bg-base-100 border black h-[250px] w-[250px] ImgContent shadow-sm carouseltemp">
 
                         <div class="relative">
                             <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel"

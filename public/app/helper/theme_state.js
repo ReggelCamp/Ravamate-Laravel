@@ -1,6 +1,8 @@
 import Api from "./Api.js";
 
-function getActive() {
+export default function getActive() {
+//function getActive() {
+// window.getActive=function() {
     Api.get({
         url: "/customize_theme/getActive",
         onSuccess: (data) => {
@@ -8,7 +10,6 @@ function getActive() {
             let activeTheme = data;
 
             if (activeTheme) {
-
             
                 document.documentElement.style.setProperty('--primary', activeTheme.primary_color);
                 document.documentElement.style.setProperty('--secondary', activeTheme.secondary_color);
@@ -83,3 +84,8 @@ $(document).on("change", "#theme-toggle", function () {
 });
 
 
+window.addEventListener("storage", function (e) {
+    if (e.key === "themeUpdated") {
+        getActive();
+    }
+});
