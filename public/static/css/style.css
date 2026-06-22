@@ -226,8 +226,8 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
     .carouselBg{
-        background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-        background-size: 200% auto;
+        /* background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
+        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
         animation: gradientShift 3s ease-in-out infinite;
         color: var(--header-color);
     }

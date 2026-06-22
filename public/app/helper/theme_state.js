@@ -48,7 +48,7 @@ export default function getActive() {
                         margin:-20,
                         center: true,
                         nav: false,
-                        autoplay: true,
+                        autoplay: false,
                         autoplayTimeout: 3000,
                         responsive: {
                             0: { items: 1 },
