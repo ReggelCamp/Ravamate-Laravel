@@ -4,6 +4,7 @@
     #salesmanTable td {
         text-align: center !important;
         vertical-align: middle;
+        overflow-x: scroll;
     }
 
     /* first column (name) stays left */
@@ -11,7 +12,27 @@
     #salesmanTable td:first-child {
         text-align: left !important;
     }
- 
+
+    /* #salesmanTable .dt-container {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    } */
+
+    .dataTable-info{
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 2px;
+    }
+
+    .dt-paging {
+        width: fit-content;
+        display: flex;
+        justify-content: flex-end;
+    }
     
 </style>
 

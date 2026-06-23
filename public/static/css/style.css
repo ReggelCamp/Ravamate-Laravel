@@ -47,14 +47,6 @@
     transition: all 0.4s ease;        
 }
 
-/* Images */
-/* .owl-item .item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-} */
-
 .owl-item .item img {
     width: 300px;
     height: 200px;
@@ -63,7 +55,7 @@
 }
 
 /* Mobile view */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
 
     /* Shrink the item container itself */
     .owl-item .item {
@@ -71,22 +63,51 @@
         height: 200px !important;
     }
 
-    /* Tone down the transforms so side items don't blow out */
     .owl-item.active:not(.center) .item {
         transform: scale(0.65);
     }
 
     .owl-item.center .item {
-        transform: scale(1.1) rotateX(5deg) rotateY(-10deg);
+        transform: scale(1.5) rotateX(5deg) rotateY(-10deg);
     }
 
-    /* Fit image inside the smaller container */
     .owl-item .item img {
         width: 120px;
-        height: 100px;
+        height: 150px;
+    }
+
+    .owl-carousel {
+        overflow: visible !important;
+        padding-top: 35px; /* room for scale overflow at the top */
     }
 }
 
+/* tablet view */
+@media (min-width: 712px) and (max-width: 1023px) {
+    
+    .owl-carousel {
+        overflow: visible !important;
+        padding-top: 20px; /* room for scale overflow at the top */
+    }
+
+    .owl-item .item {
+        width: 250px !important;
+        height: 300px !important;
+        /* scale upward from bottom, not center */
+    }
+
+    .owl-item.active:not(.center) .item {
+        transform: scale(1.1);
+    }
+
+    .owl-item.center .item {
+        transform: scale(1.1);
+    }
+    .owl-item .item img {
+        width: 180px;
+        height: 180px;
+    }
+}
 
 
 
@@ -137,7 +158,8 @@ summary::-webkit-details-marker {
 
 /* for gradient */
 .gradient1 {
-    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+    /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
+    background: radial-gradient(circle at 50% 50%, var(--primary), var(--secondary), var(--accent));
     background-size: 200% auto;
     animation: gradientShift 3s ease-in-out infinite;
 }
@@ -212,7 +234,8 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
     .report_title{
-        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
+        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
         background-size: 200% auto;
         animation: gradientShift 3s ease-in-out infinite;
         /* background-color: var(--background); */
@@ -232,7 +255,8 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
     .tableSec{
-        background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        /* background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
+        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
         background-size: 200% auto;
         animation: gradientShift 3s ease-in-out infinite;
         /* background-color: var(--background); */
@@ -564,3 +588,26 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
     border: 1px solid var(--accent) !important;
 }
 
+.dt-paging-button{
+    background: var(--primary) !important;
+}
+
+/* Make the right panel fill height properly */
+.tableSec {
+    flex: 0 0 auto;
+}
+
+.tableSec.expanded {
+    flex: 1 1 auto;   
+    height: 100%;
+}
+
+#DataTable {
+    height: 300px;
+    overflow-y: auto;
+}
+
+#DataTable.expanded {
+    height: calc(100% - 60px); 
+    overflow-y: auto;
+}

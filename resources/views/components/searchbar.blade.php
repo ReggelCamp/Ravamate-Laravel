@@ -13,7 +13,8 @@
         <input
             type="text"
             {{ $attributes->merge([
-                'class' => 'border rounded-lg bodyFont searchBar w-full h-[40px] pl-10 pr-3'
+                'class' => 'border rounded-lg bodyFont searchBar w-full h-[30px] pl-10 pr-3'
+                // 'class' => 'border rounded-lg bodyFont searchBar w-full h-[40px] pl-10 pr-3'
             ]) }}
             placeholder="Search..."
         >

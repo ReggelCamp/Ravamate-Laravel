@@ -6,8 +6,12 @@ export default class MyDataTables{
                 ordering: false,
                 lengthChange: false,
                 responsive: true,
-
-                dom: 'tip',
+                data: json,
+                columns: columns,
+                pageLength: 5,
+                scrollX:true,
+                
+                dom: '<"top">rt<"dataTable-info"ip><"clear">',
 
                 buttons: [
                     {

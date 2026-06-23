@@ -28,8 +28,8 @@
 <body class="w-full h-full gradient1">
     <div class="flex flex-col w-full h-full">
         <div class="flex w-full h--full justify-between p-5">
-            <div class="w-full h-full">
-                <h1 class="text-2xl headerFont">
+            <div class="w-full h-full ">
+                <h1 class="text-2xl w-fit p-2 rounded-xl headerFont border bg-amber-200">
                     Color Theme
                 </h1>
                 <h1 class="text-2xl bodyFont">
@@ -37,7 +37,7 @@
                 </h1>
             </div>
             <div class="flex w-full h-full justify-end">
-                <button class="bg-blue-400 w-fit p-2 rounded-lg text-white "id='addbtn'>
+                <button class="bg-blue-400 w-fit p-2 rounded-lg text-white"id='addbtn'>
                     <i class="fa-solid fa-plus"></i> Add Theme
                 </button>
             </div>
@@ -208,7 +208,7 @@
                 </label>
 
                 <div class="w-full overflow-x-scroll p-5 mt-3">
-                    <div id="imgContainer" class="flex gap-5"></div>
+                    <div id="imgContainer" class="flex gap-5" ></div>
                 </div>
             </div>
 

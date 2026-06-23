@@ -1,8 +1,6 @@
 import Api from "./Api.js";
 
 export default function getActive() {
-//function getActive() {
-// window.getActive=function() {
     Api.get({
         url: "/customize_theme/getActive",
         onSuccess: (data) => {
@@ -48,11 +46,11 @@ export default function getActive() {
                         margin:-20,
                         center: true,
                         nav: false,
-                        autoplay: false,
+                        autoplay: true,
                         autoplayTimeout: 3000,
                         responsive: {
                             0: { items: 1 },
-                            768: { items: 2 },
+                            768: { items: 3 },
                             1024: { items: 3 }
                         }
                     });
@@ -87,5 +85,26 @@ $(document).on("change", "#theme-toggle", function () {
 window.addEventListener("storage", function (e) {
     if (e.key === "themeUpdated") {
         getActive();
+    }
+});
+
+$("#ExpandBtn").click(function () {
+    const isExpanding = $(".HideMap").is(":visible");
+    $("#ExpandBtn").text
+    $(".HideMap").toggle();
+    $(".tableSec").toggleClass("expanded");
+    $("#DataTable").toggleClass("expanded");
+
+    $("#ExpandBtn").text(
+    $("#DataTable").hasClass("expanded")
+        ? "Collapse"
+        : "Expand"
+    );
+
+    let table = $("#salesmanTable").DataTable();
+    if (isExpanding) {
+        table.page.len(10).draw(false);
+    } else {
+        table.page.len(5).draw(false);
     }
 });
