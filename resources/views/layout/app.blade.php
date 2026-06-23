@@ -126,6 +126,7 @@
     <script type="module" src="/app/module/salesman.js"></script>
     <script type="module" src="/app/module/dropdown.js"></script>
     <script type="module" src="/app/module/user.js"></script>
+    <script type="module" src="/app/module/dashboard.js"></script>
 
     @stack('scripts')
     
