@@ -78,7 +78,8 @@
 
     .owl-carousel {
         overflow: visible !important;
-        padding-top: 35px; /* room for scale overflow at the top */
+        padding-top: 45px; /* room for scale overflow at the top */
+        padding-bottom: 35px; /* room for scale overflow at the top */
     }
 }
 
@@ -88,6 +89,7 @@
     .owl-carousel {
         overflow: visible !important;
         padding-top: 20px; /* room for scale overflow at the top */
+        padding-bottom: 20px; /* room for scale overflow at the top */
     }
 
     .owl-item .item {
@@ -157,12 +159,7 @@ summary::-webkit-details-marker {
 }
 
 /* for gradient */
-.gradient1 {
-    /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
-    background: radial-gradient(circle at 50% 50%, var(--primary), var(--secondary), var(--accent));
-    background-size: 200% auto;
-    animation: gradientShift 3s ease-in-out infinite;
-}
+
 
 .gradient2 {
     background: linear-gradient(90deg, var(--background), var(--primary), var(--accent), var(--secondary));
@@ -235,7 +232,7 @@ summary::-webkit-details-marker {
     }
     .report_title{
         /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
-        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
+        /* background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent)); */
         background-size: 200% auto;
         animation: gradientShift 3s ease-in-out infinite;
         /* background-color: var(--background); */
@@ -248,15 +245,45 @@ summary::-webkit-details-marker {
         background-color: var(--background);
         color: var(--header-color);
     }
-    .carouselBg{
-        /* background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
-        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
-        animation: gradientShift 3s ease-in-out infinite;
-        color: var(--header-color);
+    .RadialBg {
+        background: radial-gradient(
+             ellipse at 0% 50%,
+            /* var(--primary) 0%,
+            var(--primary) 50%,
+            var(--secondary) 100% */
+
+            var(--secondary) 0%,
+            var(--secondary) 50%,
+            var(--primary) 100%
+
+            /* var(--secondary) 0%,
+            var(--secondary) 45%,
+            var(--primary) 85%,
+            var(--accent) 100% */
+        );
     }
+
+    .LinearBg {
+        background: linear-gradient(
+            to top,
+            /* var(--primary) 0%,
+            var(--primary) 50%,
+            var(--secondary) 100% */
+            
+            var(--secondary) 0%,
+            var(--secondary) 50%,
+            var(--primary) 100%
+
+            /* var(--secondary) 0%,
+            var(--secondary) 45%,
+            var(--primary) 85%,
+            var(--accent) 100% */
+        );
+    }
+
     .tableSec{
         /* background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
-        background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent));
+        /* background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent)); */
         background-size: 200% auto;
         animation: gradientShift 3s ease-in-out infinite;
         /* background-color: var(--background); */
@@ -307,12 +334,6 @@ summary::-webkit-details-marker {
     .primaryBg{
         background-color: var(--primary);
     }
-
-    /* .shine-bg {
-        position: relative;
-        background: var(--primary);
-        color: var(--body-color);
-    } */
 
     #salesmanTable_info{
         color: var(--body-color);
@@ -417,6 +438,21 @@ summary::-webkit-details-marker {
         background-color: #120b3d;
         color: white;
     }
+
+    /* .LinearBg {
+        background-color: #120b3d;
+        color: white;
+    } */
+    .RadialBg {
+        background-color: #120b3d;
+        color: white;
+    }
+    
+    .DarkMode {
+        background-color: #120b3d;
+        color: white;
+    }
+
     .report_title{
        background-color: #120b3d;
         color: white;
@@ -425,10 +461,10 @@ summary::-webkit-details-marker {
         background-color: #120b3d;
         color: white;
     }
-    .carouselBg{
+    /* .carouselBg{
         background-color: #120b3d;
         color: white;
-    }
+    } */
     .tableSec{
         background-color: #120b3d;
         color: white;

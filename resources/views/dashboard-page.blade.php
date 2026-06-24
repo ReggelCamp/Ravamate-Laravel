@@ -1,10 +1,10 @@
 @extends('layout.app')
 @section('content')
 
-    <div class="w-full h-full flex flex-col lg:flex-row overflow-y-scroll">
+    <div class="w-full h-full flex flex-col lg:flex-row overflow-y-scroll RadialBg">
 
         {{-- Carousel Panel --}}
-        <div class="order-last lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center no-hover carouselBg">
+        <div class="order-last DarkMode LinearBg  lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center ">
 
             {{-- Logo --}}
             <div class="flex w-full justify-center items-center">
@@ -21,14 +21,14 @@
         </div>
 
         {{-- Main div --}}
-        <div class="flex flex-col w-full flex-1 border-l-1">
+        <div class="flex flex-col w-full flex-1 border-l-1 ">
 
             {{-- Map --}}
-            <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto">
+            <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto ">
 
                 {{-- Map Header --}}
-                <div class="w-full h-[50px] flex-shrink-0 flex justify-between report_title items-center">
-                    <div class="w-full h-[50px] items-center">
+                <div class="w-full h-[50px] flex-shrink-0 flex justify-between report_title items-center ">
+                    <div class="w-full items-center">
                         <x-report-header-title title="Dashboard"/>
                     </div>
                     <div class="flex w-[150px] sm:w-full h-[50px] whitespace-nowrap gap-2">
@@ -37,7 +37,7 @@
                 </div>
 
                 {{-- Map Body --}}
-                <div class="w-full h-full  flex-1">
+                <div class="w-full h-full bg-white flex-1">
                     <div class="w-full h-full flex justify-center p-2 items-end">
                         <div class="flex w-[450px] gap-5 ps-2 rounded-lg h-[35px] bg-gray-200">
                             {{-- avatar --}}
@@ -66,7 +66,7 @@
             </div>
 
             {{-- Table --}}
-            <div class="w-full bodyFont flex flex-col tableSec h-[400px] sm:h-[350px] lg:h-[300px]">
+            <div class="w-full bodyFont flex flex-col tableSec h-[400px] sm:h-[350px] lg:h-[300px] ">
 
                 {{-- Toolbar --}}
                 <div class="w-full h-[217px] sm:h-[60px] flex-shrink-0 flex flex-col-reverse sm:flex-row justify-between gap-5 p-5">

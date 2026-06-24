@@ -15,7 +15,7 @@
         
         <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-stretch gap-5 p-5 w-full">
 
-            <div class="w-full sm:w-[250px] h-[30px]">
+            <div class="w-[220px] lg:w-[250px] h-[30px]">
                 <x-dropdown>
                     <x-slot:dropdownName>
                         Filter by Salesman

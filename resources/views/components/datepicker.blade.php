@@ -97,9 +97,9 @@
     'displayOnly' => false
 ])
 
-<div class="w-[150px] sm:w-full flex h-full sm:justify-end pr-2">
+<div class="w-full flex h-full justify-end pr-2">
 
-    <div class="w-[150px] dateColor flex items-center h-full sm:justify-end ">
+    <div class="w-[250px] dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)
 
@@ -112,7 +112,7 @@
 
             <button
                 id="dateButton"
-                class="border text-xs md:text-base w-[150px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition">
+                class="border text-xs md:text-base w-[200px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition">
 
                 Filter by Date
 

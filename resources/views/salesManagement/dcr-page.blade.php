@@ -6,7 +6,7 @@
         <div class="w-full h-full items-center ">
             <x-report-header-title title="DCR" />
         </div>
-        <div class="w-fit h-[30px] ">
+        <div class="w-[100px] h-[30px] flex text-nowrap ">
             <x-datepicker/>
         </div>
     </div>

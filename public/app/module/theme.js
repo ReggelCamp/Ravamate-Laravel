@@ -130,49 +130,42 @@ function getAll() {
                                 >
                             </div>
 
-                            <h2 class="card-title">
-                                Company Name: ${item.company_name}
-                            </h2>
+                            <div class="flex w-full flex-col">
+                                <h2 class="card-title">
+                                     ${item.company_name}
+                                </h2>
+
+                                <div>
+                                    <div class="text-gray-500">${item.report_header ? item.report_header : "NULL"}</div>
+                                </div>
+                            </div>
 
                             <!-- COLORS -->
-                            <div class="flex justify-between w-full gap-2 mt-4 flex-wrap">
+                            <div class="flex flex-col w-full">
+                                <h1>Color Palette</h1>
+                                <div class="flex w-full gap-2 mt-2">
 
-                                <div class="flex flex-col">
-                                    <h1>Primary</h1>
-                                    <div class="w-[30px] h-[30px] border" style="background:${item.primary_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.primary_color}"></div>
+
+                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.secondary_color}"></div>
+
+                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.accent_color}"></div>
+
+                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.background_color}"></div>
                                 </div>
-
-                            <div class="flex flex-col">
-                                <h1>Secondary</h1>
-                                <div class="w-[30px] h-[30px] border" style="background:${item.secondary_color}"></div>
                             </div>
-
-                            <div class="flex flex-col">
-                                <h1>Accent</h1>
-                                <div class="w-[30px] h-[30px] border" style="background:${item.accent_color}"></div>
-                            </div>
-
-                            <div class="flex flex-col">
-                                <h1>BG</h1>
-                                <div class="w-[30px] h-[30px] border" style="background:${item.background_color}"></div>
-                            </div>
-                        </div>
 
                         <!-- FONT INFO -->
-                        <div class="flex flex-col w-full mt-3">
+                        <div class="flex justify-between w-full mt-2">
 
-                            <div>
-                                <span class="text-gray-500 text-sm">Report Header:</span>
-                                <div>${item.report_header? item.report_header : "NULL"}</div>
-                            </div>
-
+                            
                             <div class="flex justify-between items-center mt-2">
                                 <div>
                                     <span class="text-gray-500 text-sm">Body Font:</span>
                                     <div>${item.body_font}</div>
                                 </div>
 
-                                <div class="w-6 h-6 rounded border" style="background:${item.body_color}"></div>
+                                
                             </div>
 
                             <div class="flex justify-between items-center mt-2">
@@ -181,7 +174,7 @@ function getAll() {
                                     <div>${item.header_font}</div>
                                 </div>
 
-                                <div class="w-6 h-6 rounded border" style="background:${item.header_color}"></div>
+                                
                             </div>
                         </div>
 
@@ -192,7 +185,7 @@ function getAll() {
                                 Edit
                             </button>
 
-                            <button class="bg-red-500 p-2 w-[40px] h-[30px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden":"flex justify-center"}"
+                            <button class="bg-red-500 p-2 w-[40px] h-[30px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}"
                                 data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
@@ -521,6 +514,7 @@ $(document).on("click", "#executeEditbtn", function () {
                 .html("Confirm");
             AddThemeModal.close();
             getAll();
+            localStorage.setItem("themeUpdated", Date.now());  
         },
         onFail: (error) => {
             $("#executeEditbtn")
