@@ -54,9 +54,9 @@
     <div class="modal-box w-[700px] max-w-[95vw] max-h-[90vh] overflow-y-auto p-6">
 
         {{-- Close button --}}
-        <form method="dialog">
+        {{-- <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 absolute right-3 top-3">✕</button>
-        </form>
+        </form> --}}
 
         {{-- Title --}}
         <h1 id="modalTitle" class="text-xl font-medium text-center mb-6"></h1>
@@ -70,7 +70,7 @@
                         Theme name <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="theme_name" id="theme_name" required placeholder="e.g. Corporate Blue"
-                        class="input input-bordered input-sm w-full rounded-lg" />
+                        class="input input-bordered input-sm w-full rounded-lg custom-input custom-input" />
                     <span id="ThemeName-error" role="alert"
                         class="text-red-500 text-xs mt-0.5 hidden animate-bounce"></span>
                 </div>
@@ -100,7 +100,7 @@
                                 Website Name <span class="text-red-500">*</span>
                             </label>
                             <input type="text" name="company_name" id="company_name" required
-                                placeholder="e.g. Acme Corp" class="input input-bordered input-sm w-full rounded-lg" />
+                                placeholder="e.g. Acme Corp" class="input input-bordered input-sm w-full rounded-lg custom-input" />
                             <span id="CompanyName-error" role="alert"
                                 class="text-red-500 text-xs mt-0.5 hidden animate-bounce"></span>
                         </div>
@@ -108,7 +108,7 @@
                         <div class="flex flex-col gap-1">
                             <label class="text-sm font-medium text-gray-600">Site Name</label>
                             <input type="text" id="report_header" placeholder="Report header text"
-                                class="input input-bordered input-sm w-full rounded-lg" />
+                                class="input input-bordered input-sm w-full rounded-lg custom-input" />
                         </div>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                     {{-- Body Font --}}
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm font-medium text-gray-600">Body font</label>
-                        <select id="body_font" name="body_font" class="select select-bordered select-sm w-full rounded-lg">
+                        <select id="body_font" name="body_font" class="select select-bordered select-sm w-full rounded-lg custom-input">
                             <option disabled selected>Pick a font</option>
                         </select>
                         {{-- <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
@@ -188,7 +188,7 @@
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm font-medium text-gray-600">Header font</label>
                         <select id="header_font" name="header_font"
-                            class="select select-bordered select-sm w-full rounded-lg">
+                            class="select select-bordered select-sm w-full rounded-lg custom-input">
                             <option disabled selected>Pick a font</option>
                         </select>
                         {{-- <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
@@ -216,14 +216,17 @@
                 </label>
 
                 <div class="w-full overflow-x-scroll">
-                    <div id="imgContainer" class="flex gap-5"></div>
+                    <div id="imgContainer" class="flex gap-5 pb-5"></div>
                 </div>
             </div>
 
             {{-- Action Buttons --}}
-            <div class="w-full flex pt-1">
+            <div class="w-[250px] gap-2 flex pt-1">
                 <button id="executeSavebtn" class="btn btn-outline btn-primary rounded-lg w-full">Save</button>
                 <button id="executeEditbtn" class="btn btn-primary rounded-lg w-full">Confirm</button>
+                <form method="dialog">
+                    <button class="btn btn-outline hover:bg-red-500 border-red-500 text-red-500 rounded-lg hover:text-white w-full">Cancel</button>
+                </form>
             </div>
 
         </div>

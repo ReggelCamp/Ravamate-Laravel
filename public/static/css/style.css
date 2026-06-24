@@ -647,3 +647,12 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
     height: calc(100% - 60px); 
     overflow-y: auto;
 }
+
+/* selected input */
+.custom-input:focus {
+    outline: none;
+    border-color:  blue;
+    box-shadow: 0 0 0 2px blue;
+    /* border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary); */
+}

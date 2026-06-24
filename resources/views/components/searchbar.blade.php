@@ -11,6 +11,7 @@
             placeholder="Search..."
         > --}}
         <input
+        id="SearchInput"
             type="text"
             {{ $attributes->merge([
                 'class' => 'border rounded-lg bodyFont searchBar w-full h-[30px] pl-10 pr-3'

@@ -130,13 +130,13 @@ function getAll() {
                                 >
                             </div>
 
-                            <div class="flex w-full flex-col">
-                                <h2 class="card-title">
+                            <div class="flex w-full flex-col ">
+                                <h2 class="card-title tooltip w-fit" data-tip="Company Name">
                                      ${item.company_name}
                                 </h2>
 
                                 <div>
-                                    <div class="text-gray-500">${item.report_header ? item.report_header : "NULL"}</div>
+                                    <div class="text-gray-500 tooltip" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
                                 </div>
                             </div>
 
@@ -145,13 +145,13 @@ function getAll() {
                                 <h1>Color Palette</h1>
                                 <div class="flex w-full gap-2 mt-2">
 
-                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.primary_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-md border tooltip tooltip-primary "data-tip="Primary Color" style="background:${item.primary_color} "></div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.secondary_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Secondary Color" style="background:${item.secondary_color}"></div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.accent_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Accent Color" style="background:${item.accent_color}"></div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border" style="background:${item.background_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Background Color" style="background:${item.background_color}"></div>
                                 </div>
                             </div>
 
