@@ -71,66 +71,50 @@ function getAll() {
             
 
             $("#table").html(`
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4 ">
             `);
 
             const $grid = $("#table .grid");
 
             data.forEach((item) => {
-                let isActive = item.is_active ? "shine-pulse" : "bg-base-100";
+                let isActive = item.is_active ? "bg-blue-50 border-4 border-blue-600" : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
-                // console.log("defl",isDefaultTheme);
-                // console.log("item",item.id);
-                // console.log("theme",defaultTheme);
+                
                 $grid.append(`
                     <div id="themeCard"
-                        class="card bg-base-100  transition-all duration-300 ease-out
+                        class="card bg-base-100 shadow-xl  transition-all 
                             hover:-translate-y-2
                             hover:shadow-2xl
-                            hover:scale-105  shadow-sm border-4 border-solid ${isActive}">
+                            hover:scale-105  border ${isActive}">
 
-                        <div class="card-body">
+                        <div class="card-body p-0">
 
                             <!-- HEADER -->
-                            <div class="flex w-full justify-between items-center">
+                            <div class="flex w-full justify-between items-center pt-5 pl-5 pr-5">
 
                                 <h2 class="card-title">
                                     ${item.theme_name}
                                 </h2>
 
-                                <label class="toggle theme-toggle text-base-content ${item.is_active ? "bg-green-500" : ""}">
+                                <label class=" text-base-content switch ${item.is_active}">
                                     <input type="checkbox"
                                         data-id="${item.id}"
                                         class="flipswitch"
                                         ${item.is_active ? "checked" : ""}/>
-
-                                    <svg aria-label="disabled" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6 6 18" />
-                                        <path d="m6 6 12 12" />
-                                    </svg>
-
-                                    <svg aria-label="enabled" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24">
-                                        <g stroke-linejoin="round" stroke-linecap="round"
-                                            stroke-width="4" fill="none" stroke="currentColor">
-                                            <path d="M20 6 9 17l-5-5"></path>
-                                        </g>
-                                    </svg>
+                                    <span class="slider"></span>
                                 </label>
                             </div>
 
                             <!-- IMAGE -->
-                            <div class="flex justify-center items-center h-48 rounded-xl mt-2">
-                                <img src="${item.logo?.[0]?.url || ""}"
-                                    class="max-h-48 max-w-full skeleton  object-contain"
-                                        onload="this.classList.remove('skeleton')"
-                                        onerror="this.classList.remove('skeleton')"    
-                                >
+                            <div class="flex justify-center items-center h-48 mt-2 bg-gray-400 w-full p-5">
+                                <img
+                                    src="${item.logo?.[0]?.url ? item.logo[0].url + '?t=' + Date.now() : ''}"
+                                    class="max-w-[150px] max-h-[150px] object-contain overflow-visible skeleton"
+                                    onload="this.classList.remove('skeleton')"
+                                    onerror="this.classList.remove('skeleton')">
                             </div>
 
-                            <div class="flex w-full flex-col ">
+                            <div class="flex w-full flex-col pl-5 pr-5">
                                 <h2 class="card-title tooltip w-fit" data-tip="Company Name">
                                      ${item.company_name}
                                 </h2>
@@ -141,7 +125,7 @@ function getAll() {
                             </div>
 
                             <!-- COLORS -->
-                            <div class="flex flex-col w-full">
+                            <div class="flex flex-col w-full pl-5 pr-5">
                                 <h1>Color Palette</h1>
                                 <div class="flex w-full gap-2 mt-2">
 
@@ -156,7 +140,7 @@ function getAll() {
                             </div>
 
                         <!-- FONT INFO -->
-                        <div class="flex justify-between w-full mt-2">
+                        <div class="flex justify-between w-full mt-2 pl-5 pr-5">
 
                             
                             <div class="flex justify-between items-center mt-2">
@@ -179,7 +163,7 @@ function getAll() {
                         </div>
 
                         <!-- BUTTONS -->
-                        <div class="flex w-full gap-2 mt-3">
+                        <div class="flex w-full gap-2 mt-3 pl-5 pr-5 pb-5">
                             <button class="bg-blue-700 w-full rounded-xl h-[30px] text-white cursor-pointer"
                                 data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
                                 Edit
@@ -266,7 +250,7 @@ $(document).on("click", "#updatebtn", function () {
     console.log("dasd",row);
     
 
-    $("#LogoImg").text("Current File " + filename);
+    //$("#LogoImg").text("Current File " + filename);
     
 
     $("#executeSavebtn").hide();
@@ -280,12 +264,16 @@ $(document).on("click", "#updatebtn", function () {
     // $("#carouselImg").val("");
 
     ClearImgContainer();
+    //DisplayLogoImg(row.logo[0]);
+    DisplayLogoImg(logoUrl,filename);
 
     if (row.carouselImg && row.carouselImg.length > 0) {
         DisplayCarouselImg(row.carouselImg);
     }
     AddThemeModal.showModal();
 
+    // console.log("a",logoUrl);
+    // console.log("b",filename);
 });
 
 //for add
@@ -312,12 +300,39 @@ $(document).on("click", "#addbtn", function () {
     $("#carouselImg").val("");
     $("#executeSavebtn").show();
     $("#executeEditbtn").hide();
-    $("#modalTitle").text("Add Theme");
-    $("#LogoImg").html('<i class="fa-solid fa-upload"></i> Add Image');
-    $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+    $("#modalTitle").html(`
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block align-middle mr-2 relative top-[-2px]">
+            <path d="M8.25 1.5H6.75C3 1.5 1.5 3 1.5 6.75V11.25C1.5 15 3 16.5 6.75 16.5H11.25C15 16.5 16.5 15 16.5 11.25V9.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12.03 2.26592L6.12 8.17592C5.895 8.40092 5.67 8.84342 5.625 9.16592L5.3025 11.4234C5.1825 12.2409 5.76 12.8109 6.5775 12.6984L8.835 12.3759C9.15 12.3309 9.5925 12.1059 9.825 11.8809L15.735 5.97092C16.755 4.95092 17.235 3.76592 15.735 2.26592C14.235 0.765922 13.05 1.24592 12.03 2.26592Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11.1825 3.11328C11.685 4.90578 13.0875 6.30828 14.8875 6.81828" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Add Theme
+    `);
 
-
+    $("#LogoImg").html(`
+        <div class="flex flex-col">
+            <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
+                Upload Logo <i class="fa-solid fa-upload ml-2"></i>
+            </span>
+            <span class="text-gray-400">
+                SVG, PNG, or JPEG (max, 800x400px)
+            </span>
+        </div>
+    `);
+    
     ClearImgContainer();
+
+    $("#addImg").html(`
+        <div class="flex flex-col">
+            <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
+                Upload Logo <i class="fa-solid fa-upload ml-2"></i>
+            </span>
+            <span class="text-gray-400">
+                SVG, PNG, or JPEG (max, 800x400px)
+            </span>
+        </div>
+    `);
+
     AddThemeModal.showModal();
 });
 
@@ -404,6 +419,7 @@ $(document).on("click", "#executeSavebtn", function () {
                 .html("Save");
             AddThemeModal.close();
             getAll();
+            localStorage.setItem("themeUpdated", Date.now());  
         },
         onFail: (error) => {
             $("#executeSavebtn")
@@ -529,16 +545,48 @@ $("#accent_color").on("input", function () {
     $("#accentColorHex").val($(this).val());
 });
 
+$("#accentColorHex").on("input", function () {
+    let hex = $(this).val();
+
+    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+        $("#accent_color").val(hex);
+    }
+});
+
 $("#primary_color").on("input", function () {
     $("#primaryColorHex").val($(this).val());
+});
+
+$("#primaryColorHex").on("input", function () {
+    let hex = $(this).val();
+
+    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+        $("#primary_color").val(hex);
+    }
 });
 
 $("#secondary_color").on("input", function () {
     $("#secondaryColorHex").val($(this).val());
 });
 
+$("#secondaryColorHex").on("input", function () {
+    let hex = $(this).val();
+
+    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+        $("#secondary_color").val(hex);
+    }
+});
+
 $("#background_color").on("input", function () {
     $("#backgroundColorHex").val($(this).val());
+});
+
+$("#backgroundColorHex").on("input", function () {
+    let hex = $(this).val();
+
+    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+        $("#background_color").val(hex);
+    }
 });
 
 $("#BodyFont_color").on("input", function () {
@@ -549,6 +597,19 @@ $("#HeaderFont_color").on("input", function () {
     $("#HeaderFontColorHex").val($(this).val());
 });
 
+function RenderLogo(file) {
+    const logo_reader = new FileReader();
+
+    logo_reader.onload = function (e) {
+        $("#LogoImg").html(`
+            <img src="${e.target.result}" 
+                 class="h-[85px] w-[100px] object-contain  ">
+            <span class="text-sm text-black truncate max-w-[120px]">${file.name}</span>
+        `);
+    };
+
+    logo_reader.readAsDataURL(file);
+}
 
 $("#logo_id").on("change", function () {
     const file = this.files[0];
@@ -569,10 +630,21 @@ $("#logo_id").on("change", function () {
     }
 
     // clear error
-    $("#LogoImg").text(FileName);
+    //$("#LogoImg").text(FileName);
     $("#logo-error").text("").addClass("hidden");
-    console.log("file",FileName);
+    console.log("filesss",FileName);
+    console.log("filexxx",file);
+    RenderLogo(file);
 });
+
+function DisplayLogoImg(LogoImg,LogoName){
+
+    $("#LogoImg").html(`
+            <img src="${LogoImg}" 
+                 class="h-[85px] w-[100px] object-contain  ">
+            <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
+        `);
+}
 
 function renderCarouselPreviews(files) {
     carouselSortable.option("disabled", true);
@@ -591,7 +663,7 @@ function renderCarouselPreviews(files) {
                      data-type="new"
                      data-index="${imgIndex}">
 
-                    <div class="card bg-base-100 border black h-[250px] w-[250px] ImgContent shadow-sm carouseltemp">
+                    <div class="card bg-base-100 black h-[250px] w-[250px] ImgContent shadow-sm carouseltemp">
 
                         <div class="relative">
                             <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel"
@@ -831,7 +903,17 @@ function ClearImgContainer(){
     CarouselOrder = [];
     DeleteCarouselImg = [];
 
-    $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+    // $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+    $("#addImg").html(`
+        <div class="flex flex-col">
+            <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
+                Upload Logo <i class="fa-solid fa-upload ml-2"></i>
+            </span>
+            <span class="text-gray-400">
+                SVG, PNG, or JPEG (max, 800x400px)
+            </span>
+        </div>
+    `);
 }
 
 function getImagePosition(index) {
@@ -878,3 +960,4 @@ function Filecount() {
     }
     console.log("dd",count);
 }
+

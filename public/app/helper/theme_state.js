@@ -20,7 +20,12 @@ export default function getActive() {
                 document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
                 document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
                 
-                $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
+                // $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
+
+                $(".themeLogo").attr(
+                    "src",
+                    activeTheme.logo[0]?.url + "?t=" + Date.now()
+                );
                
                 const $container = $("#carouselContainer");
 
