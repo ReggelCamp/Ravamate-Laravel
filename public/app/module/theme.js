@@ -92,7 +92,7 @@ function getAll() {
                             <!-- HEADER -->
                             <div class="flex w-full justify-between items-center pt-5 pl-5 pr-5">
 
-                                <h2 class="card-title">
+                                <h2 class="card-title text-[20px]">
                                     ${item.theme_name}
                                 </h2>
 
@@ -129,13 +129,26 @@ function getAll() {
                                 <h1>Color Palette</h1>
                                 <div class="flex w-full gap-2 mt-2">
 
-                                    <div class="w-[30px] h-[30px] rounded-md border tooltip tooltip-primary "data-tip="Primary Color" style="background:${item.primary_color} "></div>
+                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        data-tip="Primary Color"
+                                        style="background:${item.primary_color}">
+                                    </div>
+                                    
+                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        data-tip="Primary Color"
+                                        style="background:${item.secondary_color}">
+                                    </div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Secondary Color" style="background:${item.secondary_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        data-tip="Primary Color"
+                                        style="background:${item.accent_color}">
+                                    </div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Accent Color" style="background:${item.accent_color}"></div>
+                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        data-tip="Primary Color"
+                                        style="background:${item.background_color}">
+                                    </div>
 
-                                    <div class="w-[30px] h-[30px] rounded-md border tooltip"data-tip="Background Color" style="background:${item.background_color}"></div>
                                 </div>
                             </div>
 
@@ -164,12 +177,12 @@ function getAll() {
 
                         <!-- BUTTONS -->
                         <div class="flex w-full gap-2 mt-3 pl-5 pr-5 pb-5">
-                            <button class="bg-blue-700 w-full rounded-xl h-[30px] text-white cursor-pointer"
+                            <button class="bg-blue-700 w-full rounded-xl h-[34px] text-white cursor-pointer"
                                 data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
                                 Edit
                             </button>
 
-                            <button class="bg-red-500 p-2 w-[40px] h-[30px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}"
+                            <button class="bg-red-500 p-2 w-[40px] h-[34px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}"
                                 data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>

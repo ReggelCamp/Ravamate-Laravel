@@ -659,8 +659,8 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
 
 /* From Uiverse.io by namecho */ 
 .switch {
- --button-width: 3.5em;
- --button-height: 2em;
+ --button-width: 54.86px;
+ --button-height: 24px;
  --toggle-diameter: 1.5em;
  --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
  --toggle-shadow-offset: 10px;

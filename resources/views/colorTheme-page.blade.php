@@ -226,10 +226,10 @@
             </div>
 
             {{-- Action Buttons --}}
-            <div class="w-full justify-between gap-2 flex pt-1 ">
-                <div class="flex w-full">
-                    <button id="executeSavebtn" class="btn btn-primary rounded-lg w-full">Save</button>
-                    <button id="executeEditbtn" class="btn btn-primary rounded-lg w-full">Confirm</button>
+            <div class="w-full h-full justify-between gap-2 flex pt-1 ">
+                <div class="flex w-full h-full">
+                    <button id="executeSavebtn" class="btn btn-primary rounded-lg h-[34px] w-full">Save</button>
+                    <button id="executeEditbtn" class="btn btn-primary rounded-lg h-[34px] w-full">Confirm</button>
                 </div>
                 <div class="flex w-full">
                     <form method="dialog" class="w-full flex">
