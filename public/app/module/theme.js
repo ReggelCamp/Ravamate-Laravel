@@ -77,7 +77,7 @@ function getAll() {
             const $grid = $("#table .grid");
 
             data.forEach((item) => {
-                let isActive = item.is_active ? "bg-blue-50 border-4 border-blue-600" : "bg-base-100 border border-base-300";
+                let isActive = item.is_active ? "bg-blue-50 border-[4px] border-[#CFDFFF]" : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
                 
                 $grid.append(`
@@ -117,20 +117,20 @@ function getAll() {
                             <div class="flex flex-col w-full p-[16px] gap-[18px]">
 
                             <!-- Brand -->
-                                <div class="flex w-[275px] flex-col ">
-                                    <h2 class="card-title tooltip w-fit font-bold text-[20px]" data-tip="Company Name">
+                                <div class="flex w-full  border gap-[8px] h-full  flex-col ">
+                                    <h2 class=" tooltip w-fit  font-bold  text-[20px]" data-tip="Company Name">
                                         ${item.company_name}
                                     </h2>
 
                                     <div>
-                                        <div class="text-[#444A51] tooltip text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
+                                        <div class="text-[#444A51] tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
                                     </div>
                                 </div>
 
                                 <!-- COLORS -->
-                                <div class="flex flex-col w-full w-[275px] h-[61px] ">
-                                    <h1 class="text-[16px] text-[#9599A1] font-normal">Color Palette</h1>
-                                    <div class="flex w-full gap-2 mt-2">
+                                <div class="flex flex-col gap-[8px] w-full h-full  border">
+                                    <h1 class="text-[16px] text-[#9599A1] font-normal">COLOR PALETTE</h1>
+                                    <div class="flex w-full gap-[13px] ">
 
                                         <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
                                             data-tip="Primary Color"
@@ -156,18 +156,18 @@ function getAll() {
                                 </div>
 
                             <!-- FONT INFO -->
-                            <div class="flex gap-[15px] w-[275px] h-[44px]">
+                            <div class="flex gap-[8px] w-full h-full border">
 
-                                <div class="flex justify-between items-center ">
+                                <div class="flex w-full border justify-between items-center ">
                                     <div>
-                                        <span class="text-[#9599A1] font-normal text-[16px]">Header Font:</span>
+                                        <span class="text-[#9599A1] font-normal text-[16px]">HEADER FONT</span>
                                         <div class="text-[12px]" font-normal>${item.header_font}</div>
                                     </div>
                                 </div>
 
-                                <div class="flex justify-between items-center ">
+                                <div class="flex w-full border justify-between items-center ">
                                     <div>
-                                        <span class="text-[#9599A1] font-normal text-[16px]">Body Font:</span>
+                                        <span class="text-[#9599A1] font-normal text-[16px]">BODY FONT</span>
                                         <div class="text-[12px]" font-normal>${item.body_font}</div>
                                     </div>
                                 </div>
