@@ -31,15 +31,15 @@
     <div class="flex flex-col w-full p-5 h-full">
         <div class="flex w-full h-[60px]  justify-between pl-10 pr-10">
             <div class="">
-                <h1 class="text-2xl headerFont ">
+                <h1 class="text-[28px] font-semibold headerFont ">
                     Appearance
                 </h1>
-                <h1 class="text-2xl bodyFont ">
+                <h1 class="text-[16px] font-normal bodyFont ">
                     Customize how the application looks for you and your team
                 </h1>
             </div>
             <div class="flex items-end justify-end">
-                <button class="bg-[#366EFB] w-fit btn rounded-lg text-white" id='addbtn'>
+                <button class="bg-[#366EFB] w-fit p-5 btn rounded-lg text-white" id='addbtn'>
                     Create new <i class="fa-solid fa-plus"></i> 
                 </button>
             </div>

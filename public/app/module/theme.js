@@ -87,12 +87,12 @@ function getAll() {
                             hover:shadow-2xl
                             hover:scale-105  border ${isActive}">
 
-                        <div class="card-body p-0">
+                        <div class="card-body p-0 gap-0">
 
                             <!-- HEADER -->
-                            <div class="flex w-full justify-between items-center pt-5 pl-5 pr-5">
+                            <div class="flex w-full justify-between p-[16px] items-center h-[56px]">
 
-                                <h2 class="card-title text-[20px]">
+                                <h2 class=" text-[20px] font-medium">
                                     ${item.theme_name}
                                 </h2>
 
@@ -106,7 +106,7 @@ function getAll() {
                             </div>
 
                             <!-- IMAGE -->
-                            <div class="flex justify-center items-center h-48 mt-2 bg-gray-400 w-full p-5">
+                            <div class="flex justify-center items-center h-48 bg-[#E3E5E8] w-full">
                                 <img
                                     src="${item.logo?.[0]?.url ? item.logo[0].url + '?t=' + Date.now() : ''}"
                                     class="max-w-[150px] max-h-[150px] object-contain overflow-visible skeleton"
@@ -114,77 +114,78 @@ function getAll() {
                                     onerror="this.classList.remove('skeleton')">
                             </div>
 
-                            <div class="flex w-full flex-col pl-5 pr-5">
-                                <h2 class="card-title tooltip w-fit" data-tip="Company Name">
-                                     ${item.company_name}
-                                </h2>
+                            <div class="flex flex-col w-full p-[16px] gap-[18px]">
 
-                                <div>
-                                    <div class="text-gray-500 tooltip" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
-                                </div>
-                            </div>
+                            <!-- Brand -->
+                                <div class="flex w-[275px] flex-col ">
+                                    <h2 class="card-title tooltip w-fit font-bold text-[20px]" data-tip="Company Name">
+                                        ${item.company_name}
+                                    </h2>
 
-                            <!-- COLORS -->
-                            <div class="flex flex-col w-full pl-5 pr-5">
-                                <h1>Color Palette</h1>
-                                <div class="flex w-full gap-2 mt-2">
-
-                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
-                                        data-tip="Primary Color"
-                                        style="background:${item.primary_color}">
+                                    <div>
+                                        <div class="text-[#444A51] tooltip text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
                                     </div>
-                                    
-                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
-                                        data-tip="Primary Color"
-                                        style="background:${item.secondary_color}">
-                                    </div>
-
-                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
-                                        data-tip="Primary Color"
-                                        style="background:${item.accent_color}">
-                                    </div>
-
-                                    <div class="w-[30px] h-[30px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
-                                        data-tip="Primary Color"
-                                        style="background:${item.background_color}">
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        <!-- FONT INFO -->
-                        <div class="flex justify-between w-full mt-2 pl-5 pr-5">
-
-                            
-                            <div class="flex justify-between items-center mt-2">
-                                <div>
-                                    <span class="text-gray-500 text-sm">Body Font:</span>
-                                    <div>${item.body_font}</div>
                                 </div>
 
-                                
-                            </div>
+                                <!-- COLORS -->
+                                <div class="flex flex-col w-full w-[275px] h-[61px] ">
+                                    <h1 class="text-[16px] text-[#9599A1] font-normal">Color Palette</h1>
+                                    <div class="flex w-full gap-2 mt-2">
 
-                            <div class="flex justify-between items-center mt-2">
-                                <div>
-                                    <span class="text-gray-500 text-sm">Header Font:</span>
-                                    <div>${item.header_font}</div>
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                            data-tip="Primary Color"
+                                            style="background:${item.primary_color}">
+                                        </div>
+                                        
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                            data-tip="Secondary Color"
+                                            style="background:${item.secondary_color}">
+                                        </div>
+
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                            data-tip="Accent Color"
+                                            style="background:${item.accent_color}">
+                                        </div>
+
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                            data-tip="Background Color"
+                                            style="background:${item.background_color}">
+                                        </div>
+
+                                    </div>
                                 </div>
 
-                                
+                            <!-- FONT INFO -->
+                            <div class="flex gap-[15px] w-[275px] h-[44px]">
+
+                                <div class="flex justify-between items-center ">
+                                    <div>
+                                        <span class="text-[#9599A1] font-normal text-[16px]">Header Font:</span>
+                                        <div class="text-[12px]" font-normal>${item.header_font}</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between items-center ">
+                                    <div>
+                                        <span class="text-[#9599A1] font-normal text-[16px]">Body Font:</span>
+                                        <div class="text-[12px]" font-normal>${item.body_font}</div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
 
-                        <!-- BUTTONS -->
-                        <div class="flex w-full gap-2 mt-3 pl-5 pr-5 pb-5">
-                            <button class="bg-blue-700 w-full rounded-xl h-[34px] text-white cursor-pointer"
-                                data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
-                                Edit
-                            </button>
+                            <!-- BUTTONS -->
+                            <div class="flex w-full items-center justify-between gap-[12px]">
+                                <button class="bg-[#18B173] w-full text-[14px] pt-[8px] pr-[20px] pb-[8px] pl-[20px] gap-[6px] rounded-[8px] h-[40px] text-white cursor-pointer"
+                                    data-id="${item.id}" id="updatebtn"> <i class="fa-solid fa-pen-to-square"></i>
+                                    Edit
+                                </button>
 
-                            <button class="bg-red-500 p-2 w-[40px] h-[34px] text-white rounded-lg cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}"
-                                data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
-                            </button>
+                                <button class="bg-[#FDE3E3] p-[8px] items-center justify-center w-[40px] h-[40px] text-[#B92123] rounded-[8px] cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}
+                                    ${item.is_active ? "hidden" : "flex justify-center"}"
+                                    data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -202,7 +203,7 @@ $(document).on("click", "#deletebtn", function () {
     let row = array.find((item) => {
         return item.id == $(this).data().id;
     });
-
+    
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -268,7 +269,10 @@ $(document).on("click", "#updatebtn", function () {
 
     $("#executeSavebtn").hide();
     $("#executeEditbtn").show();
-    $("#modalTitle").text("Update Theme");
+   // $("#modalTitle").text("Update Theme");
+    $("#modalTitle").html(`
+        <i class="fa-solid fa-pen-to-square"></i> Update Theme
+        `);
 
     
     // ImgArray = [];
@@ -285,8 +289,6 @@ $(document).on("click", "#updatebtn", function () {
     }
     AddThemeModal.showModal();
 
-    // console.log("a",logoUrl);
-    // console.log("b",filename);
 });
 
 //for add
@@ -314,11 +316,7 @@ $(document).on("click", "#addbtn", function () {
     $("#executeSavebtn").show();
     $("#executeEditbtn").hide();
     $("#modalTitle").html(`
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block align-middle mr-2 relative top-[-2px]">
-            <path d="M8.25 1.5H6.75C3 1.5 1.5 3 1.5 6.75V11.25C1.5 15 3 16.5 6.75 16.5H11.25C15 16.5 16.5 15 16.5 11.25V9.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12.03 2.26592L6.12 8.17592C5.895 8.40092 5.67 8.84342 5.625 9.16592L5.3025 11.4234C5.1825 12.2409 5.76 12.8109 6.5775 12.6984L8.835 12.3759C9.15 12.3309 9.5925 12.1059 9.825 11.8809L15.735 5.97092C16.755 4.95092 17.235 3.76592 15.735 2.26592C14.235 0.765922 13.05 1.24592 12.03 2.26592Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M11.1825 3.11328C11.685 4.90578 13.0875 6.30828 14.8875 6.81828" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <i class="fa-solid fa-pen-to-square"></i>
         Add Theme
     `);
 
@@ -626,16 +624,30 @@ function RenderLogo(file) {
 
 $("#logo_id").on("change", function () {
     const file = this.files[0];
+    if (!file) return;
+
     const FileName = this.files[0].name;
+    const maxSize = 5 ;
+
+    const FileSize = this.files[0].size / 1024 / 1024;
+  
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-    if (!file) return;
     
-
+    
     // Wrong file type
     if (!allowedTypes.includes(file.type)) {
         $("#logo-error")
             .text("Invalid file type. Only JPG, PNG, and WEBP are allowed.")
+            .removeClass("hidden");
+
+        $(this).val(""); 
+        return;
+    }
+
+    if(FileSize > maxSize){
+         $("#logo-error")
+            .text(`Invalid! file to large your file has ${FileSize.toFixed(2)}MB limit is ${maxSize}MB`)
             .removeClass("hidden");
 
         $(this).val(""); 
@@ -647,6 +659,7 @@ $("#logo_id").on("change", function () {
     $("#logo-error").text("").addClass("hidden");
     console.log("filesss",FileName);
     console.log("filexxx",file);
+    console.log("faa",FileSize);
     RenderLogo(file);
 });
 
@@ -661,7 +674,7 @@ function DisplayLogoImg(LogoImg,LogoName){
 
 function renderCarouselPreviews(files) {
     carouselSortable.option("disabled", true);
-
+    
     Array.from(files).forEach((file) => {
 
         ImgArray.push(file);
@@ -705,48 +718,54 @@ const nameCount = {};
 // displaying Img when adding img
 $("#carouselImg").on("change", function () {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    const maxSize = 5 ;
+    let AcceptedFile = [];
+    let RejectedFilesbyType = [];
+    let RejectedFilesbySize = [];
+    let ErrorHandler = "";
 
     const files = Array.from(this.files);
 
-    const acceptedFiles = files.filter(
-        file => allowedTypes.includes(file.type)
-    );
-
-    const rejectedFiles = files.filter(
-        file => !allowedTypes.includes(file.type)
-    );
-
-    // for invalid files
-    if (rejectedFiles.length > 0) {
-        const names = rejectedFiles.map(file => file.name).join(", ");
-
-        $("#CarouselError")
-            .text(`Rejected files: ${names}. Only JPG, PNG, WEBP are allowed.`)
-            .removeClass("hidden");
-    } else {
+    files.forEach(file => {
+        const AcceptedSize = file.size / 1024 / 1024;
+        if (!allowedTypes.includes(file.type)) {
+            RejectedFilesbyType.push(file);
+        } else if (AcceptedSize > maxSize) {
+            RejectedFilesbySize.push(file);
+        } else {
+            AcceptedFile.push(file);
+        }
+    });
+   
+    // for invalid files by type
+    if (RejectedFilesbyType.length > 0) {
+        const names = RejectedFilesbyType.map(file => file.name).join(", ");
+        ErrorHandler+= `Rejected files: ${names}. Only JPG, PNG, WEBP are allowed. <br>`;
+        // $("#CarouselError")
+        //     .text(`Rejected files: ${names}. Only JPG, PNG, WEBP are allowed.`)
+        //     .removeClass("hidden");
+    } 
+    //for invalid files by size
+    if(RejectedFilesbySize.length > 0){
+        const names = RejectedFilesbySize.map(file => file.name).join(", ");
+        ErrorHandler+= `Rejected files: ${names}. Too large max size is ${maxSize} MB. <br>`;
+        // $("#CarouselError")
+        //     .text(`Rejected files: ${names}. Too large max size is ${maxSize} MB.`)
+        //     .removeClass("hidden");
+    }
+   
+    else {
         $("#CarouselError").text("").addClass("hidden");
     }
 
+    $("#CarouselError")
+            .html(ErrorHandler)
+            .removeClass("hidden");
+
+    // approved files
+   if (AcceptedFile.length > 0) {
     
-   if (acceptedFiles.length > 0) {
-    // const duplicates = [];
-
-    // acceptedFiles.forEach((file) => {
-    //     const name = file.name;
-    //     nameCount[name] = (nameCount[name] || 0) + 1;
-
-    //     if (nameCount[name] > 1) {
-    //         duplicates.push(name);
-    //     }
-    // });
-
-    // if (duplicates.length > 0) {
-    //     $("#CarouselError")
-    //         .text(`Duplicate files: ${duplicates.join(", ")}`)
-    //         .removeClass("hidden");
-    // } else {
-    //     $("#CarouselError").text("").addClass("hidden");
-        renderCarouselPreviews(acceptedFiles);
+        renderCarouselPreviews(AcceptedFile);
     }
     
 });
