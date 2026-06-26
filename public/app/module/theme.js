@@ -117,10 +117,10 @@ function getAll() {
                             <div class="flex flex-col w-full p-[16px] gap-[18px]">
 
                             <!-- Brand -->
-                                <div class="flex w-full  border gap-[8px] h-full  flex-col ">
-                                    <h2 class=" tooltip w-fit  font-bold  text-[20px]" data-tip="Company Name">
+                                <div class="flex w-full  m-0 gap-[8px] h-full  flex-col ">
+                                    <span class=" tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
                                         ${item.company_name}
-                                    </h2>
+                                    </span>
 
                                     <div>
                                         <div class="text-[#444A51] tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
@@ -128,7 +128,7 @@ function getAll() {
                                 </div>
 
                                 <!-- COLORS -->
-                                <div class="flex flex-col gap-[8px] w-full h-full  border">
+                                <div class="flex flex-col gap-[8px] w-full h-full ">
                                     <h1 class="text-[16px] text-[#9599A1] font-normal">COLOR PALETTE</h1>
                                     <div class="flex w-full gap-[13px] ">
 
@@ -156,17 +156,17 @@ function getAll() {
                                 </div>
 
                             <!-- FONT INFO -->
-                            <div class="flex gap-[8px] w-full h-full border">
+                            <div class="flex gap-[15px] w-full h-full border">
 
-                                <div class="flex w-full border justify-between items-center ">
-                                    <div>
-                                        <span class="text-[#9599A1] font-normal text-[16px]">HEADER FONT</span>
+                                <div class="flex w-full h-full  border justify-between items-center ">
+                                    <div >
+                                        <span class="text-[#9599A1] leading-0 font-normal text-[16px]">HEADER FONT</span>
                                         <div class="text-[12px]" font-normal>${item.header_font}</div>
                                     </div>
                                 </div>
 
-                                <div class="flex w-full border justify-between items-center ">
-                                    <div>
+                                <div class="flex w-full  border justify-between items-center ">
+                                    <div >
                                         <span class="text-[#9599A1] font-normal text-[16px]">BODY FONT</span>
                                         <div class="text-[12px]" font-normal>${item.body_font}</div>
                                     </div>
