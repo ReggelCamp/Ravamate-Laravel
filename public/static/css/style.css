@@ -804,3 +804,28 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
 .ts-wrapper.single.dropdown-active .ts-control::after {
     transform: translateY(-50%) rotate(180deg);
 }
+
+
+
+input[type="color"] {
+    border: none;
+    outline: none;
+    padding: 0;
+    background: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 4px;
+}

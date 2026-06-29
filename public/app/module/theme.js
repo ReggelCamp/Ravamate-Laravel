@@ -253,12 +253,41 @@ $(document).on("click", "#updatebtn", function () {
 
     $("#theme_name").val(row.theme_name);
     $("#company_name").val(row.company_name);
-    $("#primary_color").val(row.primary_color);
-    $("#secondary_color").val(row.secondary_color);
-    $("#accent_color").val(row.accent_color);
-    $("#background_color").val(row.background_color);
-    $("#BodyFont_color").val(row.body_color);
-    $("#HeaderFont_color").val(row.header_color);
+    
+    // $("#primary_color").val(row.primary_color);
+    // $("#secondary_color").val(row.secondary_color);
+    // $("#accent_color").val(row.accent_color);
+
+    updateColorPicker(
+        "#primary_color",
+        "#primaryColorWrapper",
+        "#primaryColorHex",
+        row.primary_color
+    );
+
+    updateColorPicker(
+        "#secondary_color",
+        "#secondaryColorWrapper",
+        "#secondaryColorHex",
+        row.secondary_color
+    );
+
+    updateColorPicker(
+        "#accent_color",
+        "#accentColorWrapper",
+        "#accentColorHex",
+        row.accent_color
+    );
+
+    updateColorPicker(
+        "#background_color",
+        "#backgroundColorWrapper",
+        "#backgroundColorHex",
+        row.background_color
+    );
+
+    bodyTomSelect.setValue(row.body_font);
+    headerTomSelect.setValue(row.header_font);
     $("#body_font").val(row.body_font);
     $("#header_font").val(row.header_font);
     $("#report_header").val(row.report_header);
@@ -275,12 +304,6 @@ $(document).on("click", "#updatebtn", function () {
     $("#modalTitle").html(`
         <i class="fa-solid fa-pen-to-square"></i> Update Theme
         `);
-
-    
-    // ImgArray = [];
-    // DeleteCarouselImg = [];
-    // CarouselOrder = [];
-    // $("#carouselImg").val("");
 
     ClearImgContainer();
     //DisplayLogoImg(row.logo[0]);
@@ -305,14 +328,22 @@ $(document).on("click", "#addbtn", function () {
     $("#theme_name").val("");
     $("#company_name").val("");
     $("#logo_id").val("");
-    $("#primary_color").val("#3b82f6");
+    // $("#primary_color").val("#3b82f6");
+    
+    updateColorPicker(
+        "#primary_color",
+        "#primaryColorWrapper",
+        "#primaryColorHex",
+        "#3b82f6"
+    );
+
     $("#secondary_color").val("#3b82f6");
     $("#accent_color").val("#3b82f6");
     $("#background_color").val("#3b82f6");
     $("#BodyFont_color").val("#ffffff");
     $("#HeaderFont_color").val("#000000");
-    $("#body_font").val("Roboto");
-    $("#header_font").val("Roboto");
+    bodyTomSelect.setValue("Roboto");
+    headerTomSelect.setValue("Roboto");
     $("#report_header").val("");
     $("#carouselImg").val("");
     $("#executeSavebtn").show();
@@ -554,53 +585,29 @@ $(document).on("click", "#executeEditbtn", function () {
     });
 });
 
-$("#accent_color").on("input", function () {
-    $("#accentColorHex").val($(this).val());
-});
+bindColorPicker(
+    "#primary_color",
+    "#primaryColorWrapper",
+    "#primaryColorHex"
+);
 
-$("#accentColorHex").on("input", function () {
-    let hex = $(this).val();
+bindColorPicker(
+    "#secondary_color",
+    "#secondaryColorWrapper",
+    "#secondaryColorHex"
+);
 
-    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
-        $("#accent_color").val(hex);
-    }
-});
+bindColorPicker(
+    "#accent_color",
+    "#accentColorWrapper",
+    "#accentColorHex"
+);
 
-$("#primary_color").on("input", function () {
-    $("#primaryColorHex").val($(this).val());
-});
-
-$("#primaryColorHex").on("input", function () {
-    let hex = $(this).val();
-
-    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
-        $("#primary_color").val(hex);
-    }
-});
-
-$("#secondary_color").on("input", function () {
-    $("#secondaryColorHex").val($(this).val());
-});
-
-$("#secondaryColorHex").on("input", function () {
-    let hex = $(this).val();
-
-    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
-        $("#secondary_color").val(hex);
-    }
-});
-
-$("#background_color").on("input", function () {
-    $("#backgroundColorHex").val($(this).val());
-});
-
-$("#backgroundColorHex").on("input", function () {
-    let hex = $(this).val();
-
-    if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
-        $("#background_color").val(hex);
-    }
-});
+bindColorPicker(
+    "#background_color",
+    "#backgroundColorWrapper",
+    "#backgroundColorHex"
+);
 
 $("#BodyFont_color").on("input", function () {
     $("#BodyFontColorHex").val($(this).val());
@@ -848,13 +855,14 @@ $.ajax({
         });
 
 
-headerTomSelect.on("dropdown_open", function () {
-    this.clear();
-});
+        headerTomSelect.on("dropdown_open", function () {
+            this.clear();
+        });
 
-bodyTomSelect.on("dropdown_open", function () {
-    this.clear();
-});
+        bodyTomSelect.on("dropdown_open", function () {
+            this.clear();
+        });
+
         // Set default value
         headerTomSelect.setValue("Roboto");
         bodyTomSelect.setValue("Roboto");
@@ -1044,3 +1052,55 @@ function Filecount() {
     console.log("dd",count);
 }
 
+function isWhiteColor(hex) {
+    let clean = hex.replace("#", "");
+    if (clean.length === 3) {
+        clean = clean.split("").map(c => c + c).join(""); // fff → ffffff
+    }
+    const r = parseInt(clean.substring(0, 2), 16);
+    const g = parseInt(clean.substring(2, 4), 16);
+    const b = parseInt(clean.substring(4, 6), 16);
+    return r === 255 && g === 255 && b === 255;
+}
+
+function updateColorPicker(inputId, wrapperId, hexInputId, color) {
+    const selectedColor = color ?? "#ffffff";
+    $(inputId).val(selectedColor);
+    $(hexInputId).val(selectedColor);
+    $(wrapperId).css(
+        "border",
+        isWhiteColor(selectedColor) ? "1px solid #E5E5E7" : "none"
+    );
+}
+
+function bindColorPicker(inputId, wrapperId, hexInputId) {
+
+    $(inputId).on("input", function () {
+        const color = $(this).val();
+
+        $(hexInputId).val(color);
+
+        $(wrapperId).css(
+            "border",
+            isWhiteColor(color)
+                ? "1px solid #E5E5E7"
+                : "none"
+        );
+    });
+
+    $(hexInputId).on("input", function () {
+        const hex = $(this).val();
+
+        if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
+
+            $(inputId).val(hex);
+
+            $(wrapperId).css(
+                "border",
+                isWhiteColor(hex)
+                    ? "1px solid #E5E5E7"
+                    : "none"
+            );
+        }
+    });
+}
