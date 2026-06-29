@@ -85,7 +85,7 @@
 <body class="w-full h-screen">
 
     <x-header/>
-    
+     @yield('content')
 
     {{-- jQuery FIRST --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -130,7 +130,7 @@
 
     @stack('scripts')
     
-    @yield('content')
+   
 </label>
 </body>
 </html>

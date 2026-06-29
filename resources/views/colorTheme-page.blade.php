@@ -24,6 +24,10 @@
     <script src="{{ asset('js/AddThemeModal.js') }}"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    {{-- tomselect --}}
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
 </head>
 
@@ -39,7 +43,7 @@
                 </h1>
             </div>
             <div class="flex items-end justify-end">
-                <button class="bg-[#366EFB] w-fit p-5 btn rounded-lg text-white" id='addbtn'>
+                <button class="bg-[#366EFB] w-fit p-5 btn rounded-[8px] text-white" id='addbtn'>
                     Create new <i class="fa-solid fa-plus"></i> 
                 </button>
             </div>
@@ -59,7 +63,7 @@
 
             {{-- Close button --}}
             <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 absolute right-3 top-3">✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost hover:bg-red-500 hover:text-white absolute right-3 top-3">✕</button>
             </form>
         </div>
         <div class="flex flex-col h-full w-full gap-8">
@@ -175,7 +179,7 @@
                     {{-- Body Font --}}
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm font-medium text-gray-600">Body font</label>
-                        <select id="body_font" name="body_font" class="select select-bordered select-sm w-full h-[40px]  rounded-lg custom-input">
+                        <select id="body_font" name="body_font" >
                             <option disabled selected>Pick a font</option>
                         </select>
                         {{-- <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
@@ -193,7 +197,7 @@
                     <div class="flex w-full flex-col gap-2">
                         <label class="text-sm font-medium text-gray-600">Header font</label>
                         <select id="header_font" name="header_font"
-                            class="select select-bordered select-sm w-full h-[40px]  rounded-lg custom-input">
+                            >
                             <option disabled selected>Pick a font</option>
                         </select>
                         {{-- <div class="flex items-center gap-2 bg-base-200 rounded-lg px-3 py-2">
@@ -226,14 +230,14 @@
             </div>
 
             {{-- Action Buttons --}}
-            <div class="w-full h-full justify-between gap-2 flex pt-1 ">
+            <div class="w-full h-full justify-between gap-[12px] flex  ">
                 <div class="flex w-full h-full">
-                    <button id="executeSavebtn" class="btn btn-primary rounded-lg h-[34px] w-full">Save</button>
-                    <button id="executeEditbtn" class="btn btn-primary rounded-lg h-[34px] w-full">Confirm</button>
+                    <button id="executeSavebtn" class="btn bg-[#18B173] text-white rounded-[4px] h-[40px] w-full">Save</button>
+                    <button id="executeEditbtn" class="btn bg-[#18B173] text-white rounded-[4px] h-[40px] w-full">Confirm</button>
                 </div>
                 <div class="flex w-full">
                     <form method="dialog" class="w-full flex">
-                        <button class="btn btn-outline flex hover:bg-red-500 border-red-500 text-red-500 rounded-lg hover:text-white w-full">Cancel</button>
+                        <button class="btn btn-outline flex hover:bg-red-500 border-red-500 text-red-500 rounded-[4px] hover:text-white w-full">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -244,5 +248,13 @@
 
 <script type="module" src="/app/module/theme.js"></script>
 <script type="module" src="/app/helper/theme_state.js"></script>
+<!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Select JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 
 </html>

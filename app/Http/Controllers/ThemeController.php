@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\FileHandler;
 use App\Models\CarouselImage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class ThemeController extends Controller
 {
@@ -178,22 +179,31 @@ class ThemeController extends Controller
     return response()->json($activeTheme);
 }
 
-    public function getFonts(){
-        $response = Http::get('https://www.googleapis.com/webfonts/v1/webfonts', [
-            'key' => env('GOOGLE_FONTS_API_KEY'),
-            'sort' => 'popularity',
-        ]);
+    // public function getFonts(){
+    //     $response = Http::get('https://www.googleapis.com/webfonts/v1/webfonts', [
+    //         'key' => env('GOOGLE_FONTS_API_KEY'),
+    //         'sort' => 'popularity',
+    //     ]);
 
-        return response()->json($response->json()['items']);
+    //     return response()->json($response->json()['items']);
+    // }
+
+    public function getFonts()
+    {
+        $fonts = Cache::remember('google_fonts', now()->addDays(1), function () {
+            $response = Http::get('https://www.googleapis.com/webfonts/v1/webfonts', [
+                'key' => env('GOOGLE_FONTS_API_KEY'),
+                'sort' => 'popularity',
+            ]);
+
+            if ($response->failed()) {
+                return [];
+            }
+
+            return $response->json()['items'] ?? [];
+        });
+
+        return response()->json($fonts);
     }
 
-    // public function deleteCarouselImages(Request $request)
-    // {
-       
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Carousel images deleted successfully'
-    //     ]);
-    // }
 }

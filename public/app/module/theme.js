@@ -7,6 +7,8 @@ let CarouselOrder = [];
 let DeleteCarouselImg = [];
 let ImgArray = [];
 let updateId;
+let headerTomSelect = null;
+let bodyTomSelect = null;
 
 //for switch
 $(document).on("change", ".flipswitch", function () {
@@ -71,7 +73,7 @@ function getAll() {
             
 
             $("#table").html(`
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4 ">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4 "></div>
             `);
 
             const $grid = $("#table .grid");
@@ -118,12 +120,12 @@ function getAll() {
 
                             <!-- Brand -->
                                 <div class="flex w-full  m-0 gap-[8px] h-full  flex-col ">
-                                    <span class=" tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
+                                    <span class=" custom-tooltip tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
                                         ${item.company_name}
                                     </span>
 
                                     <div>
-                                        <div class="text-[#444A51] tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
+                                        <div class="text-[#444A51] custom-tooltip tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
                                     </div>
                                 </div>
 
@@ -132,22 +134,22 @@ function getAll() {
                                     <h1 class="text-[16px] text-[#9599A1] font-normal">COLOR PALETTE</h1>
                                     <div class="flex w-full gap-[13px] ">
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
                                             data-tip="Primary Color"
                                             style="background:${item.primary_color}">
                                         </div>
                                         
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
                                             data-tip="Secondary Color"
                                             style="background:${item.secondary_color}">
                                         </div>
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
                                             data-tip="Accent Color"
                                             style="background:${item.accent_color}">
                                         </div>
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip tooltip-primary"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
                                             data-tip="Background Color"
                                             style="background:${item.background_color}">
                                         </div>
@@ -156,17 +158,17 @@ function getAll() {
                                 </div>
 
                             <!-- FONT INFO -->
-                            <div class="flex gap-[15px] w-full h-full border">
+                            <div class="flex gap-[15px] w-full h-full">
 
-                                <div class="flex w-full h-full  border justify-between items-center ">
-                                    <div >
-                                        <span class="text-[#9599A1] leading-0 font-normal text-[16px]">HEADER FONT</span>
+                                <div class="flex w-full h-full justify-between items-center ">
+                                    <div class="gap-[8px] flex flex-col ">
+                                        <span class="text-[#9599A1] font-normal text-[16px]">HEADER FONT</span>
                                         <div class="text-[12px]" font-normal>${item.header_font}</div>
                                     </div>
                                 </div>
 
-                                <div class="flex w-full  border justify-between items-center ">
-                                    <div >
+                                <div class="flex w-full   justify-between items-center ">
+                                    <div class="gap-[8px] flex flex-col" >
                                         <span class="text-[#9599A1] font-normal text-[16px]">BODY FONT</span>
                                         <div class="text-[12px]" font-normal>${item.body_font}</div>
                                     </div>
@@ -183,7 +185,7 @@ function getAll() {
 
                                 <button class="bg-[#FDE3E3] p-[8px] items-center justify-center w-[40px] h-[40px] text-[#B92123] rounded-[8px] cursor-pointer ${isDefaultTheme ? "hidden" : "flex justify-center"}
                                     ${item.is_active ? "hidden" : "flex justify-center"}"
-                                    data-id="${item.id}" id="deletebtn"> <i class="fa-solid fa-trash"></i>
+                                    data-id="${item.id}" id="deletebtn"> <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </div>
                         </div>
@@ -325,8 +327,8 @@ $(document).on("click", "#addbtn", function () {
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
                 Upload Logo <i class="fa-solid fa-upload ml-2"></i>
             </span>
-            <span class="text-gray-400">
-                SVG, PNG, or JPEG (max, 800x400px)
+            <span class="text-[#9599A1]">
+                SVG, PNG, or JPEG (max 5MB)
             </span>
         </div>
     `);
@@ -338,8 +340,8 @@ $(document).on("click", "#addbtn", function () {
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
                 Upload Logo <i class="fa-solid fa-upload ml-2"></i>
             </span>
-            <span class="text-gray-400">
-                SVG, PNG, or JPEG (max, 800x400px)
+            <span class="text-[#9599A1]">
+                SVG, PNG, or JPEG (max 5MB)
             </span>
         </div>
     `);
@@ -417,7 +419,7 @@ $(document).on("click", "#executeSavebtn", function () {
 
     $("#executeSavebtn")
     .prop("disabled", true)
-    .html('<span class="loading loading-spinner text-primary"></span>');
+    .html('<span class="loading loading-spinner text-white"></span>');
 
     Api.post({
         url: "/customize_theme",
@@ -523,7 +525,7 @@ $(document).on("click", "#executeEditbtn", function () {
     
     $("#executeEditbtn")
     .prop("disabled", true)
-    .html('<span class="loading loading-spinner text-primary"></span>');
+    .html('<span class="loading loading-spinner text-white"></span>');
 
     Api.post({
         url: `/customize_theme/update/${updateId}`,
@@ -647,7 +649,7 @@ $("#logo_id").on("change", function () {
 
     if(FileSize > maxSize){
          $("#logo-error")
-            .text(`Invalid! file to large your file has ${FileSize.toFixed(2)}MB limit is ${maxSize}MB`)
+            .text(`Invalid! file to large your. File has ${FileSize.toFixed(2)}MB limit is ${maxSize}MB`)
             .removeClass("hidden");
 
         $(this).val(""); 
@@ -796,31 +798,79 @@ $.ajax({
     url: "/fonts",
     type: "GET",
     success: function (fonts) {
+
+        // Destroy existing Tom Select instances
+        if (headerTomSelect) {
+            headerTomSelect.destroy();
+            headerTomSelect = null;
+        }
+
+        if (bodyTomSelect) {
+            bodyTomSelect.destroy();
+            bodyTomSelect = null;
+        }
+
+        // Clear existing options
         $("#header_font, #body_font").empty();
 
+        // Add placeholder
         $("#header_font, #body_font").append(
-            "<option disabled selected>Pick a font</option>",
+            '<option value="">Pick a font</option>'
         );
 
+        // Limit to first 100 fonts
         const Fonts = fonts.slice(0, 100);
 
         Fonts.forEach((font) => {
-            $("#header_font").append(`
-                <option value="${font.family}">${font.family}</option>
-            `);
-            $("#body_font").append(`
-                <option value="${font.family}">${font.family}</option>
-            `);
+            $("#header_font").append(
+                `<option value="${font.family}">${font.family}</option>`
+            );
+
+            $("#body_font").append(
+                `<option value="${font.family}">${font.family}</option>`
+            );
         });
 
-        // Set defaults after options are loaded
-        $("#header_font").val("Roboto");
-        $("#body_font").val("Roboto");
-    },
+        
+        // Initialize Tom Select
+        headerTomSelect = new TomSelect("#header_font", {
+            create: false,
+            placeholder: "Search header font...",
+            searchField: ["text"],
+            maxOptions: 100
+        });
+
+        bodyTomSelect = new TomSelect("#body_font", {
+            create: false,
+            placeholder: "Search body font...",
+            searchField: ["text"],
+            maxOptions: 100
+        });
+
+
+headerTomSelect.on("dropdown_open", function () {
+    this.clear();
 });
 
+bodyTomSelect.on("dropdown_open", function () {
+    this.clear();
+});
+        // Set default value
+        headerTomSelect.setValue("Roboto");
+        bodyTomSelect.setValue("Roboto");
+    },
+    error: function (xhr) {
+        console.error("Failed to load fonts:", xhr);
+    }
+
+    
+});
+
+// Header font preview
 $("#header_font").on("change", function () {
     const font = $(this).val();
+
+    if (!font) return;
 
     $("#google-font-link").remove();
 
@@ -828,15 +878,17 @@ $("#header_font").on("change", function () {
         <link
             id="google-font-link"
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap"
-        >
+            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap">
     `);
 
     $(".header-preview").css("font-family", `'${font}', sans-serif`);
 });
 
+// Body font preview
 $("#body_font").on("change", function () {
     const font = $(this).val();
+
+    if (!font) return;
 
     $("#google-font-link").remove();
 
@@ -844,8 +896,7 @@ $("#body_font").on("change", function () {
         <link
             id="google-font-link"
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap"
-        >
+            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap">
     `);
 
     $(".body-preview").css("font-family", `'${font}', sans-serif`);
@@ -941,8 +992,8 @@ function ClearImgContainer(){
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
                 Upload Logo <i class="fa-solid fa-upload ml-2"></i>
             </span>
-            <span class="text-gray-400">
-                SVG, PNG, or JPEG (max, 800x400px)
+            <span class="text-[#9599A1]">
+                SVG, PNG, or JPEG (max 5MB)
             </span>
         </div>
     `);
