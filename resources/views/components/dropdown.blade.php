@@ -10,7 +10,7 @@
     <div 
         tabindex="0" 
         role="button" 
-        class="btn w-full h-full  shine-bg rounded-lg dp flex justify-between items-center"
+        class="p-2 w-full h-full  shine-bg rounded-lg gap-2 flex justify-between items-center"
     >
         <span class="dropdownName">{{$dropdownName}}</span>
 

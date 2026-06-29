@@ -269,6 +269,35 @@ summary::-webkit-details-marker {
         );
     }
 
+    .RadialBg2 {
+    background:
+    /* Soft top overlay */
+    linear-gradient(
+        to bottom,
+        rgba(255,255,255,.08) 0%,
+        rgba(255,255,255,.03) 40%,
+        transparent 100%
+    ),
+    /* Primary glow from top left — diagonal stretch */
+    radial-gradient(
+        ellipse 130% 60% at -10% -10%,
+        var(--primary) 0%,
+        transparent 65%
+    ),
+    /* Primary glow from top right — diagonal stretch */
+    radial-gradient(
+        ellipse 130% 60% at 110% -10%,
+        var(--primary) 0%,
+        transparent 65%
+    ),
+    /* Base */
+    linear-gradient(
+        to bottom,
+        var(--secondary),
+        var(--secondary)
+    );
+}
+
     .LinearBg {
         background: linear-gradient(
             to top,
