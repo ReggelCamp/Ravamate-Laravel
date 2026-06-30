@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserModelController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class UserModelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $userModel)
+    public function show(User $user)
     {
         //
     }
@@ -42,7 +42,7 @@ class UserModelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $userModel)
+    public function edit(User $user)
     {
         //
     }
@@ -50,7 +50,7 @@ class UserModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $userModel)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -58,15 +58,25 @@ class UserModelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $userModel)
+    public function destroy(User $user)
     {
         //
     }
 
-    public function getUser(){
-        $user = User::first();
+    public function Login(Request $request){
+    $request->validate([
+        'contact_number' => 'required|digits_between:10,11',
+    ]);
 
-        return response()->json($user);
-        
+    $user = User::where('contact_number', $request->contact_number)->first();
+
+    if (!$user) {
+        return response()->json(['message' => 'Contact Number not found'], 404);
     }
+
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    return response()->json(['message' => 'Logged in successfully']);
+}
 }

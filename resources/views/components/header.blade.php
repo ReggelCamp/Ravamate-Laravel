@@ -79,7 +79,7 @@
         </label>
 
 
-        <div class="bg-base-200 min-h-full w-[300px] shadow-2xl overflow-y-auto">
+        <div class="bg-base-200 min-h-full sm:w-[300px] w-[250px] shadow-2xl overflow-y-auto">
 
 
             <div class="flex items-center justify-center h-[180px] px-6 border-b">

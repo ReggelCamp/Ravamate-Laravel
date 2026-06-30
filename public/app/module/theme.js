@@ -65,15 +65,11 @@ function getAll() {
             array = data;
 
             let activeTheme = array.find((item) => item.is_active);
-            //console.log("pola",array);
             
             const defaultTheme = array[0]?.id;
-            
-            //console.log("def",defaultTheme);
-            
 
             $("#table").html(`
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-visible p-4 "></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full overflow-visible p-4 "></div>
             `);
 
             const $grid = $("#table .grid");
@@ -81,7 +77,15 @@ function getAll() {
             data.forEach((item) => {
                 let isActive = item.is_active ? "bg-blue-50 border-[4px] border-[#CFDFFF]" : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
-                
+                const convert_date = new Date(item.updated_at);
+                const formatDate = convert_date.toLocaleDateString("en-PH", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                });
+
                 $grid.append(`
                     <div id="themeCard"
                         class="card bg-base-100 shadow-xl  transition-all 
@@ -174,6 +178,10 @@ function getAll() {
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class ="flex w-full">
+                                <span>Updated at ${formatDate}</span>
                             </div>
 
                             <!-- BUTTONS -->
@@ -293,6 +301,7 @@ $(document).on("click", "#updatebtn", function () {
     $("#report_header").val(row.report_header);
     
     console.log("dasd",row);
+    console.log("dasded",row.updated_at);
     
 
     //$("#LogoImg").text("Current File " + filename);
@@ -313,7 +322,7 @@ $(document).on("click", "#updatebtn", function () {
         DisplayCarouselImg(row.carouselImg);
     }
     AddThemeModal.showModal();
-
+    //localStorage.setItem("themeUpdated", Date.now()); 
 });
 
 //for add
@@ -354,7 +363,7 @@ $(document).on("click", "#addbtn", function () {
     `);
 
     $("#LogoImg").html(`
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-[12px]">
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
                 Upload Logo <i class="fa-solid fa-upload ml-2"></i>
             </span>
@@ -367,9 +376,9 @@ $(document).on("click", "#addbtn", function () {
     ClearImgContainer();
 
     $("#addImg").html(`
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-[12px]">
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
-                Upload Logo <i class="fa-solid fa-upload ml-2"></i>
+                Upload Carousel Images <i class="fa-solid fa-upload ml-2"></i>
             </span>
             <span class="text-[#9599A1]">
                 SVG, PNG, or JPEG (max 5MB)
@@ -378,6 +387,7 @@ $(document).on("click", "#addbtn", function () {
     `);
 
     AddThemeModal.showModal();
+    //localStorage.setItem("themeUpdated", Date.now()); 
 });
 
 //for executing the save btn
@@ -388,7 +398,7 @@ $(document).on("click", "#executeSavebtn", function () {
 
     // clear previous errors
     $("#CompanyName-error, #ThemeName-error, #logo-error").text("").addClass("hidden");
-
+    
     // validate individually
    if (!theme_name || !company_name || !logoFile) {
 
@@ -451,7 +461,9 @@ $(document).on("click", "#executeSavebtn", function () {
     $("#executeSavebtn")
     .prop("disabled", true)
     .html('<span class="loading loading-spinner text-white"></span>');
-
+    
+    // loadGoogleFont("header-font-link", font, ".header-preview");
+    // loadGoogleFont("body-font-link", font, ".body-preview");
     Api.post({
         url: "/customize_theme",
         data: form,
@@ -463,6 +475,7 @@ $(document).on("click", "#executeSavebtn", function () {
                 .html("Save");
             AddThemeModal.close();
             getAll();
+            getActive();
             localStorage.setItem("themeUpdated", Date.now());  
         },
         onFail: (error) => {
@@ -574,6 +587,7 @@ $(document).on("click", "#executeEditbtn", function () {
                 .html("Confirm");
             AddThemeModal.close();
             getAll();
+            getActive();
             localStorage.setItem("themeUpdated", Date.now());  
         },
         onFail: (error) => {
@@ -854,13 +868,46 @@ $.ajax({
             maxOptions: 100
         });
 
+        const DEFAULT_FONT = "Roboto";
+        let previousHeaderFont = "Roboto";
+        let previousBodyFont = "Roboto";
+
+        headerTomSelect.on("initialize", function () {
+            this.control_input.readOnly = true;
+        });
+
+        bodyTomSelect.on("initialize", function () {
+            this.control_input.readOnly = true;
+        });
 
         headerTomSelect.on("dropdown_open", function () {
+            this.control_input.readOnly = false;
+            this.control_input.focus();
+            previousHeaderFont = this.getValue();
             this.clear();
         });
 
         bodyTomSelect.on("dropdown_open", function () {
+            this.control_input.readOnly = false;
+            this.control_input.focus();
+            previousBodyFont = this.getValue();
             this.clear();
+        });
+
+        bodyTomSelect.on("dropdown_close", function () {
+            this.control_input.readOnly = true;
+            const currentFont = this.getValue();
+            if(!currentFont){
+                this.setValue(previousBodyFont);
+            }
+        });
+
+        headerTomSelect.on("dropdown_close", function () {
+            this.control_input.readOnly = true;
+            const currentFont = this.getValue();
+            if(!currentFont){
+                this.setValue(previousHeaderFont);
+            }
         });
 
         // Set default value
@@ -869,8 +916,7 @@ $.ajax({
     },
     error: function (xhr) {
         console.error("Failed to load fonts:", xhr);
-    }
-
+    },
     
 });
 
@@ -879,17 +925,8 @@ $("#header_font").on("change", function () {
     const font = $(this).val();
 
     if (!font) return;
-
-    $("#google-font-link").remove();
-
-    $("head").append(`
-        <link
-            id="google-font-link"
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap">
-    `);
-
-    $(".header-preview").css("font-family", `'${font}', sans-serif`);
+ 
+    //loadGoogleFont("header-font-link", font, ".header-preview")
 });
 
 // Body font preview
@@ -898,17 +935,9 @@ $("#body_font").on("change", function () {
 
     if (!font) return;
 
-    $("#google-font-link").remove();
-
-    $("head").append(`
-        <link
-            id="google-font-link"
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap">
-    `);
-
-    $(".body-preview").css("font-family", `'${font}', sans-serif`);
+    //loadGoogleFont("body-font-link", font, ".body-preview")
 });
+
 
 // displaying img when edit btn is click
 function DisplayCarouselImg(images){
@@ -996,9 +1025,9 @@ function ClearImgContainer(){
 
     // $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
     $("#addImg").html(`
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-[12px]">
             <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
-                Upload Logo <i class="fa-solid fa-upload ml-2"></i>
+                Upload Carousel Images <i class="fa-solid fa-upload ml-2"></i>
             </span>
             <span class="text-[#9599A1]">
                 SVG, PNG, or JPEG (max 5MB)
@@ -1103,4 +1132,17 @@ function bindColorPicker(inputId, wrapperId, hexInputId) {
             );
         }
     });
+}
+
+function loadGoogleFont(id, font, selector) {
+    $("#" + id).remove();
+
+    $("head").append(`
+        <link
+            id="${id}"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=${font.replace(/ /g, "+")}&display=swap">
+    `);
+
+    $(selector).css("font-family", `'${font}', sans-serif`);
 }

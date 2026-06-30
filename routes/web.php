@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
-use App\Http\Controllers\UserModelController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -209,6 +209,12 @@ Route::get('/profile',function(){
 })->name('profile');
 
 //getting the user account
-Route::get('/getUser',[UserModelController::class,'getUser']);
+Route::get('/getAdmin',[UserController::class,'getUser']);
+
+Route::get('/adminLogin', function () {
+    return view('admin.admin-login');
+})->name('adminlogin');
+
+Route::post('/adminLogin',[UserController::class,'Login']);
 
 Route::post('/SavePostion',[ThemeController::class,'SortCarousel']);

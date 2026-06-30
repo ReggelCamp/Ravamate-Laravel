@@ -761,21 +761,27 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
     background-color: inherit;
 }
 
+
+/* for select in font */
 .ts-wrapper { width: 100%; }
 
 .ts-control {
     min-height: 34px;
-    border-radius: 8px;
+    border-radius: 8px !important;
     border: 1px solid #d1d5db;
     font-size: 0.875rem;
     background-color: white;
     cursor: pointer;
 }
 
+/* .ts-control {
+    border-radius: 8px !important;
+} */
+
 .ts-dropdown {
     z-index: 9999;
     border-radius: 8px;
-    border: 1px solid #d1d5db;
+    border: 1px solid #C1C3C7;
 }
 
 .ts-dropdown .ts-dropdown-content {
@@ -806,7 +812,7 @@ div.dt-container .dt-paging .dt-paging-button.current:hover {
 }
 
 
-
+/* for the white border color picker */
 input[type="color"] {
     border: none;
     outline: none;
@@ -828,4 +834,8 @@ input[type="color"]::-webkit-color-swatch {
 input[type="color"]::-moz-color-swatch {
     border: none;
     border-radius: 4px;
+}
+
+.custom-dashed {
+    border: 2px dashed #C1C3C7;
 }
