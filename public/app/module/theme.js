@@ -180,8 +180,9 @@ function getAll() {
 
                             </div>
 
-                            <div class ="flex w-full">
-                                <span>Updated at ${formatDate}</span>
+                            <div class ="flex flex-col w-full">
+                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated at ${formatDate}</span>
+                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated by ${item.user.admin_name}</span>
                             </div>
 
                             <!-- BUTTONS -->

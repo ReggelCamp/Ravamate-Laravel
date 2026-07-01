@@ -20,8 +20,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 
-    <script src="{{ asset('js/getActive.js') }}"></script>
-    <script src="{{ asset('js/AddThemeModal.js') }}"></script>
+    {{-- <script src="{{ asset('js/getActive.js') }}"></script>
+    <script src="{{ asset('js/AddThemeModal.js') }}"></script> --}}
+    <script type="module" src="/app/module/login.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -46,10 +47,13 @@
                 </h1>
             </div>
             <div class="flex items-end justify-end ">
-                <button class="bg-[#366EFB] w-fit p-5 btn rounded-[8px] text-white" id='addbtn'>
-                    <span class="hidden md:inline">Create new</span>
-                    <i class="fa-solid fa-plus"></i>
-                </button>
+                <div class="flex gap-2">
+                    <button class="bg-red-500 w-fit p-5 btn rounded-[8px] text-white" id="logoutbtn">Logout</button>
+                    <button class="bg-[#366EFB] w-fit p-5 btn rounded-[8px] text-white" id='addbtn'>
+                        <span class="hidden md:inline">Create new</span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
             </div>
         </div>
 

@@ -10,6 +10,7 @@ class Theme extends Model
     use HasFactory;
 
       protected $fillable = [
+        'user_id',
         'theme_name',
         'company_name',
         'primary_color',
@@ -24,5 +25,8 @@ class Theme extends Model
         'position',
         'is_active',
     ];
-
+    
+    public function user(){
+      return $this->hasOne(User::class,'id','user_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\FileHandler;
 use App\Models\CarouselImage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 
 class ThemeController extends Controller
 {
@@ -43,7 +44,8 @@ class ThemeController extends Controller
         $json = json_decode($request->input('json'), true);
         $order = json_decode($request->carousel_order, true);
         
-        $row = $this->model::create($json);
+        $userId = Auth::id();
+        $row = $this->model::create(array_merge($json, ['user_id' => $userId]));
         
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
         FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
@@ -51,7 +53,6 @@ class ThemeController extends Controller
         
         Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
       
-
         return response()->json($row);
     }
 
@@ -112,7 +113,7 @@ class ThemeController extends Controller
      */
     public function destroy(Theme $theme, $id)
     {
-        $theme = Theme::findOrFail($id);
+        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
         $theme->delete();
 
          return response()->json([
@@ -123,8 +124,8 @@ class ThemeController extends Controller
 
     public function updateActive(Request $request, $id)
     {
-        $this->model::where("is_active",true)->update(["is_active"=>false]);
-        $theme = Theme::findOrFail($id);
+        $this->model::where("is_active",true)->where('user_id', Auth::id())->update(["is_active"=>false]);
+        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
 
         $theme->is_active = $request->is_active;
 
@@ -138,7 +139,12 @@ class ThemeController extends Controller
     }
 
   public function getAll(){
-    return response()->json($this->model::all()->map(function($row){
+    return response()->json($this->model::where('user_id', Auth::id())->with('user',function($query){
+        $query->select('id', 'admin_name');
+    })->get()->map(function($row){
+
+       
+
         $row['logo'] = FileHandler::getFilesByID('logo/img', $row['id']);
 
         $images = FileHandler::getFilesByID('carousel', $row['id']);
@@ -153,12 +159,13 @@ class ThemeController extends Controller
 
         $row['carouselImg'] = $images;
 
+        
         return $row;
     }));
 }
 
-    public function getActive(){
-    $activeTheme = Theme::where('is_active', true)->first();
+public function getActive(){
+    $activeTheme = Theme::where('user_id', Auth::id())->where('is_active', true)->first();
 
     if ($activeTheme) {
         $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
@@ -205,5 +212,6 @@ class ThemeController extends Controller
 
         return response()->json($fonts);
     }
+
 
 }

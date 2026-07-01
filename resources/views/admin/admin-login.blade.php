@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="module" src="/app/module/login.js"></script>
 </head>
 <body class="min-h-screen w-full bg-gray-50 flex items-center justify-center px-4 py-12">
 

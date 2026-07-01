@@ -24,6 +24,7 @@ Route::get('/login', function () {
     return view('login-page');
 });
 
+Route::middleware('auth')->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard-page');
 })->name('dashboard');
@@ -180,9 +181,11 @@ Route::get('/salesmanobjective', function () {
     return view('maintenance.others.salesmanObjective');
 })->name('salesmanobjective');
 
+// Route::middleware('auth')->group(function () {
 //Color Theme
 Route::get('/customize_theme',[ThemeController::class,'create']);
 Route::post('/customize_theme',[ThemeController::class,'store']);
+
 
 //update toggle
 Route::put('/customize_theme/{id}', [ThemeController::class, 'updateActive']);
@@ -196,6 +199,8 @@ Route::get('/customize_theme/getAll',[ThemeController::class,'getAll']);
 
 //api get active
 Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
+
+});//end of middleware group
 
 //getsalesman
 Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
@@ -213,7 +218,11 @@ Route::get('/getAdmin',[UserController::class,'getUser']);
 
 Route::get('/adminLogin', function () {
     return view('admin.admin-login');
-})->name('adminlogin');
+})->name('login');
+
+Route::post('/logout', [UserController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 Route::post('/adminLogin',[UserController::class,'Login']);
 
