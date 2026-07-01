@@ -11,6 +11,7 @@ class Theme extends Model
 
       protected $fillable = [
         'user_id',
+        'updated_by',
         'theme_name',
         'company_name',
         'primary_color',
@@ -28,5 +29,10 @@ class Theme extends Model
     
     public function user(){
       return $this->hasOne(User::class,'id','user_id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

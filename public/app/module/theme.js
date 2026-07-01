@@ -64,6 +64,8 @@ function getAll() {
         onSuccess: (data) => {
             array = data;
 
+            console.log(array,"array");
+
             let activeTheme = array.find((item) => item.is_active);
             
             const defaultTheme = array[0]?.id;
@@ -78,13 +80,22 @@ function getAll() {
                 let isActive = item.is_active ? "bg-blue-50 border-[4px] border-[#CFDFFF]" : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
                 const convert_date = new Date(item.updated_at);
-                const formatDate = convert_date.toLocaleDateString("en-PH", {
+                const convert_createdAt = new Date(item.created_at);
+                const formatDateUpdated = convert_date.toLocaleDateString("en-PH", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                     hour: "numeric",
                     minute: "2-digit",
                 });
+                const formatDateCreated = convert_createdAt.toLocaleDateString("en-PH", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                });
+                
 
                 $grid.append(`
                     <div id="themeCard"
@@ -181,8 +192,10 @@ function getAll() {
                             </div>
 
                             <div class ="flex flex-col w-full">
-                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated at ${formatDate}</span>
-                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated by ${item.user.admin_name}</span>
+                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated at ${formatDateUpdated}</span>
+                                <span class = "text-[#9599A1] font-normal text-[12px]">Created at ${formatDateCreated}</span>
+                                <span class="text-[#9599A1] font-normal text-[12px]">Created by ${item.user?.admin_name ?? 'Unknown'}</span>                               
+                                <span class="text-[#9599A1] font-normal text-[12px]">Updated by ${item.updated_by_name ?? 'Unknown'}</span>                               
                             </div>
 
                             <!-- BUTTONS -->

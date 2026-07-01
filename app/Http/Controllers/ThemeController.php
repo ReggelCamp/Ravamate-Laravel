@@ -75,38 +75,45 @@ class ThemeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-    {
-        $json = json_decode($request->input('json'), true);
-        $order = json_decode($request->carousel_order, true);
-        $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
+public function update(Request $request, $id){
+    $json = json_decode($request->input('json'), true);
+    $order = json_decode($request->carousel_order, true);
+    $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
 
-        foreach ($deleted as $url) {
-            $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
-            
-            if (!str_starts_with($relativePath, 'uploads/carousel/')) {
-                continue;
-            }
+    // Delete removed carousel images
+    foreach ($deleted as $url) {
+        $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
 
-            $fullPath = storage_path('app/public/' . $relativePath);
-
-            if (file_exists($fullPath)) {
-                unlink($fullPath);
-            }
+        if (!str_starts_with($relativePath, 'uploads/carousel/')) {
+            continue;
         }
-      
-        FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
-        $this->model::find($id)->update($json);
 
-        FileHandler::replaceFilesByID('logo/img',$id,$request->file('logo'));
-    
-        // if ($request->hasFile('CarouselImgList')) {
-        //     FileHandler::replaceFilesByID('carousel',$id,$request->file('CarouselImgList'));
-        // }
+        $fullPath = storage_path('app/public/' . $relativePath);
 
-        Theme::where('id', $id)->update(['position' => json_encode($order)]);
-
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
     }
+
+    $theme = Theme::findOrFail($id);
+
+    // Update theme data, last updater, and carousel order
+    $theme->update(array_merge($json, [
+        'updated_by' => Auth::id(),
+        'position'   => json_encode($order),
+    ]));
+
+
+    FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
+
+    FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Theme updated successfully.',
+        'theme' => $theme->fresh()
+    ]);
+}
 
     /**
      * Remove the specified resource from storage.
@@ -124,8 +131,8 @@ class ThemeController extends Controller
 
     public function updateActive(Request $request, $id)
     {
-        $this->model::where("is_active",true)->where('user_id', Auth::id())->update(["is_active"=>false]);
-        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
+        $this->model::where("is_active",true)->update(["is_active"=>false]);
+        $theme = Theme::findOrFail($id);
 
         $theme->is_active = $request->is_active;
 
@@ -138,34 +145,41 @@ class ThemeController extends Controller
         ]);
     }
 
-  public function getAll(){
-    return response()->json($this->model::where('user_id', Auth::id())->with('user',function($query){
-        $query->select('id', 'admin_name');
-    })->get()->map(function($row){
+  public function getAll()
+{
+    return response()->json(
+        $this->model::with([
+            'user' => function ($query) {
+                $query->select('id', 'admin_name');
+            },
+            'updatedBy' => function ($query) {
+                $query->select('id', 'admin_name');
+            }
+        ])->get()->map(function ($row) {
 
-       
+            $row['logo'] = FileHandler::getFilesByID('logo/img', $row['id']);
+            $row['updated_by_name'] = $row->updatedBy?->admin_name;
 
-        $row['logo'] = FileHandler::getFilesByID('logo/img', $row['id']);
+            $images = FileHandler::getFilesByID('carousel', $row['id']);
+            $order = json_decode($row['position'], true) ?? [];
 
-        $images = FileHandler::getFilesByID('carousel', $row['id']);
-        $order = json_decode($row['position'], true) ?? [];
+            usort($images, function ($a, $b) use ($order) {
+                $aIndex = array_search($a['url'], array_column($order, 'id'));
+                $bIndex = array_search($b['url'], array_column($order, 'id'));
 
-        usort($images, function ($a, $b) use ($order) {
-            $aIndex = array_search($a['url'], array_column($order, 'id'));
-            $bIndex = array_search($b['url'], array_column($order, 'id'));
+                return ($aIndex === false ? 999 : $aIndex)
+                    <=> ($bIndex === false ? 999 : $bIndex);
+            });
 
-            return ($aIndex === false ? 999 : $aIndex) <=> ($bIndex === false ? 999 : $bIndex);
-        });
+            $row['carouselImg'] = $images;
 
-        $row['carouselImg'] = $images;
-
-        
-        return $row;
-    }));
+            return $row;
+        })
+    );
 }
 
 public function getActive(){
-    $activeTheme = Theme::where('user_id', Auth::id())->where('is_active', true)->first();
+    $activeTheme = Theme::where('is_active', true)->first();
 
     if ($activeTheme) {
         $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
@@ -212,6 +226,5 @@ public function getActive(){
 
         return response()->json($fonts);
     }
-
 
 }
