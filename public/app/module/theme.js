@@ -57,6 +57,8 @@ $(document).on("change", ".flipswitch", function () {
     });
 });
 
+{/* <i data-id="${item.id}" class="tooltip-info fa-solid fa-info"></i> */}
+
 //function for displaying
 function getAll() {
     Api.get({
@@ -79,23 +81,6 @@ function getAll() {
             data.forEach((item) => {
                 let isActive = item.is_active ? "bg-blue-50 border-[4px] border-[#CFDFFF]" : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
-                const convert_date = new Date(item.updated_at);
-                const convert_createdAt = new Date(item.created_at);
-                const formatDateUpdated = convert_date.toLocaleDateString("en-PH", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                });
-                const formatDateCreated = convert_createdAt.toLocaleDateString("en-PH", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                });
-                
 
                 $grid.append(`
                     <div id="themeCard"
@@ -109,17 +94,23 @@ function getAll() {
                             <!-- HEADER -->
                             <div class="flex w-full justify-between p-[16px] items-center h-[56px]">
 
-                                <h2 class=" text-[20px] font-medium">
-                                    ${item.theme_name}
-                                </h2>
-
-                                <label class=" text-base-content switch ${item.is_active}">
+                                 <label class=" text-base-content switch ${item.is_active}">
                                     <input type="checkbox"
                                         data-id="${item.id}"
                                         class="flipswitch"
                                         ${item.is_active ? "checked" : ""}/>
                                     <span class="slider"></span>
                                 </label>
+
+                                <h2 class=" text-[20px] font-medium">
+                                    ${item.theme_name}
+                                </h2>
+
+                                <span class="relative inline-block w-[24px] h-[24px] text-[#C1C3C7]">
+                                    <i class="text-3xl ti ti-info-circle tooltip-info" data-id="${item.id}"></i>
+                                    <div class="tooltip-box hidden absolute z-20 rounded-[10px] top-0 right-full mr-0.5 bg-[#FFFFFF] shadow-xl border border-[#C1C3C7] rounded-2xl p-4 w-[290px]"></div>
+                                </span>
+
                             </div>
 
                             <!-- IMAGE -->
@@ -189,13 +180,6 @@ function getAll() {
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <div class ="flex flex-col w-full">
-                                <span class = "text-[#9599A1] font-normal text-[12px]">Updated at ${formatDateUpdated}</span>
-                                <span class = "text-[#9599A1] font-normal text-[12px]">Created at ${formatDateCreated}</span>
-                                <span class="text-[#9599A1] font-normal text-[12px]">Created by ${item.user?.admin_name ?? 'Unknown'}</span>                               
-                                <span class="text-[#9599A1] font-normal text-[12px]">Updated by ${item.updated_by_name ?? 'Unknown'}</span>                               
                             </div>
 
                             <!-- BUTTONS -->
@@ -1160,3 +1144,62 @@ function loadGoogleFont(id, font, selector) {
 
     $(selector).css("font-family", `'${font}', sans-serif`);
 }
+
+$(document).on("mouseenter", ".tooltip-info", function () {
+    const id = $(this).data("id");
+    const item = array.find((x) => x.id == id);
+    if (!item) return;
+
+    const convert_date = new Date(item.updated_at);
+    const convert_createdAt = new Date(item.created_at);
+    const formatDateUpdated = convert_date.toLocaleDateString("en-PH", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+    }).replace(",", " |");
+    const formatDateCreated = convert_createdAt.toLocaleDateString("en-PH", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+    }).replace(",", " |");
+    const createdBy = item.user?.admin_name ?? "Unknown";
+    const updatedBy = item.updated_by_name ?? "";
+
+    $(".tooltip-box").addClass("hidden");
+    
+    // <div class="absolute -top-2 right-4 w-4 h-4 bg-[#F5F5F5] rotate-45 shadow-sm"></div>
+   $(this).siblings(".tooltip-box").removeClass("hidden").html(`
+
+    <div class="flex text-[12px] gap-[18px] flex-col relative z-10">
+        <div class="flex gap-[15px] justify-between">
+            <div class="flex gap-[4px] flex-col">
+                <span class="text-[#9599A1]">Created by:</span>
+                <span class="text-[#17191C]">${createdBy}</span>
+            </div>
+            <div class="flex gap-[4px] flex-col">
+                <span class="text-[#9599A1]">Created at:</span>
+                <span class="text-[#17191C]">${formatDateCreated}</span>
+            </div>
+        </div>
+
+        <div class="flex gap-[15px] justify-between ${updatedBy ? "" : "hidden"}">
+            <div class="flex gap-[4px] flex-col">
+                <span class="text-[#9599A1]">Updated by:</span>
+                <span class="text-[#17191C]">${updatedBy}</span>
+            </div>
+            <div class="flex gap-[4px] flex-col">
+                <span class="text-[#9599A1]">Updated at:</span>
+                <span class="text-[#17191C]">${formatDateUpdated}</span>
+            </div>
+        </div>
+    </div>
+`);
+});
+
+$(document).on("mouseleave", ".tooltip-info", function () {
+    $(this).siblings(".tooltip-box").addClass("hidden");
+});

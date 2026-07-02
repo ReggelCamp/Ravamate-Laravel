@@ -228,3 +228,9 @@ Route::post('/logout', [UserController::class, 'logout'])
 Route::post('/adminLogin',[UserController::class,'Login']);
 
 Route::post('/SavePostion',[ThemeController::class,'SortCarousel']);
+
+Route::get('/activitylogs', function () {
+    return view('activity-logs');
+})->name('activitylogs');
+
+Route::get('/activitylogs/data', [ThemeController::class, 'getActivityLogs']);

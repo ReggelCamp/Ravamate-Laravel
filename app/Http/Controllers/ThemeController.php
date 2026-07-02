@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Theme;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\FileHandler;
 use App\Models\CarouselImage;
@@ -44,15 +45,27 @@ class ThemeController extends Controller
         $json = json_decode($request->input('json'), true);
         $order = json_decode($request->carousel_order, true);
         
-        $userId = Auth::id();
-        $row = $this->model::create(array_merge($json, ['user_id' => $userId]));
+        $json['user_id'] = Auth::id();
         
+        $row = $this->model::create($json);
+
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'theme_id' => $row->id,
+            'action' => 'create',
+            'description' => 'Created a new theme',
+            'old_values' => null,
+            'new_values' => json_encode($row->toArray()),
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+        ]);
+
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
         FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
 
         
         Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
-      
+        //dd(ActivityLog::all());
         return response()->json($row);
     }
 
@@ -96,18 +109,30 @@ public function update(Request $request, $id){
     }
 
     $theme = Theme::findOrFail($id);
-
+    
+    $oldValues = $theme->toArray();
+    
     // Update theme data, last updater, and carousel order
     $theme->update(array_merge($json, [
         'updated_by' => Auth::id(),
         'position'   => json_encode($order),
     ]));
 
+    ActivityLog::create([
+        'user_id' => Auth::id(),
+        'theme_id' => $theme->id,
+        'action' => 'update',
+        'description' => 'Updated a theme',
+        'old_values' => json_encode($oldValues),
+        'new_values' => json_encode($theme->fresh()->toArray()),
+        'ip_address' => $request->ip(),
+        'user_agent' => $request->header('User-Agent'),
+    ]);
 
     FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
 
     FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
-
+    //dd(ActivityLog::all());
     return response()->json([
         'success' => true,
         'message' => 'Theme updated successfully.',
@@ -123,10 +148,21 @@ public function update(Request $request, $id){
         $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
         $theme->delete();
 
-         return response()->json([
-        'success' => true,
-        'message' => 'Theme deleted successfully'
-    ]);
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'theme_id' => $theme->id,
+            'action' => 'delete',
+            'description' => 'Deleted a theme',
+            'old_values' => json_encode($theme->toArray()),
+            'new_values' => null,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Theme deleted successfully'
+        ]);
     }
 
     public function updateActive(Request $request, $id)
@@ -180,7 +216,7 @@ public function update(Request $request, $id){
 
 public function getActive(){
     $activeTheme = Theme::where('is_active', true)->first();
-
+    
     if ($activeTheme) {
         $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
 
@@ -227,4 +263,23 @@ public function getActive(){
         return response()->json($fonts);
     }
 
+//     public function getActivityLogs()
+//     {
+//         $logs = ActivityLog::with('user:id,admin_name')
+//             ->orderBy('created_at', 'desc')
+//             ->get();
+//        dd([
+//     'old' => $logs->old_values,
+//     'new' => $logs->new_values,
+// ]);
+//         return response()->json($logs);
+//     }
+
+public function getActivityLogs()
+{
+    $logs = ActivityLog::with(['user', 'theme'])
+        ->latest()
+        ->get();
+    return response()->json($logs);
+}
 }

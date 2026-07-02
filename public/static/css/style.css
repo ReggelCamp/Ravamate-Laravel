@@ -839,3 +839,35 @@ input[type="color"]::-moz-color-swatch {
 .custom-dashed {
     border: 2px dashed #C1C3C7;
 }
+
+/* .tooltip-box {
+    position: absolute;
+    right: 20px;
+    top: 60px;
+    transform: translateY(-50%);
+
+    width: 280px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    z-index: 9999;
+}
+
+.tooltip-box::before {
+    content: "";
+    position: absolute;
+
+    top: 5px;
+    right: -5px;
+
+    width: 14px;
+    height: 14px;
+
+    background: red;
+    transform: rotate(45deg);
+
+    border-top: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+} */
