@@ -208,7 +208,7 @@ public function update(Request $request, $id){
             });
 
             $row['carouselImg'] = $images;
-
+            // dd($row);
             return $row;
         })
     );
@@ -277,9 +277,32 @@ public function getActive(){
 
 public function getActivityLogs()
 {
-    $logs = ActivityLog::with(['user', 'theme'])
-        ->latest()
-        ->get();
+    $logs = ActivityLog::with([
+        'user' => function ($query) {
+            $query->select('id', 'admin_name');
+        },
+        'theme' => function ($query) {
+            $query->select('id', 'theme_name', 'updated_by', 'updated_at');
+        },
+        'theme.updatedBy' => function ($query) {
+            $query->select('id', 'admin_name');
+        }
+    ])->latest()->get();
+
+    $logs = $logs->map(function ($log) {
+        if ($log->action === 'update') {
+            $log['User'] = $log->theme?->updatedBy?->admin_name
+                ?? $log->user?->admin_name
+                ?? "-";
+        } else {
+            $log['User'] = $log->user?->admin_name ?? "-";
+        }
+
+        return $log;
+    });
+
     return response()->json($logs);
 }
+
+
 }
