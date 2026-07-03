@@ -50,7 +50,7 @@ function getActivityLogs() {
                             return `
                                 <button
                                     class="descModal btn btn-sm"
-                                    data-theme-id="${row.theme_id}">
+                                    data-log-id="${row.id}">
                                     View Logs
                                 </button>
                             `;
@@ -85,9 +85,8 @@ $(document).on("click", ".descModal", function () {
     console.log("Description clicked:");
 
     $("#DescModal")[0].showModal(); 
-    const themeId = $(this).data('theme-id');
-    const changes = getChanges(themeId);
-    getChanges(themeId);
+    const logId = $(this).data('log-id');
+    const changes = getChanges(logId);
     console.log("Changes:", changes);
 
     if ($.fn.DataTable.isDataTable('#changesTable')) {
@@ -112,7 +111,7 @@ $(document).on("click", ".descModal", function () {
                 ]);
 });
 
-function getChanges(themeId) {
+function getChanges(logId) {
     const changes = [];
 
     const allowedFields = [
@@ -129,7 +128,7 @@ function getChanges(themeId) {
 
     $logs.forEach(log => {
 
-        if (log.theme_id != themeId) {
+        if (log.id != logId) {
             return;
         }
 
