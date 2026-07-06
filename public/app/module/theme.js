@@ -87,7 +87,7 @@ function getAll() {
                         class="card bg-base-100 shadow-xl  transition-all 
                             hover:-translate-y-2
                             hover:shadow-2xl
-                            hover:scale-105  border ${isActive}">
+                            hover:scale-105 h-[550px] w-[307px] border ${isActive}">
 
                         <div class="card-body p-0 gap-0">
 
@@ -199,6 +199,7 @@ function getAll() {
                 </div>
                 `);
             });
+            // console.log("aaa",array);
         },
     });
 }
@@ -321,6 +322,7 @@ $(document).on("click", "#updatebtn", function () {
     }
     AddThemeModal.showModal();
     //localStorage.setItem("themeUpdated", Date.now()); 
+    localStorage.setItem("activityLogsUpdated", Date.now());
 });
 
 //for add
@@ -474,7 +476,8 @@ $(document).on("click", "#executeSavebtn", function () {
             AddThemeModal.close();
             getAll();
             getActive();
-            localStorage.setItem("themeUpdated", Date.now());  
+            localStorage.setItem("themeUpdated", Date.now()); 
+            localStorage.setItem("activityLogsUpdated", Date.now()); 
         },
         onFail: (error) => {
             $("#executeSavebtn")
@@ -587,6 +590,7 @@ $(document).on("click", "#executeEditbtn", function () {
             getAll();
             getActive();
             localStorage.setItem("themeUpdated", Date.now());  
+            localStorage.setItem("activityLogsUpdated", Date.now());
         },
         onFail: (error) => {
             $("#executeEditbtn")
@@ -911,6 +915,7 @@ $.ajax({
         // Set default value
         headerTomSelect.setValue("Roboto");
         bodyTomSelect.setValue("Roboto");
+        localStorage.setItem("activityLogsUpdated", Date.now());
     },
     error: function (xhr) {
         console.error("Failed to load fonts:", xhr);
@@ -947,7 +952,7 @@ function DisplayCarouselImg(images){
 
         $("#imgContainer").append(`
             <div class="flex w-full justify-center">
-                <div class="uploaderSort" data-type="existing" data-id="${img.url}">
+                <div class="uploaderSort" data-type="existing" data-id="${img.id}" data-url="${img.url}"">
                     <div class="card h-[250px] w-[250px] shadow-xl  transition-all duration-300 ease-out cursor-pointer
                     hover:-translate-y-2
                     hover:shadow-2xl

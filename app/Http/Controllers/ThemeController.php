@@ -55,20 +55,26 @@ class ThemeController extends Controller
         
         Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
 
+        $carouselImages = FileHandler::getFilesByID('carousel', $row->id);
+        $logData = $row->toArray();
+        $logData['carousel_images'] = $carouselImages;
+
         ActivityLog::create([
             'user_id' => Auth::id(),
-            // 'theme_record_id' => $theme->id,
             //'log_id' => $id,
+            'theme_id' => $row->id,
             'action' => 'create',
             //'description' => 'Created a new theme',
-            'description' => 'Created theme: ',
+            'description' => 'Created the theme: ',
             'old_values' => null,
-            'new_values' => json_encode($row->toArray()),
+            // 'new_values' => json_encode($row->toArray()),
+            'new_values' => json_encode($logData),
             'ip_address' => $request->ip(),
             'user_agent' => $request->header('User-Agent'),
         ]);
 
-        // dd(ActivityLog::all());
+        //dd(ActivityLog::all());
+        //dd($logData);
         return response()->json($row);
     }
 
@@ -114,28 +120,47 @@ public function update(Request $request, $id){
     $theme = Theme::findOrFail($id);
     
     $oldValues = $theme->toArray();
-    
+    $oldValues['carousel_images'] = FileHandler::getFilesByID('carousel', $theme->id);
+
     // Update theme data, last updater, and carousel order
     $theme->update(array_merge($json, [
         'updated_by' => Auth::id(),
         'position'   => json_encode($order),
     ]));
 
+    FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
+
+    FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
+
+    $newValues = $theme->fresh()->toArray();
+    $newValues['carousel_images'] = FileHandler::getFilesByID('carousel', $theme->id);
+
+    // ActivityLog::create([
+    //     'user_id' => Auth::id(),
+    //     'theme_id' => $theme->id,
+    //     'action' => 'update',
+    //     'description' => 'Updated the theme ',
+    //     'old_values' => json_encode($oldValues),
+    //     'new_values' => json_encode($theme->fresh()->toArray()),
+    //     'ip_address' => $request->ip(),
+    //     'user_agent' => $request->header('User-Agent'),
+    // ]);
+    
     ActivityLog::create([
         'user_id' => Auth::id(),
         'theme_id' => $theme->id,
         'action' => 'update',
-        'description' => 'Updated theme: ',
+        'description' => 'Updated the theme ',
+        // 'old_values' => json_encode($oldValues),
         'old_values' => json_encode($oldValues),
-        'new_values' => json_encode($theme->fresh()->toArray()),
+        'new_values' => json_encode($newValues),
         'ip_address' => $request->ip(),
         'user_agent' => $request->header('User-Agent'),
     ]);
 
-    FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
-
-    FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
     //dd(ActivityLog::all());
+    //dd($theme);
+    //dd($logData);
     return response()->json([
         'success' => true,
         'message' => 'Theme updated successfully.',
@@ -150,7 +175,7 @@ public function update(Request $request, $id){
 
 public function destroy(Theme $theme, $id)
 {
-    return DB::transaction(function () use ($id) {
+    return DB::transaction(function () use ($id, $theme) {
         $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
 
         // toArray() before delete so old_values still has the full record
@@ -160,7 +185,8 @@ public function destroy(Theme $theme, $id)
             'user_id' => Auth::id(),
             'theme_id' => $theme->id,
             'action' => 'delete',
-            'description' => 'Deleted theme: ' . ($theme->theme_name ?? ''),
+            //'description' => 'Deleted theme: ' . ($theme->theme_name ?? ''),
+            'description' => 'Deleted the theme ',
             'old_values' => json_encode($oldValues),
             'new_values' => null,
             'ip_address' => request()->ip(),
@@ -173,11 +199,11 @@ public function destroy(Theme $theme, $id)
         }
 
         $theme->delete();
-
         return response()->json([
             'success' => true,
             'message' => 'Theme deleted successfully'
         ]);
+        
     });
 }
 
@@ -315,10 +341,14 @@ public function getActivityLogs()
         } else {
             $log['User'] = $log->user?->admin_name ?? "-";
         }
-
-        // if($log->action === 'delete') {
-        //     $log['theme_name'] = $log->old_values ? json_decode($log->old_values)->theme_name : '-';
-        // }
+    // Determine theme name
+        if ($log->theme) {
+            $log['theme_name'] = $log->theme->theme_name;
+        } elseif ($log->new_values) {
+            $log['theme_name'] = json_decode($log->new_values, true)['theme_name'] ?? null;
+        } elseif ($log->old_values) {
+            $log['theme_name'] = json_decode($log->old_values, true)['theme_name'] ?? null;
+        }
 
         return $log;
     });

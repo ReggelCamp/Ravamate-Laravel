@@ -28,8 +28,12 @@ function getActivityLogs() {
                         title: 'Description',
                         data: 'description',
                         render: function (data, type, row) {
-                            const themeName = row.theme_name ?? row.theme?.theme_name ?? 'Unknown Theme';
-                            return `${data} "${themeName}"`;
+
+                            if (row.action === "delete") {
+                                return `The theme " ${row.theme_name}" has already been deleted.`;
+                            }
+
+                            return `${data}"${row.theme_name}"`;
                         }
                     },
                     {
@@ -72,58 +76,129 @@ function getActivityLogs() {
                 console.error("activity-logs-body not found.");
                 return;
             }
+            console.log($logs,"daa");
         },
 
         onError: (err) => {
             console.error(err);
         }
     });
+    
 }
 
 
 $(document).ready(function () {
     getActivityLogs();
+
+    window.addEventListener("storage", function (event) {
+        if (event.key === "activityLogsUpdated") {
+            console.log("Reloading activity logs...");
+            getActivityLogs();
+        }
+    });
 });
 
 
 $(document).on("click", ".descModal", function () {
     console.log("Description clicked:");
 
-    $("#DescModal")[0].showModal(); 
-    const logId = $(this).data('log-id');
+    $("#DescModal")[0].showModal();
+    const logId = $(this).data("log-id");
     const changes = getChanges(logId);
     console.log("Changes:", changes);
 
-    if ($.fn.DataTable.isDataTable('#changesTable')) {
-    $('#changesTable').DataTable().clear().destroy();
-}
+    if ($.fn.DataTable.isDataTable("#changesTable")) {
+        $("#changesTable").DataTable().clear().destroy();
+    }
     //  $logs = response.data ?? response;
-            LogsTable.tableData(
-                '#changesTable',
-                changes,[
-                        {
-                            title:'Theme Id',
-                            data:'theme_id'
-                        },
-                        {
-                            title:'Field',
-                            data:'field'
-                        },
-                        {
-                            title: 'Old Value',
-                            data: 'old',
-                            render: function(data) {
-                                return data ? data : "-";
-                            }
-                        },
-                        {
-                            title:'Current Value',
-                            data:'new',
-                            render: function(data) {
-                                return data ? data : "-";
-                            }
-                        },
-                ]);
+    LogsTable.tableData("#changesTable", changes, [
+        {
+            title: "Theme Id",
+            data: "theme_id",
+        },
+        {
+            title: "Field",
+            data: "field",
+        },
+        // {
+        //     title: "Old Value",
+        //     data: "old",
+        //     render: function (data) {
+        //         return data ? data : "-";
+        //     },
+        // },
+        {
+            title: "Old Value",
+            data: "old",
+            render: function (data, type, row) {
+
+                if (!data) {
+                    return "-";
+                }
+
+                // Carousel images
+                if (row.field === "carousel_images" && Array.isArray(data)) {
+                    return data.map(image => `
+                            <img src="${image.url}"
+                                class="rounded border w-[150px] h-[200px]">
+                           
+                    `).join("");
+
+                }
+
+                // Logo image
+                // if (row.field === "logo_img" && typeof data === "object" && data.url) {
+                //     return `
+                //         <img src="${data.url}" width="120" class="rounded border">
+                //     `;
+                // }
+
+                return data;
+            }
+        },
+        // {
+        //     title: "Current Value",
+        //     data: "new",
+        //     render: function (data) {
+        //         return data ? data : "-";
+        //     },
+        // },
+        {
+            title: "Current Value",
+            data: "new",
+            render: function (data, type, row) {
+
+                if (!data) {
+                    return "-";
+                }
+
+                // Carousel Images
+                if (row.field === "carousel_images" && Array.isArray(data)) {
+
+                    return data.map(image => `
+                        <div class = "flex flex-col w-full">
+                            <img src="${image.url}"
+                                class="rounded border w-[150px] h-[200px]">
+                           
+                        </div>   
+                    `).join("");
+                }
+
+                // Logo Image (if stored as object)
+                // if (row.field === "logo_img" && typeof data === "object") {
+
+                //     return `
+                //         <img src="${data.url}"
+                //             width="120"
+                //             class="rounded border">
+                //     `;
+
+                // }
+                //console.log("aaa",data);
+                return data;
+            }
+        }
+    ]);
 });
 
 function getChanges(logId) {
@@ -138,7 +213,9 @@ function getChanges(logId) {
         "background_color",
         "body_font",
         "header_font",
-        "report_header"
+        "report_header",
+        "carousel_images",
+        // "logo_img",
     ];
 
     $logs.forEach(log => {
@@ -153,6 +230,7 @@ function getChanges(logId) {
         const newValues = JSON.parse(log.new_values || "{}");
 
         Object.keys(newValues).forEach(key => {
+            const themeId = newValues.id;
 
             // Skip fields that are not in the allowed list
             if (!allowedFields.includes(key)) {
@@ -160,18 +238,40 @@ function getChanges(logId) {
             }
 
             // Only include changed values
-            if (oldValues[key] !== newValues[key]) {
+            // if (oldValues[key] !== newValues[key]) {
+            //     changes.push({
+            //         //theme_id: theme_id,
+            //         theme_id: themeId,
+            //         field: key,
+            //         old: oldValues[key],
+            //         new: newValues[key]
+            //     });
+            // }
+
+            const oldValue =
+                typeof oldValues[key] === "object"
+                    ? JSON.stringify(oldValues[key])
+                    : oldValues[key];
+
+            const newValue =
+                typeof newValues[key] === "object"
+                    ? JSON.stringify(newValues[key])
+                    : newValues[key];
+
+            if (oldValue !== newValue) {
                 changes.push({
-                    theme_id: theme_id,
+                    theme_id: themeId,
                     field: key,
                     old: oldValues[key],
                     new: newValues[key]
                 });
             }
         });
-            // console.log("xaxa",$logs[0].theme_id);
-
+            //console.log("xaxa",log);
+            //console.log(newValues.carousel_images);
+            //console.log(typeof newValues.carousel_images);
     });
     //console.log("xaxa",changes);
     return changes;
 }
+
