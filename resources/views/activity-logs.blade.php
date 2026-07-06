@@ -35,7 +35,7 @@
                             <tr>
                                 <th>Field</th>
                                 <th>Old Value</th>
-                                <th>New Value</th>
+                                <th>Current Value</th>
                             </tr>
                         </thead>
                         <tbody id="changes-body">

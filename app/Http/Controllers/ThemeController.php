@@ -10,6 +10,7 @@ use App\Models\CarouselImage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ThemeController extends Controller
 {
@@ -49,23 +50,25 @@ class ThemeController extends Controller
         
         $row = $this->model::create($json);
 
+        FileHandler::upload('logo/img',$row->id,$request->file('logo'));
+        FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
+        
+        Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
+
         ActivityLog::create([
             'user_id' => Auth::id(),
-            'theme_id' => $row->id,
+            // 'theme_record_id' => $theme->id,
+            //'log_id' => $id,
             'action' => 'create',
-            'description' => 'Created a new theme',
+            //'description' => 'Created a new theme',
+            'description' => 'Created theme: ',
             'old_values' => null,
             'new_values' => json_encode($row->toArray()),
             'ip_address' => $request->ip(),
             'user_agent' => $request->header('User-Agent'),
         ]);
 
-        FileHandler::upload('logo/img',$row->id,$request->file('logo'));
-        FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
-
-        
-        Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
-        //dd(ActivityLog::all());
+        // dd(ActivityLog::all());
         return response()->json($row);
     }
 
@@ -122,7 +125,7 @@ public function update(Request $request, $id){
         'user_id' => Auth::id(),
         'theme_id' => $theme->id,
         'action' => 'update',
-        'description' => 'Updated a theme',
+        'description' => 'Updated theme: ',
         'old_values' => json_encode($oldValues),
         'new_values' => json_encode($theme->fresh()->toArray()),
         'ip_address' => $request->ip(),
@@ -143,27 +146,40 @@ public function update(Request $request, $id){
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Theme $theme, $id)
-    {
-        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
-        $theme->delete();
 
-        ActivityLog::create([
+
+public function destroy(Theme $theme, $id)
+{
+    return DB::transaction(function () use ($id) {
+        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
+
+        // toArray() before delete so old_values still has the full record
+        $oldValues = $theme->toArray();
+
+        $log = ActivityLog::create([
             'user_id' => Auth::id(),
             'theme_id' => $theme->id,
             'action' => 'delete',
-            'description' => 'Deleted a theme',
-            'old_values' => json_encode($theme->toArray()),
+            'description' => 'Deleted theme: ' . ($theme->theme_name ?? ''),
+            'old_values' => json_encode($oldValues),
             'new_values' => null,
             'ip_address' => request()->ip(),
             'user_agent' => request()->header('User-Agent'),
         ]);
 
+        // If the log didn't actually persist, bail out — transaction rolls back
+        if (!$log || !$log->exists) {
+            throw new \RuntimeException('Failed to record activity log; theme not deleted.');
+        }
+
+        $theme->delete();
+
         return response()->json([
             'success' => true,
             'message' => 'Theme deleted successfully'
         ]);
-    }
+    });
+}
 
     public function updateActive(Request $request, $id)
     {
@@ -289,6 +305,8 @@ public function getActivityLogs()
         }
     ])->latest()->get();
 
+    //$images = FileHandler::getFilesByID('carousel', $activeTheme->id);
+
     $logs = $logs->map(function ($log) {
         if ($log->action === 'update') {
             $log['User'] = $log->theme?->updatedBy?->admin_name
@@ -298,9 +316,13 @@ public function getActivityLogs()
             $log['User'] = $log->user?->admin_name ?? "-";
         }
 
+        // if($log->action === 'delete') {
+        //     $log['theme_name'] = $log->old_values ? json_decode($log->old_values)->theme_name : '-';
+        // }
+
         return $log;
     });
-
+    //dd($logs);
     return response()->json($logs);
 }
 

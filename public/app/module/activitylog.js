@@ -17,8 +17,8 @@ function getActivityLogs() {
                         data:'User'
                     },
                     {
-                        title:'Theme ID',
-                        data:'theme_id'
+                        title:'Log ID',
+                        data:'id'
                     },
                     {
                         title:'Action',
@@ -27,6 +27,10 @@ function getActivityLogs() {
                     {
                         title: 'Description',
                         data: 'description',
+                        render: function (data, type, row) {
+                            const themeName = row.theme_name ?? row.theme?.theme_name ?? 'Unknown Theme';
+                            return `${data} "${themeName}"`;
+                        }
                     },
                     {
                         title:'Date Created',
@@ -81,6 +85,7 @@ $(document).ready(function () {
     getActivityLogs();
 });
 
+
 $(document).on("click", ".descModal", function () {
     console.log("Description clicked:");
 
@@ -97,16 +102,26 @@ $(document).on("click", ".descModal", function () {
                 '#changesTable',
                 changes,[
                         {
+                            title:'Theme Id',
+                            data:'theme_id'
+                        },
+                        {
                             title:'Field',
                             data:'field'
                         },
                         {
-                            title:'Old Value',
-                            data:'old'
+                            title: 'Old Value',
+                            data: 'old',
+                            render: function(data) {
+                                return data ? data : "-";
+                            }
                         },
                         {
-                            title:'New Value',
-                            data:'new'
+                            title:'Current Value',
+                            data:'new',
+                            render: function(data) {
+                                return data ? data : "-";
+                            }
                         },
                 ]);
 });
@@ -132,6 +147,8 @@ function getChanges(logId) {
             return;
         }
 
+        const theme_id = log.theme_id;
+
         const oldValues = JSON.parse(log.old_values || "{}");
         const newValues = JSON.parse(log.new_values || "{}");
 
@@ -145,13 +162,16 @@ function getChanges(logId) {
             // Only include changed values
             if (oldValues[key] !== newValues[key]) {
                 changes.push({
+                    theme_id: theme_id,
                     field: key,
                     old: oldValues[key],
                     new: newValues[key]
                 });
             }
         });
-    });
+            // console.log("xaxa",$logs[0].theme_id);
 
+    });
+    //console.log("xaxa",changes);
     return changes;
 }
