@@ -10,12 +10,17 @@ function getActivityLogs() {
 
         onSuccess: (response) => {
             $logs = response.data ?? response;
+            console.log("daaas",$logs);
             LogsTable.tableData(
                 '#activityLogsTable',
                 $logs,[
                     {
                         title:'User',
                         data:'User'
+                    },
+                    {
+                        title:'User Id',
+                        data:'user_id'
                     },
                     {
                         title:'Log ID',

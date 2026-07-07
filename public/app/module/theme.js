@@ -92,7 +92,10 @@ function getAll() {
 
                             <!-- HEADER -->
                             <div class="flex w-full justify-between p-[16px] items-center h-[56px]">
-
+                                <h2 class="text-[20px] font-medium">
+                                    ${item.theme_name}
+                                    ${isDefaultTheme ? '<span class="text-xs text-blue-600">(Default)</span>' : ''}
+                                </h2>
                                  <label class=" text-base-content switch ${item.is_active}">
                                     <input type="checkbox"
                                         data-id="${item.id}"
@@ -820,9 +823,9 @@ $(document).on("click", ".DeleteCarousel", function (e) {
         ClearImgContainer();
     }
     
-    console.log("Iac",ImgArray.length);
-    console.log("Iacqq",ImgArray);
-    console.log("llplp",targetIndex);
+    // console.log("Iac",ImgArray.length);
+    // console.log("Iacqq",ImgArray);
+    // console.log("llplp",targetIndex);
 
 });
 
