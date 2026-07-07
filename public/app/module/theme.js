@@ -545,7 +545,7 @@ $(document).on("click", "#executeEditbtn", function () {
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
             type: el.dataset.type || "existing",
-            id: el.dataset.id || null,
+            id: el.dataset.url || null,
             temp_index: el.dataset.index || null,
             position: index + 1
         });
@@ -952,7 +952,7 @@ function DisplayCarouselImg(images){
 
         $("#imgContainer").append(`
             <div class="flex w-full justify-center">
-                <div class="uploaderSort" data-type="existing" data-id="${img.id}" data-url="${img.url}"">
+                <div class="uploaderSort" data-type="existing" data-url="${img.url}">
                     <div class="card h-[250px] w-[250px] shadow-xl  transition-all duration-300 ease-out cursor-pointer
                     hover:-translate-y-2
                     hover:shadow-2xl
@@ -990,8 +990,8 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
 
     items.forEach((el, index) => {
         CarouselOrder.push({
-        id: el.dataset.id,
-        position: index + 1,
+            id: el.dataset.url,
+            position: index + 1
         });
 
        
@@ -1007,7 +1007,7 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const delete_id = $(this).closest(".uploaderSort").data("id");
+    const delete_id = $(this).closest(".uploaderSort").data("url");
 
     DeleteCarouselImg.push(delete_id);
 
@@ -1056,8 +1056,8 @@ function renumberPositions() {
 
     document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
         CarouselOrder.push({
-            id: el.dataset.id,
-            position: index + 1,
+            id: el.dataset.url,
+            position: index + 1
         });
     });
 

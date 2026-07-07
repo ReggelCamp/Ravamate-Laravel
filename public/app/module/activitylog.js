@@ -3,7 +3,7 @@ import LogsTable from "./dataTable.js";
 
 let $logs = [];
 function getActivityLogs() {
-    console.log("Fetching activity logs...");
+    //console.log("Fetching activity logs...");
     Api.get({
         url: "/activitylogs/data",
 
@@ -69,14 +69,14 @@ function getActivityLogs() {
 
 
             //If the API returns { data: [...] }
-            console.log($logs,"Fetched activity logs successfully.");
+            //console.log($logs,"Fetched activity logs successfully.");
             const tbody = $("#activity-logs-body");
 
             if (!tbody) {
                 console.error("activity-logs-body not found.");
                 return;
             }
-            console.log($logs,"daa");
+            //console.log($logs,"daa");
         },
 
         onError: (err) => {
@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     window.addEventListener("storage", function (event) {
         if (event.key === "activityLogsUpdated") {
-            console.log("Reloading activity logs...");
+            //console.log("Reloading activity logs...");
             getActivityLogs();
         }
     });
@@ -100,7 +100,7 @@ $(document).ready(function () {
 
 
 $(document).on("click", ".descModal", function () {
-    console.log("Description clicked:");
+    //console.log("Description clicked:");
 
     $("#DescModal")[0].showModal();
     const logId = $(this).data("log-id");
@@ -139,19 +139,23 @@ $(document).on("click", ".descModal", function () {
                 // Carousel images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
                     return data.map(image => `
-                            <img src="${image.url}"
-                                class="rounded border w-[150px] h-[200px]">
-                           
+                            <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
+                                <img src="${image.url}" class="max-w-[100px] min-w-[100px] min-h-[100px] max-h-[100px] rounded border ">
+                            </div>
+                            <span>Position: ${image.position}</span>  
                     `).join("");
 
                 }
 
                 // Logo image
-                // if (row.field === "logo_img" && typeof data === "object" && data.url) {
-                //     return `
-                //         <img src="${data.url}" width="120" class="rounded border">
-                //     `;
-                // }
+                if (row.field === "logo_img" && typeof data === "object" && data.url) {
+                    console.log(data,"pp");
+                    return `
+                        <img src="${data.url}" width="120" class="rounded border">
+                    `;
+                    console.log("Old logo:", data);
+                    console.log("Old logo type:", typeof data);
+                }
 
                 return data;
             }
@@ -174,26 +178,25 @@ $(document).on("click", ".descModal", function () {
 
                 // Carousel Images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
-
                     return data.map(image => `
-                        <div class = "flex flex-col w-full">
-                            <img src="${image.url}"
-                                class="rounded border w-[150px] h-[200px]">
-                           
-                        </div>   
+                            <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
+                                <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
+                            </div>
+                            <span>Position: ${image.position}</span>                         
                     `).join("");
                 }
 
                 // Logo Image (if stored as object)
-                // if (row.field === "logo_img" && typeof data === "object") {
-
-                //     return `
-                //         <img src="${data.url}"
-                //             width="120"
-                //             class="rounded border">
-                //     `;
-
-                // }
+                if (row.field === "logo_img" && typeof data === "object") {
+                    console.log(data,"vav");
+                    return `
+                        <img src="${data.url}"
+                            width="120"
+                            class="rounded border">
+                    `;
+                    console.log("New logo:", data);
+                    console.log("New logo type:", typeof data);
+                }
                 //console.log("aaa",data);
                 return data;
             }
@@ -215,7 +218,7 @@ function getChanges(logId) {
         "header_font",
         "report_header",
         "carousel_images",
-        // "logo_img",
+        "logo_img",
     ];
 
     $logs.forEach(log => {
@@ -274,4 +277,3 @@ function getChanges(logId) {
     //console.log("xaxa",changes);
     return changes;
 }
-

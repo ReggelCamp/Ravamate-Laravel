@@ -19,6 +19,69 @@ class ThemeController extends Controller
     {
        $this->model = Theme::class;
     }
+
+    private function normalizeCarouselOrder(?array $order, array $newUrls = [], array $allUrls = []): array
+    {
+        $normalized = [];
+        $newIndex = 0;
+
+        foreach ($order ?? [] as $index => $item) {
+            $id = $item['id'] ?? $item['url'] ?? null;
+
+            if (($item['type'] ?? null) === 'new') {
+                $tempIndex = $item['temp_index'] ?? $newIndex;
+                $id = $newUrls[$tempIndex] ?? $newUrls[$newIndex] ?? null;
+                $newIndex++;
+            } elseif ($newUrls && is_numeric($id)) {
+                $id = $newUrls[(int) $id] ?? null;
+            }
+
+            if ($id === null || $id === '') {
+                continue;
+            }
+
+            $normalized[] = [
+                'id' => $id,
+                'position' => (int) ($item['position'] ?? ($index + 1)),
+            ];
+        }
+
+        $orderedUrls = array_column($normalized, 'id');
+        foreach ($allUrls as $url) {
+            if (in_array($url, $orderedUrls, true)) {
+                continue;
+            }
+
+            $normalized[] = [
+                'id' => $url,
+                'position' => count($normalized) + 1,
+            ];
+        }
+
+        return $normalized;
+    }
+
+    private function sortCarouselImages(array $images, ?array $order): array
+    {
+        $positions = collect($order ?? [])
+            ->filter(fn ($item) => !empty($item['id']))
+            ->mapWithKeys(fn ($item) => [$item['id'] => (int) ($item['position'] ?? 999)])
+            ->all();
+
+        usort($images, function ($a, $b) use ($positions) {
+            $aPosition = $positions[$a['url']] ?? 999;
+            $bPosition = $positions[$b['url']] ?? 999;
+
+            return $aPosition <=> $bPosition;
+        });
+
+        foreach ($images as &$image) {
+            $image['position'] = $positions[$image['url']] ?? null;
+        }
+
+        //dd($images);
+        return $images;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -52,12 +115,19 @@ class ThemeController extends Controller
 
         FileHandler::upload('logo/img',$row->id,$request->file('logo'));
         FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
-        
-        Theme::where('id', $row->id)->update(['position' => json_encode($order)]);
 
         $carouselImages = FileHandler::getFilesByID('carousel', $row->id);
+        $newUrls = array_column($carouselImages, 'url');
+        $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $newUrls);
+        
+        Theme::where('id', $row->id)->update(['position' => json_encode($normalizedOrder)]);
+        $row->position = json_encode($normalizedOrder);
+
         $logData = $row->toArray();
-        $logData['carousel_images'] = $carouselImages;
+        $logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
+        
+        $logos = FileHandler::getFilesByID('logo/img', $row->id);
+        $logData['logo_img'] = $logos[0] ?? null;
 
         ActivityLog::create([
             'user_id' => Auth::id(),
@@ -75,6 +145,7 @@ class ThemeController extends Controller
 
         //dd(ActivityLog::all());
         //dd($logData);
+        //dd($normalizedOrder);
         return response()->json($row);
     }
 
@@ -101,7 +172,7 @@ public function update(Request $request, $id){
     $json = json_decode($request->input('json'), true);
     $order = json_decode($request->carousel_order, true);
     $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
-
+    
     // Delete removed carousel images
     foreach ($deleted as $url) {
         $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
@@ -118,22 +189,62 @@ public function update(Request $request, $id){
     }
 
     $theme = Theme::findOrFail($id);
-    
+    $oldOrder = json_decode($theme->position, true);
     $oldValues = $theme->toArray();
-    $oldValues['carousel_images'] = FileHandler::getFilesByID('carousel', $theme->id);
 
-    // Update theme data, last updater, and carousel order
+    $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+    $oldValues['carousel_images'] = $this->sortCarouselImages(
+        $oldCarouselImages,
+        $oldOrder
+    );
+    
+//     $oldValues['carousel_images'] = $this->sortCarouselImages(
+//     FileHandler::getFilesByID('carousel', $theme->id),
+//     $oldOrder
+// );
+// $oldValues['logo_img'] = FileHandler::getFilesByID('logo/img', $theme->id)[0] ?? null;
+
+
+    // $old_logos = FileHandler::getFilesByID("logo/img",$theme->id);
+    // $oldValues['logo_img'] = $old_logos[0] ?? null;
+
+    $old_logos = FileHandler::getFilesByID("logo/img", $theme->id);
+    $oldValues['logo_img'] = $old_logos[0]
+    ? (is_array($old_logos[0]) ? $old_logos[0] : $old_logos[0]->toArray())
+    : null;
+
+    $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
+    $existingUrls = array_column($existingImages, 'url');
+
+    // Update theme data before replacing files, then save normalized carousel order.
     $theme->update(array_merge($json, [
         'updated_by' => Auth::id(),
-        'position'   => json_encode($order),
     ]));
 
     FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
 
     FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
 
+    $allImages = FileHandler::getFilesByID('carousel', $theme->id);
+    $allUrls = array_column($allImages, 'url');
+    $newUrls = array_values(array_diff($allUrls, $existingUrls));
+    $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $allUrls);
+
+    $theme->update([
+        'position' => json_encode($normalizedOrder),
+    ]);
+
     $newValues = $theme->fresh()->toArray();
-    $newValues['carousel_images'] = FileHandler::getFilesByID('carousel', $theme->id);
+    //$newValues['carousel_images'] = $this->sortCarouselImages($allImages, $normalizedOrder);
+    $newCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+
+    $newValues['carousel_images'] = $this->sortCarouselImages(
+        $newCarouselImages,
+        $normalizedOrder
+    );
+    $newLogos = FileHandler::getFilesByID('logo/img', $theme->id);
+    $newValues['logo_img'] = $newLogos[0] ?? null;
+
 
     // ActivityLog::create([
     //     'user_id' => Auth::id(),
@@ -146,6 +257,7 @@ public function update(Request $request, $id){
     //     'user_agent' => $request->header('User-Agent'),
     // ]);
     
+    
     ActivityLog::create([
         'user_id' => Auth::id(),
         'theme_id' => $theme->id,
@@ -157,9 +269,11 @@ public function update(Request $request, $id){
         'ip_address' => $request->ip(),
         'user_agent' => $request->header('User-Agent'),
     ]);
+    
 
     //dd(ActivityLog::all());
     //dd($theme);
+    //dd($normalizedOrder);
     //dd($logData);
     return response()->json([
         'success' => true,
@@ -241,15 +355,7 @@ public function destroy(Theme $theme, $id)
             $images = FileHandler::getFilesByID('carousel', $row['id']);
             $order = json_decode($row['position'], true) ?? [];
 
-            usort($images, function ($a, $b) use ($order) {
-                $aIndex = array_search($a['url'], array_column($order, 'id'));
-                $bIndex = array_search($b['url'], array_column($order, 'id'));
-
-                return ($aIndex === false ? 999 : $aIndex)
-                    <=> ($bIndex === false ? 999 : $bIndex);
-            });
-
-            $row['carouselImg'] = $images;
+            $row['carouselImg'] = $this->sortCarouselImages($images, $order);
             // dd($row);
             return $row;
         })
@@ -263,16 +369,9 @@ public function getActive(){
         $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);
 
         $images = FileHandler::getFilesByID('carousel', $activeTheme->id);
-        $order = collect(json_decode($activeTheme->position, true) ?? [])->keyBy('id');
+        $order = json_decode($activeTheme->position, true) ?? [];
 
-        usort($images, function ($a, $b) use ($order) {
-            $aPosition = $order[$a['url']]['position'] ?? 999;
-            $bPosition = $order[$b['url']]['position'] ?? 999;
-
-            return $aPosition <=> $bPosition;
-        });
-
-        $activeTheme['carouselImg'] = $images;
+        $activeTheme['carouselImg'] = $this->sortCarouselImages($images, $order);
     }
 
     return response()->json($activeTheme);
