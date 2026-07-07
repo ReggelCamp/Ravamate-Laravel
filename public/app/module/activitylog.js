@@ -2,6 +2,7 @@ import Api from "../helper/Api.js";
 import LogsTable from "./dataTable.js";
 
 let $logs = [];
+
 function getActivityLogs() {
     //console.log("Fetching activity logs...");
     Api.get({
@@ -13,7 +14,7 @@ function getActivityLogs() {
                 '#activityLogsTable',
                 $logs,[
                     {
-                        title:'Actor',
+                        title:'User',
                         data:'User'
                     },
                     {
@@ -37,18 +38,26 @@ function getActivityLogs() {
                         }
                     },
                     {
-                        title:'Date Created',
+                        title: 'Date Created',
                         data: 'created_at',
-                        render: function (data, type, row) {
+                        render: function (data) {
                             if (!data) return '';
+
                             const d = new Date(data);
-                            return d.toLocaleString('en-US', {
+
+                            const date = d.toLocaleString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
                                 day: '2-digit',
                                 hour: '2-digit',
-                                minute: '2-digit'
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
                             });
+
+                            const ms = String(d.getMilliseconds()).padStart(3, '0');
+
+                            return `${date}.${ms}`;
                         }
                     },
                     {
@@ -57,14 +66,18 @@ function getActivityLogs() {
                         render: function (data, type, row) {
                             return `
                                 <button
-                                    class="descModal btn btn-sm"
+                                    class="descModal btn btn-sm "
                                     data-log-id="${row.id}">
                                     View Logs
                                 </button>
                             `;
                         }
                     }
-                ])
+                ],
+                 { 
+                    pageLength: 10
+                }
+            )
 
 
 
@@ -92,11 +105,11 @@ $(document).ready(function () {
 
     window.addEventListener("storage", function (event) {
         if (event.key === "activityLogsUpdated") {
-            //console.log("Reloading activity logs...");
+            console.log("Storage event fired!");
             getActivityLogs();
         }
     });
-});
+});;
 
 
 $(document).on("click", ".descModal", function () {
@@ -140,9 +153,9 @@ $(document).on("click", ".descModal", function () {
                 if (row.field === "carousel_images" && Array.isArray(data)) {
                     return data.map(image => `
                             <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
-                                <img src="${image.url}" class="max-w-[100px] min-w-[100px] min-h-[100px] max-h-[100px] rounded border ">
+                                <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
                             </div>
-                            <span>Position: ${image.position}</span>  
+                            <span>Position: ${image.position}</span>    
                     `).join("");
 
                 }
@@ -210,6 +223,7 @@ function getChanges(logId) {
     const allowedFields = [
         "theme_name",
         "company_name",
+        "theme_status",
         "primary_color",
         "secondary_color",
         "accent_color",
@@ -239,17 +253,6 @@ function getChanges(logId) {
             if (!allowedFields.includes(key)) {
                 return;
             }
-
-            // Only include changed values
-            // if (oldValues[key] !== newValues[key]) {
-            //     changes.push({
-            //         //theme_id: theme_id,
-            //         theme_id: themeId,
-            //         field: key,
-            //         old: oldValues[key],
-            //         new: newValues[key]
-            //     });
-            // }
 
             const oldValue =
                 typeof oldValues[key] === "object"

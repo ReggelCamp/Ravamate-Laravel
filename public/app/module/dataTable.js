@@ -8,7 +8,7 @@ export default class MyDataTables{
                 responsive: true,
                 data: json,
                 columns: columns,
-                pageLength: 5,
+                // pageLength: 5,
                 scrollX:true,
                 
                 dom: '<"top">rt<"dataTable-info"ip><"clear">',

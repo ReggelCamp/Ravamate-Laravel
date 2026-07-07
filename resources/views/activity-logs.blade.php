@@ -6,7 +6,7 @@
         <table class="table" id="activityLogsTable">
         <thead>
             <tr>
-                <th>Actor</th>
+                <th>User</th>
                 <th>Theme ID</th>
                 <th>Action</th>
                 <th>Description</th>
@@ -26,6 +26,7 @@
         <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
+        <span id="LogInfo"></span>
         <h3 class="font-bold text-lg">Changes</h3>
         <div class="flex flex-col w-full h-full">
             <div class="flex w-full">

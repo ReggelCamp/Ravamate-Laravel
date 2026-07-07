@@ -1,5 +1,6 @@
 import Api from "../helper/Api.js";
 import getActive from "../helper/theme_state.js"
+//import { getActivityLogs } from "./activityLog.js";
 
 let array = [];
 let carImg = [];
@@ -56,8 +57,6 @@ $(document).on("change", ".flipswitch", function () {
         }
     });
 });
-
-{/* <i data-id="${item.id}" class="tooltip-info fa-solid fa-info"></i> */}
 
 //function for displaying
 function getAll() {
@@ -401,7 +400,6 @@ $(document).on("click", "#executeSavebtn", function () {
     
     // validate individually
    if (!theme_name || !company_name || !logoFile) {
-
         if (!theme_name) {
             $("#ThemeName-error")
                 .text("Theme name is required")
@@ -478,6 +476,7 @@ $(document).on("click", "#executeSavebtn", function () {
             getActive();
             localStorage.setItem("themeUpdated", Date.now()); 
             localStorage.setItem("activityLogsUpdated", Date.now()); 
+            
         },
         onFail: (error) => {
             $("#executeSavebtn")
@@ -591,6 +590,7 @@ $(document).on("click", "#executeEditbtn", function () {
             getActive();
             localStorage.setItem("themeUpdated", Date.now());  
             localStorage.setItem("activityLogsUpdated", Date.now());
+            
         },
         onFail: (error) => {
             $("#executeEditbtn")
@@ -688,13 +688,22 @@ $("#logo_id").on("change", function () {
     RenderLogo(file);
 });
 
-function DisplayLogoImg(LogoImg,LogoName){
+// function DisplayLogoImg(LogoImg,LogoName){
+
+//     $("#LogoImg").html(`
+//             <img src="${LogoImg}" 
+//                  class="h-[85px] w-[100px] object-contain  ">
+//             <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
+//         `);
+// }
+
+function DisplayLogoImg(LogoImg, LogoName){
 
     $("#LogoImg").html(`
-            <img src="${LogoImg}" 
-                 class="h-[85px] w-[100px] object-contain  ">
-            <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
-        `);
+        <img src="${LogoImg}?t=${Date.now()}"
+             class="h-[85px] w-[100px] object-contain">
+        <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
+    `);
 }
 
 function renderCarouselPreviews(files) {

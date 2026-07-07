@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ThemeController extends Controller
 {
@@ -82,6 +83,38 @@ class ThemeController extends Controller
         //dd($images);
         return $images;
     }
+
+    private function snapshotFileForLog(?array $file, int $themeId, string $label): ?array
+    {
+        if (!$file || empty($file['url'])) {
+            return $file;
+        }
+
+        $path = parse_url($file['url'], PHP_URL_PATH);
+        $relativePath = ltrim(str_replace('/storage/', '', $path), '/');
+        $sourcePath = storage_path('app/public/' . $relativePath);
+
+        if (!str_starts_with($relativePath, 'uploads/') || !is_file($sourcePath)) {
+            return $file;
+        }
+
+        $extension = pathinfo($sourcePath, PATHINFO_EXTENSION) ?: 'file';
+        $snapshotPath = sprintf(
+            'uploads/activity-logs/logo/%s_theme_%d_%s_%s.%s',
+            $label,
+            $themeId,
+            now()->format('YmdHisv'),
+            uniqid(),
+            $extension
+        );
+
+        Storage::disk('public')->put($snapshotPath, file_get_contents($sourcePath));
+
+        return array_merge($file, [
+            'url' => Storage::url($snapshotPath),
+            'original_url' => $file['url'],
+        ]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -127,7 +160,7 @@ class ThemeController extends Controller
         $logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
         
         $logos = FileHandler::getFilesByID('logo/img', $row->id);
-        $logData['logo_img'] = $logos[0] ?? null;
+        $logData['logo_img'] = $this->snapshotFileForLog($logos[0] ?? null, $row->id, 'created-logo');
 
         ActivityLog::create([
             'user_id' => Auth::id(),
@@ -172,8 +205,27 @@ public function update(Request $request, $id){
     $json = json_decode($request->input('json'), true);
     $order = json_decode($request->carousel_order, true);
     $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
-    
-    // Delete removed carousel images
+
+    $theme = Theme::findOrFail($id);
+    $logoChanged = $request->hasFile('logo');
+    $oldOrder = json_decode($theme->position, true);
+    $oldValues = $theme->toArray();
+
+    $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+    $oldValues['carousel_images'] = $this->sortCarouselImages(
+        $oldCarouselImages,
+        $oldOrder
+    );
+
+    $oldLogos = FileHandler::getFilesByID("logo/img", $theme->id);
+    $oldValues['logo_img'] = $logoChanged
+        ? $this->snapshotFileForLog($oldLogos[0] ?? null, $theme->id, 'old-logo')
+        : ($oldLogos[0] ?? null);
+
+    $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
+    $existingUrls = array_column($existingImages, 'url');
+
+    // Delete removed carousel images after the old log snapshot is captured.
     foreach ($deleted as $url) {
         $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
 
@@ -187,34 +239,6 @@ public function update(Request $request, $id){
             unlink($fullPath);
         }
     }
-
-    $theme = Theme::findOrFail($id);
-    $oldOrder = json_decode($theme->position, true);
-    $oldValues = $theme->toArray();
-
-    $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
-    $oldValues['carousel_images'] = $this->sortCarouselImages(
-        $oldCarouselImages,
-        $oldOrder
-    );
-    
-//     $oldValues['carousel_images'] = $this->sortCarouselImages(
-//     FileHandler::getFilesByID('carousel', $theme->id),
-//     $oldOrder
-// );
-// $oldValues['logo_img'] = FileHandler::getFilesByID('logo/img', $theme->id)[0] ?? null;
-
-
-    // $old_logos = FileHandler::getFilesByID("logo/img",$theme->id);
-    // $oldValues['logo_img'] = $old_logos[0] ?? null;
-
-    $old_logos = FileHandler::getFilesByID("logo/img", $theme->id);
-    $oldValues['logo_img'] = $old_logos[0]
-    ? (is_array($old_logos[0]) ? $old_logos[0] : $old_logos[0]->toArray())
-    : null;
-
-    $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
-    $existingUrls = array_column($existingImages, 'url');
 
     // Update theme data before replacing files, then save normalized carousel order.
     $theme->update(array_merge($json, [
@@ -243,7 +267,9 @@ public function update(Request $request, $id){
         $normalizedOrder
     );
     $newLogos = FileHandler::getFilesByID('logo/img', $theme->id);
-    $newValues['logo_img'] = $newLogos[0] ?? null;
+    $newValues['logo_img'] = $logoChanged
+        ? $this->snapshotFileForLog($newLogos[0] ?? null, $theme->id, 'new-logo')
+        : ($newLogos[0] ?? null);
 
 
     // ActivityLog::create([
@@ -321,23 +347,85 @@ public function destroy(Theme $theme, $id)
     });
 }
 
-    public function updateActive(Request $request, $id)
-    {
-        $this->model::where("is_active",true)->update(["is_active"=>false]);
-        $theme = Theme::findOrFail($id);
+// public function updateActive(Request $request, $id)
+//     {
+//         $this->model::where("is_active",true)->update(["is_active"=>false]);
+//         $theme = Theme::findOrFail($id);
 
-        $theme->is_active = $request->is_active;
+//         $theme->is_active = $request->is_active;
+    
+//         $theme->save();
 
-        $theme->save();
+//         return response()->json([
+//             'success' => true,
+//             'message' => 'Status updated',
+//             'is_active' => $theme->is_active
+//         ]);
+// }
 
+public function updateActive(Request $request, $id)
+{
+    // Find the currently active theme BEFORE changing anything
+    $previousTheme = Theme::where('is_active', true)->first();
+
+    // If the selected theme is already active, do nothing
+    if ($previousTheme && $previousTheme->id == $id) {
         return response()->json([
             'success' => true,
-            'message' => 'Status updated',
-            'is_active' => $theme->is_active
+            'message' => 'Theme is already active.',
+            'is_active' => true
+        ]);
+    }
+    
+    // for deactivationg previous theme
+    if ($previousTheme) {
+
+        $oldValues = $previousTheme->toArray();
+
+        $previousTheme->update([
+            'is_active' => false
+        ]);
+
+        ActivityLog::create([
+            'user_id'    => Auth::id(),
+            'theme_id'   => $previousTheme->id,
+            'action'     => 'update',
+            'description'=> 'Deactivated theme',
+            'old_values' => json_encode($oldValues),
+            'new_values' => json_encode($previousTheme->fresh()->toArray()),
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
         ]);
     }
 
-  public function getAll()
+    // for Activation
+    $theme = Theme::findOrFail($id);
+
+    $oldValues = $theme->toArray();
+
+    $theme->update([
+        'is_active' => true
+    ]);
+
+    ActivityLog::create([
+        'user_id'    => Auth::id(),
+        'theme_id'   => $theme->id,
+        'action'     => 'update',
+        'description'=> 'Activated theme',
+        'old_values' => json_encode($oldValues),
+        'new_values' => json_encode($theme->fresh()->toArray()),
+        'ip_address' => $request->ip(),
+        'user_agent' => $request->userAgent(),
+    ]);
+
+    return response()->json([
+        'success'   => true,
+        'message'   => 'Status updated',
+        'is_active' => true
+    ]);
+}
+
+public function getAll()
 {
     return response()->json(
         $this->model::with([
@@ -356,7 +444,8 @@ public function destroy(Theme $theme, $id)
             $order = json_decode($row['position'], true) ?? [];
 
             $row['carouselImg'] = $this->sortCarouselImages($images, $order);
-            // dd($row);
+            
+            //dd($row);
             return $row;
         })
     );
@@ -440,7 +529,7 @@ public function getActivityLogs()
         } else {
             $log['User'] = $log->user?->admin_name ?? "-";
         }
-    // Determine theme name
+        // Determine theme name
         if ($log->theme) {
             $log['theme_name'] = $log->theme->theme_name;
         } elseif ($log->new_values) {
