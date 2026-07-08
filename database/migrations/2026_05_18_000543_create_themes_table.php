@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('themes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->dateTime('created_at', 3)->useCurrent();
+            $table->dateTime('updated_at', 3)
+                ->useCurrent()
+                ->useCurrentOnUpdate();
             $table->string('theme_name')->nullable();
             $table->string('company_name')->nullable();
             $table->string('header_font')->nullable();

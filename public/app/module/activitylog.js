@@ -11,6 +11,7 @@ function getActivityLogs() {
         onSuccess: (response) => {
             $logs = response.data ?? response;
             console.log("daaas",$logs);
+            
             LogsTable.tableData(
                 '#activityLogsTable',
                 $logs,[
@@ -20,11 +21,14 @@ function getActivityLogs() {
                     },
                     {
                         title:'User Id',
-                        data:'user_id'
+                        data:'user_id',
+                        // type: "string"
+                        
                     },
                     {
                         title:'Log ID',
-                        data:'id'
+                        data:'id',
+                        // type: "string"
                     },
                     {
                         title:'Action',
@@ -44,25 +48,10 @@ function getActivityLogs() {
                     },
                     {
                         title: 'Date Created',
-                        data: 'created_at',
+                        //data: 'created_at',
+                        data: null,
                         render: function (data) {
-                            if (!data) return '';
-
-                            const d = new Date(data);
-
-                            const date = d.toLocaleString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: '2-digit',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                                hour12: true
-                            });
-
-                            const ms = String(d.getMilliseconds()).padStart(3, '0');
-
-                            return `${date}.${ms}`;
+                           return moment(data.created_at).format("MMM DD, YYYY | hh : mm : ss : SS A");
                         }
                     },
                     {
@@ -79,8 +68,8 @@ function getActivityLogs() {
                         }
                     }
                 ],
-                 { 
-                    pageLength: 10
+                { 
+                    pageLength: 10,
                 }
             )
 
@@ -114,20 +103,50 @@ $(document).ready(function () {
             getActivityLogs();
         }
     });
-});;
+});
 
 
 $(document).on("click", ".descModal", function () {
-    //console.log("Description clicked:");
+    console.log("Description clicked:",$logs);
 
     $("#DescModal")[0].showModal();
     const logId = $(this).data("log-id");
     const changes = getChanges(logId);
     console.log("Changes:", changes);
 
-    if ($.fn.DataTable.isDataTable("#changesTable")) {
-        $("#changesTable").DataTable().clear().destroy();
+    const log = $logs.find(item => item.id == logId);
+
+    if ($.fn.DataTable.isDataTable("#themeInfoTable")) {
+        $("#themeInfoTable").DataTable().clear().destroy();
     }
+
+    $("#themeInfoBody").html(`
+        <tr>
+            <th>Log ID</th>
+            <td>${log.id}</td>
+        </tr>
+        <tr>
+            <th>Theme</th>
+            <td>${log.theme_name}</td>
+        </tr>
+        <tr>
+            <th>Action</th>
+            <td>${log.action}</td>
+        </tr>
+        <tr>
+            <th>User</th>
+            <td>${log.User}</td>
+        </tr>
+        <tr>
+            <th>User ID</th>
+            <td>${log.user_id}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>${moment(log.created_at).format("MMM DD, YYYY | hh : mm : ss : SS A")}</td>
+        </tr>
+    `);
+
     //  $logs = response.data ?? response;
     LogsTable.tableData("#changesTable", changes, [
         {
@@ -138,36 +157,35 @@ $(document).on("click", ".descModal", function () {
             title: "Field",
             data: "field",
         },
-        // {
-        //     title: "Old Value",
-        //     data: "old",
-        //     render: function (data) {
-        //         return data ? data : "-";
-        //     },
-        // },
         {
             title: "Old Value",
             data: "old",
             render: function (data, type, row) {
-
                 if (!data) {
                     return "-";
                 }
 
                 // Carousel images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data.map(image => `
+                    return data
+                        .map(
+                            (image) => `
                             <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
                                 <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
                             </div>
                             <span>Position: ${image.position}</span>    
-                    `).join("");
-
+                    `,
+                        )
+                        .join("");
                 }
 
                 // Logo image
-                if (row.field === "logo_img" && typeof data === "object" && data.url) {
-                    console.log(data,"pp");
+                if (
+                    row.field === "logo_img" &&
+                    typeof data === "object" &&
+                    data.url
+                ) {
+                    console.log(data, "pp");
                     return `
                         <img src="${data.url}" width="120" class="rounded border">
                     `;
@@ -176,37 +194,33 @@ $(document).on("click", ".descModal", function () {
                 }
 
                 return data;
-            }
+            },
         },
-        // {
-        //     title: "Current Value",
-        //     data: "new",
-        //     render: function (data) {
-        //         return data ? data : "-";
-        //     },
-        // },
         {
             title: "Current Value",
             data: "new",
             render: function (data, type, row) {
-
                 if (!data) {
                     return "-";
                 }
 
                 // Carousel Images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data.map(image => `
+                    return data
+                        .map(
+                            (image) => `
                             <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
                                 <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
                             </div>
                             <span>Position: ${image.position}</span>                         
-                    `).join("");
+                    `,
+                        )
+                        .join("");
                 }
 
                 // Logo Image (if stored as object)
                 if (row.field === "logo_img" && typeof data === "object") {
-                    console.log(data,"vav");
+                    console.log(data, "vav");
                     return `
                         <img src="${data.url}"
                             width="120"
@@ -217,8 +231,8 @@ $(document).on("click", ".descModal", function () {
                 }
                 //console.log("aaa",data);
                 return data;
-            }
-        }
+            },
+        },
     ]);
 });
 
@@ -285,3 +299,13 @@ function getChanges(logId) {
     //console.log("xaxa",changes);
     return changes;
 }
+
+$(document).on('input', '.searchBar', function(){
+      if ($.fn.DataTable.isDataTable("#activityLogsTable")) {
+        $("#activityLogsTable")
+            .DataTable()
+            .search(this.value)
+            .draw();
+    }
+});
+

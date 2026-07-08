@@ -11,6 +11,11 @@ let updateId;
 let headerTomSelect = null;
 let bodyTomSelect = null;
 
+let originalTheme = null;
+
+let $logs = [];
+//let changes = 0;
+
 //for switch
 $(document).on("change", ".flipswitch", function () {
     let toggle = this;
@@ -92,10 +97,6 @@ function getAll() {
 
                             <!-- HEADER -->
                             <div class="flex w-full justify-between p-[16px] items-center h-[56px]">
-                                <h2 class="text-[20px] font-medium">
-                                    ${item.theme_name}
-                                    ${isDefaultTheme ? '<span class="text-xs text-blue-600">(Default)</span>' : ''}
-                                </h2>
                                  <label class=" text-base-content switch ${item.is_active}">
                                     <input type="checkbox"
                                         data-id="${item.id}"
@@ -128,9 +129,16 @@ function getAll() {
 
                             <!-- Brand -->
                                 <div class="flex w-full  m-0 gap-[8px] h-full  flex-col ">
-                                    <span class=" custom-tooltip tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
-                                        ${item.company_name}
-                                    </span>
+                                    <div class="flex w-full justify-between">
+                                        <span class=" custom-tooltip tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
+                                            ${item.company_name}
+                                        </span>
+                                        ${isDefaultTheme ? `
+                                            <h2 class="text-[20px] font-medium">
+                                                <span class="text-xs text-blue-600">(Default)</span>
+                                            </h2>
+                                        ` : ""}
+                                    </div>
 
                                     <div>
                                         <div class="text-[#444A51] custom-tooltip tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
@@ -248,6 +256,8 @@ $(document).on("click", "#updatebtn", function () {
     let row = array.find((item) => {
         return item.id == $(this).data().id;
     });
+
+    originalTheme = structuredClone(row);
 
     const logoUrl = row.logo[0].url;
     const filename = logoUrl.split("/").pop();
@@ -494,6 +504,9 @@ $(document).on("click", "#executeSavebtn", function () {
 $(document).on("click", "#executeEditbtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
     const isEdit = $("#executeEditbtn").is(":visible"); 
+    
+    //getThemeChanges();
+    //countChanges();
 
     const theme_name = $("#theme_name").val();
     const company_name = $("#company_name").val();
@@ -504,7 +517,6 @@ $(document).on("click", "#executeEditbtn", function () {
 
      // validate individually
    if (!theme_name || !company_name || (!logoFile && !isEdit)) {
-
         if (!theme_name) {
             $("#ThemeName-error")
                 .text("Theme name is required")
@@ -553,6 +565,18 @@ $(document).on("click", "#executeEditbtn", function () {
         });
     });
 
+    if (!hasChanges()) {
+    AddThemeModal.close();
+
+    Swal.fire({
+        icon: "info",
+        title: "No changes detected",
+        text: "Please modify at least one field before updating."
+    });
+
+    return;
+}
+
     form.append("carousel_order", JSON.stringify(CarouselOrder));
     form.append("deleted_carousel_images", JSON.stringify(DeleteCarouselImg));
 
@@ -592,14 +616,18 @@ $(document).on("click", "#executeEditbtn", function () {
             getAll();
             getActive();
             localStorage.setItem("themeUpdated", Date.now());  
-            localStorage.setItem("activityLogsUpdated", Date.now());
-            
+            console.log("aasd",updateId);
         },
-        onFail: (error) => {
+        onError: (error) => {
             $("#executeEditbtn")
                 .prop("disabled", false)
                 .html("Confirm");
-            Swal.fire("Error", error?.message ?? "Something went wrong.", "error");
+
+            Swal.fire(
+                "Error",
+                error?.responseJSON?.message ?? "Something went wrong.",
+                "error"
+            );
         }
     });
 });
@@ -1220,3 +1248,31 @@ $(document).on("mouseenter", ".tooltip-info", function () {
 $(document).on("mouseleave", ".tooltip-info", function () {
     $(this).siblings(".tooltip-box").addClass("hidden");
 });
+
+function hasChanges() {
+    if (!originalTheme) return false;
+
+    const sameValue = (oldValue, newValue) => (oldValue ?? "") === (newValue ?? "");
+    const originalCarouselUrls = (originalTheme.carouselImg ?? []).map((img) => img.url);
+    const currentCarouselUrls = Array.from(document.querySelectorAll("#imgContainer .uploaderSort"))
+        .filter((el) => el.dataset.type !== "new")
+        .map((el) => el.dataset.url);
+
+    return (
+        !sameValue(originalTheme.theme_name, $("#theme_name").val()) ||
+        !sameValue(originalTheme.company_name, $("#company_name").val()) ||
+        !sameValue(originalTheme.primary_color, $("#primary_color").val()) ||
+        !sameValue(originalTheme.secondary_color, $("#secondary_color").val()) ||
+        !sameValue(originalTheme.accent_color, $("#accent_color").val()) ||
+        !sameValue(originalTheme.background_color, $("#background_color").val()) ||
+        !sameValue(originalTheme.body_color, $("#BodyFont_color").val()) ||
+        !sameValue(originalTheme.header_color, $("#HeaderFont_color").val()) ||
+        !sameValue(originalTheme.body_font, $("#body_font").val()) ||
+        !sameValue(originalTheme.header_font, $("#header_font").val()) ||
+        !sameValue(originalTheme.report_header, $("#report_header").val()) ||
+        JSON.stringify(originalCarouselUrls) !== JSON.stringify(currentCarouselUrls) ||
+        $("#logo_id")[0].files.length > 0 ||
+        ImgArray.length > 0 ||
+        DeleteCarouselImg.length > 0
+    );
+}

@@ -840,6 +840,14 @@ input[type="color"]::-moz-color-swatch {
     border: 2px dashed #C1C3C7;
 }
 
+/* .swal-high-z {
+    z-index: 99999 !important;
+}
+
+.swal2-container {
+    z-index: 99999 !important;
+} */
+
 /* .tooltip-box {
     position: absolute;
     right: 20px;
@@ -870,4 +878,13 @@ input[type="color"]::-moz-color-swatch {
 
     border-top: 1px solid #F5F5F5;
     border-right: 1px solid #F5F5F5;
+} */
+
+th{
+    padding: 10px !important;
+}
+
+/* .modal-box {
+    width: 800px !important;
+    max-width: none !important;
 } */

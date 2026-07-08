@@ -1,9 +1,9 @@
 export default class MyDataTables{
-    static tableData(id,json,columns){
+    static tableData(id, json, columns, options = {}){
         $(id).DataTable({
             data:json,
                 searching: true,
-                ordering: false,
+                ordering: true,
                 lengthChange: false,
                 responsive: true,
                 data: json,

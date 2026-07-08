@@ -162,6 +162,7 @@ class ThemeController extends Controller
         $logos = FileHandler::getFilesByID('logo/img', $row->id);
         $logData['logo_img'] = $this->snapshotFileForLog($logos[0] ?? null, $row->id, 'created-logo');
 
+        //dd(now()->format('Y-m-d H:i:s.u'));
         ActivityLog::create([
             'user_id' => Auth::id(),
             //'log_id' => $id,
@@ -179,6 +180,7 @@ class ThemeController extends Controller
         //dd(ActivityLog::all());
         //dd($logData);
         //dd($normalizedOrder);
+        
         return response()->json($row);
     }
 
@@ -202,7 +204,7 @@ class ThemeController extends Controller
      * Update the specified resource in storage.
      */
 public function update(Request $request, $id){
-    $json = json_decode($request->input('json'), true);
+    $json = json_decode($request->input('json'), true) ?? [];
     $order = json_decode($request->carousel_order, true);
     $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
 
@@ -224,6 +226,29 @@ public function update(Request $request, $id){
 
     $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
     $existingUrls = array_column($existingImages, 'url');
+    $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
+    $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
+    $themeFieldsChanged = false;
+
+    foreach ($json as $field => $value) {
+        if ((string) ($theme->{$field} ?? '') !== (string) ($value ?? '')) {
+            $themeFieldsChanged = true;
+            break;
+        }
+    }
+
+    if (
+        !$themeFieldsChanged
+        && !$logoChanged
+        && !$request->hasFile('CarouselImgList')
+        && empty($deleted)
+        && $normalizedSubmittedOrder == $currentOrder
+    ) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No changes detected. Please modify at least one field before updating.',
+        ], 422);
+    }
 
     // Delete removed carousel images after the old log snapshot is captured.
     foreach ($deleted as $url) {
@@ -270,19 +295,6 @@ public function update(Request $request, $id){
     $newValues['logo_img'] = $logoChanged
         ? $this->snapshotFileForLog($newLogos[0] ?? null, $theme->id, 'new-logo')
         : ($newLogos[0] ?? null);
-
-
-    // ActivityLog::create([
-    //     'user_id' => Auth::id(),
-    //     'theme_id' => $theme->id,
-    //     'action' => 'update',
-    //     'description' => 'Updated the theme ',
-    //     'old_values' => json_encode($oldValues),
-    //     'new_values' => json_encode($theme->fresh()->toArray()),
-    //     'ip_address' => $request->ip(),
-    //     'user_agent' => $request->header('User-Agent'),
-    // ]);
-    
     
     ActivityLog::create([
         'user_id' => Auth::id(),
@@ -316,7 +328,7 @@ public function update(Request $request, $id){
 public function destroy(Theme $theme, $id)
 {
     return DB::transaction(function () use ($id, $theme) {
-        $theme = Theme::where('user_id', Auth::id())->findOrFail($id);
+        $theme = Theme::findOrFail($id);
 
         // toArray() before delete so old_values still has the full record
         $oldValues = $theme->toArray();
@@ -346,22 +358,6 @@ public function destroy(Theme $theme, $id)
         
     });
 }
-
-// public function updateActive(Request $request, $id)
-//     {
-//         $this->model::where("is_active",true)->update(["is_active"=>false]);
-//         $theme = Theme::findOrFail($id);
-
-//         $theme->is_active = $request->is_active;
-    
-//         $theme->save();
-
-//         return response()->json([
-//             'success' => true,
-//             'message' => 'Status updated',
-//             'is_active' => $theme->is_active
-//         ]);
-// }
 
 public function updateActive(Request $request, $id)
 {
@@ -466,15 +462,6 @@ public function getActive(){
     return response()->json($activeTheme);
 }
 
-    // public function getFonts(){
-    //     $response = Http::get('https://www.googleapis.com/webfonts/v1/webfonts', [
-    //         'key' => env('GOOGLE_FONTS_API_KEY'),
-    //         'sort' => 'popularity',
-    //     ]);
-
-    //     return response()->json($response->json()['items']);
-    // }
-
     public function getFonts()
     {
         $fonts = Cache::remember('google_fonts', now()->addDays(1), function () {
@@ -493,18 +480,6 @@ public function getActive(){
         return response()->json($fonts);
     }
 
-//     public function getActivityLogs()
-//     {
-//         $logs = ActivityLog::with('user:id,admin_name')
-//             ->orderBy('created_at', 'desc')
-//             ->get();
-//        dd([
-//     'old' => $logs->old_values,
-//     'new' => $logs->new_values,
-// ]);
-//         return response()->json($logs);
-//     }
-
 public function getActivityLogs()
 {
     $logs = ActivityLog::with([
@@ -519,28 +494,20 @@ public function getActivityLogs()
         }
     ])->latest()->get();
 
-    //$images = FileHandler::getFilesByID('carousel', $activeTheme->id);
-
     $logs = $logs->map(function ($log) {
-        if ($log->action === 'update') {
-            $log['User'] = $log->theme?->updatedBy?->admin_name
-                ?? $log->user?->admin_name
-                ?? "-";
-        } else {
-            $log['User'] = $log->user?->admin_name ?? "-";
-        }
+
+        $log['User'] = $log->user?->admin_name ?? "-";
+
         // Determine theme name
         if ($log->theme) {
-            $log['theme_name'] = $log->theme->theme_name;
-        } elseif ($log->new_values) {
-            $log['theme_name'] = json_decode($log->new_values, true)['theme_name'] ?? null;
-        } elseif ($log->old_values) {
-            $log['theme_name'] = json_decode($log->old_values, true)['theme_name'] ?? null;
+            $log['theme_name'] = json_decode($log->old_values, true)['theme_name'] ?? json_decode($log->new_values,true)['theme_name'];
         }
 
         return $log;
     });
     //dd($logs);
+    //dd(now()->format('Y-m-d H:i:s.u'));
+    
     return response()->json($logs);
 }
 

@@ -26,7 +26,8 @@ class Theme extends Model
         'position',
         'is_active',
     ];
-    
+      protected $dateFormat = 'Y-m-d H:i:s.v';
+      
     public function user(){
       return $this->hasOne(User::class,'id','user_id');
     }
