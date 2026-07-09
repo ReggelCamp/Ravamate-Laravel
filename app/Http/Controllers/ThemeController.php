@@ -157,11 +157,26 @@ class ThemeController extends Controller
         $row->position = json_encode($normalizedOrder);
 
         $logData = $row->toArray();
-        $logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
+        //$logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
         
         $logos = FileHandler::getFilesByID('logo/img', $row->id);
         $logData['logo_img'] = $this->snapshotFileForLog($logos[0] ?? null, $row->id, 'created-logo');
+        
+        $sortedImages = $this->sortCarouselImages(
+            $carouselImages,
+            $normalizedOrder
+        );
 
+        $logData['carousel_images'] = [];
+
+        foreach ($sortedImages as $image) {
+            $logData['carousel_images'][] = $this->snapshotFileForLog(
+                $image,
+                $row->id,
+                'carousel'
+            );
+        }
+        
         //dd(now()->format('Y-m-d H:i:s.u'));
         ActivityLog::create([
             'user_id' => Auth::id(),
@@ -210,11 +225,19 @@ public function update(Request $request, $id){
 
     $theme = Theme::findOrFail($id);
     $logoChanged = $request->hasFile('logo');
+
+    //$carouselChanged = $request->hasFile('CarouselImgList[]');
+
     $oldOrder = json_decode($theme->position, true);
     $oldValues = $theme->toArray();
 
     $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
-    $oldValues['carousel_images'] = $this->sortCarouselImages(
+    // $oldValues['carousel_images'] = $this->sortCarouselImages(
+    //     $oldCarouselImages,
+    //     $oldOrder
+    // );
+
+    $sortedOldImages = $this->sortCarouselImages(
         $oldCarouselImages,
         $oldOrder
     );
@@ -226,8 +249,34 @@ public function update(Request $request, $id){
 
     $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
     $existingUrls = array_column($existingImages, 'url');
+
     $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
     $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
+    
+    $carouselChanged =
+    $request->hasFile('CarouselImgList')
+    || !empty($deleted)
+    || $normalizedSubmittedOrder != $currentOrder;
+
+    if ($carouselChanged) {
+
+        $sortedOldImages = $this->sortCarouselImages(
+            $oldCarouselImages,
+            $oldOrder
+        );
+
+        $oldValues['carousel_images'] = [];
+
+        foreach ($sortedOldImages as $image) {
+            $oldValues['carousel_images'][] =
+                $this->snapshotFileForLog(
+                    $image,
+                    $theme->id,
+                    'old-carousel'
+                );
+        }
+    }
+
     $themeFieldsChanged = false;
 
     foreach ($json as $field => $value) {
@@ -287,10 +336,30 @@ public function update(Request $request, $id){
     //$newValues['carousel_images'] = $this->sortCarouselImages($allImages, $normalizedOrder);
     $newCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
 
-    $newValues['carousel_images'] = $this->sortCarouselImages(
+    $sortedNewImages = $this->sortCarouselImages(
         $newCarouselImages,
         $normalizedOrder
     );
+
+     if ($carouselChanged) {
+
+    $sortedNewImages = $this->sortCarouselImages(
+        $newCarouselImages,
+        $normalizedOrder
+    );
+
+    $newValues['carousel_images'] = [];
+
+    foreach ($sortedNewImages as $image) {
+        $newValues['carousel_images'][] =
+            $this->snapshotFileForLog(
+                $image,
+                $theme->id,
+                'old-carousel'
+            );
+    }
+}
+    
     $newLogos = FileHandler::getFilesByID('logo/img', $theme->id);
     $newValues['logo_img'] = $logoChanged
         ? $this->snapshotFileForLog($newLogos[0] ?? null, $theme->id, 'new-logo')
@@ -330,14 +399,19 @@ public function destroy(Theme $theme, $id)
     return DB::transaction(function () use ($id, $theme) {
         $theme = Theme::findOrFail($id);
 
-        // toArray() before delete so old_values still has the full record
         $oldValues = $theme->toArray();
+
+        $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+        $oldOrder = json_decode($theme->position, true);
+        $oldValues['carousel_images'] = $this->sortCarouselImages($oldCarouselImages, $oldOrder);
+
+        $oldLogos = FileHandler::getFilesByID('logo/img', $theme->id);
+        $oldValues['logo_img'] = $this->snapshotFileForLog($oldLogos[0] ?? null, $theme->id, 'deleted-logo');
 
         $log = ActivityLog::create([
             'user_id' => Auth::id(),
             'theme_id' => $theme->id,
             'action' => 'delete',
-            //'description' => 'Deleted theme: ' . ($theme->theme_name ?? ''),
             'description' => 'Deleted the theme ',
             'old_values' => json_encode($oldValues),
             'new_values' => null,
@@ -345,7 +419,6 @@ public function destroy(Theme $theme, $id)
             'user_agent' => request()->header('User-Agent'),
         ]);
 
-        // If the log didn't actually persist, bail out — transaction rolls back
         if (!$log || !$log->exists) {
             throw new \RuntimeException('Failed to record activity log; theme not deleted.');
         }
@@ -355,7 +428,6 @@ public function destroy(Theme $theme, $id)
             'success' => true,
             'message' => 'Theme deleted successfully'
         ]);
-        
     });
 }
 
@@ -480,6 +552,38 @@ public function getActive(){
         return response()->json($fonts);
     }
 
+// public function getActivityLogs()
+// {
+//     $logs = ActivityLog::with([
+//         'user' => function ($query) {
+//             $query->select('id', 'admin_name');
+//         },
+//         'theme' => function ($query) {
+//             $query->select('id', 'theme_name', 'updated_by', 'updated_at');
+//         },
+//         'theme.updatedBy' => function ($query) {
+//             $query->select('id', 'admin_name');
+//         }
+//     ])->latest()->get();
+
+//     $logs = $logs->map(function ($log) {
+
+//         $log['User'] = $log->user?->admin_name ?? "-";
+
+//         // Determine theme name
+//         if ($log->theme) {
+//             $log['theme_name'] = json_decode($log->old_values, true)['theme_name'] ?? json_decode($log->new_values,true)['theme_name'];
+//         }
+
+//         return $log;
+//     });
+//     //dd($logs->toArray());
+//     //dd(now()->format('Y-m-d H:i:s.u'));
+    
+//     return response()->json($logs);
+// }
+
+
 public function getActivityLogs()
 {
     $logs = ActivityLog::with([
@@ -498,18 +602,19 @@ public function getActivityLogs()
 
         $log['User'] = $log->user?->admin_name ?? "-";
 
-        // Determine theme name
-        if ($log->theme) {
-            $log['theme_name'] = json_decode($log->old_values, true)['theme_name'] ?? json_decode($log->new_values,true)['theme_name'];
-        }
+        $oldValues = json_decode($log->old_values, true) ?? [];
+        $newValues = json_decode($log->new_values, true) ?? [];
+
+        $log['theme_name'] =
+            $oldValues['theme_name']
+            ?? $newValues['theme_name']
+            ?? $log->theme?->theme_name
+            ?? "Unknown Theme";
 
         return $log;
     });
-    //dd($logs);
-    //dd(now()->format('Y-m-d H:i:s.u'));
-    
+
     return response()->json($logs);
 }
-
 
 }

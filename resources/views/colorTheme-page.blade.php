@@ -216,7 +216,7 @@
                 <p class="text-[16px] font-medium text-black">Carousel images</p>
                 <span id="CarouselError" class="text-red-500 text-xs mb-2 hidden animate-bounce"></span>
 
-                <input type="file" id="carouselImg" name="carouselImg" multiple class="hidden" />
+                <input type="file" id="carouselImg" name="carouselImg" accept="image/* multiple class="hidden" />
                 <label for="carouselImg" id="addImg"
                     class="btn btn-outline bg-[#F5F5F5] w-full rounded-lg custom-dashed border-[#C1C3C7] addImg border h-[120px]">
                     <i class="fa-solid fa-upload text-sm"></i> Add carousel images

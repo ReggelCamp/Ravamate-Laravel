@@ -3,8 +3,16 @@
 
     <body class="p-5">
         <div class=" flex w-full justify-between ">
-            <h1 class="flex w-full">Activity Logs</h1>
-            <x-searchbar id="searchLogs"/>
+            <div class="flex w-full gap-5">
+                <h1 class=" items-center justify-center flex text-xl ">Activity Logs</h1>
+                <button class=" btn btn-soft btn-primary text-sm  rounded-lg " id="refreshBtn">Refresh <i class="fa-solid fa-arrow-rotate-right"></i> </button>
+            </div> 
+            {{-- <div class=" flex items-center justify-center">
+                    <x-datepicker/>
+                </div>    --}}
+            <div class="flex items-center justify-center" >
+                <x-searchbar id="searchLogs"/>
+            </div>
         </div>   
         <table class="table" id="activityLogsTable">
         <thead>
@@ -26,10 +34,13 @@
     <dialog id="DescModal" class="modal openModal">
     <div class="modal-box w-[700px]">
         <form method="dialog">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <div class="flex p-2">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </div>
         </form>
         <span id="LogInfo"></span>
         <div class="w-full h-full flex flex-col gap-5">
+            <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg ">Log Information</h3>
             <table class="table table-zebra w-full flex">
                 <tbody id="themeInfoBody"></tbody>
             </table>

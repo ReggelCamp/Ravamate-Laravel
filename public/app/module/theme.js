@@ -70,7 +70,7 @@ function getAll() {
         onSuccess: (data) => {
             array = data;
 
-            console.log(array,"array");
+            //console.log(array,"arrayvvv");
 
             let activeTheme = array.find((item) => item.is_active);
             
@@ -340,7 +340,7 @@ $(document).on("click", "#updatebtn", function () {
 //for add
 $(document).on("click", "#addbtn", function () {
     carouselSortable.option("disabled", true);
-
+    
     $("#CarouselError").text("").addClass("hidden");
     $("#logo-error").text("").addClass("hidden");
     $("#CompanyName-error").text("").addClass("hidden");
@@ -355,6 +355,24 @@ $(document).on("click", "#addbtn", function () {
         "#primary_color",
         "#primaryColorWrapper",
         "#primaryColorHex",
+        "#3b82f6"
+    );
+    updateColorPicker(
+        "#secondary_color",
+        "#secondaryColorWrapper",
+        "#secondaryColorHex",
+        "#3b82f6"
+    );
+    updateColorPicker(
+        "#accent_color",
+        "#accentColorWrapper",
+        "#accentColorHex",
+        "#3b82f6"
+    );
+    updateColorPicker(
+        "#background_color",
+        "#backgroundColorWrapper",
+        "#backgroundColorHex",
         "#3b82f6"
     );
 
@@ -405,8 +423,8 @@ $(document).on("click", "#addbtn", function () {
 //for executing the save btn
 $(document).on("click", "#executeSavebtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
-    const theme_name = $("#theme_name").val();
-    const company_name = $("#company_name").val();
+    const theme_name = $("#theme_name").val().trim();
+    const company_name = $("#company_name").val().trim();
 
     // clear previous errors
     $("#CompanyName-error, #ThemeName-error, #logo-error").text("").addClass("hidden");
@@ -436,6 +454,23 @@ $(document).on("click", "#executeSavebtn", function () {
     }
    
     if (!theme_name || !company_name || !logoFile) return;
+
+     const duplicate = array.some(theme =>
+        theme.theme_name.trim().toLowerCase() ===
+        theme_name.trim().toLowerCase()
+    );
+
+    if (duplicate) {
+        $("#ThemeName-error")
+            .text("Theme name already exists.")
+            .removeClass("hidden")[0]
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        return;
+    }
 
     let form = new FormData();
 
@@ -484,11 +519,18 @@ $(document).on("click", "#executeSavebtn", function () {
             $("#executeSavebtn")
                 .prop("disabled", false)
                 .html("Save");
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Theme created successfully!',
+                timer: 3000, // closes after 3 seconds
+                //showConfirmButton: false
+            });
+
             AddThemeModal.close();
             getAll();
             getActive();
             localStorage.setItem("themeUpdated", Date.now()); 
-            localStorage.setItem("activityLogsUpdated", Date.now()); 
             
         },
         onFail: (error) => {
@@ -505,11 +547,13 @@ $(document).on("click", "#executeEditbtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
     const isEdit = $("#executeEditbtn").is(":visible"); 
     
+    // console.log("daasa",array);
+
     //getThemeChanges();
     //countChanges();
 
-    const theme_name = $("#theme_name").val();
-    const company_name = $("#company_name").val();
+    const theme_name = $("#theme_name").val().trim();
+    const company_name = $("#company_name").val().trim();
 
     $("#CompanyName-error, #ThemeName-error, #logo-error")
         .text("")
@@ -537,6 +581,24 @@ $(document).on("click", "#executeEditbtn", function () {
             .removeClass("hidden")[0]
             .scrollIntoView({ behavior: "smooth", block: "center" });
         }
+
+        return;
+    }
+
+    const duplicate = array.some(theme =>
+        theme.theme_name.trim().toLowerCase() === theme_name.trim().toLowerCase() &&
+        (!isEdit || theme.id !== updateId)
+    );
+
+    if (duplicate) {
+        $("#ThemeName-error")
+            .text("Theme name already exists.")
+            .removeClass("hidden")[0]
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
         return;
     }
 
@@ -575,7 +637,7 @@ $(document).on("click", "#executeEditbtn", function () {
     });
 
     return;
-}
+    }
 
     form.append("carousel_order", JSON.stringify(CarouselOrder));
     form.append("deleted_carousel_images", JSON.stringify(DeleteCarouselImg));
@@ -612,6 +674,12 @@ $(document).on("click", "#executeEditbtn", function () {
             $("#executeEditbtn")
                 .prop("disabled", false)
                 .html("Confirm");
+            Swal.fire({
+                icon: 'success',
+                title: 'Theme updated successfully!',
+                timer: 3000, // closes after 3 seconds
+                //showConfirmButton: false
+            });
             AddThemeModal.close();
             getAll();
             getActive();
@@ -1061,6 +1129,7 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
 function ClearImgContainer(){
     $("#imgContainer").empty();
     $("#carouselImg").val("");
+    //$("#primary_color").val("");
 
     ImgArray = [];
     CarouselOrder = [];

@@ -35,15 +35,17 @@ function getActivityLogs() {
                         data:'action'
                     },
                     {
-                        title: 'Description',
-                        data: 'description',
+                        title: "Description",
+                        data: "description",
                         render: function (data, type, row) {
 
+                            const themeName = row.theme_name ?? "Unknown Theme";
+
                             if (row.action === "delete") {
-                                return `The theme " ${row.theme_name}" has already been deleted.`;
+                                return `The theme "${themeName}" has already been deleted.`;
                             }
 
-                            return `${data}"${row.theme_name}"`;
+                            return `${data}"${themeName}"`;
                         }
                     },
                     {
@@ -69,6 +71,8 @@ function getActivityLogs() {
                     }
                 ],
                 { 
+                      ordering: true,
+                    order: [[ "desc"]], // Log ID descending (latest first)
                     pageLength: 10,
                 }
             )
@@ -107,17 +111,27 @@ $(document).ready(function () {
 
 
 $(document).on("click", ".descModal", function () {
-    console.log("Description clicked:",$logs);
 
     $("#DescModal")[0].showModal();
+
     const logId = $(this).data("log-id");
-    const changes = getChanges(logId);
-    console.log("Changes:", changes);
 
     const log = $logs.find(item => item.id == logId);
 
-    if ($.fn.DataTable.isDataTable("#themeInfoTable")) {
-        $("#themeInfoTable").DataTable().clear().destroy();
+    const oldValues = log.old_values ? JSON.parse(log.old_values) : {};
+
+    console.log("asqw",oldValues);
+
+    if (!log) {
+        console.error("Log not found.");
+        return;
+    }
+
+    console.log("log",log);
+    const changes = getChanges(logId);
+
+    if ($.fn.DataTable.isDataTable("#changesTable")) {
+        $("#changesTable").DataTable().clear().destroy();
     }
 
     $("#themeInfoBody").html(`
@@ -126,8 +140,8 @@ $(document).on("click", ".descModal", function () {
             <td>${log.id}</td>
         </tr>
         <tr>
-            <th>Theme</th>
-            <td>${log.theme_name}</td>
+            <th>Theme Name</th>
+            <td>${oldValues.theme_name}</td>
         </tr>
         <tr>
             <th>Action</th>
@@ -147,7 +161,6 @@ $(document).on("click", ".descModal", function () {
         </tr>
     `);
 
-    //  $logs = response.data ?? response;
     LogsTable.tableData("#changesTable", changes, [
         {
             title: "Theme Id",
@@ -161,87 +174,83 @@ $(document).on("click", ".descModal", function () {
             title: "Old Value",
             data: "old",
             render: function (data, type, row) {
-                if (!data) {
+
+               if (data == null || data === "" || (Array.isArray(data) && data.length === 0) ) {
                     return "-";
                 }
 
-                // Carousel images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data
-                        .map(
-                            (image) => `
-                            <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
-                                <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
-                            </div>
-                            <span>Position: ${image.position}</span>    
-                    `,
-                        )
-                        .join("");
+                    return data.map(image => `
+                        <div class="w-[100px] h-[150px] flex flex-col items-center">
+                            <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border">
+                            <span>Position: ${image.position}</span>
+                        </div>                                                          
+                    `).join("");
                 }
 
-                // Logo image
-                if (
-                    row.field === "logo_img" &&
-                    typeof data === "object" &&
-                    data.url
-                ) {
-                    console.log(data, "pp");
-                    return `
-                        <img src="${data.url}" width="120" class="rounded border">
-                    `;
-                    console.log("Old logo:", data);
-                    console.log("Old logo type:", typeof data);
+                if (row.field === "logo_img" && typeof data === "object") {
+                    return `<img src="${data.url}" width="120" class="rounded border">`;
                 }
 
+                if (row.field === "is_active") {
+                    return data == 1
+                        ? "<span>Active</span>"
+                        : "<span>Inactive</span>";
+                } 
+            
                 return data;
-            },
+            }
         },
         {
             title: "Current Value",
             data: "new",
             render: function (data, type, row) {
-                if (!data) {
+                //console.log("Current value:", row.field, data.length);
+
+                const positionData = JSON.parse(row.position || "[]");
+               
+                if (data == null || data === "" || (Array.isArray(data) && data.length === 0) ) {
                     return "-";
                 }
 
-                // Carousel Images
                 if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data
-                        .map(
-                            (image) => `
-                            <div class ="w-[100px] h-[100px]  items-center justify-center flex flex-col">
-                                <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border ">
-                            </div>
-                            <span>Position: ${image.position}</span>                         
-                    `,
-                        )
-                        .join("");
+                    return data.map(image => `
+                        <div class="w-[100px] h-[150px] flex flex-col items-center">
+                            <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border">
+                            <span>Position: ${image.position}</span>
+                        </div>
+                    `).join("");
                 }
 
-                // Logo Image (if stored as object)
                 if (row.field === "logo_img" && typeof data === "object") {
-                    console.log(data, "vav");
-                    return `
-                        <img src="${data.url}"
-                            width="120"
-                            class="rounded border">
-                    `;
-                    console.log("New logo:", data);
-                    console.log("New logo type:", typeof data);
+                    return `<img src="${data.url}" width="120" class="rounded border">`;
                 }
-                //console.log("aaa",data);
+
+                if (row.field === "is_active") {
+                    return data == 1
+                        ? "<span>Active</span>"
+                        : "<span>Inactive</span>";
+                }  
+                
                 return data;
-            },
-        },
-    ]);
+            }
+        }
+    ],
+     {
+        ordering: false,
+        //pageLength: 10
+    }
+    );
 });
 
 function getChanges(logId) {
+
     const changes = [];
 
     const allowedFields = [
         "theme_name",
         "company_name",
+        "Site_name",
         "theme_status",
         "primary_color",
         "secondary_color",
@@ -252,51 +261,88 @@ function getChanges(logId) {
         "report_header",
         "carousel_images",
         "logo_img",
+        "is_active"
     ];
 
-    $logs.forEach(log => {
+    const log = $logs.find(item => item.id == logId);
 
-        if (log.id != logId) {
-            return;
-        }
+    if (!log) {
+        return changes;
+    }
 
-        const theme_id = log.theme_id;
+    const oldValues = JSON.parse(log.old_values || "{}");
+    const newValues = JSON.parse(log.new_values || "{}");
 
-        const oldValues = JSON.parse(log.old_values || "{}");
-        const newValues = JSON.parse(log.new_values || "{}");
+    // CREATE
+    if (log.action === "create") {
 
         Object.keys(newValues).forEach(key => {
-            const themeId = newValues.id;
 
-            // Skip fields that are not in the allowed list
             if (!allowedFields.includes(key)) {
                 return;
             }
 
-            const oldValue =
-                typeof oldValues[key] === "object"
-                    ? JSON.stringify(oldValues[key])
-                    : oldValues[key];
+            const value = newValues[key];
 
-            const newValue =
-                typeof newValues[key] === "object"
-                    ? JSON.stringify(newValues[key])
-                    : newValues[key];
+            if (
+                value !== null &&
+                value !== "" &&
+                !(Array.isArray(value) && value.length === 0)
+            ) {
 
-            if (oldValue !== newValue) {
                 changes.push({
-                    theme_id: themeId,
+                    theme_id: log.theme_id,
                     field: key,
-                    old: oldValues[key],
-                    new: newValues[key]
+                    old: "-",
+                    new: value
                 });
+
             }
+
         });
-            //console.log("xaxa",log);
-            //console.log(newValues.carousel_images);
-            //console.log(typeof newValues.carousel_images);
+
+        return changes;
+    }
+
+    // UPDATE / DELETE
+
+    const keys = new Set([
+        ...Object.keys(oldValues),
+        ...Object.keys(newValues)
+    ]);
+
+    keys.forEach(key => {
+
+        if (!allowedFields.includes(key)) {
+            return;
+        }
+
+        const oldValue =
+            typeof oldValues[key] === "object"
+                ? JSON.stringify(oldValues[key])
+                : oldValues[key];
+
+        const newValue =
+            typeof newValues[key] === "object"
+                ? JSON.stringify(newValues[key])
+                : newValues[key];
+
+        if (oldValue !== newValue) {
+
+            changes.push({
+                theme_id: log.theme_id,
+                field: key,
+                old: oldValues[key],
+                new: newValues[key]
+            });
+
+        }
+
     });
-    //console.log("xaxa",changes);
+
+    console.log("Old Values", oldValues);
+    console.log("New Values", newValues);
+    console.log("faaa",changes);
     return changes;
 }
 
@@ -309,3 +355,10 @@ $(document).on('input', '.searchBar', function(){
     }
 });
 
+$(document).on("click","#refreshBtn",function (){
+    location.reload();
+});
+
+$(document).on("click","#dateButton",function(){
+    console.log("asssvva");
+});

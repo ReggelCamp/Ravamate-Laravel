@@ -3,7 +3,7 @@ export default class MyDataTables{
         $(id).DataTable({
             data:json,
                 searching: true,
-                ordering: true,
+                //ordering: true,
                 lengthChange: false,
                 responsive: true,
                 data: json,
@@ -32,7 +32,8 @@ export default class MyDataTables{
                         className: 'btn btn-sm btn-info'
                     }
                 ],
-                columns
+                columns,
+                ...options
          });
     }
     
