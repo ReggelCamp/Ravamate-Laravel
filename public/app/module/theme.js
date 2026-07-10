@@ -533,11 +533,16 @@ $(document).on("click", "#executeSavebtn", function () {
             localStorage.setItem("themeUpdated", Date.now()); 
             
         },
-        onFail: (error) => {
+        onError: (error) => {
             $("#executeSavebtn")
                 .prop("disabled", false)
-                .html("Save");
-            Swal.fire("Error", error?.message ?? "Something went wrong.", "error");
+                .html("Confirm");
+
+            $("#errorMessage").text(
+                error.responseJSON?.message ?? "Something went wrong."
+            );
+
+            $("#ErrorModal")[0].showModal();
         }
     });
 });
@@ -691,11 +696,11 @@ $(document).on("click", "#executeEditbtn", function () {
                 .prop("disabled", false)
                 .html("Confirm");
 
-            Swal.fire(
-                "Error",
-                error?.responseJSON?.message ?? "Something went wrong.",
-                "error"
+            $("#errorMessage").text(
+                error.responseJSON?.message ?? "Something went wrong."
             );
+
+            $("#ErrorModal")[0].showModal();
         }
     });
 });

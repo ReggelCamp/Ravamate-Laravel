@@ -888,3 +888,19 @@ th{
     width: 800px !important;
     max-width: none !important;
 } */
+
+/* .daterangepicker th.prev,
+.daterangepicker th.available {
+    color: red !important;
+} */
+
+.daterangepicker th.next.available span{
+    color: #27a371 !important;
+}
+.daterangepicker th.prev.available span{
+    color: #27a371 !important;
+}
+
+/* #datePickerBtn .applyBtns{
+    background-color: #08ec6a;
+} */

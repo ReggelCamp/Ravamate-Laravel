@@ -1,33 +1,54 @@
 @extends('layout.centralizedScript')
 @section('content')
 
-    <body class="p-5">
-        <div class=" flex w-full justify-between ">
-            <div class="flex w-full gap-5">
-                <h1 class=" items-center justify-center flex text-xl ">Activity Logs</h1>
-                <button class=" btn btn-soft btn-primary text-sm  rounded-lg " id="refreshBtn">Refresh <i class="fa-solid fa-arrow-rotate-right"></i> </button>
-            </div> 
-            {{-- <div class=" flex items-center justify-center">
-                    <x-datepicker/>
-                </div>    --}}
-            <div class="flex items-center justify-center" >
-                <x-searchbar id="searchLogs"/>
-            </div>
-        </div>   
-        <table class="table" id="activityLogsTable">
-        <thead>
-            <tr>
-                {{-- <th>User</th>
-                <th>Theme ID</th>
-                <th>Action</th>
-                <th>Description</th>
-                <th>Date Created</th> --}}
-            </tr>
-        </thead>
+    <style>
+        .applyBtn{
+            background-color: #27a371 !important;
+            color: white !important;
+        }
+        .cancelBtn {
+            background-color: #b51414 !important;
+            color: white !important;
+        }
+    </style>
 
-        <tbody id="activity-logs-body">
-        </tbody>
-        </table>
+    <body class="p-6">
+        <div class="flex items-center justify-between mb-6">
+            {{-- Left Side --}}
+            <div class="flex items-center gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold headerFont">
+                        Activity Logs
+                    </h1>
+                    <p class="text-sm opacity-70">
+                        View and manage system activity.
+                    </p>
+                </div>
+                <button id="refreshBtn" class="btn btn-primary btn-sm rounded-xl gap-2">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                    Refresh
+                </button>
+            </div>
+    
+            {{-- Right Side --}}
+            <div class="flex items-center gap-3">
+                <x-datepicker id="datePickerBtn" class="w-[220px]  h-10" />
+                <x-searchbar id="searchLogs" class="w-72" />
+            </div>
+    
+        </div>
+    
+        <div class="overflow-x-auto rounded-xl shadow-md bg-base-100">
+            <table class="table table-zebra" id="activityLogsTable">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="activity-logs-body">
+                </tbody>
+            </table>
+        </div>
+    
     </body>
 
     

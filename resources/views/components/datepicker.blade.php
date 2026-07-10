@@ -77,7 +77,6 @@
         color: var(--body-color);
         height: 25px;
     }
-
     
 </style>
 
@@ -94,12 +93,14 @@
 /> --}}
 
 @props([
-    'displayOnly' => false
+    'displayOnly' => false,
+    'id' => 'datePicker'
 ])
 
 <div class="w-full flex h-full justify-end pr-2">
 
-    <div class="w-[250px] dateColor flex items-center h-full justify-end ">
+    {{-- <div class="w-[250px] dateColor flex items-center h-full justify-end "> --}}
+    <div class="dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)
 
@@ -110,12 +111,19 @@
 
         @else
 
-            <button
+            {{-- <button
                 id="dateButton"
+                {{ $attributes }}
                 class="border text-xs md:text-base w-[200px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition">
-
                 Filter by Date
+            </button> --}}
 
+            <button
+                id="{{ $id }}"
+                {{ $attributes->merge([
+                    'class' => 'date-picker border text-xs md:text-base w-[200px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition'
+                ]) }}>
+                Filter by Date
             </button>
 
         @endif

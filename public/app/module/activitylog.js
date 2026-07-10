@@ -2,6 +2,8 @@ import Api from "../helper/Api.js";
 import LogsTable from "./dataTable.js";
 
 let $logs = [];
+let filterStart = null;
+let filterEnd = null;
 
 function getActivityLogs() {
     //console.log("Fetching activity logs...");
@@ -11,7 +13,9 @@ function getActivityLogs() {
         onSuccess: (response) => {
             $logs = response.data ?? response;
             console.log("daaas",$logs);
-            
+
+           
+
             LogsTable.tableData(
                 '#activityLogsTable',
                 $logs,[
@@ -71,13 +75,11 @@ function getActivityLogs() {
                     }
                 ],
                 { 
-                      ordering: true,
+                    ordering: true,
                     order: [[ "desc"]], // Log ID descending (latest first)
                     pageLength: 10,
                 }
             )
-
-
 
             //If the API returns { data: [...] }
             //console.log($logs,"Fetched activity logs successfully.");
@@ -88,6 +90,10 @@ function getActivityLogs() {
                 return;
             }
             //console.log($logs,"daa");
+            let table = $('#activityLogsTable').DataTable();
+            table.clear();
+            table.rows.add($logs);
+            table.draw();
         },
 
         onError: (err) => {
@@ -141,7 +147,7 @@ $(document).on("click", ".descModal", function () {
         </tr>
         <tr>
             <th>Theme Name</th>
-            <td>${oldValues.theme_name}</td>
+            <td>${log.theme_name}</td>
         </tr>
         <tr>
             <th>Action</th>
@@ -355,10 +361,82 @@ $(document).on('input', '.searchBar', function(){
     }
 });
 
+
 $(document).on("click","#refreshBtn",function (){
-    location.reload();
+    // location.reload();
+
+    getActivityLogs();
 });
 
-$(document).on("click","#dateButton",function(){
-    console.log("asssvva");
+
+//$('.date-picker').daterangepicker({
+$('#datePickerBtn').daterangepicker({
+    showWeekNumbers: false,
+    linkedCalendars: false,
+    alwaysShowCalendars: true,
+    autoUpdateInput: false,            
+    //  opens: window.innerWidth < 370 ? 'center' : 'left',
+    opens: 'left',
+    //  opens: 'center',
+     ranges: {
+        'Today': [
+            moment(),
+            moment()
+        ],
+        'Last 7 Days': [
+            moment().subtract(6, 'days'),
+            moment()
+        ],
+        'This Month': [
+            moment().startOf('month'),
+            moment().endOf('month')
+        ]
+    }
+}, function (start, end) {
+
+    filterStart = start.startOf('day');
+    filterEnd = end.endOf('day');
+
+    $(this.element).text(
+        `${start.format('ll')} - ${end.format('ll')}`
+    );
+
+    $('#activityLogsTable').DataTable().draw();
+
+});
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+    if (settings.nTable.id !== "activityLogsTable") {
+        return true;
+    }
+
+    if (!filterStart || !filterEnd) {
+        return true;
+    }
+
+    const table = $('#activityLogsTable').DataTable();
+    const row = table.row(dataIndex).data();
+
+    const rowDate = moment(row.created_at);
+
+    const result = rowDate.isBetween(
+        filterStart,
+        filterEnd,
+        undefined,
+        "[]"
+    );
+
+    return result;
+});
+
+$('#datePickerBtn').on('cancel.daterangepicker', function () {
+
+    filterStart = null;
+    filterEnd = null;
+
+    $(this).text("Filter by Date");
+
+    $('#activityLogsTable').DataTable().draw();
+
 });

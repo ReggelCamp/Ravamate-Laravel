@@ -144,59 +144,72 @@ class ThemeController extends Controller
         
         $json['user_id'] = Auth::id();
         
-        $row = $this->model::create($json);
+        DB::beginTransaction();
 
-        FileHandler::upload('logo/img',$row->id,$request->file('logo'));
-        FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
+        try{
+            
+            $row = $this->model::create($json);
 
-        $carouselImages = FileHandler::getFilesByID('carousel', $row->id);
-        $newUrls = array_column($carouselImages, 'url');
-        $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $newUrls);
-        
-        Theme::where('id', $row->id)->update(['position' => json_encode($normalizedOrder)]);
-        $row->position = json_encode($normalizedOrder);
+            FileHandler::upload('logo/img',$row->id,$request->file('logo'));
+            FileHandler::upload('carousel',$row->id,$request->file('CarouselImgList'));
 
-        $logData = $row->toArray();
-        //$logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
-        
-        $logos = FileHandler::getFilesByID('logo/img', $row->id);
-        $logData['logo_img'] = $this->snapshotFileForLog($logos[0] ?? null, $row->id, 'created-logo');
-        
-        $sortedImages = $this->sortCarouselImages(
-            $carouselImages,
-            $normalizedOrder
-        );
+            $carouselImages = FileHandler::getFilesByID('carousel', $row->id);
+            $newUrls = array_column($carouselImages, 'url');
+            $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $newUrls);
+            
+            Theme::where('id', $row->id)->update(['position' => json_encode($normalizedOrder)]);
+            $row->position = json_encode($normalizedOrder);
 
-        $logData['carousel_images'] = [];
-
-        foreach ($sortedImages as $image) {
-            $logData['carousel_images'][] = $this->snapshotFileForLog(
-                $image,
-                $row->id,
-                'carousel'
+            $logData = $row->toArray();
+            //$logData['carousel_images'] = $this->sortCarouselImages($carouselImages, $normalizedOrder);
+            
+            $logos = FileHandler::getFilesByID('logo/img', $row->id);
+            $logData['logo_img'] = $this->snapshotFileForLog($logos[0] ?? null, $row->id, 'created-logo');
+            
+            $sortedImages = $this->sortCarouselImages(
+                $carouselImages,
+                $normalizedOrder
             );
-        }
-        
-        //dd(now()->format('Y-m-d H:i:s.u'));
-        ActivityLog::create([
-            'user_id' => Auth::id(),
-            //'log_id' => $id,
-            'theme_id' => $row->id,
-            'action' => 'create',
-            //'description' => 'Created a new theme',
-            'description' => 'Created the theme: ',
-            'old_values' => null,
-            // 'new_values' => json_encode($row->toArray()),
-            'new_values' => json_encode($logData),
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->header('User-Agent'),
-        ]);
 
+            $logData['carousel_images'] = [];
+
+            foreach ($sortedImages as $image) {
+                $logData['carousel_images'][] = $this->snapshotFileForLog(
+                    $image,
+                    $row->id,
+                    'carousel'
+                );
+            }
+            
+            //dd(now()->format('Y-m-d H:i:s.u'));
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                //'log_id' => $id,
+                'theme_id' => $row->id,
+                'action' => 'create',
+                //'description' => 'Created a new theme',
+                'description' => 'Created the theme: ',
+                'old_values' => null,
+                // 'new_values' => json_encode($row->toArray()),
+                'new_values' => json_encode($logData),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->header('User-Agent'),
+            ]);
+
+            DB::commit();
+            return response()->json($row);
+        }
         //dd(ActivityLog::all());
         //dd($logData);
         //dd($normalizedOrder);
+        catch (\Throwable $e) {
+            DB::rollBack();
+           return response()->json([
+                'success' => false,
+                'message' => 'Theme creation unsuccessful.',
+            ], 500);
+        }
         
-        return response()->json($row);
     }
 
     /**
@@ -218,176 +231,237 @@ class ThemeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-public function update(Request $request, $id){
-    $json = json_decode($request->input('json'), true) ?? [];
-    $order = json_decode($request->carousel_order, true);
-    $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
+    public function update(Request $request, $id)
+    {
+        $json = json_decode($request->input('json'), true) ?? [];
+        $order = json_decode($request->carousel_order, true);
+        $deleted = json_decode($request->input('deleted_carousel_images'), true) ?? [];
 
-    $theme = Theme::findOrFail($id);
-    $logoChanged = $request->hasFile('logo');
+        $theme = Theme::findOrFail($id);
+        $logoChanged = $request->hasFile('logo');
 
-    //$carouselChanged = $request->hasFile('CarouselImgList[]');
+        //$carouselChanged = $request->hasFile('CarouselImgList[]');
 
-    $oldOrder = json_decode($theme->position, true);
-    $oldValues = $theme->toArray();
+        $oldOrder = json_decode($theme->position, true);
+        $oldValues = $theme->toArray();
 
-    $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
-    // $oldValues['carousel_images'] = $this->sortCarouselImages(
-    //     $oldCarouselImages,
-    //     $oldOrder
-    // );
+        $oldCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+        // $oldValues['carousel_images'] = $this->sortCarouselImages(
+        //     $oldCarouselImages,
+        //     $oldOrder
+        // );
 
-    $sortedOldImages = $this->sortCarouselImages(
-        $oldCarouselImages,
-        $oldOrder
-    );
+        $oldLogos = FileHandler::getFilesByID("logo/img", $theme->id);
 
-    $oldLogos = FileHandler::getFilesByID("logo/img", $theme->id);
-    $oldValues['logo_img'] = $logoChanged
-        ? $this->snapshotFileForLog($oldLogos[0] ?? null, $theme->id, 'old-logo')
-        : ($oldLogos[0] ?? null);
+        $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
+        $existingUrls = array_column($existingImages, 'url');
 
-    $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
-    $existingUrls = array_column($existingImages, 'url');
+        $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
+        $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
 
-    $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
-    $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
-    
-    $carouselChanged =
-    $request->hasFile('CarouselImgList')
-    || !empty($deleted)
-    || $normalizedSubmittedOrder != $currentOrder;
+        $carouselChanged =
+            $request->hasFile('CarouselImgList')
+            || !empty($deleted)
+            || $normalizedSubmittedOrder != $currentOrder;
 
-    if ($carouselChanged) {
+        if ($carouselChanged) {
 
-        $sortedOldImages = $this->sortCarouselImages(
-            $oldCarouselImages,
-            $oldOrder
-        );
-
-        $oldValues['carousel_images'] = [];
-
-        foreach ($sortedOldImages as $image) {
-            $oldValues['carousel_images'][] =
-                $this->snapshotFileForLog(
-                    $image,
-                    $theme->id,
-                    'old-carousel'
-                );
-        }
-    }
-
-    $themeFieldsChanged = false;
-
-    foreach ($json as $field => $value) {
-        if ((string) ($theme->{$field} ?? '') !== (string) ($value ?? '')) {
-            $themeFieldsChanged = true;
-            break;
-        }
-    }
-
-    if (
-        !$themeFieldsChanged
-        && !$logoChanged
-        && !$request->hasFile('CarouselImgList')
-        && empty($deleted)
-        && $normalizedSubmittedOrder == $currentOrder
-    ) {
-        return response()->json([
-            'success' => false,
-            'message' => 'No changes detected. Please modify at least one field before updating.',
-        ], 422);
-    }
-
-    // Delete removed carousel images after the old log snapshot is captured.
-    foreach ($deleted as $url) {
-        $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
-
-        if (!str_starts_with($relativePath, 'uploads/carousel/')) {
-            continue;
-        }
-
-        $fullPath = storage_path('app/public/' . $relativePath);
-
-        if (file_exists($fullPath)) {
-            unlink($fullPath);
-        }
-    }
-
-    // Update theme data before replacing files, then save normalized carousel order.
-    $theme->update(array_merge($json, [
-        'updated_by' => Auth::id(),
-    ]));
-
-    FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
-
-    FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
-
-    $allImages = FileHandler::getFilesByID('carousel', $theme->id);
-    $allUrls = array_column($allImages, 'url');
-    $newUrls = array_values(array_diff($allUrls, $existingUrls));
-    $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $allUrls);
-
-    $theme->update([
-        'position' => json_encode($normalizedOrder),
-    ]);
-
-    $newValues = $theme->fresh()->toArray();
-    //$newValues['carousel_images'] = $this->sortCarouselImages($allImages, $normalizedOrder);
-    $newCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
-
-    $sortedNewImages = $this->sortCarouselImages(
-        $newCarouselImages,
-        $normalizedOrder
-    );
-
-     if ($carouselChanged) {
-
-    $sortedNewImages = $this->sortCarouselImages(
-        $newCarouselImages,
-        $normalizedOrder
-    );
-
-    $newValues['carousel_images'] = [];
-
-    foreach ($sortedNewImages as $image) {
-        $newValues['carousel_images'][] =
-            $this->snapshotFileForLog(
-                $image,
-                $theme->id,
-                'old-carousel'
+            $sortedOldImages = $this->sortCarouselImages(
+                $oldCarouselImages,
+                $oldOrder
             );
-    }
-}
-    
-    $newLogos = FileHandler::getFilesByID('logo/img', $theme->id);
-    $newValues['logo_img'] = $logoChanged
-        ? $this->snapshotFileForLog($newLogos[0] ?? null, $theme->id, 'new-logo')
-        : ($newLogos[0] ?? null);
-    
-    ActivityLog::create([
-        'user_id' => Auth::id(),
-        'theme_id' => $theme->id,
-        'action' => 'update',
-        'description' => 'Updated the theme ',
-        // 'old_values' => json_encode($oldValues),
-        'old_values' => json_encode($oldValues),
-        'new_values' => json_encode($newValues),
-        'ip_address' => $request->ip(),
-        'user_agent' => $request->header('User-Agent'),
-    ]);
-    
 
-    //dd(ActivityLog::all());
-    //dd($theme);
-    //dd($normalizedOrder);
-    //dd($logData);
-    return response()->json([
-        'success' => true,
-        'message' => 'Theme updated successfully.',
-        'theme' => $theme->fresh()
-    ]);
-}
+            $oldValues['carousel_images'] = [];
+
+            foreach ($sortedOldImages as $image) {
+                $oldValues['carousel_images'][] =
+                    $this->snapshotFileForLog(
+                        $image,
+                        $theme->id,
+                        'old-carousel'
+                    );
+            }
+        }
+
+        $themeFieldsChanged = false;
+
+        foreach ($json as $field => $value) {
+            if ((string) ($theme->{$field} ?? '') !== (string) ($value ?? '')) {
+                $themeFieldsChanged = true;
+                break;
+            }
+        }
+
+        if (
+            !$themeFieldsChanged
+            && !$logoChanged
+            && !$request->hasFile('CarouselImgList')
+            && empty($deleted)
+            && $normalizedSubmittedOrder == $currentOrder
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No changes detected. Please modify at least one field before updating.',
+            ], 422);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $oldValues['logo_img'] = $logoChanged
+                ? $this->snapshotFileForLog($oldLogos[0] ?? null, $theme->id, 'old-logo')
+                : ($oldLogos[0] ?? null);
+
+            // $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
+            // $existingUrls = array_column($existingImages, 'url');
+
+            // $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
+            // $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
+
+            // $carouselChanged =
+            // $request->hasFile('CarouselImgList')
+            // || !empty($deleted)
+            // || $normalizedSubmittedOrder != $currentOrder;
+
+            // if ($carouselChanged) {
+
+            //     $sortedOldImages = $this->sortCarouselImages(
+            //         $oldCarouselImages,
+            //         $oldOrder
+            //     );
+
+            //     $oldValues['carousel_images'] = [];
+
+            //     foreach ($sortedOldImages as $image) {
+            //         $oldValues['carousel_images'][] =
+            //             $this->snapshotFileForLog(
+            //                 $image,
+            //                 $theme->id,
+            //                 'old-carousel'
+            //             );
+            //     }
+            // }
+
+            // $themeFieldsChanged = false;
+
+            // foreach ($json as $field => $value) {
+            //     if ((string) ($theme->{$field} ?? '') !== (string) ($value ?? '')) {
+            //         $themeFieldsChanged = true;
+            //         break;
+            //     }
+            // }
+
+            // if (
+            //     !$themeFieldsChanged
+            //     && !$logoChanged
+            //     && !$request->hasFile('CarouselImgList')
+            //     && empty($deleted)
+            //     && $normalizedSubmittedOrder == $currentOrder
+            // ) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'No changes detected. Please modify at least one field before updating.',
+            //     ], 422);
+            // }
+
+            // Delete removed carousel images after the old log snapshot is captured.
+            foreach ($deleted as $url) {
+                $relativePath = str_replace('/storage/', '', parse_url($url, PHP_URL_PATH));
+
+                if (!str_starts_with($relativePath, 'uploads/carousel/')) {
+                    continue;
+                }
+
+                $fullPath = storage_path('app/public/' . $relativePath);
+
+                if (file_exists($fullPath)) {
+                    unlink($fullPath);
+                }
+            }
+
+            // Update theme data before replacing files, then save normalized carousel order.
+            $theme->update(array_merge($json, [
+                'updated_by' => Auth::id(),
+            ]));
+
+            //dd();
+            
+            FileHandler::upload('carousel', $id, $request->file('CarouselImgList'));
+
+            FileHandler::replaceFilesByID('logo/img', $id, $request->file('logo'));
+
+            $allImages = FileHandler::getFilesByID('carousel', $theme->id);
+            $allUrls = array_column($allImages, 'url');
+            $newUrls = array_values(array_diff($allUrls, $existingUrls));
+            $normalizedOrder = $this->normalizeCarouselOrder($order, $newUrls, $allUrls);
+
+            $theme->update([
+                'position' => json_encode($normalizedOrder),
+            ]);
+
+            $newValues = $theme->fresh()->toArray();
+            //$newValues['carousel_images'] = $this->sortCarouselImages($allImages, $normalizedOrder);
+            $newCarouselImages = FileHandler::getFilesByID('carousel', $theme->id);
+
+            if ($carouselChanged) {
+
+                $sortedNewImages = $this->sortCarouselImages(
+                    $newCarouselImages,
+                    $normalizedOrder
+                );
+
+                $newValues['carousel_images'] = [];
+
+                foreach ($sortedNewImages as $image) {
+                    $newValues['carousel_images'][] =
+                        $this->snapshotFileForLog(
+                            $image,
+                            $theme->id,
+                            'new-carousel'
+                        );
+                }
+            }
+
+            //dd($newValues);
+            $newLogos = FileHandler::getFilesByID('logo/img', $theme->id);
+            $newValues['logo_img'] = $logoChanged
+                ? $this->snapshotFileForLog($newLogos[0] ?? null, $theme->id, 'new-logo')
+                : ($newLogos[0] ?? null);
+
+            ActivityLog::create([
+                'user_id' => Auth::id(),
+                'theme_id' => $theme->id,
+                'action' => 'update',
+                'description' => 'Updated the theme ',
+                // 'old_values' => json_encode($oldValues),
+                'old_values' => json_encode($oldValues),
+                'new_values' => json_encode($newValues),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->header('User-Agent'),
+            ]);
+
+            DB::commit();
+
+
+
+            //dd(ActivityLog::all());
+            //dd($theme);
+            //dd($normalizedOrder);
+            //dd($logData);
+            return response()->json([
+                'success' => true,
+                'message' => 'Theme updated successfully.',
+                'theme' => $theme->fresh()
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Theme update unsuccessfull.',
+                'theme' => $theme->fresh()
+            ]);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -216,7 +216,7 @@
                 <p class="text-[16px] font-medium text-black">Carousel images</p>
                 <span id="CarouselError" class="text-red-500 text-xs mb-2 hidden animate-bounce"></span>
 
-                <input type="file" id="carouselImg" name="carouselImg" accept="image/* multiple class="hidden" />
+                <input type="file" id="carouselImg" name="carouselImg" accept="image/*" multiple class="hidden" />
                 <label for="carouselImg" id="addImg"
                     class="btn btn-outline bg-[#F5F5F5] w-full rounded-lg custom-dashed border-[#C1C3C7] addImg border h-[120px]">
                     <i class="fa-solid fa-upload text-sm"></i> Add carousel images
@@ -246,6 +246,30 @@
 
             </div>
 
+        </div>
+    </div>
+</dialog>
+
+<dialog id="ErrorModal" class="modal">
+    <div class="modal-box border border-red-500">
+        <div class="flex flex-col items-center justify-center w-full h-full text-center">
+            <i class="text-[110px] text-red-500 fa-solid fa-circle-exclamation"></i>
+
+            <h3 class="mt-2 text-xl font-bold text-red-500">
+                Error
+            </h3>
+
+            <p id="errorMessage" class="py-4 text-gray-700">
+                Something went wrong.
+            </p>
+        </div>
+
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn btn-error text-white">
+                    Close
+                </button>
+            </form>
         </div>
     </div>
 </dialog>
