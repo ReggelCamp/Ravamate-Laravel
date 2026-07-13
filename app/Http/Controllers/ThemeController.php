@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Helpers\ActivityLogHelper;
+
 
 class ThemeController extends Controller
 {
@@ -173,6 +175,8 @@ class ThemeController extends Controller
 
             $logData['carousel_images'] = [];
 
+            //dd($logData);
+
             foreach ($sortedImages as $image) {
                 $logData['carousel_images'][] = $this->snapshotFileForLog(
                     $image,
@@ -181,19 +185,12 @@ class ThemeController extends Controller
                 );
             }
             
-            //dd(now()->format('Y-m-d H:i:s.u'));
-            ActivityLog::create([
-                'user_id' => Auth::id(),
-                //'log_id' => $id,
+            ActivityLogHelper::create($request,[
                 'theme_id' => $row->id,
-                'action' => 'create',
-                //'description' => 'Created a new theme',
+                'action' => 'Create',
                 'description' => 'Created the theme: ',
                 'old_values' => null,
-                // 'new_values' => json_encode($row->toArray()),
                 'new_values' => json_encode($logData),
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->header('User-Agent'),
             ]);
 
             DB::commit();
@@ -202,14 +199,18 @@ class ThemeController extends Controller
         //dd(ActivityLog::all());
         //dd($logData);
         //dd($normalizedOrder);
+        
+        // catch (\Throwable $e) {
+        //     DB::rollBack();
+        //    return response()->json([
+        //         'success' => false,
+        //         'message' => 'Theme creation unsuccessful.',
+        //     ], 500);
+        // }
         catch (\Throwable $e) {
             DB::rollBack();
-           return response()->json([
-                'success' => false,
-                'message' => 'Theme creation unsuccessful.',
-            ], 500);
         }
-        
+       
     }
 
     /**
@@ -311,58 +312,6 @@ class ThemeController extends Controller
             $oldValues['logo_img'] = $logoChanged
                 ? $this->snapshotFileForLog($oldLogos[0] ?? null, $theme->id, 'old-logo')
                 : ($oldLogos[0] ?? null);
-
-            // $existingImages = FileHandler::getFilesByID('carousel', $theme->id);
-            // $existingUrls = array_column($existingImages, 'url');
-
-            // $normalizedSubmittedOrder = $this->normalizeCarouselOrder($order, [], $existingUrls);
-            // $currentOrder = $this->normalizeCarouselOrder($oldOrder, [], $existingUrls);
-
-            // $carouselChanged =
-            // $request->hasFile('CarouselImgList')
-            // || !empty($deleted)
-            // || $normalizedSubmittedOrder != $currentOrder;
-
-            // if ($carouselChanged) {
-
-            //     $sortedOldImages = $this->sortCarouselImages(
-            //         $oldCarouselImages,
-            //         $oldOrder
-            //     );
-
-            //     $oldValues['carousel_images'] = [];
-
-            //     foreach ($sortedOldImages as $image) {
-            //         $oldValues['carousel_images'][] =
-            //             $this->snapshotFileForLog(
-            //                 $image,
-            //                 $theme->id,
-            //                 'old-carousel'
-            //             );
-            //     }
-            // }
-
-            // $themeFieldsChanged = false;
-
-            // foreach ($json as $field => $value) {
-            //     if ((string) ($theme->{$field} ?? '') !== (string) ($value ?? '')) {
-            //         $themeFieldsChanged = true;
-            //         break;
-            //     }
-            // }
-
-            // if (
-            //     !$themeFieldsChanged
-            //     && !$logoChanged
-            //     && !$request->hasFile('CarouselImgList')
-            //     && empty($deleted)
-            //     && $normalizedSubmittedOrder == $currentOrder
-            // ) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'No changes detected. Please modify at least one field before updating.',
-            //     ], 422);
-            // }
 
             // Delete removed carousel images after the old log snapshot is captured.
             foreach ($deleted as $url) {
@@ -496,6 +445,8 @@ public function destroy(Theme $theme, $id)
         if (!$log || !$log->exists) {
             throw new \RuntimeException('Failed to record activity log; theme not deleted.');
         }
+
+        //dd($log);
 
         $theme->delete();
         return response()->json([

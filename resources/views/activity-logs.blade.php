@@ -10,9 +10,14 @@
             background-color: #b51414 !important;
             color: white !important;
         }
+
+        .daterangepicker td.active{
+            background-color: aquamarine !important;
+        }
+
     </style>
 
-    <body class="p-6">
+    <div class="p-6">
         <div class="flex items-center justify-between mb-6">
             {{-- Left Side --}}
             <div class="flex items-center gap-4">
@@ -49,7 +54,7 @@
             </table>
         </div>
     
-    </body>
+    </div>
 
     
     <dialog id="DescModal" class="modal openModal">
@@ -67,11 +72,12 @@
             </table>
             {{-- <table id="themeInfoTable" class="table table-zebra w-full mb-6">
             </table> --}}
-            <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg">Changes</h3>
+           
         </div>
         <div class="flex flex-col w-full h-full">
             <div class="flex w-full">
-                <div class="flex flex-col w-full h-full">
+                <div class="flex flex-col w-full h-full" id="changesSection">
+                    <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg">Changes</h3>
                     <table class="table" id="changesTable">
                         {{-- <thead>
                             <tr>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Helpers\ActivityLogHelper;
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,12 +78,23 @@ class UserController extends Controller
 
     Auth::login($user);
     $request->session()->regenerate();
+
+    ActivityLogHelper::create($request,[
+            'action' => 'login',
+            'description' => 'User Logged in',
+    ]);
+
     // dd($user);
     return response()->json(['message' => 'Logged in successfully', 'user' => $user]);
 }
 
 public function logout(Request $request)
 {
+    ActivityLogHelper::create($request,[
+        'action' => 'logout',
+        'description' => 'User Logged out',
+    ]);
+
     Auth::logout();
 
     $request->session()->invalidate();

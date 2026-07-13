@@ -21,7 +21,7 @@ class Theme extends Model
         'body_color',
         'header_color',
         'header_font',
-        'report_header',
+        'site_name',
         'body_font',
         'position',
         'is_active',

@@ -96,8 +96,14 @@
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
-                            <label class="text-[12px] font-medium text-[#17191C]">Site Name</label>
-                            <input type="text" id="report_header" placeholder="Report header text"
+                            <div class="flex-gap-5">
+                                <label class="text-[12px] font-medium text-[#17191C]">Site Name
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <span id="SiteName-error" role="alert"
+                                    class="text-red-500 text-xs  hidden animate-bounce"></span>
+                            </div>
+                            <input type="text" id="site_name" placeholder="e.g. Acme Corps"
                                 class="input input-bordered input-sm w-full border-[#C1C3C7] rounded-lg custom-input h-[34px]" />
                         </div>
                     </div>
@@ -223,7 +229,8 @@
                 </label>
 
                 <div class="w-full pb-5 overflow-x-scroll">
-                    <div id="imgContainer" class="flex gap-5 "></div>
+                    {{-- <div id="imgContainer" class="flex gap-5 "></div> --}}
+                    <div id="imgContainer" class="grid grid-cols-5 gap-[20px]"></div>
                 </div>
             </div>
 

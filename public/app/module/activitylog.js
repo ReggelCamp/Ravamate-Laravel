@@ -14,8 +14,6 @@ function getActivityLogs() {
             $logs = response.data ?? response;
             console.log("daaas",$logs);
 
-           
-
             LogsTable.tableData(
                 '#activityLogsTable',
                 $logs,[
@@ -49,6 +47,14 @@ function getActivityLogs() {
                                 return `The theme "${themeName}" has already been deleted.`;
                             }
 
+                            else if (row.action === "login"){
+                                 return ` User "${row.User}" logged in.`;
+                            }
+
+                            else if (row.action === "logout"){
+                                 return ` User "${row.User}" logged out.`;
+                            }
+
                             return `${data}"${themeName}"`;
                         }
                     },
@@ -61,14 +67,14 @@ function getActivityLogs() {
                         }
                     },
                     {
-                        title: 'View Changes',
+                        title: 'Actions',
                         data: null,
                         render: function (data, type, row) {
                             return `
                                 <button
-                                    class="descModal btn btn-sm "
+                                    class="descModal btn btn-sm"
                                     data-log-id="${row.id}">
-                                    View Logs
+                                    View
                                 </button>
                             `;
                         }
@@ -81,8 +87,6 @@ function getActivityLogs() {
                 }
             )
 
-            //If the API returns { data: [...] }
-            //console.log($logs,"Fetched activity logs successfully.");
             const tbody = $("#activity-logs-body");
 
             if (!tbody) {
@@ -103,7 +107,6 @@ function getActivityLogs() {
     
 }
 
-
 $(document).ready(function () {
     getActivityLogs();
 
@@ -114,7 +117,6 @@ $(document).ready(function () {
         }
     });
 });
-
 
 $(document).on("click", ".descModal", function () {
 
@@ -134,7 +136,10 @@ $(document).on("click", ".descModal", function () {
     }
 
     console.log("log",log);
+
     const changes = getChanges(logId);
+
+    console.log("saaaaa",changes);
 
     if ($.fn.DataTable.isDataTable("#changesTable")) {
         $("#changesTable").DataTable().clear().destroy();
@@ -145,33 +150,76 @@ $(document).on("click", ".descModal", function () {
             <th>Log ID</th>
             <td>${log.id}</td>
         </tr>
+        
+        ${(log.action === "login" || log.action === "logout") ? "" : `
         <tr>
             <th>Theme Name</th>
             <td>${log.theme_name}</td>
         </tr>
+
+        <tr>
+            <th>Theme ID</th>
+            <td>${log.theme_id ?? oldValues.id}</td>
+        </tr>
+        `}
+
         <tr>
             <th>Action</th>
-            <td>${log.action}</td>
+            <td>
+                <span class="px-2 py-1 rounded font-medium ${
+                    log.action === "login" ? "bg-green-100 text-green-700" :
+                    log.action === "logout" ? "bg-gray-100 text-gray-700" :
+                    log.action === "delete" ? "bg-red-100 text-red-700" :
+                    log.action === "update" ? "bg-yellow-100 text-yellow-700" :
+                    "bg-blue-100 text-blue-700"
+                }">
+                    ${log.action}
+                </span>
+            </td>
         </tr>
+        
         <tr>
             <th>User</th>
             <td>${log.User}</td>
         </tr>
+        
         <tr>
             <th>User ID</th>
             <td>${log.user_id}</td>
         </tr>
+        
+        <tr>
+            <th>User IP Address</th>
+            <td>${log.ip_address}</td>
+        </tr>
+
+        <tr>
+            <th>Browser</th>
+            <td>${getBrowser(log.user_agent)}</td>
+        </tr>
+        
+        <tr>
+            <th>Operating System</th>
+            <td>${getOS(log.user_agent)}</td>
+        </tr>
+        
         <tr>
             <th>Date</th>
             <td>${moment(log.created_at).format("MMM DD, YYYY | hh : mm : ss : SS A")}</td>
         </tr>
     `);
 
+    if (log.action === "login" || log.action === "logout") {
+        $("#changesSection").hide();
+    } else {
+        $("#changesSection").show();
+    }
+
     LogsTable.tableData("#changesTable", changes, [
-        {
-            title: "Theme Id",
-            data: "theme_id",
-        },
+        // {
+        //     title: "Theme Id",
+        //     data: "theme_id",
+        // },
         {
             title: "Field",
             data: "field",
@@ -256,7 +304,7 @@ function getChanges(logId) {
     const allowedFields = [
         "theme_name",
         "company_name",
-        "Site_name",
+        "site_name",
         "theme_status",
         "primary_color",
         "secondary_color",
@@ -264,10 +312,10 @@ function getChanges(logId) {
         "background_color",
         "body_font",
         "header_font",
-        "report_header",
         "carousel_images",
         "logo_img",
-        "is_active"
+        "is_active",
+        "theme_id"
     ];
 
     const log = $logs.find(item => item.id == logId);
@@ -275,9 +323,13 @@ function getChanges(logId) {
     if (!log) {
         return changes;
     }
+    console.log("1212121",log)
 
     const oldValues = JSON.parse(log.old_values || "{}");
     const newValues = JSON.parse(log.new_values || "{}");
+
+    console.log("newval",newValues);
+    console.log("oldval",oldValues);
 
     // CREATE
     if (log.action === "create") {
@@ -289,7 +341,7 @@ function getChanges(logId) {
             }
 
             const value = newValues[key];
-
+            console.log("val",value);
             if (
                 value !== null &&
                 value !== "" &&
@@ -297,7 +349,7 @@ function getChanges(logId) {
             ) {
 
                 changes.push({
-                    theme_id: log.theme_id,
+                    theme_id: log.theme_id ?? newValues.id ?? oldValues.id,
                     field: key,
                     old: "-",
                     new: value
@@ -336,7 +388,8 @@ function getChanges(logId) {
         if (oldValue !== newValue) {
 
             changes.push({
-                theme_id: log.theme_id,
+                // theme_id: log.theme_id ?? oldValues.id,
+                theme_id: log.theme_id ?? newValues.id ?? oldValues.id,
                 field: key,
                 old: oldValues[key],
                 new: newValues[key]
@@ -346,9 +399,10 @@ function getChanges(logId) {
 
     });
 
-    console.log("Old Values", oldValues);
+    console.log("Old Values11", oldValues);
     console.log("New Values", newValues);
     console.log("faaa",changes);
+    console.log("poooo",log);
     return changes;
 }
 
@@ -440,3 +494,41 @@ $('#datePickerBtn').on('cancel.daterangepicker', function () {
     $('#activityLogsTable').DataTable().draw();
 
 });
+
+function getBrowser(userAgent) {
+    if (!userAgent) return "Unknown";
+
+    if (userAgent.includes("Edge")) 
+        return `
+            <img src="/static/images/edgelogo.png" width="24" height="24" alt="edge Logo">
+        `;
+    if (userAgent.includes("Firefox"))
+         return `
+            <img src="/static/images/mozilalogo.png" width="24" height="24" alt="Mozila Logo">
+        `;
+
+    if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) 
+        return `
+            <img src="/static/images/chromelogo.png" width="24" height="24" alt="chrome Logo">
+        `;
+
+    if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) 
+        return `
+            <img src="/static/images/safarilogo.png" width="24" height="24" alt="safari Logo">
+        `;
+
+    return "Other";
+}
+
+function getOS(userAgent) {
+    if (!userAgent) return "Unknown";
+
+    if (userAgent.includes("Windows")) 
+        return `
+            <img src="/static/images/windowslogo.png" width="24" height="24" alt="windows Logo">
+        `;
+
+    if (userAgent.includes("Mac OS X")) return "macOS";
+
+    return "Other";
+}

@@ -1,5 +1,5 @@
 import Api from "../helper/Api.js";
-import getActive from "../helper/theme_state.js"
+import getActive from "../helper/theme_state.js";
 //import { getActivityLogs } from "./activityLog.js";
 
 let array = [];
@@ -53,10 +53,10 @@ $(document).on("change", ".flipswitch", function () {
                         icon: "success",
                     });
 
-                    getAll(); 
+                    getAll();
                     //window.getActive();
                     getActive();
-                    localStorage.setItem("themeUpdated", Date.now());             
+                    localStorage.setItem("themeUpdated", Date.now());
                 },
             });
         }
@@ -73,7 +73,7 @@ function getAll() {
             //console.log(array,"arrayvvv");
 
             let activeTheme = array.find((item) => item.is_active);
-            
+
             const defaultTheme = array[0]?.id;
 
             $("#table").html(`
@@ -83,7 +83,9 @@ function getAll() {
             const $grid = $("#table .grid");
 
             data.forEach((item) => {
-                let isActive = item.is_active ? "bg-blue-50 border-[4px] border-[#CFDFFF]" : "bg-base-100 border border-base-300";
+                let isActive = item.is_active
+                    ? "bg-blue-50 border-[4px] border-[#CFDFFF]"
+                    : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
 
                 $grid.append(`
@@ -119,7 +121,7 @@ function getAll() {
                             <!-- IMAGE -->
                             <div class="flex justify-center items-center h-48 bg-[#E3E5E8] w-full">
                                 <img
-                                    src="${item.logo?.[0]?.url ? item.logo[0].url + '?t=' + Date.now() : ''}"
+                                    src="${item.logo?.[0]?.url ? item.logo[0].url + "?t=" + Date.now() : ""}"
                                     class="max-w-[150px] max-h-[150px] object-contain overflow-visible skeleton"
                                     onload="this.classList.remove('skeleton')"
                                     onerror="this.classList.remove('skeleton')">
@@ -133,15 +135,19 @@ function getAll() {
                                         <span class=" custom-tooltip tooltip w-fit leading-none  font-bold  text-[20px]" data-tip="Company Name">
                                             ${item.company_name}
                                         </span>
-                                        ${isDefaultTheme ? `
+                                        ${
+                                            isDefaultTheme
+                                                ? `
                                             <h2 class="text-[20px] font-medium">
                                                 <span class="text-xs text-blue-600">(Default)</span>
                                             </h2>
-                                        ` : ""}
+                                        `
+                                                : ""
+                                        }
                                     </div>
 
                                     <div>
-                                        <div class="text-[#444A51] custom-tooltip tooltip  text-[16px] font-normal" data-tip="Site">${item.report_header ? item.report_header : "NULL"}</div>
+                                        <div class="text-[#444A51] custom-tooltip tooltip  text-[16px] font-normal" data-tip="Site">${item.site_name ? item.site_name : "NULL"}</div>
                                     </div>
                                 </div>
 
@@ -150,22 +156,22 @@ function getAll() {
                                     <h1 class="text-[16px] text-[#9599A1] font-normal">COLOR PALETTE</h1>
                                     <div class="flex w-full gap-[13px] ">
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.primary_color?.toLowerCase() === "#ffffff" ? "border border-[#E5E5E7]" : ""} tooltip custom-tooltip"
                                             data-tip="Primary Color"
                                             style="background:${item.primary_color}">
                                         </div>
                                         
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.secondary_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.secondary_color?.toLowerCase() === "#ffffff" ? "border border-[#E5E5E7]" : ""} tooltip custom-tooltip"
                                             data-tip="Secondary Color"
                                             style="background:${item.secondary_color}">
                                         </div>
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.accent_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.accent_color?.toLowerCase() === "#ffffff" ? "border border-[#E5E5E7]" : ""} tooltip custom-tooltip"
                                             data-tip="Accent Color"
                                             style="background:${item.accent_color}">
                                         </div>
 
-                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.background_color?.toLowerCase() === '#ffffff' ? 'border border-[#E5E5E7]' : ''} tooltip custom-tooltip"
+                                        <div class="w-[35px] h-[35px] rounded-[4px] ${item.background_color?.toLowerCase() === "#ffffff" ? "border border-[#E5E5E7]" : ""} tooltip custom-tooltip"
                                             data-tip="Background Color"
                                             style="background:${item.background_color}">
                                         </div>
@@ -222,7 +228,7 @@ $(document).on("click", "#deletebtn", function () {
     let row = array.find((item) => {
         return item.id == $(this).data().id;
     });
-    
+
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -232,7 +238,6 @@ $(document).on("click", "#deletebtn", function () {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      
         if (result.isConfirmed) {
             Api.delete({
                 url: `/customize_theme/delete/${$(this).data("id")}`,
@@ -252,7 +257,7 @@ $(document).on("click", "#deletebtn", function () {
 //for displaying the current data into the modal
 $(document).on("click", "#updatebtn", function () {
     carouselSortable.option("disabled", false);
-    
+
     let row = array.find((item) => {
         return item.id == $(this).data().id;
     });
@@ -272,7 +277,7 @@ $(document).on("click", "#updatebtn", function () {
 
     $("#theme_name").val(row.theme_name);
     $("#company_name").val(row.company_name);
-    
+
     // $("#primary_color").val(row.primary_color);
     // $("#secondary_color").val(row.secondary_color);
     // $("#accent_color").val(row.accent_color);
@@ -281,99 +286,98 @@ $(document).on("click", "#updatebtn", function () {
         "#primary_color",
         "#primaryColorWrapper",
         "#primaryColorHex",
-        row.primary_color
+        row.primary_color,
     );
 
     updateColorPicker(
         "#secondary_color",
         "#secondaryColorWrapper",
         "#secondaryColorHex",
-        row.secondary_color
+        row.secondary_color,
     );
 
     updateColorPicker(
         "#accent_color",
         "#accentColorWrapper",
         "#accentColorHex",
-        row.accent_color
+        row.accent_color,
     );
 
     updateColorPicker(
         "#background_color",
         "#backgroundColorWrapper",
         "#backgroundColorHex",
-        row.background_color
+        row.background_color,
     );
 
     bodyTomSelect.setValue(row.body_font);
     headerTomSelect.setValue(row.header_font);
     $("#body_font").val(row.body_font);
     $("#header_font").val(row.header_font);
-    $("#report_header").val(row.report_header);
-    
-    console.log("dasd",row);
-    console.log("dasded",row.updated_at);
-    
+    $("#site_name").val(row.site_name);
+
+    console.log("dasd", row);
+    console.log("dasded", row.updated_at);
 
     //$("#LogoImg").text("Current File " + filename);
-    
 
     $("#executeSavebtn").hide();
     $("#executeEditbtn").show();
-   // $("#modalTitle").text("Update Theme");
+    // $("#modalTitle").text("Update Theme");
     $("#modalTitle").html(`
         <i class="fa-solid fa-pen-to-square"></i> Update Theme
         `);
 
     ClearImgContainer();
     //DisplayLogoImg(row.logo[0]);
-    DisplayLogoImg(logoUrl,filename);
+    DisplayLogoImg(logoUrl, filename);
 
     if (row.carouselImg && row.carouselImg.length > 0) {
         DisplayCarouselImg(row.carouselImg);
     }
     AddThemeModal.showModal();
-    //localStorage.setItem("themeUpdated", Date.now()); 
+    //localStorage.setItem("themeUpdated", Date.now());
     localStorage.setItem("activityLogsUpdated", Date.now());
 });
 
 //for add
 $(document).on("click", "#addbtn", function () {
     carouselSortable.option("disabled", true);
-    
+
     $("#CarouselError").text("").addClass("hidden");
     $("#logo-error").text("").addClass("hidden");
     $("#CompanyName-error").text("").addClass("hidden");
     $("#ThemeName-error").text("").addClass("hidden");
+    //$("#SiteName-error").text("").addClass("hidden");
 
     $("#theme_name").val("");
     $("#company_name").val("");
     $("#logo_id").val("");
     // $("#primary_color").val("#3b82f6");
-    
+
     updateColorPicker(
         "#primary_color",
         "#primaryColorWrapper",
         "#primaryColorHex",
-        "#3b82f6"
+        "#3b82f6",
     );
     updateColorPicker(
         "#secondary_color",
         "#secondaryColorWrapper",
         "#secondaryColorHex",
-        "#3b82f6"
+        "#3b82f6",
     );
     updateColorPicker(
         "#accent_color",
         "#accentColorWrapper",
         "#accentColorHex",
-        "#3b82f6"
+        "#3b82f6",
     );
     updateColorPicker(
         "#background_color",
         "#backgroundColorWrapper",
         "#backgroundColorHex",
-        "#3b82f6"
+        "#3b82f6",
     );
 
     $("#secondary_color").val("#3b82f6");
@@ -383,7 +387,7 @@ $(document).on("click", "#addbtn", function () {
     $("#HeaderFont_color").val("#000000");
     bodyTomSelect.setValue("Roboto");
     headerTomSelect.setValue("Roboto");
-    $("#report_header").val("");
+    $("#site_name").val("");
     $("#carouselImg").val("");
     $("#executeSavebtn").show();
     $("#executeEditbtn").hide();
@@ -402,7 +406,7 @@ $(document).on("click", "#addbtn", function () {
             </span>
         </div>
     `);
-    
+
     ClearImgContainer();
 
     $("#addImg").html(`
@@ -417,7 +421,7 @@ $(document).on("click", "#addbtn", function () {
     `);
 
     AddThemeModal.showModal();
-    //localStorage.setItem("themeUpdated", Date.now()); 
+    //localStorage.setItem("themeUpdated", Date.now());
 });
 
 //for executing the save btn
@@ -425,12 +429,15 @@ $(document).on("click", "#executeSavebtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
     const theme_name = $("#theme_name").val().trim();
     const company_name = $("#company_name").val().trim();
+    const site_name = $("#site_name").val().trim();
 
     // clear previous errors
-    $("#CompanyName-error, #ThemeName-error, #logo-error").text("").addClass("hidden");
-    
+    $("#CompanyName-error, #ThemeName-error, #logo-error, #SiteName-error")
+        .text("")
+        .addClass("hidden");
+
     // validate individually
-   if (!theme_name || !company_name || !logoFile) {
+    if (!theme_name || !company_name || !logoFile || !site_name) {
         if (!theme_name) {
             $("#ThemeName-error")
                 .text("Theme name is required")
@@ -451,13 +458,21 @@ $(document).on("click", "#executeSavebtn", function () {
                 .removeClass("hidden")[0]
                 .scrollIntoView({ behavior: "smooth", block: "center" });
         }
-    }
-   
-    if (!theme_name || !company_name || !logoFile) return;
 
-     const duplicate = array.some(theme =>
-        theme.theme_name.trim().toLowerCase() ===
-        theme_name.trim().toLowerCase()
+        if (!site_name) {
+            $("#SiteName-error")
+                .text("Site Name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+
+    if (!theme_name || !company_name || !logoFile || !site_name) return;
+
+    const duplicate = array.some(
+        (theme) =>
+            theme.theme_name.trim().toLowerCase() ===
+            theme_name.trim().toLowerCase(),
     );
 
     if (duplicate) {
@@ -466,7 +481,7 @@ $(document).on("click", "#executeSavebtn", function () {
             .removeClass("hidden")[0]
             .scrollIntoView({
                 behavior: "smooth",
-                block: "center"
+                block: "center",
             });
 
         return;
@@ -475,7 +490,7 @@ $(document).on("click", "#executeSavebtn", function () {
     let form = new FormData();
 
     form.append("logo[]", logoFile);
-    
+
     CarouselOrder = [];
     if (ImgArray.length > 0) {
         ImgArray.forEach((file, index) => {
@@ -483,31 +498,34 @@ $(document).on("click", "#executeSavebtn", function () {
 
             CarouselOrder.push({
                 id: index,
-                position: index + 1
+                position: index + 1,
             });
         });
     }
-    
+
     form.append("carousel_order", JSON.stringify(CarouselOrder));
 
-    form.append("json", JSON.stringify({
-        theme_name,
-        company_name,
-        primary_color: $("#primary_color").val(),
-        secondary_color: $("#secondary_color").val(),
-        accent_color: $("#accent_color").val(),
-        background_color: $("#background_color").val(),
-        body_color: $("#BodyFont_color").val(),
-        header_color: $("#HeaderFont_color").val(),
-        body_font: $("#body_font").val(),
-        header_font: $("#header_font").val(),
-        report_header: $("#report_header").val(),
-    }));
+    form.append(
+        "json",
+        JSON.stringify({
+            theme_name,
+            company_name,
+            primary_color: $("#primary_color").val(),
+            secondary_color: $("#secondary_color").val(),
+            accent_color: $("#accent_color").val(),
+            background_color: $("#background_color").val(),
+            body_color: $("#BodyFont_color").val(),
+            header_color: $("#HeaderFont_color").val(),
+            body_font: $("#body_font").val(),
+            header_font: $("#header_font").val(),
+            site_name: $("#site_name").val(),
+        }),
+    );
 
     $("#executeSavebtn")
-    .prop("disabled", true)
-    .html('<span class="loading loading-spinner text-white"></span>');
-    
+        .prop("disabled", true)
+        .html('<span class="loading loading-spinner text-white"></span>');
+
     // loadGoogleFont("header-font-link", font, ".header-preview");
     // loadGoogleFont("body-font-link", font, ".body-preview");
     Api.post({
@@ -516,13 +534,11 @@ $(document).on("click", "#executeSavebtn", function () {
         processData: false,
         contentType: false,
         onSuccess: () => {
-            $("#executeSavebtn")
-                .prop("disabled", false)
-                .html("Save");
-            
+            $("#executeSavebtn").prop("disabled", false).html("Save");
+
             Swal.fire({
-                icon: 'success',
-                title: 'Theme created successfully!',
+                icon: "success",
+                title: "Theme created successfully!",
                 timer: 3000, // closes after 3 seconds
                 //showConfirmButton: false
             });
@@ -530,28 +546,25 @@ $(document).on("click", "#executeSavebtn", function () {
             AddThemeModal.close();
             getAll();
             getActive();
-            localStorage.setItem("themeUpdated", Date.now()); 
-            
+            localStorage.setItem("themeUpdated", Date.now());
         },
         onError: (error) => {
-            $("#executeSavebtn")
-                .prop("disabled", false)
-                .html("Confirm");
+            $("#executeSavebtn").prop("disabled", false).html("Save");
 
             $("#errorMessage").text(
-                error.responseJSON?.message ?? "Something went wrong."
+                error.responseJSON?.message ?? "Something went wrong.",
             );
 
             $("#ErrorModal")[0].showModal();
-        }
+        },
     });
 });
 
 //for updating tha card
 $(document).on("click", "#executeEditbtn", function () {
     const logoFile = $("#logo_id")[0]?.files[0];
-    const isEdit = $("#executeEditbtn").is(":visible"); 
-    
+    const isEdit = $("#executeEditbtn").is(":visible");
+
     // console.log("daasa",array);
 
     //getThemeChanges();
@@ -564,8 +577,8 @@ $(document).on("click", "#executeEditbtn", function () {
         .text("")
         .addClass("hidden");
 
-     // validate individually
-   if (!theme_name || !company_name || (!logoFile && !isEdit)) {
+    // validate individually
+    if (!theme_name || !company_name || (!logoFile && !isEdit)) {
         if (!theme_name) {
             $("#ThemeName-error")
                 .text("Theme name is required")
@@ -580,19 +593,28 @@ $(document).on("click", "#executeEditbtn", function () {
                 .scrollIntoView({ behavior: "smooth", block: "center" });
         }
 
-       if (!logoFile && !isEdit) {
-        $("#logo-error")
-            .text("Logo is required")
-            .removeClass("hidden")[0]
-            .scrollIntoView({ behavior: "smooth", block: "center" });
+        if (!logoFile && !isEdit) {
+            $("#logo-error")
+                .text("Logo is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        if (!site_name) {
+            $("#SiteName-error")
+                .text("Site Name is required")
+                .removeClass("hidden")[0]
+                .scrollIntoView({ behavior: "smooth", block: "center" });
         }
 
         return;
     }
 
-    const duplicate = array.some(theme =>
-        theme.theme_name.trim().toLowerCase() === theme_name.trim().toLowerCase() &&
-        (!isEdit || theme.id !== updateId)
+    const duplicate = array.some(
+        (theme) =>
+            theme.theme_name.trim().toLowerCase() ===
+                theme_name.trim().toLowerCase() &&
+            (!isEdit || theme.id !== updateId),
     );
 
     if (duplicate) {
@@ -601,7 +623,7 @@ $(document).on("click", "#executeEditbtn", function () {
             .removeClass("hidden")[0]
             .scrollIntoView({
                 behavior: "smooth",
-                block: "center"
+                block: "center",
             });
 
         return;
@@ -615,7 +637,7 @@ $(document).on("click", "#executeEditbtn", function () {
     if (logoFile) {
         form.append("logo[]", logoFile);
     }
-    
+
     CarouselOrder = [];
 
     ImgArray.forEach((file) => {
@@ -623,47 +645,52 @@ $(document).on("click", "#executeEditbtn", function () {
         form.append("CarouselImgList[]", file);
     });
 
-    document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
-        CarouselOrder.push({
-            type: el.dataset.type || "existing",
-            id: el.dataset.url || null,
-            temp_index: el.dataset.index || null,
-            position: index + 1
+    document
+        .querySelectorAll("#imgContainer .uploaderSort")
+        .forEach((el, index) => {
+            CarouselOrder.push({
+                type: el.dataset.type || "existing",
+                id: el.dataset.url || null,
+                temp_index: el.dataset.index || null,
+                position: index + 1,
+            });
         });
-    });
 
     if (!hasChanges()) {
-    AddThemeModal.close();
+        AddThemeModal.close();
 
-    Swal.fire({
-        icon: "info",
-        title: "No changes detected",
-        text: "Please modify at least one field before updating."
-    });
+        Swal.fire({
+            icon: "info",
+            title: "No changes detected",
+            text: "Please modify at least one field before updating.",
+        });
 
-    return;
+        return;
     }
 
     form.append("carousel_order", JSON.stringify(CarouselOrder));
     form.append("deleted_carousel_images", JSON.stringify(DeleteCarouselImg));
 
-    form.append("json", JSON.stringify({
-        theme_name,
-        company_name,
-        primary_color: $("#primary_color").val(),
-        secondary_color: $("#secondary_color").val(),
-        accent_color: $("#accent_color").val(),
-        background_color: $("#background_color").val(),
-        body_color: $("#BodyFont_color").val(),
-        header_color: $("#HeaderFont_color").val(),
-        body_font: $("#body_font").val(),
-        header_font: $("#header_font").val(),
-        report_header: $("#report_header").val(),
-    }));
-    
+    form.append(
+        "json",
+        JSON.stringify({
+            theme_name,
+            company_name,
+            primary_color: $("#primary_color").val(),
+            secondary_color: $("#secondary_color").val(),
+            accent_color: $("#accent_color").val(),
+            background_color: $("#background_color").val(),
+            body_color: $("#BodyFont_color").val(),
+            header_color: $("#HeaderFont_color").val(),
+            body_font: $("#body_font").val(),
+            header_font: $("#header_font").val(),
+            site_name: $("#site_name").val(),
+        }),
+    );
+
     $("#executeEditbtn")
-    .prop("disabled", true)
-    .html('<span class="loading loading-spinner text-white"></span>');
+        .prop("disabled", true)
+        .html('<span class="loading loading-spinner text-white"></span>');
 
     Api.post({
         url: `/customize_theme/update/${updateId}`,
@@ -671,62 +698,51 @@ $(document).on("click", "#executeEditbtn", function () {
         contentType: false,
         headers: {
             "X-HTTP-Method-Override": "PUT",
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                .content,
         },
         data: form,
 
-       onSuccess: () => {
-            $("#executeEditbtn")
-                .prop("disabled", false)
-                .html("Confirm");
+        onSuccess: () => {
+            $("#executeEditbtn").prop("disabled", false).html("Confirm");
             Swal.fire({
-                icon: 'success',
-                title: 'Theme updated successfully!',
+                icon: "success",
+                title: "Theme updated successfully!",
                 timer: 3000, // closes after 3 seconds
                 //showConfirmButton: false
             });
             AddThemeModal.close();
             getAll();
             getActive();
-            localStorage.setItem("themeUpdated", Date.now());  
-            console.log("aasd",updateId);
+            localStorage.setItem("themeUpdated", Date.now());
+            console.log("aasd", updateId);
         },
         onError: (error) => {
-            $("#executeEditbtn")
-                .prop("disabled", false)
-                .html("Confirm");
+            $("#executeEditbtn").prop("disabled", false).html("Confirm");
 
             $("#errorMessage").text(
-                error.responseJSON?.message ?? "Something went wrong."
+                error.responseJSON?.message ?? "Something went wrong.",
             );
 
             $("#ErrorModal")[0].showModal();
-        }
+        },
     });
 });
 
-bindColorPicker(
-    "#primary_color",
-    "#primaryColorWrapper",
-    "#primaryColorHex"
-);
+bindColorPicker("#primary_color", "#primaryColorWrapper", "#primaryColorHex");
 
 bindColorPicker(
     "#secondary_color",
     "#secondaryColorWrapper",
-    "#secondaryColorHex"
+    "#secondaryColorHex",
 );
 
-bindColorPicker(
-    "#accent_color",
-    "#accentColorWrapper",
-    "#accentColorHex"
-);
+bindColorPicker("#accent_color", "#accentColorWrapper", "#accentColorHex");
 
 bindColorPicker(
     "#background_color",
     "#backgroundColorWrapper",
-    "#backgroundColorHex"
+    "#backgroundColorHex",
 );
 
 $("#BodyFont_color").on("input", function () {
@@ -756,53 +772,52 @@ $("#logo_id").on("change", function () {
     if (!file) return;
 
     const FileName = this.files[0].name;
-    const maxSize = 5 ;
+    const maxSize = 5;
 
     const FileSize = this.files[0].size / 1024 / 1024;
-  
+
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-    
-    
     // Wrong file type
     if (!allowedTypes.includes(file.type)) {
         $("#logo-error")
             .text("Invalid file type. Only JPG, PNG, and WEBP are allowed.")
             .removeClass("hidden");
 
-        $(this).val(""); 
+        $(this).val("");
         return;
     }
 
-    if(FileSize > maxSize){
-         $("#logo-error")
-            .text(`Invalid! file to large your. File has ${FileSize.toFixed(2)}MB limit is ${maxSize}MB`)
+    if (FileSize > maxSize) {
+        $("#logo-error")
+            .text(
+                `Invalid! file to large your. File has ${FileSize.toFixed(2)}MB limit is ${maxSize}MB`,
+            )
             .removeClass("hidden");
 
-        $(this).val(""); 
+        $(this).val("");
         return;
     }
 
     // clear error
     //$("#LogoImg").text(FileName);
     $("#logo-error").text("").addClass("hidden");
-    console.log("filesss",FileName);
-    console.log("filexxx",file);
-    console.log("faa",FileSize);
+    console.log("filesss", FileName);
+    console.log("filexxx", file);
+    console.log("faa", FileSize);
     RenderLogo(file);
 });
 
 // function DisplayLogoImg(LogoImg,LogoName){
 
 //     $("#LogoImg").html(`
-//             <img src="${LogoImg}" 
+//             <img src="${LogoImg}"
 //                  class="h-[85px] w-[100px] object-contain  ">
 //             <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
 //         `);
 // }
 
-function DisplayLogoImg(LogoImg, LogoName){
-
+function DisplayLogoImg(LogoImg, LogoName) {
     $("#LogoImg").html(`
         <img src="${LogoImg}?t=${Date.now()}"
              class="h-[85px] w-[100px] object-contain">
@@ -812,9 +827,8 @@ function DisplayLogoImg(LogoImg, LogoName){
 
 function renderCarouselPreviews(files) {
     carouselSortable.option("disabled", true);
-    
-    Array.from(files).forEach((file) => {
 
+    Array.from(files).forEach((file) => {
         ImgArray.push(file);
 
         const imgIndex = ImgArray.length - 1;
@@ -824,23 +838,19 @@ function renderCarouselPreviews(files) {
         reader.onload = function (e) {
             $("#imgContainer").append(`
                 <div class="uploaderSort newCarouselImage"
-                     data-type="new"
-                     data-index="${imgIndex}">
+                    data-type="new"
+                    data-index="${imgIndex}">
 
-                    <div class="card bg-base-100 black h-[250px] w-[250px] ImgContent shadow-sm carouseltemp">
+                    <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
 
                         <div class="relative">
-                            <button class="btn btn-square absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 btn-sm DeleteCarousel"
+                            <button class="btn btn-square absolute z-10 rounded-xl w-[20px] h-[20px] hover:bg-red-500 text-black right-2 top-2 btn-sm DeleteCarousel"
                                     data-index="${imgIndex}">
                                 X
                             </button>
                         </div>
 
-                        <img src="${e.target.result}" class="w-full h-40 object-cover rounded">
-
-                        <div class="w-full p-2 bg-gray-100">
-                            <p class="text-sm text-black">File name: ${file.name}</p>
-                        </div>
+                        <img src="${e.target.result}" class=" object-cover rounded">
 
                     </div>
                 </div>
@@ -849,14 +859,13 @@ function renderCarouselPreviews(files) {
         };
         reader.readAsDataURL(file);
     });
- 
 }
 
 const nameCount = {};
 // displaying Img when adding img
 $("#carouselImg").on("change", function () {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    const maxSize = 5 ;
+    const maxSize = 5;
     let AcceptedFile = [];
     let RejectedFilesbyType = [];
     let RejectedFilesbySize = [];
@@ -864,7 +873,7 @@ $("#carouselImg").on("change", function () {
 
     const files = Array.from(this.files);
 
-    files.forEach(file => {
+    files.forEach((file) => {
         const AcceptedSize = file.size / 1024 / 1024;
         if (!allowedTypes.includes(file.type)) {
             RejectedFilesbyType.push(file);
@@ -874,38 +883,32 @@ $("#carouselImg").on("change", function () {
             AcceptedFile.push(file);
         }
     });
-   
+
     // for invalid files by type
     if (RejectedFilesbyType.length > 0) {
-        const names = RejectedFilesbyType.map(file => file.name).join(", ");
-        ErrorHandler+= `Rejected files: ${names}. Only JPG, PNG, WEBP are allowed. <br>`;
+        const names = RejectedFilesbyType.map((file) => file.name).join(", ");
+        ErrorHandler += `Rejected files: ${names}. Only JPG, PNG, WEBP are allowed. <br>`;
         // $("#CarouselError")
         //     .text(`Rejected files: ${names}. Only JPG, PNG, WEBP are allowed.`)
         //     .removeClass("hidden");
-    } 
+    }
     //for invalid files by size
-    if(RejectedFilesbySize.length > 0){
-        const names = RejectedFilesbySize.map(file => file.name).join(", ");
-        ErrorHandler+= `Rejected files: ${names}. Too large max size is ${maxSize} MB. <br>`;
+    if (RejectedFilesbySize.length > 0) {
+        const names = RejectedFilesbySize.map((file) => file.name).join(", ");
+        ErrorHandler += `Rejected files: ${names}. Too large max size is ${maxSize} MB. <br>`;
         // $("#CarouselError")
         //     .text(`Rejected files: ${names}. Too large max size is ${maxSize} MB.`)
         //     .removeClass("hidden");
-    }
-   
-    else {
+    } else {
         $("#CarouselError").text("").addClass("hidden");
     }
 
-    $("#CarouselError")
-            .html(ErrorHandler)
-            .removeClass("hidden");
+    $("#CarouselError").html(ErrorHandler).removeClass("hidden");
 
     // approved files
-   if (AcceptedFile.length > 0) {
-    
+    if (AcceptedFile.length > 0) {
         renderCarouselPreviews(AcceptedFile);
     }
-    
 });
 
 // Deleting carousel when add modal
@@ -920,21 +923,19 @@ $(document).on("click", ".DeleteCarousel", function (e) {
     reindexCarousel();
     Filecount();
 
-    if(ImgArray.length == 0){
+    if (ImgArray.length == 0) {
         ClearImgContainer();
     }
-    
+
     // console.log("Iac",ImgArray.length);
     // console.log("Iacqq",ImgArray);
     // console.log("llplp",targetIndex);
-
 });
 
 $.ajax({
     url: "/fonts",
     type: "GET",
     success: function (fonts) {
-
         // Destroy existing Tom Select instances
         if (headerTomSelect) {
             headerTomSelect.destroy();
@@ -951,7 +952,7 @@ $.ajax({
 
         // Add placeholder
         $("#header_font, #body_font").append(
-            '<option value="">Pick a font</option>'
+            '<option value="">Pick a font</option>',
         );
 
         // Limit to first 100 fonts
@@ -959,28 +960,27 @@ $.ajax({
 
         Fonts.forEach((font) => {
             $("#header_font").append(
-                `<option value="${font.family}">${font.family}</option>`
+                `<option value="${font.family}">${font.family}</option>`,
             );
 
             $("#body_font").append(
-                `<option value="${font.family}">${font.family}</option>`
+                `<option value="${font.family}">${font.family}</option>`,
             );
         });
 
-        
         // Initialize Tom Select
         headerTomSelect = new TomSelect("#header_font", {
             create: false,
             placeholder: "Search header font...",
             searchField: ["text"],
-            maxOptions: 100
+            maxOptions: 100,
         });
 
         bodyTomSelect = new TomSelect("#body_font", {
             create: false,
             placeholder: "Search body font...",
             searchField: ["text"],
-            maxOptions: 100
+            maxOptions: 100,
         });
 
         const DEFAULT_FONT = "Roboto";
@@ -1012,7 +1012,7 @@ $.ajax({
         bodyTomSelect.on("dropdown_close", function () {
             this.control_input.readOnly = true;
             const currentFont = this.getValue();
-            if(!currentFont){
+            if (!currentFont) {
                 this.setValue(previousBodyFont);
             }
         });
@@ -1020,7 +1020,7 @@ $.ajax({
         headerTomSelect.on("dropdown_close", function () {
             this.control_input.readOnly = true;
             const currentFont = this.getValue();
-            if(!currentFont){
+            if (!currentFont) {
                 this.setValue(previousHeaderFont);
             }
         });
@@ -1033,7 +1033,6 @@ $.ajax({
     error: function (xhr) {
         console.error("Failed to load fonts:", xhr);
     },
-    
 });
 
 // Header font preview
@@ -1041,7 +1040,7 @@ $("#header_font").on("change", function () {
     const font = $(this).val();
 
     if (!font) return;
- 
+
     //loadGoogleFont("header-font-link", font, ".header-preview")
 });
 
@@ -1054,37 +1053,34 @@ $("#body_font").on("change", function () {
     //loadGoogleFont("body-font-link", font, ".body-preview")
 });
 
-
 // displaying img when edit btn is click
-function DisplayCarouselImg(images){
-    
+function DisplayCarouselImg(images) {
     $("#imgContainer").empty();
-    
+
     images.forEach((img, index) => {
         const ImgPosition = getImagePosition(index);
 
         $("#imgContainer").append(`
             <div class="flex w-full justify-center">
                 <div class="uploaderSort" data-type="existing" data-url="${img.url}">
-                    <div class="card h-[250px] w-[250px] shadow-xl  transition-all duration-300 ease-out cursor-pointer
-                    hover:-translate-y-2
-                    hover:shadow-2xl
-                    hover:scale-105">
-                        <div class="relative">
-                            <button class="btn btn-square btn-sm absolute z-10 rounded-xl hover:bg-red-500 text-black left-55 DeleteExistingCarousel" data-index="${index}">
-                            X
-                            </button>
-                        </div>  
-                     
-                        <img src="${img.url}" class="w-full h-40 object-cover rounded skeleton"
-                            onload="this.classList.remove('skeleton')"
-                            onerror="this.classList.remove('skeleton')"
-                        >
-                        <div class="w-full flex justify-center p-2 bg-gray-100">
-                            <p>Carousel Position: </p>
-                            <div class="img-position ">${ImgPosition}</div>
+                    <div class="card  shadow-xl  transition-all duration-300 ease-out cursor-pointer
+                        hover:-translate-y-2
+                        hover:shadow-2xl
+                        hover:scale-105">
+                        <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
+                            <div class="relative">
+                                <button class=" absolute z-10  hover:text-red-500 text-black  right-2 top-2 btn-sm DeleteCarousel"
+                                        data-index="${index}">
+                                        <i class="fa-regular fa-circle-xmark text-[20px]"></i>
+                                </button>
+                            </div>
+                            <img src="${img.url}" class=" object-cover rounded">
+                            <div class="absolute top-2 left-2 z-10 flex items-center justify-center
+                                        bg-[#3B81E9] rounded-xl text-white text-[10px]
+                                        w-[20px] h-[20px]" id="imgOrder">
+                                ${ImgPosition}
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -1097,22 +1093,25 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
     disabled: true,
 
     onEnd() {
-    CarouselOrder = [];
+        // CarouselOrder = [];
 
-    const items = document.querySelectorAll("#imgContainer .uploaderSort");
+        // const items = document.querySelectorAll("#imgContainer .uploaderSort");
 
-    items.forEach((el, index) => {
-        CarouselOrder.push({
-            id: el.dataset.url,
-            position: index + 1
-        });
+        // items.forEach((el, index) => {
+        //     CarouselOrder.push({
+        //         id: el.dataset.url,
+        //         position: index + 1,
+        //     });
 
-       
-        const position = el.closest(".flex").querySelector(".img-position");
-        if (position) position.textContent = index + 1;
+        //     const position = el.closest(".flex").querySelector(".img-position");
+        //     if (position) position.textContent = index + 1;
+        // });
+
+         $(".uploaderSort").each(function (i) {
+        $(this).find("#imgOrder").
+        text(i+1);
     });
-}
-
+    },
 });
 
 // Deleting on edit
@@ -1128,10 +1127,10 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
 
     renumberPositions();
 
-    console.log("Del",delete_id);
+    console.log("Del", delete_id);
 });
 
-function ClearImgContainer(){
+function ClearImgContainer() {
     $("#imgContainer").empty();
     $("#carouselImg").val("");
     //$("#primary_color").val("");
@@ -1158,50 +1157,58 @@ function getImagePosition(index) {
 }
 
 function renumberPositions() {
-    document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, i) => {
-        const posEl = el.querySelector(".img-position");
+    document
+        .querySelectorAll("#imgContainer .uploaderSort")
+        .forEach((el, i) => {
+            const posEl = el.querySelector(".img-position");
 
-        if (posEl) {
-            posEl.textContent = i + 1;
-        }
-    });
+            if (posEl) {
+                posEl.textContent = i + 1;
+            }
+        });
 
     CarouselOrder = [];
 
-    document.querySelectorAll("#imgContainer .uploaderSort").forEach((el, index) => {
-        CarouselOrder.push({
-            id: el.dataset.url,
-            position: index + 1
+    document
+        .querySelectorAll("#imgContainer .uploaderSort")
+        .forEach((el, index) => {
+            CarouselOrder.push({
+                id: el.dataset.url,
+                position: index + 1,
+            });
         });
-    });
 
     Filecount();
 }
 
 function reindexCarousel() {
     $(".uploaderSort").each(function (i) {
-        $(this)
-            .find(".DeleteCarousel")
-            .attr("data-index", i)
-            .data("index", i);
+        $(this).find(".DeleteCarousel").
+        attr("data-index", i).
+        data("index", i);
     });
 }
 
 function Filecount() {
-    const count = document.querySelectorAll('#imgContainer .uploaderSort[data-type="new"]').length;
+    const count = document.querySelectorAll(
+        '#imgContainer .uploaderSort[data-type="new"]',
+    ).length;
 
     if (count > 0) {
         $("#addImg").text(`${count} files selected`);
     } else {
         $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
     }
-    console.log("dd",count);
+    console.log("dd", count);
 }
 
 function isWhiteColor(hex) {
     let clean = hex.replace("#", "");
     if (clean.length === 3) {
-        clean = clean.split("").map(c => c + c).join(""); // fff → ffffff
+        clean = clean
+            .split("")
+            .map((c) => c + c)
+            .join(""); // fff → ffffff
     }
     const r = parseInt(clean.substring(0, 2), 16);
     const g = parseInt(clean.substring(2, 4), 16);
@@ -1215,12 +1222,11 @@ function updateColorPicker(inputId, wrapperId, hexInputId, color) {
     $(hexInputId).val(selectedColor);
     $(wrapperId).css(
         "border",
-        isWhiteColor(selectedColor) ? "1px solid #E5E5E7" : "none"
+        isWhiteColor(selectedColor) ? "1px solid #E5E5E7" : "none",
     );
 }
 
 function bindColorPicker(inputId, wrapperId, hexInputId) {
-
     $(inputId).on("input", function () {
         const color = $(this).val();
 
@@ -1228,9 +1234,7 @@ function bindColorPicker(inputId, wrapperId, hexInputId) {
 
         $(wrapperId).css(
             "border",
-            isWhiteColor(color)
-                ? "1px solid #E5E5E7"
-                : "none"
+            isWhiteColor(color) ? "1px solid #E5E5E7" : "none",
         );
     });
 
@@ -1238,14 +1242,11 @@ function bindColorPicker(inputId, wrapperId, hexInputId) {
         const hex = $(this).val();
 
         if (/^#([0-9A-F]{3}){1,2}$/i.test(hex)) {
-
             $(inputId).val(hex);
 
             $(wrapperId).css(
                 "border",
-                isWhiteColor(hex)
-                    ? "1px solid #E5E5E7"
-                    : "none"
+                isWhiteColor(hex) ? "1px solid #E5E5E7" : "none",
             );
         }
     });
@@ -1271,27 +1272,31 @@ $(document).on("mouseenter", ".tooltip-info", function () {
 
     const convert_date = new Date(item.updated_at);
     const convert_createdAt = new Date(item.created_at);
-    const formatDateUpdated = convert_date.toLocaleDateString("en-PH", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-    }).replace(",", " |");
-    const formatDateCreated = convert_createdAt.toLocaleDateString("en-PH", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-    }).replace(",", " |");
+    const formatDateUpdated = convert_date
+        .toLocaleDateString("en-PH", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+        })
+        .replace(",", " |");
+    const formatDateCreated = convert_createdAt
+        .toLocaleDateString("en-PH", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+        })
+        .replace(",", " |");
     const createdBy = item.user?.admin_name ?? "Unknown";
     const updatedBy = item.updated_by_name ?? "";
 
     $(".tooltip-box").addClass("hidden");
-    
+
     // <div class="absolute -top-2 right-4 w-4 h-4 bg-[#F5F5F5] rotate-45 shadow-sm"></div>
-   $(this).siblings(".tooltip-box").removeClass("hidden").html(`
+    $(this).siblings(".tooltip-box").removeClass("hidden").html(`
 
     <div class="flex text-[12px] gap-[18px] flex-col relative z-10">
         <div class="flex gap-[15px] justify-between">
@@ -1326,9 +1331,14 @@ $(document).on("mouseleave", ".tooltip-info", function () {
 function hasChanges() {
     if (!originalTheme) return false;
 
-    const sameValue = (oldValue, newValue) => (oldValue ?? "") === (newValue ?? "");
-    const originalCarouselUrls = (originalTheme.carouselImg ?? []).map((img) => img.url);
-    const currentCarouselUrls = Array.from(document.querySelectorAll("#imgContainer .uploaderSort"))
+    const sameValue = (oldValue, newValue) =>
+        (oldValue ?? "") === (newValue ?? "");
+    const originalCarouselUrls = (originalTheme.carouselImg ?? []).map(
+        (img) => img.url,
+    );
+    const currentCarouselUrls = Array.from(
+        document.querySelectorAll("#imgContainer .uploaderSort"),
+    )
         .filter((el) => el.dataset.type !== "new")
         .map((el) => el.dataset.url);
 
@@ -1336,15 +1346,22 @@ function hasChanges() {
         !sameValue(originalTheme.theme_name, $("#theme_name").val()) ||
         !sameValue(originalTheme.company_name, $("#company_name").val()) ||
         !sameValue(originalTheme.primary_color, $("#primary_color").val()) ||
-        !sameValue(originalTheme.secondary_color, $("#secondary_color").val()) ||
+        !sameValue(
+            originalTheme.secondary_color,
+            $("#secondary_color").val(),
+        ) ||
         !sameValue(originalTheme.accent_color, $("#accent_color").val()) ||
-        !sameValue(originalTheme.background_color, $("#background_color").val()) ||
+        !sameValue(
+            originalTheme.background_color,
+            $("#background_color").val(),
+        ) ||
         !sameValue(originalTheme.body_color, $("#BodyFont_color").val()) ||
         !sameValue(originalTheme.header_color, $("#HeaderFont_color").val()) ||
         !sameValue(originalTheme.body_font, $("#body_font").val()) ||
         !sameValue(originalTheme.header_font, $("#header_font").val()) ||
-        !sameValue(originalTheme.report_header, $("#report_header").val()) ||
-        JSON.stringify(originalCarouselUrls) !== JSON.stringify(currentCarouselUrls) ||
+        !sameValue(originalTheme.site_name, $("#site_name").val()) ||
+        JSON.stringify(originalCarouselUrls) !==
+            JSON.stringify(currentCarouselUrls) ||
         $("#logo_id")[0].files.length > 0 ||
         ImgArray.length > 0 ||
         DeleteCarouselImg.length > 0

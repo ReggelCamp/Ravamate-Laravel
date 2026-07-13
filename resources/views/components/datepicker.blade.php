@@ -78,6 +78,7 @@
         height: 25px;
     }
     
+    
 </style>
 
 
@@ -132,7 +133,7 @@
 
 </div>
 
-<script>
+{{-- <script>
     $(function () {
 
         $('#dateButton').daterangepicker({
@@ -185,4 +186,4 @@
         });
 
     });
-</script>
+</script> --}}
