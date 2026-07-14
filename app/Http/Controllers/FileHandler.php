@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileHandler extends Controller
 {
@@ -14,9 +15,14 @@ class FileHandler extends Controller
             $max = self::getMaxByID($folder, $id);
 
             foreach ($file_array as $key => $file) {
+                // $extension = $file->getClientOriginalExtension();
+                // $filename = "{$id}_{$max}.{$extension}";
+                // $file->storeAs("uploads/{$folder}", "ID{$filename}", 'public');
                 $extension = $file->getClientOriginalExtension();
-                $filename = "{$id}_{$max}.{$extension}";
-                $file->storeAs("uploads/{$folder}", "ID{$filename}", 'public');
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalName = Str::slug($originalName);
+                $filename = "ID{$id}_{$max}_{$originalName}.{$extension}";
+                $file->storeAs("uploads/{$folder}", $filename, 'public');
                 $max++;
             }
         }  

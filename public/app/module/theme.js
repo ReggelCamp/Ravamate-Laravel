@@ -10,8 +10,10 @@ let ImgArray = [];
 let updateId;
 let headerTomSelect = null;
 let bodyTomSelect = null;
-
+//let AcceptedFile = [];
 let originalTheme = null;
+
+let getFilename = [];
 
 let $logs = [];
 //let changes = 0;
@@ -70,11 +72,13 @@ function getAll() {
         onSuccess: (data) => {
             array = data;
 
-            //console.log(array,"arrayvvv");
+            console.log(array,"arrayvvv");
 
-            let activeTheme = array.find((item) => item.is_active);
-
+            const activeTheme = array.find(item => item.is_active);
             const defaultTheme = array[0]?.id;
+
+            // Theme to display as checked
+            const checkedThemeId = activeTheme ? activeTheme.id : defaultTheme;
 
             $("#table").html(`
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full overflow-visible p-4 "></div>
@@ -83,11 +87,12 @@ function getAll() {
             const $grid = $("#table .grid");
 
             data.forEach((item) => {
-                let isActive = item.is_active
+                const isChecked = item.id === checkedThemeId;
+                let isActive = isChecked
                     ? "bg-blue-50 border-[4px] border-[#CFDFFF]"
                     : "bg-base-100 border border-base-300";
                 const isDefaultTheme = item.id === defaultTheme;
-
+                console.log("plpl",item);
                 $grid.append(`
                     <div id="themeCard"
                         class="card bg-base-100 shadow-xl  transition-all 
@@ -100,10 +105,12 @@ function getAll() {
                             <!-- HEADER -->
                             <div class="flex w-full justify-between p-[16px] items-center h-[56px]">
                                  <label class=" text-base-content switch ${item.is_active}">
-                                    <input type="checkbox"
+                                    <input
+                                        type="checkbox"
                                         data-id="${item.id}"
                                         class="flipswitch"
-                                        ${item.is_active ? "checked" : ""}/>
+                                        ${isChecked ? "checked" : ""}
+                                    />
                                     <span class="slider"></span>
                                 </label>
 
@@ -317,6 +324,7 @@ $(document).on("click", "#updatebtn", function () {
     $("#site_name").val(row.site_name);
 
     console.log("dasd", row);
+    console.log("dd", filename);
     console.log("dasded", row.updated_at);
 
     //$("#LogoImg").text("Current File " + filename);
@@ -828,36 +836,45 @@ function DisplayLogoImg(LogoImg, LogoName) {
 function renderCarouselPreviews(files) {
     carouselSortable.option("disabled", true);
 
+    console.log("pppp",files)
     Array.from(files).forEach((file) => {
         ImgArray.push(file);
 
         const imgIndex = ImgArray.length - 1;
 
+        const fileNames = file.name;
+        
         const reader = new FileReader();
 
+        console.log("lppp",fileNames);
+        
         reader.onload = function (e) {
             $("#imgContainer").append(`
-                <div class="uploaderSort newCarouselImage"
-                    data-type="new"
-                    data-index="${imgIndex}">
+                <div class="flex w-full justify-center relative hover:z-50">
+                    <div class="uploaderSort newCarouselImage"
+                        data-type="new"
+                        data-index="${imgIndex}"
+                        data-file="${fileNames.toLowerCase()}">
 
-                    <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
+                        <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
 
-                        <div class="relative">
-                            <button class="btn btn-square absolute z-10 rounded-xl w-[20px] h-[20px] hover:bg-red-500 text-black right-2 top-2 btn-sm DeleteCarousel"
+                            <div class="relative">
+                                <button class="absolute z-10 rounded-xl w-[20px] h-[20px] text-red-500 right-2 top-2 btn-sm DeleteCarousel"
                                     data-index="${imgIndex}">
-                                X
-                            </button>
+                                    <i class="fa-regular fa-trash-can text-[15px]"></i>
+                                </button>
+                            </div>
+
+                            <img src="${e.target.result}" class=" object-cover rounded">
+
                         </div>
-
-                        <img src="${e.target.result}" class=" object-cover rounded">
-
                     </div>
                 </div>
             `);
             Filecount();
         };
         reader.readAsDataURL(file);
+        console.log("reader",reader);
     });
 }
 
@@ -888,17 +905,13 @@ $("#carouselImg").on("change", function () {
     if (RejectedFilesbyType.length > 0) {
         const names = RejectedFilesbyType.map((file) => file.name).join(", ");
         ErrorHandler += `Rejected files: ${names}. Only JPG, PNG, WEBP are allowed. <br>`;
-        // $("#CarouselError")
-        //     .text(`Rejected files: ${names}. Only JPG, PNG, WEBP are allowed.`)
-        //     .removeClass("hidden");
+
     }
     //for invalid files by size
     if (RejectedFilesbySize.length > 0) {
         const names = RejectedFilesbySize.map((file) => file.name).join(", ");
         ErrorHandler += `Rejected files: ${names}. Too large max size is ${maxSize} MB. <br>`;
-        // $("#CarouselError")
-        //     .text(`Rejected files: ${names}. Too large max size is ${maxSize} MB.`)
-        //     .removeClass("hidden");
+
     } else {
         $("#CarouselError").text("").addClass("hidden");
     }
@@ -1056,35 +1069,48 @@ $("#body_font").on("change", function () {
 // displaying img when edit btn is click
 function DisplayCarouselImg(images) {
     $("#imgContainer").empty();
+    console.log("faqw",images);
 
     images.forEach((img, index) => {
         const ImgPosition = getImagePosition(index);
+        const parts = img.url.split("_");
 
-        $("#imgContainer").append(`
-            <div class="flex w-full justify-center">
-                <div class="uploaderSort" data-type="existing" data-url="${img.url}">
-                    <div class="card  shadow-xl  transition-all duration-300 ease-out cursor-pointer
-                        hover:-translate-y-2
-                        hover:shadow-2xl
-                        hover:scale-105">
-                        <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
-                            <div class="relative">
-                                <button class=" absolute z-10  hover:text-red-500 text-black  right-2 top-2 btn-sm DeleteCarousel"
-                                        data-index="${index}">
-                                        <i class="fa-regular fa-circle-xmark text-[20px]"></i>
-                                </button>
-                            </div>
-                            <img src="${img.url}" class=" object-cover rounded">
-                            <div class="absolute top-2 left-2 z-10 flex items-center justify-center
-                                        bg-[#3B81E9] rounded-xl text-white text-[10px]
-                                        w-[20px] h-[20px]" id="imgOrder">
-                                ${ImgPosition}
-                            </div>
+        const idPart = `${parts[0]}_${parts[1]}`;
+        const filePart = parts.slice(2).join("_");
+        
+      
+        const displayName = filePart.substring(0, 10) + "...";
+        
+        
+            console.log("aqw",img);
+        
+
+       $("#imgContainer").append(`
+        <div class="flex w-full justify-center relative hover:z-50">
+            <div class="uploaderSort " data-type="existing" data-url="${img.url}"  data-file="${filePart.toLowerCase()}">
+                <div class="card  shadow-xl  transition-all duration-300 ease-out cursor-pointer
+                    hover:-translate-y-2
+                    hover:shadow-2xl
+                    hover:scale-105">
+                    <div class="card bg-base-100 tooltip tooltip-bottom custom-tooltip  h-[110px] w-[110px] 
+                    shadow-sm carouseltemp overflow-visible" data-tip="${filePart.length > 10 ? displayName : filePart}">
+                        <div class="relative">
+                            <button class=" absolute z-10 text-red-500  right-2 top-2 btn-sm DeleteExistingCarousel"
+                                    data-index="${index}">
+                                    <i class="fa-regular fa-trash-can text-[15px]"></i>
+                            </button>
+                        </div>
+                        <img src="${img.url}" class="object-cover rounded max-w-[110px] max-h-[110px]">
+                        <div class="absolute top-2 left-2 z-10 flex border border-white  items-center justify-center
+                                    bg-[#3B81E9] rounded-xl text-white text-[10px]
+                                    w-[20px] h-[20px]" id="imgOrder">
+                            ${ImgPosition}
                         </div>
                     </div>
                 </div>
             </div>
-        `);
+        </div>
+    `);
     });
 }
 
@@ -1093,23 +1119,8 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
     disabled: true,
 
     onEnd() {
-        // CarouselOrder = [];
-
-        // const items = document.querySelectorAll("#imgContainer .uploaderSort");
-
-        // items.forEach((el, index) => {
-        //     CarouselOrder.push({
-        //         id: el.dataset.url,
-        //         position: index + 1,
-        //     });
-
-        //     const position = el.closest(".flex").querySelector(".img-position");
-        //     if (position) position.textContent = index + 1;
-        // });
-
-         $(".uploaderSort").each(function (i) {
-        $(this).find("#imgOrder").
-        text(i+1);
+    $("#imgContainer > .flex > .uploaderSort").each(function (i) {
+        $(this).find("#imgOrder").text(i + 1);
     });
     },
 });
@@ -1133,6 +1144,7 @@ $(document).on("click", ".DeleteExistingCarousel", function (e) {
 function ClearImgContainer() {
     $("#imgContainer").empty();
     $("#carouselImg").val("");
+    $(".searchbar").val("");
     //$("#primary_color").val("");
 
     ImgArray = [];
@@ -1367,3 +1379,25 @@ function hasChanges() {
         DeleteCarouselImg.length > 0
     );
 }
+
+$(document).on("input", ".searchBar", function () {
+    const keyword = this.value.toLowerCase();
+    let found = false;
+
+    $("#imgContainer .uploaderSort[data-file]").each(function () {
+        const fileName = ($(this).data("file") || "").toLowerCase();
+        const match = fileName.includes(keyword);
+
+        $(this).parent().toggle(match);
+
+        if (match) {
+            found = true;
+        }
+    });
+
+    $("#CarouselError").toggleClass("hidden", found || keyword === "");
+
+    if (!found && keyword !== "") {
+        $("#CarouselError").text("No image found");
+    }
+});

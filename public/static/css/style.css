@@ -115,7 +115,6 @@
     /* width: 265px; */
     /* width: 500px; */
     position: relative;
-    /* overflow: hidden; */
     border-radius: 12px;
     background-color: #ffffff;
     /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
@@ -222,6 +221,8 @@ summary::-webkit-details-marker {
     background-color: var(--secondary);
 }
 
+
+
 /* Light mode (default) */
 :root {
     .tableBg {
@@ -229,13 +230,7 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
     /* tooltip */
-    .custom-tooltip::before {
-        background: #f2f5f4;
-        color: black;
-        border: 1px solid #27a371;
-        border-radius: 8px;
-        font-weight: 500;
-    }
+    
     .report_title{
         /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
         /* background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent)); */
@@ -901,6 +896,15 @@ th{
     color: #27a371 !important;
 }
 
-/* #datePickerBtn .applyBtns{
-    background-color: #08ec6a;
-} */
+.custom-tooltip::before {
+    background: #f2f5f4;
+    color: black;
+    border: 1px solid #27a371;
+    border-radius: 8px;
+    font-weight: 500;
+    z-index: 9999;
+}
+
+.custom-tooltip::after {
+    z-index: 9999;
+}

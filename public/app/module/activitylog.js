@@ -127,8 +127,11 @@ $(document).on("click", ".descModal", function () {
     const log = $logs.find(item => item.id == logId);
 
     const oldValues = log.old_values ? JSON.parse(log.old_values) : {};
-
+    const newValues = log.new_values ? JSON.parse(log.new_values) : {};   // <-- add this line
+    
     console.log("asqw",oldValues);
+    //console.log("assqw",newValues);
+
 
     if (!log) {
         console.error("Log not found.");
@@ -159,7 +162,7 @@ $(document).on("click", ".descModal", function () {
 
         <tr>
             <th>Theme ID</th>
-            <td>${log.theme_id ?? oldValues.id}</td>
+            <td>${log.theme_id ?? oldValues.id ?? newValues.id }</td>
         </tr>
         `}
 
@@ -354,6 +357,7 @@ function getChanges(logId) {
                     old: "-",
                     new: value
                 });
+                console.log("gge",changes);
 
             }
 

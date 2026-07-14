@@ -219,8 +219,22 @@
 
             {{-- Row 5: Carousel --}}
             <div class="w-full h-full flex flex-col gap-[8px] ">
-                <p class="text-[16px] font-medium text-black">Carousel images</p>
-                <span id="CarouselError" class="text-red-500 text-xs mb-2 hidden animate-bounce"></span>
+                <div class="w-full flex items-center justify-between">
+
+                    <div class="flex items-center gap-3">
+                        <p class="text-[16px] font-medium text-black whitespace-nowrap">
+                            Carousel images
+                        </p>
+
+                        <span
+                            id="CarouselError"
+                            class="text-red-500 text-xs hidden animate-bounce">
+                        </span>
+                    </div>
+                    <div class="w-64">
+                        <x-searchbar />
+                    </div>
+                </div>
 
                 <input type="file" id="carouselImg" name="carouselImg" accept="image/*" multiple class="hidden" />
                 <label for="carouselImg" id="addImg"
@@ -228,8 +242,8 @@
                     <i class="fa-solid fa-upload text-sm"></i> Add carousel images
                 </label>
 
-                <div class="w-full pb-5 overflow-x-scroll">
-                    {{-- <div id="imgContainer" class="flex gap-5 "></div> --}}
+                <div class="w-full overflow-x-scroll" style="overflow: visible;">
+                        {{-- <div id="imgContainer" class="flex gap-5 "></div> --}}
                     <div id="imgContainer" class="grid grid-cols-5 gap-[20px]"></div>
                 </div>
             </div>
