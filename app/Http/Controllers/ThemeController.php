@@ -187,7 +187,7 @@ class ThemeController extends Controller
             
             ActivityLogHelper::create($request,[
                 'theme_id' => $row->id,
-                'action' => 'Create',
+                'action' => 'create',
                 'description' => 'Created the theme: ',
                 'old_values' => null,
                 'new_values' => json_encode($logData),

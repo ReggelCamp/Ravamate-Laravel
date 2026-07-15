@@ -240,6 +240,7 @@ $(document).on("click", ".descModal", function () {
                 data: "old",
                 className: " align-top",
                 render: function (data, type, row) {
+                    console.log("hhr",data.original_url);
                     if (
                         data == null ||
                         data === "" ||
@@ -270,7 +271,7 @@ $(document).on("click", ".descModal", function () {
                     }
 
                     if (row.field === "logo_img" && typeof data === "object") {
-                        return `<img src="${data.url}" width="120" class="rounded border skeleton"
+                        return `<img src="${data.url}" class="rounded border max-w-[100px] max-h-[100px] skeleton"
                             onload="this.classList.remove('skeleton')"
                             onerror="this.classList.remove('skeleton')"
                         >`;
@@ -323,8 +324,7 @@ $(document).on("click", ".descModal", function () {
                     }
 
                     if (row.field === "logo_img" && typeof data === "object") {
-                        return 
-                        `<img src="${data.url}" width="120" class="rounded border skeleton"
+                        return `<img src="${data.url}" class="rounded border max-w-[100px] max-h-[100px] skeleton"
                             onload="this.classList.remove('skeleton')"
                             onerror="this.classList.remove('skeleton')"
                         >`;
