@@ -65,33 +65,25 @@
         </div>
         </form>
         <span id="LogInfo"></span>
-        <div class="w-full h-full flex flex-col gap-5">
-            <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg ">Log Information</h3>
-            <table class="table table-zebra w-full flex">
-                <tbody id="themeInfoBody"></tbody>
-            </table>
-            {{-- <table id="themeInfoTable" class="table table-zebra w-full mb-6">
-            </table> --}}
-           
-        </div>
-        <div class="flex flex-col w-full h-full">
-            <div class="flex w-full">
-                <div class="flex flex-col w-full h-full" id="changesSection">
-                    <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg">Changes</h3>
-                    <table class="table" id="changesTable">
-                        {{-- <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Old Value</th>
-                                <th>Current Value</th>
-                            </tr>
-                        </thead> --}}
-                        <tbody id="changes-body">
-                        </tbody>
-                    </table>
+        {{-- <div class="flex w-full gap-10"> --}}
+            <div class="w-full h-full flex flex-col gap-5">
+                <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg ">Log Information</h3>
+                <table class="table table-zebra w-full flex">
+                    <tbody id="themeInfoBody"></tbody>
+                </table>           
+            </div>
+            <div class="flex flex-col w-full h-full">
+                <div class="flex w-full">
+                    <div class="flex flex-col w-full h-full" id="changesSection">
+                        <h3 class="font-bold text-lg border items-center justify-center w-full flex rounded-lg">Changes</h3>
+                        <table class="table" id="changesTable">
+                            <tbody id="changes-body">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        {{-- </div> --}}
     </div>
     </dialog>
 

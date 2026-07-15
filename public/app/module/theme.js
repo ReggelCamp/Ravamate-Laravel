@@ -856,7 +856,7 @@ function renderCarouselPreviews(files) {
                         data-index="${imgIndex}"
                         data-file="${fileNames.toLowerCase()}">
 
-                        <div class="card bg-base-100 h-[110px] w-[110px]  shadow-sm carouseltemp">
+                        <div class="card bg-base-100 h-[110px] w-[110px] tooltip tooltip-bottom custom-tooltip shadow-sm carouseltemp" data-tip=${fileNames}>
 
                             <div class="relative">
                                 <button class="absolute z-10 rounded-xl w-[20px] h-[20px] text-red-500 right-2 top-2 btn-sm DeleteCarousel"
@@ -1101,9 +1101,9 @@ function DisplayCarouselImg(images) {
                             </button>
                         </div>
                         <img src="${img.url}" class="object-cover rounded max-w-[110px] max-h-[110px]">
-                        <div class="absolute top-2 left-2 z-10 flex border border-white  items-center justify-center
-                                    bg-[#3B81E9] rounded-xl text-white text-[10px]
-                                    w-[20px] h-[20px]" id="imgOrder">
+                        <div class="img-position absolute top-2 left-2 z-10 flex border border-white
+                                    items-center justify-center bg-[#3B81E9] rounded-xl
+                                    text-white text-[10px] w-[20px] h-[20px]">
                             ${ImgPosition}
                         </div>
                     </div>
@@ -1119,10 +1119,8 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
     disabled: true,
 
     onEnd() {
-    $("#imgContainer > .flex > .uploaderSort").each(function (i) {
-        $(this).find("#imgOrder").text(i + 1);
-    });
-    },
+        renumberPositions();
+    }
 });
 
 // Deleting on edit

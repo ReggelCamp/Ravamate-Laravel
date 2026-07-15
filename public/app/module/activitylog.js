@@ -7,6 +7,7 @@ let filterEnd = null;
 
 function getActivityLogs() {
     //console.log("Fetching activity logs...");
+    showSkeleton();
     Api.get({
         url: "/activitylogs/data",
 
@@ -19,18 +20,16 @@ function getActivityLogs() {
                 $logs,[
                     {
                         title:'User',
-                        data:'User'
+                        data:'User',
                     },
                     {
                         title:'User Id',
                         data:'user_id',
-                        // type: "string"
                         
                     },
                     {
                         title:'Log ID',
                         data:'id',
-                        // type: "string"
                     },
                     {
                         title:'Action',
@@ -60,7 +59,6 @@ function getActivityLogs() {
                     },
                     {
                         title: 'Date Created',
-                        //data: 'created_at',
                         data: null,
                         render: function (data) {
                            return moment(data.created_at).format("MMM DD, YYYY | hh : mm : ss : SS A");
@@ -119,30 +117,28 @@ $(document).ready(function () {
 });
 
 $(document).on("click", ".descModal", function () {
-
     $("#DescModal")[0].showModal();
 
     const logId = $(this).data("log-id");
 
-    const log = $logs.find(item => item.id == logId);
+    const log = $logs.find((item) => item.id == logId);
 
     const oldValues = log.old_values ? JSON.parse(log.old_values) : {};
-    const newValues = log.new_values ? JSON.parse(log.new_values) : {};   // <-- add this line
-    
-    console.log("asqw",oldValues);
-    //console.log("assqw",newValues);
+    const newValues = log.new_values ? JSON.parse(log.new_values) : {}; // <-- add this line
 
+    console.log("asqw", oldValues);
+    //console.log("assqw",newValues);
 
     if (!log) {
         console.error("Log not found.");
         return;
     }
 
-    console.log("log",log);
+    console.log("log", log);
 
     const changes = getChanges(logId);
 
-    console.log("saaaaa",changes);
+    console.log("saaaaa", changes);
 
     if ($.fn.DataTable.isDataTable("#changesTable")) {
         $("#changesTable").DataTable().clear().destroy();
@@ -154,7 +150,10 @@ $(document).on("click", ".descModal", function () {
             <td>${log.id}</td>
         </tr>
         
-        ${(log.action === "login" || log.action === "logout") ? "" : `
+        ${
+            log.action === "login" || log.action === "logout"
+                ? ""
+                : `
         <tr>
             <th>Theme Name</th>
             <td>${log.theme_name}</td>
@@ -162,19 +161,24 @@ $(document).on("click", ".descModal", function () {
 
         <tr>
             <th>Theme ID</th>
-            <td>${log.theme_id ?? oldValues.id ?? newValues.id }</td>
+            <td>${log.theme_id ?? oldValues.id ?? newValues.id}</td>
         </tr>
-        `}
+        `
+        }
 
         <tr>
             <th>Action</th>
             <td>
                 <span class="px-2 py-1 rounded font-medium ${
-                    log.action === "login" ? "bg-green-100 text-green-700" :
-                    log.action === "logout" ? "bg-gray-100 text-gray-700" :
-                    log.action === "delete" ? "bg-red-100 text-red-700" :
-                    log.action === "update" ? "bg-yellow-100 text-yellow-700" :
-                    "bg-blue-100 text-blue-700"
+                    log.action === "login"
+                        ? "bg-green-100 text-green-700"
+                        : log.action === "logout"
+                          ? "bg-gray-100 text-gray-700"
+                          : log.action === "delete"
+                            ? "bg-red-100 text-red-700"
+                            : log.action === "update"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-blue-100 text-blue-700"
                 }">
                     ${log.action}
                 </span>
@@ -218,85 +222,128 @@ $(document).on("click", ".descModal", function () {
         $("#changesSection").show();
     }
 
-    LogsTable.tableData("#changesTable", changes, [
-        // {
-        //     title: "Theme Id",
-        //     data: "theme_id",
-        // },
+    LogsTable.tableData(
+        "#changesTable",
+        changes,
+        [
+            // {
+            //     title: "Theme Id",
+            //     data: "theme_id",
+            // },
+            {
+                title: "Field",
+                data: "field",
+                className: " align-top"
+            },
+            {
+                title: "Old Value",
+                data: "old",
+                className: " align-top",
+                render: function (data, type, row) {
+                    if (
+                        data == null ||
+                        data === "" ||
+                        (Array.isArray(data) && data.length === 0)
+                    ) {
+                        return "-";
+                    }
+
+                    if (
+                        row.field === "carousel_images" &&
+                        Array.isArray(data)
+                    ) 
+                    {
+                        return data
+                            .map(
+                                (image) => `
+                                    <div class="w-[100px] h-[150px] flex flex-col items-start">
+                                        <div class="absolute inset-0 skeleton rounded"></div>
+                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border"
+                                            onload="this.previousElementSibling.remove('skeleton')"
+                                            onerror="this.previousElementSibling.remove('skeleton')"
+                                        >
+                                        <span>Position: ${image.position}</span>
+                                    </div>                                                          
+                                `,
+                            )
+                        .join("");
+                    }
+
+                    if (row.field === "logo_img" && typeof data === "object") {
+                        return `<img src="${data.url}" width="120" class="rounded border skeleton"
+                            onload="this.classList.remove('skeleton')"
+                            onerror="this.classList.remove('skeleton')"
+                        >`;
+                    }
+
+                    if (row.field === "is_active") {
+                        return data == 1
+                            ? "<span>Active</span>"
+                            : "<span>Inactive</span>";
+                    }
+
+                    return data;
+                },
+            },
+            {
+                title: "Current Value",
+                data: "new",
+                className: " align-top",
+                render: function (data, type, row) {
+                    //console.log("Current value:", row.field, data.length);
+
+                    const positionData = JSON.parse(row.position || "[]");
+
+                    if (
+                        data == null ||
+                        data === "" ||
+                        (Array.isArray(data) && data.length === 0)
+                    ) {
+                        return "-";
+                    }
+
+                    if (
+                        row.field === "carousel_images" &&
+                        Array.isArray(data)
+                    ) {
+                        return data
+                            .map(
+                                (image) => `
+                                    <div class="w-[100px] h-[150px] flex flex-col items-center">
+                                        <div class="absolute inset-0 skeleton rounded"></div>
+                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border "
+                                            onload="this.previousElementSibling.remove('skeleton')"
+                                            onerror="this.previousElementSibling.remove('skeleton')"
+                                        >
+                                        <span>Position: ${image.position}</span>
+                                    </div>
+                                `,
+                            )
+                            .join("");
+                    }
+
+                    if (row.field === "logo_img" && typeof data === "object") {
+                        return 
+                        `<img src="${data.url}" width="120" class="rounded border skeleton"
+                            onload="this.classList.remove('skeleton')"
+                            onerror="this.classList.remove('skeleton')"
+                        >`;
+                    }
+
+                    if (row.field === "is_active") {
+                        return data == 1
+                            ? "<span>Active</span>"
+                            : "<span>Inactive</span>";
+                    }
+
+                    return data;
+                },
+            },
+        ],
         {
-            title: "Field",
-            data: "field",
+            ordering: false,
+            //pageLength: 10
         },
-        {
-            title: "Old Value",
-            data: "old",
-            render: function (data, type, row) {
-
-               if (data == null || data === "" || (Array.isArray(data) && data.length === 0) ) {
-                    return "-";
-                }
-
-                if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data.map(image => `
-                        <div class="w-[100px] h-[150px] flex flex-col items-center">
-                            <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border">
-                            <span>Position: ${image.position}</span>
-                        </div>                                                          
-                    `).join("");
-                }
-
-                if (row.field === "logo_img" && typeof data === "object") {
-                    return `<img src="${data.url}" width="120" class="rounded border">`;
-                }
-
-                if (row.field === "is_active") {
-                    return data == 1
-                        ? "<span>Active</span>"
-                        : "<span>Inactive</span>";
-                } 
-            
-                return data;
-            }
-        },
-        {
-            title: "Current Value",
-            data: "new",
-            render: function (data, type, row) {
-                //console.log("Current value:", row.field, data.length);
-
-                const positionData = JSON.parse(row.position || "[]");
-               
-                if (data == null || data === "" || (Array.isArray(data) && data.length === 0) ) {
-                    return "-";
-                }
-
-                if (row.field === "carousel_images" && Array.isArray(data)) {
-                    return data.map(image => `
-                        <div class="w-[100px] h-[150px] flex flex-col items-center">
-                            <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border">
-                            <span>Position: ${image.position}</span>
-                        </div>
-                    `).join("");
-                }
-
-                if (row.field === "logo_img" && typeof data === "object") {
-                    return `<img src="${data.url}" width="120" class="rounded border">`;
-                }
-
-                if (row.field === "is_active") {
-                    return data == 1
-                        ? "<span>Active</span>"
-                        : "<span>Inactive</span>";
-                }  
-                
-                return data;
-            }
-        }
-    ],
-     {
-        ordering: false,
-        //pageLength: 10
-    }
     );
 });
 
@@ -421,8 +468,6 @@ $(document).on('input', '.searchBar', function(){
 
 
 $(document).on("click","#refreshBtn",function (){
-    // location.reload();
-
     getActivityLogs();
 });
 
@@ -535,4 +580,22 @@ function getOS(userAgent) {
     if (userAgent.includes("Mac OS X")) return "macOS";
 
     return "Other";
+}
+
+function showSkeleton() {
+
+    $("#activity-logs-body").html(`
+        ${Array.from({length: 8}, () => `
+            <tr>
+                <td><div class="skeleton h-4 w-24"></div></td>
+                <td><div class="skeleton h-4 w-12"></div></td>
+                <td><div class="skeleton h-4 w-16"></div></td>
+                <td><div class="skeleton h-4 w-20"></div></td>
+                <td><div class="skeleton h-4 w-40"></div></td>
+                <td><div class="skeleton h-4 w-32"></div></td>
+                <td><div class="skeleton h-8 w-16"></div></td>
+            </tr>
+        `).join("")}
+    `);
+
 }
