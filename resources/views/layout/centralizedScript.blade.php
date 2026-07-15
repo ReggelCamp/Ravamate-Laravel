@@ -37,6 +37,8 @@
     <link rel="stylesheet"
         href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.min.css">
 
+    {{-- Color Thief for extracting color palette from logo --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js"></script>
 
 </head>
 <body>
@@ -59,4 +61,3 @@
       href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 
 </body>
-

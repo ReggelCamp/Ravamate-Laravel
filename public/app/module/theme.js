@@ -765,14 +765,74 @@ function RenderLogo(file) {
     const logo_reader = new FileReader();
 
     logo_reader.onload = function (e) {
+        const dataUrl = e.target.result;
         $("#LogoImg").html(`
-            <img src="${e.target.result}" 
+            <img src="${dataUrl}" 
                  class="h-[85px] w-[100px] object-contain  ">
             <span class="text-sm text-black truncate max-w-[120px]">${file.name}</span>
         `);
+
+        // Extract color palette from the logo using Color Thief
+        extractColorsFromLogo(dataUrl);
     };
 
     logo_reader.readAsDataURL(file);
+}
+
+/**
+ * Extract dominant colors from a logo image using Color Thief
+ * and auto-populate the color picker fields.
+ */
+function extractColorsFromLogo(imageUrl) {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = imageUrl;
+
+    img.onload = function () {
+        try {
+            const colorThief = new window.ColorThief();
+            const dominant = colorThief.getColor(img);       // [R, G, B]
+            const palette = colorThief.getPalette(img, 4);    // [[R,G,B], ...]
+
+            const dominantHex = rgbToHex(dominant[0], dominant[1], dominant[2]);
+            const secondaryHex = palette[1] ? rgbToHex(palette[1][0], palette[1][1], palette[1][2]) : dominantHex;
+            const accentHex = palette[2] ? rgbToHex(palette[2][0], palette[2][1], palette[2][2]) : dominantHex;
+            const bgHex = palette[3] ? rgbToHex(palette[3][0], palette[3][1], palette[3][2]) : lightenColor(dominantHex, 60);
+
+            updateColorPicker("#primary_color", "#primaryColorWrapper", "#primaryColorHex", dominantHex);
+            updateColorPicker("#secondary_color", "#secondaryColorWrapper", "#secondaryColorHex", secondaryHex);
+            updateColorPicker("#accent_color", "#accentColorWrapper", "#accentColorHex", accentHex);
+            updateColorPicker("#background_color", "#backgroundColorWrapper", "#backgroundColorHex", bgHex);
+
+        } catch (e) {
+            console.warn("Color Thief extraction failed:", e);
+        }
+    };
+
+    img.onerror = function () {
+        console.warn("Failed to load image for color extraction");
+    };
+}
+
+/**
+ * Convert RGB components to hex string (e.g. #ff00aa)
+ */
+function rgbToHex(r, g, b) {
+    return "#" + [r, g, b]
+        .map((c) => Math.max(0, Math.min(255, Math.round(c))))
+        .map((c) => c.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+/**
+ * Lighten a hex color by a percentage (0–100).
+ */
+function lightenColor(hex, percent) {
+    const num = parseInt(hex.replace("#", ""), 16);
+    const r = Math.min(255, (num >> 16) + Math.round(255 * percent / 100));
+    const g = Math.min(255, ((num >> 8) & 0x00ff) + Math.round(255 * percent / 100));
+    const b = Math.min(255, (num & 0x0000ff) + Math.round(255 * percent / 100));
+    return rgbToHex(r, g, b);
 }
 
 $("#logo_id").on("change", function () {
