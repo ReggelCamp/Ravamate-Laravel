@@ -259,7 +259,7 @@ $(document).on("click", ".descModal", function () {
                                 (image) => `
                                     <div class="w-[100px] h-[150px] flex flex-col items-start">
                                         <div class="absolute inset-0 skeleton rounded"></div>
-                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border"
+                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded "
                                             onload="this.previousElementSibling.remove('skeleton')"
                                             onerror="this.previousElementSibling.remove('skeleton')"
                                         >
@@ -271,7 +271,7 @@ $(document).on("click", ".descModal", function () {
                     }
 
                     if (row.field === "logo_img" && typeof data === "object") {
-                        return `<img src="${data.url}" class="rounded border max-w-[100px] max-h-[100px] skeleton"
+                        return `<img src="${data.url}" class="rounded  max-w-[100px] max-h-[100px] skeleton"
                             onload="this.classList.remove('skeleton')"
                             onerror="this.classList.remove('skeleton')"
                         >`;
@@ -312,7 +312,7 @@ $(document).on("click", ".descModal", function () {
                                 (image) => `
                                     <div class="w-[100px] h-[150px] flex flex-col items-center">
                                         <div class="absolute inset-0 skeleton rounded"></div>
-                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded border "
+                                        <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded  "
                                             onload="this.previousElementSibling.remove('skeleton')"
                                             onerror="this.previousElementSibling.remove('skeleton')"
                                         >
@@ -324,7 +324,7 @@ $(document).on("click", ".descModal", function () {
                     }
 
                     if (row.field === "logo_img" && typeof data === "object") {
-                        return `<img src="${data.url}" class="rounded border max-w-[100px] max-h-[100px] skeleton"
+                        return `<img src="${data.url}" class="rounded  max-w-[100px] max-h-[100px] skeleton"
                             onload="this.classList.remove('skeleton')"
                             onerror="this.classList.remove('skeleton')"
                         >`;
