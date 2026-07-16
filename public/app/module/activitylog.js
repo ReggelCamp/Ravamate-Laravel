@@ -8,6 +8,11 @@ let filterEnd = null;
 function getActivityLogs() {
     //console.log("Fetching activity logs...");
     showSkeleton();
+
+    if ($.fn.DataTable.isDataTable("#activityLogsTable")) {
+        $("#activityLogsTable").DataTable().destroy();
+    }
+
     Api.get({
         url: "/activitylogs/data",
 
@@ -257,7 +262,7 @@ $(document).on("click", ".descModal", function () {
                         return data
                             .map(
                                 (image) => `
-                                    <div class="w-[100px] h-[150px] flex flex-col items-start">
+                                    <div class="w-[100px] h-[150px] flex flex-col items-center">
                                         <div class="absolute inset-0 skeleton rounded"></div>
                                         <img src="${image.url}" class="max-w-[100px] max-h-[100px] rounded "
                                             onload="this.previousElementSibling.remove('skeleton')"
@@ -463,9 +468,16 @@ $(document).on('input', '.searchBar', function(){
             .DataTable()
             .search(this.value)
             .draw();
-    }
+        }
 });
 
+$(document).on("focus", ".searchBar", function () {
+    $(this).removeClass("border");
+});
+
+$(document).on("blur", ".searchBar", function () {
+    $(this).addClass("border");
+});
 
 $(document).on("click","#refreshBtn",function (){
     getActivityLogs();

@@ -13,8 +13,6 @@ let bodyTomSelect = null;
 //let AcceptedFile = [];
 let originalTheme = null;
 
-let getFilename = [];
-
 let $logs = [];
 //let changes = 0;
 
@@ -72,13 +70,27 @@ function getAll() {
         onSuccess: (data) => {
             array = data;
 
-            console.log(array,"arrayvvv");
+           
+            
 
             const activeTheme = array.find(item => item.is_active);
             const defaultTheme = array[0]?.id;
 
             // Theme to display as checked
             const checkedThemeId = activeTheme ? activeTheme.id : defaultTheme;
+            
+             if (array.length === 0) {
+                $("#table").html(`
+                    <div class="flex flex-col w-full h-full justify-center items-center">
+                        <span>Empty Theme</span>
+                        <button class="bg-[#366EFB] w-fit p-5 btn rounded-[8px] text-white" id='addbtn'>
+                            <span class="hidden md:inline">Create new</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                `);
+                return;
+            }
 
             $("#table").html(`
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 w-full overflow-visible p-4 "></div>
@@ -281,6 +293,7 @@ $(document).on("click", "#updatebtn", function () {
     $("#logo-error").text("").addClass("hidden");
     $("#CompanyName-error").text("").addClass("hidden");
     $("#ThemeName-error").text("").addClass("hidden");
+    $("#SiteName-error").text("").addClass("hidden");
 
     $("#theme_name").val(row.theme_name);
     $("#company_name").val(row.company_name);
@@ -896,7 +909,7 @@ function DisplayLogoImg(LogoImg, LogoName) {
 function renderCarouselPreviews(files) {
     carouselSortable.option("disabled", true);
 
-    console.log("pppp",files)
+    //console.log("pppp",files)
     Array.from(files).forEach((file) => {
         ImgArray.push(file);
 
@@ -907,10 +920,11 @@ function renderCarouselPreviews(files) {
         const reader = new FileReader();
 
         console.log("lppp",fileNames);
+        console.log("pspp",imgIndex);
         
         reader.onload = function (e) {
             $("#imgContainer").append(`
-                <div class="flex w-full justify-center relative hover:z-50">
+                <div class="flex w-full carousel-item justify-center relative hover:z-50">
                     <div class="uploaderSort newCarouselImage"
                         data-type="new"
                         data-index="${imgIndex}"
@@ -919,9 +933,9 @@ function renderCarouselPreviews(files) {
                         <div class="card bg-base-100 h-[110px] w-[110px] tooltip tooltip-bottom custom-tooltip shadow-sm carouseltemp" data-tip=${fileNames}>
 
                             <div class="relative">
-                                <button class="absolute z-10 rounded-xl w-[20px] h-[20px] text-red-500 right-2 top-2 btn-sm DeleteCarousel"
+                                <button  onclick="deleteCarouselModal.showModal()" class="absolute z-10 rounded-xl w-[20px] h-[20px] text-red-500 right-2 top-2 btn-sm DeleteCarousel"
                                     data-index="${imgIndex}">
-                                    <i class="fa-regular fa-trash-can text-[15px]"></i>
+                                    <i class="fa-regular fa-trash-can text-[15px] cursor-pointer"></i>
                                 </button>
                             </div>
 
@@ -934,28 +948,49 @@ function renderCarouselPreviews(files) {
             Filecount();
         };
         reader.readAsDataURL(file);
-        console.log("reader",reader);
+        console.log("gee",ImgArray);
     });
 }
 
 const nameCount = {};
+
 // displaying Img when adding img
 $("#carouselImg").on("change", function () {
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    const maxSize = 5;
+    const maxSize = 5; // MB
+
     let AcceptedFile = [];
     let RejectedFilesbyType = [];
     let RejectedFilesbySize = [];
+    let RejectedFilesbyDuplicate = [];
     let ErrorHandler = "";
 
     const files = Array.from(this.files);
 
+    // count occurrences of name+size within THIS selection
+    const fileCounts = {};
     files.forEach((file) => {
-        const AcceptedSize = file.size / 1024 / 1024;
+        const key = `${file.name}_${file.size}`;
+        fileCounts[key] = (fileCounts[key] || 0) + 1;
+    });
+
+    // names/sizes already present in the carousel (adjust to your actual array/property)
+    const existingKeys = new Set(
+        (typeof ImgArray !== "undefined" ? ImgArray : []).map(
+            (img) => `${img.name}_${img.size}`
+        )
+    );
+
+    files.forEach((file) => {
+        const key = `${file.name}_${file.size}`;
+        const sizeMB = file.size / 1024 / 1024;
+
         if (!allowedTypes.includes(file.type)) {
             RejectedFilesbyType.push(file);
-        } else if (AcceptedSize > maxSize) {
+        } else if (sizeMB > maxSize) {
             RejectedFilesbySize.push(file);
+        } else if (fileCounts[key] > 1 || existingKeys.has(key)) {
+            RejectedFilesbyDuplicate.push(file);
         } else {
             AcceptedFile.push(file);
         }
@@ -965,18 +1000,26 @@ $("#carouselImg").on("change", function () {
     if (RejectedFilesbyType.length > 0) {
         const names = RejectedFilesbyType.map((file) => file.name).join(", ");
         ErrorHandler += `Rejected files: ${names}. Only JPG, PNG, WEBP are allowed. <br>`;
-
     }
-    //for invalid files by size
+
+    // for invalid files by size
     if (RejectedFilesbySize.length > 0) {
         const names = RejectedFilesbySize.map((file) => file.name).join(", ");
         ErrorHandler += `Rejected files: ${names}. Too large max size is ${maxSize} MB. <br>`;
+    }
 
+    // for duplicate files
+    if (RejectedFilesbyDuplicate.length > 0) {
+        const names = RejectedFilesbyDuplicate.map((file) => file.name).join(", ");
+        ErrorHandler += `Rejected files: ${names}. Duplicate. <br>`;
+    }
+
+    // show or hide error box based on whether anything was rejected
+    if (ErrorHandler.length > 0) {
+        $("#CarouselError").html(ErrorHandler).removeClass("hidden");
     } else {
         $("#CarouselError").text("").addClass("hidden");
     }
-
-    $("#CarouselError").html(ErrorHandler).removeClass("hidden");
 
     // approved files
     if (AcceptedFile.length > 0) {
@@ -985,25 +1028,139 @@ $("#carouselImg").on("change", function () {
 });
 
 // Deleting carousel when add modal
+let pendingDelete = null;
+
 $(document).on("click", ".DeleteCarousel", function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const targetIndex = Number($(this).attr("data-index"));
+    pendingDelete = $(this);
 
-    ImgArray.splice(targetIndex, 1);
-    $(this).closest(".uploaderSort").remove();
-    reindexCarousel();
-    Filecount();
+    document.getElementById("deleteCarouselModal").showModal();
+});
 
-    if (ImgArray.length == 0) {
-        ClearImgContainer();
+// $("#confirmDelete").on("click", function () {
+
+//     if (!pendingDelete) return;
+
+//     const $item = pendingDelete.closest(".uploaderSort");
+//     const $carouselItem = pendingDelete.closest(".carousel-item");
+
+//     const type = $item.data("type");
+//     let deleted = false;
+//     if (type === "existing") {
+
+//         DeleteCarouselImg.push($item.data("url"));
+
+//         $carouselItem.remove();
+//         renumberPositions();
+//         deleted = true;
+//     } else {
+
+//         const targetIndex = Number(pendingDelete.data("index"));
+//         ImgArray.splice(targetIndex, 1);
+//         $carouselItem.remove();
+//         reindexCarousel();
+//         deleted = true;
+//     }
+//     Filecount();
+    
+//     if (document.querySelectorAll("#imgContainer .uploaderSort").length === 0) {
+//         ClearImgContainer();
+//     } else {
+//         $(".searchBar")
+//             .val("")
+//             .trigger("input");
+//     }
+
+//     pendingDelete = null;
+//     document.getElementById("deleteCarouselModal").close();
+    
+//     if(deleted){   
+//         document.getElementById("ConfirmDeleteModal").showModal();
+
+//         $("#confirmBtn").on ("click", function(){
+//             document.getElementById("ConfirmDeleteModal").close();
+//         });
+//     }
+// });
+
+$("#confirmDelete").on("click", function () {
+
+    if (!pendingDelete) return;
+
+    const $item = pendingDelete.closest(".uploaderSort");
+    const $carouselItem = pendingDelete.closest(".carousel-item");
+
+    const type = $item.data("type");
+    let deleted = false;
+
+    if (type === "existing") {
+
+        DeleteCarouselImg.push($item.data("url"));
+
+        $carouselItem.remove();
+        renumberPositions();
+        deleted = true;
+
+    } else {
+
+        const targetIndex = Number(pendingDelete.data("index"));
+
+        ImgArray.splice(targetIndex, 1);
+
+        $carouselItem.remove();
+
+        reindexCarousel();
+        deleted = true;
     }
 
-    // console.log("Iac",ImgArray.length);
-    // console.log("Iacqq",ImgArray);
-    // console.log("llplp",targetIndex);
+    Filecount();
+
+    // If no images remain
+    if ($("#imgContainer .uploaderSort").length === 0) {
+
+        ClearImgContainer();
+
+    } else {
+
+        // Current search keyword
+        const keyword = $(".searchBar").val().trim().toLowerCase();
+
+        if (keyword !== "") {
+
+            // Check if there are still matching images
+            const remainingMatches = $("#imgContainer .uploaderSort[data-file]")
+                .filter(function () {
+                    return ($(this).data("file") || "")
+                        .toLowerCase()
+                        .includes(keyword);
+                }).length;
+
+            // If no matches remain, clear the search and show all images
+            if (remainingMatches === 0) {
+                $(".searchBar")
+                    .val("")
+                    .trigger("input");
+            }
+        }
+    }
+
+    pendingDelete = null;
+
+    document.getElementById("deleteCarouselModal").close();
+
+    if (deleted) {
+        document.getElementById("ConfirmDeleteModal").showModal();
+
+        $("#confirmBtn")
+            .off("click")
+            .on("click", function () {
+                document.getElementById("ConfirmDeleteModal").close();
+            });
+    }
 });
+
 
 $.ajax({
     url: "/fonts",
@@ -1138,15 +1295,10 @@ function DisplayCarouselImg(images) {
         const idPart = `${parts[0]}_${parts[1]}`;
         const filePart = parts.slice(2).join("_");
         
-      
         const displayName = filePart.substring(0, 10) + "...";
-        
-        
-            console.log("aqw",img);
-        
 
        $("#imgContainer").append(`
-        <div class="flex w-full justify-center relative hover:z-50">
+        <div  class="flex w-full justify-center relative hover:z-50 carousel-item">
             <div class="uploaderSort " data-type="existing" data-url="${img.url}"  data-file="${filePart.toLowerCase()}">
                 <div class="card  shadow-xl  transition-all duration-300 ease-out cursor-pointer
                     hover:-translate-y-2
@@ -1155,9 +1307,9 @@ function DisplayCarouselImg(images) {
                     <div class="card bg-base-100 tooltip tooltip-bottom custom-tooltip  h-[110px] w-[110px] 
                     shadow-sm carouseltemp overflow-visible" data-tip="${filePart.length > 10 ? displayName : filePart}">
                         <div class="relative">
-                            <button class=" absolute z-10 text-red-500  right-2 top-2 btn-sm DeleteExistingCarousel"
+                            <button onclick="deleteCarouselModal.showModal()" class=" absolute z-10 text-red-500  right-2 top-2 btn-sm DeleteCarousel"
                                     data-index="${index}">
-                                    <i class="fa-regular fa-trash-can text-[15px]"></i>
+                                    <i class="fa-regular fa-trash-can text-[15px] cursor-pointer"></i>
                             </button>
                         </div>
                         <img src="${img.url}" class="object-cover rounded max-w-[110px] max-h-[110px]">
@@ -1181,22 +1333,6 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
     onEnd() {
         renumberPositions();
     }
-});
-
-// Deleting on edit
-$(document).on("click", ".DeleteExistingCarousel", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const delete_id = $(this).closest(".uploaderSort").data("url");
-
-    DeleteCarouselImg.push(delete_id);
-
-    $(this).closest(".flex").remove();
-
-    renumberPositions();
-
-    console.log("Del", delete_id);
 });
 
 function ClearImgContainer() {
@@ -1265,10 +1401,22 @@ function Filecount() {
     ).length;
 
     if (count > 0) {
-        $("#addImg").text(`${count} files selected`);
+        $("#addImg").html(`
+            <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
+                ${count} files selected
+            </>`
+            );
     } else {
-        $("#addImg").html('<i class="fa-solid fa-upload"></i> Add Image');
+        $("#addImg").html(`<div class="flex flex-col gap-[12px]">
+            <span class="font-semibold border bg-[#CFDFFF] text-[#366EFB] text-md p-2 rounded-lg">
+                Upload Carousel Images <i class="fa-solid fa-upload ml-2"></i>
+            </span>
+            <span class="text-[#9599A1]">
+                SVG, PNG, or JPEG (max 5MB)
+            </span>
+        </div>`);
     }
+    
     console.log("dd", count);
 }
 
@@ -1438,13 +1586,44 @@ function hasChanges() {
     );
 }
 
+// $(document).on("input", ".searchBar", function () {
+//     $(".searchBar").removeClass("border");
+//     const keyword = this.value.toLowerCase().trim();
+//     let found = false;
+//     const matchedImages = [];
+
+//     $("#imgContainer .uploaderSort[data-file]").each(function () {
+//     const fileName = ($(this).data("file") || "").toLowerCase();
+//     const match = keyword === "" || fileName.includes(keyword);
+
+//     $(this).parent().toggle(match);
+
+//     if (match) {
+//         found = true;
+//         matchedImages.push(fileName);
+//     }
+// });
+//     console.log(matchedImages);
+
+//     $("#CarouselError").toggleClass("hidden", found || keyword === "");
+
+//     if (!found && keyword !== "") {
+//         $("#CarouselError").text("No image found");
+//     }
+// });
+
 $(document).on("input", ".searchBar", function () {
-    const keyword = this.value.toLowerCase();
+
+    $(".searchBar").removeClass("border");
+
+    const keyword = this.value.toLowerCase().trim();
     let found = false;
 
     $("#imgContainer .uploaderSort[data-file]").each(function () {
+
         const fileName = ($(this).data("file") || "").toLowerCase();
-        const match = fileName.includes(keyword);
+
+        const match = keyword === "" || fileName.includes(keyword);
 
         $(this).parent().toggle(match);
 
@@ -1453,9 +1632,22 @@ $(document).on("input", ".searchBar", function () {
         }
     });
 
-    $("#CarouselError").toggleClass("hidden", found || keyword === "");
+    if (keyword === "") {
+        $("#CarouselError").text("").addClass("hidden");
+        return;
+    }
 
-    if (!found && keyword !== "") {
+    $("#CarouselError").toggleClass("hidden", found);
+
+    if (!found) {
         $("#CarouselError").text("No image found");
     }
+});
+
+$(document).on("focus", ".searchBar", function () {
+    $(this).removeClass("border");
+});
+
+$(document).on("blur", ".searchBar", function () {
+    $(this).addClass("border");
 });

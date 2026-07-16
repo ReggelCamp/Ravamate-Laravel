@@ -39,7 +39,7 @@
 
     {{-- Color Thief for extracting color palette from logo --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.min.js"></script>
-
+    
 </head>
 <body>
 

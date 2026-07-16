@@ -1,6 +1,7 @@
 @extends('layout.centralizedScript')
 @section('content')
 
+
 <body class="w-full h-full bg-base-200 font-['Poppins']">
     <div class="flex flex-col w-full p-5 h-full">
         <div class="flex w-full h-[60px]  justify-between pl-10 pr-10">
@@ -96,7 +97,7 @@
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
-                            <div class="flex-gap-5">
+                            <div class="flex gap-5">
                                 <label class="text-[12px] font-medium text-[#17191C]">Site Name
                                     <span class="text-red-500">*</span>
                                 </label>
@@ -291,6 +292,44 @@
                     Close
                 </button>
             </form>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="deleteCarouselModal" class="modal">
+    <div class="modal-box">
+        <div class="flex w-full gap-2">
+            <i class="text-red-500" data-lucide="triangle-alert"></i>
+
+            <h3 class="text-lg font-bold ">Delete image</h3>
+        </div>
+        <p class="py-4">Are you sure you want to remove this image?</p>
+
+        <div class="modal-action">
+            <button id="confirmDelete" class="btn text-white bg-red-500">
+                Delete
+            </button>
+
+            <form method="dialog">
+                <button class="btn">Cancel</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="ConfirmDeleteModal" class="modal">
+    <div class="modal-box">
+        <div class="flex w-full gap-2">
+            {{-- <i class="text-red-500" data-lucide="triangle-alert"></i> --}}
+
+            <h3 class="text-lg font-bold ">Delete Confirmed</h3>
+        </div>
+        <p class="py-4">Succeessfully Delete Carousel Image</p>
+
+        <div class="modal-action">
+            <button id="confirmBtn" class="btn text-white bg-green-500">
+               confirm
+            </button>
         </div>
     </div>
 </dialog>
