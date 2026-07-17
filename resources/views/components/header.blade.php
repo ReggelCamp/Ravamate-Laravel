@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<div class="flex w-full h-[70px] px-6 items-center headerFont justify-between border-b headerTheme">
+<div class="flex w-full h-[70px] px-6 items-center headerFont justify-between">
+{{-- <div class="flex w-full h-[70px] px-6 items-center headerFont justify-between border-b headerTheme"> --}}
 
 
     <div class="flex items-center w-1/3">
@@ -15,8 +16,8 @@
 
     <div class="flex justify-center w-1/3">
 
-        <h1 class="report_header animate__backInLeft text-2xl font-semibold truncate" id="company_name">
-        </h1>
+        {{-- <h1 class="report_header animate__backInLeft text-2xl font-semibold truncate" id="company_name">
+        </h1> --}}
 
     </div>
 

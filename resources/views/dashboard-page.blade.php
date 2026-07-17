@@ -1,10 +1,14 @@
 @extends('layout.app')
 @section('content')
 
-    <div class="w-full h-full flex flex-col RadialBg2 lg:flex-row overflow-y-scroll ">
+      <div class="w-full flex flex-col mainBG">
+            <x-header/>
+        
+
+    <div class="w-full h-full flex flex-col  lg:flex-row overflow-y-scroll ">
 
         {{-- Carousel Panel --}}
-        <div class="order-last DarkMode   lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center ">
+        <div class="order-last DarkMode  lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center ">
 
             {{-- Logo --}}
             <div class="flex w-full justify-center items-center">
@@ -21,7 +25,7 @@
         </div>
 
         {{-- Main div --}}
-        <div class="flex flex-col w-full flex-1 border-l-1 ">
+        <div class="flex flex-col w-full flex-1  ">
 
             {{-- Map --}}
             <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto ">
@@ -112,5 +116,5 @@
         </div>
 
     </div>
-
+</div>
 @endsection

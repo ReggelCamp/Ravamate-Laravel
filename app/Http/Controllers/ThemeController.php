@@ -150,6 +150,11 @@ class ThemeController extends Controller
 
         try{
             
+            // If no theme is currently active, auto-activate this new one
+            if (!Theme::where('is_active', true)->exists()) {
+                $json['is_active'] = true;
+            }
+            
             $row = $this->model::create($json);
 
             FileHandler::upload('logo/img',$row->id,$request->file('logo'));
@@ -421,6 +426,7 @@ public function destroy(Theme $theme, $id)
 {
     return DB::transaction(function () use ($id, $theme) {
         $theme = Theme::findOrFail($id);
+        $wasActive = $theme->is_active;
 
         $oldValues = $theme->toArray();
 
@@ -446,12 +452,22 @@ public function destroy(Theme $theme, $id)
             throw new \RuntimeException('Failed to record activity log; theme not deleted.');
         }
 
-        //dd($log);
-
         $theme->delete();
+
+        // If the deleted theme was active, auto-activate the first remaining theme
+        $activatedThemeId = null;
+        if ($wasActive) {
+            $nextTheme = Theme::orderBy('id')->first();
+            if ($nextTheme) {
+                $nextTheme->update(['is_active' => true]);
+                $activatedThemeId = $nextTheme->id;
+            }
+        }
+
         return response()->json([
             'success' => true,
-            'message' => 'Theme deleted successfully'
+            'message' => 'Theme deleted successfully',
+            'activated_theme_id' => $activatedThemeId
         ]);
     });
 }
@@ -546,6 +562,15 @@ public function getAll()
 
 public function getActive(){
     $activeTheme = Theme::where('is_active', true)->first();
+    
+    // If no theme is active, auto-activate the first available theme
+    if (!$activeTheme) {
+        $firstTheme = Theme::orderBy('id')->first();
+        if ($firstTheme) {
+            $firstTheme->update(['is_active' => true]);
+            $activeTheme = $firstTheme->fresh();
+        }
+    }
     
     if ($activeTheme) {
         $activeTheme['logo'] = FileHandler::getFilesByID('logo/img', $activeTheme->id);

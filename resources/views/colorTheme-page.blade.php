@@ -320,11 +320,11 @@
 <dialog id="ConfirmDeleteModal" class="modal">
     <div class="modal-box">
         <div class="flex w-full gap-2">
-            {{-- <i class="text-red-500" data-lucide="triangle-alert"></i> --}}
+            <i class="text-green-500" data-lucide="CircleCheckBig"></i>
 
             <h3 class="text-lg font-bold ">Delete Confirmed</h3>
         </div>
-        <p class="py-4">Succeessfully Delete Carousel Image</p>
+        <p class="py-4">Successfully Deleted Carousel Image</p>
 
         <div class="modal-action">
             <button id="confirmBtn" class="btn text-white bg-green-500">

@@ -84,7 +84,8 @@
 
 <body class="w-full h-screen">
 
-    <x-header/>
+    {{-- <x-header/> --}}
+    
      @yield('content')
 
     {{-- jQuery FIRST --}}

@@ -13,6 +13,8 @@ let bodyTomSelect = null;
 //let AcceptedFile = [];
 let originalTheme = null;
 
+let ImgFileCount = 0;
+
 let $logs = [];
 //let changes = 0;
 
@@ -70,9 +72,6 @@ function getAll() {
         onSuccess: (data) => {
             array = data;
 
-           
-            
-
             const activeTheme = array.find(item => item.is_active);
             const defaultTheme = array[0]?.id;
 
@@ -82,7 +81,7 @@ function getAll() {
              if (array.length === 0) {
                 $("#table").html(`
                     <div class="flex flex-col w-full h-full justify-center items-center">
-                        <span>Empty Theme</span>
+                        <span class="text-gray-300 text-[100px]">Empty Theme</span>
                         <button class="bg-[#366EFB] w-fit p-5 btn rounded-[8px] text-white" id='addbtn'>
                             <span class="hidden md:inline">Create new</span>
                             <i class="fa-solid fa-plus"></i>
@@ -261,7 +260,9 @@ $(document).on("click", "#deletebtn", function () {
             Api.delete({
                 url: `/customize_theme/delete/${$(this).data("id")}`,
                 onSuccess: (data) => {
-                    $(this).closest("#themeCard").remove();
+                    getAll();
+                    getActive();
+                    localStorage.setItem("themeUpdated", Date.now());
                 },
             });
             Swal.fire({
@@ -363,6 +364,8 @@ $(document).on("click", "#updatebtn", function () {
 
 //for add
 $(document).on("click", "#addbtn", function () {
+    originalTheme = null; 
+
     carouselSortable.option("disabled", true);
 
     $("#CarouselError").text("").addClass("hidden");
@@ -512,17 +515,24 @@ $(document).on("click", "#executeSavebtn", function () {
 
     form.append("logo[]", logoFile);
 
-    CarouselOrder = [];
-    if (ImgArray.length > 0) {
-        ImgArray.forEach((file, index) => {
-            form.append("CarouselImgList[]", file);
+CarouselOrder = [];
+
+if (ImgArray.length > 0) {
+    document
+        .querySelectorAll("#imgContainer .uploaderSort")
+        .forEach((el, index) => {
+            const originalIndex = Number(el.dataset.index);
+            const file = ImgArray[originalIndex];
+
+            if (file) {
+                form.append("CarouselImgList[]", file);
+            }
 
             CarouselOrder.push({
-                id: index,
                 position: index + 1,
             });
         });
-    }
+}
 
     form.append("carousel_order", JSON.stringify(CarouselOrder));
 
@@ -857,7 +867,7 @@ $("#logo_id").on("change", function () {
 
     const FileSize = this.files[0].size / 1024 / 1024;
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/svg"];
 
     // Wrong file type
     if (!allowedTypes.includes(file.type)) {
@@ -889,15 +899,6 @@ $("#logo_id").on("change", function () {
     RenderLogo(file);
 });
 
-// function DisplayLogoImg(LogoImg,LogoName){
-
-//     $("#LogoImg").html(`
-//             <img src="${LogoImg}"
-//                  class="h-[85px] w-[100px] object-contain  ">
-//             <span class="text-sm text-black truncate max-w-[120px]">${LogoName}</span>
-//         `);
-// }
-
 function DisplayLogoImg(LogoImg, LogoName) {
     $("#LogoImg").html(`
         <img src="${LogoImg}?t=${Date.now()}"
@@ -907,30 +908,49 @@ function DisplayLogoImg(LogoImg, LogoName) {
 }
 
 function renderCarouselPreviews(files) {
-    carouselSortable.option("disabled", true);
+    carouselSortable.option("disabled", false);
+    
+    
+    console.log("Carousel count:", getCarouselCounts());
 
-    //console.log("pppp",files)
-    Array.from(files).forEach((file) => {
+    const existingCount = document.querySelectorAll(
+        '#imgContainer .uploaderSort[data-type="existing"]'
+    ).length;
+    
+    const newCount = document.querySelectorAll(
+        '#imgContainer .uploaderSort[data-type="new"]'
+    ).length;
+
+
+    const startingPosition = existingCount + newCount;
+
+    Array.from(files).forEach((file,index) => {
         ImgArray.push(file);
+        console.log("gerw",existingCount);
+
+        const position = startingPosition + index + 1;
 
         const imgIndex = ImgArray.length - 1;
-
-        const fileNames = file.name;
+        const originalName = file.name;
+        const normalizedName = file.name
+        .replace(/\.[^/.]+$/, "")      // remove extension
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")   // similar to Str::slug()
+        .replace(/^-|-$/g, "");
         
         const reader = new FileReader();
 
-        console.log("lppp",fileNames);
-        console.log("pspp",imgIndex);
         
+
         reader.onload = function (e) {
             $("#imgContainer").append(`
                 <div class="flex w-full carousel-item justify-center relative hover:z-50">
                     <div class="uploaderSort newCarouselImage"
                         data-type="new"
                         data-index="${imgIndex}"
-                        data-file="${fileNames.toLowerCase()}">
+                        data-file="${normalizedName}">
 
-                        <div class="card bg-base-100 h-[110px] w-[110px] tooltip tooltip-bottom custom-tooltip shadow-sm carouseltemp" data-tip=${fileNames}>
+                        <div class="card bg-base-100 h-[110px] w-[110px] tooltip tooltip-bottom custom-tooltip shadow-sm carouseltemp" data-tip="${originalName}">
 
                             <div class="relative">
                                 <button  onclick="deleteCarouselModal.showModal()" class="absolute z-10 rounded-xl w-[20px] h-[20px] text-red-500 right-2 top-2 btn-sm DeleteCarousel"
@@ -940,7 +960,11 @@ function renderCarouselPreviews(files) {
                             </div>
 
                             <img src="${e.target.result}" class=" object-cover rounded">
-
+                            <div class="img-position absolute top-2 left-2 z-10 flex border border-white
+                                    items-center justify-center bg-[#3B81E9] rounded-xl
+                                    text-white text-[10px] w-[20px] h-[20px]">
+                            ${position}
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -967,6 +991,10 @@ $("#carouselImg").on("change", function () {
 
     const files = Array.from(this.files);
 
+    console.log("lp",files.length);
+
+    
+
     // count occurrences of name+size within THIS selection
     const fileCounts = {};
     files.forEach((file) => {
@@ -981,16 +1009,36 @@ $("#carouselImg").on("change", function () {
         )
     );
 
+    // Build set of slugified filenames from currently visible saved images.
+    // Exclude images that have been marked for deletion (DeleteCarouselImg).
+    const deletedUrls = new Set(DeleteCarouselImg || []);
+    const existingThemeFiles = new Set(
+        (originalTheme?.carouselImg ?? [])
+            .filter(img => !deletedUrls.has(img.url))
+            .map(img => {
+                const filename = img.url.split("/").pop();
+                const originalName = filename.split("_").slice(2).join("_");
+                return normalizeFileName(originalName);
+            })
+    );
+
     files.forEach((file) => {
         const key = `${file.name}_${file.size}`;
         const sizeMB = file.size / 1024 / 1024;
 
         if (!allowedTypes.includes(file.type)) {
             RejectedFilesbyType.push(file);
+
         } else if (sizeMB > maxSize) {
             RejectedFilesbySize.push(file);
-        } else if (fileCounts[key] > 1 || existingKeys.has(key)) {
+
+        } else if (
+            fileCounts[key] > 1 ||
+            existingKeys.has(key) ||
+            existingThemeFiles.has(normalizeFileName(file.name))
+        ) {
             RejectedFilesbyDuplicate.push(file);
+
         } else {
             AcceptedFile.push(file);
         }
@@ -1011,7 +1059,7 @@ $("#carouselImg").on("change", function () {
     // for duplicate files
     if (RejectedFilesbyDuplicate.length > 0) {
         const names = RejectedFilesbyDuplicate.map((file) => file.name).join(", ");
-        ErrorHandler += `Rejected files: ${names}. Duplicate. <br>`;
+        ErrorHandler += `Rejected files: ${names}. Due to duplication. <br>`;
     }
 
     // show or hide error box based on whether anything was rejected
@@ -1038,52 +1086,6 @@ $(document).on("click", ".DeleteCarousel", function (e) {
 
     document.getElementById("deleteCarouselModal").showModal();
 });
-
-// $("#confirmDelete").on("click", function () {
-
-//     if (!pendingDelete) return;
-
-//     const $item = pendingDelete.closest(".uploaderSort");
-//     const $carouselItem = pendingDelete.closest(".carousel-item");
-
-//     const type = $item.data("type");
-//     let deleted = false;
-//     if (type === "existing") {
-
-//         DeleteCarouselImg.push($item.data("url"));
-
-//         $carouselItem.remove();
-//         renumberPositions();
-//         deleted = true;
-//     } else {
-
-//         const targetIndex = Number(pendingDelete.data("index"));
-//         ImgArray.splice(targetIndex, 1);
-//         $carouselItem.remove();
-//         reindexCarousel();
-//         deleted = true;
-//     }
-//     Filecount();
-    
-//     if (document.querySelectorAll("#imgContainer .uploaderSort").length === 0) {
-//         ClearImgContainer();
-//     } else {
-//         $(".searchBar")
-//             .val("")
-//             .trigger("input");
-//     }
-
-//     pendingDelete = null;
-//     document.getElementById("deleteCarouselModal").close();
-    
-//     if(deleted){   
-//         document.getElementById("ConfirmDeleteModal").showModal();
-
-//         $("#confirmBtn").on ("click", function(){
-//             document.getElementById("ConfirmDeleteModal").close();
-//         });
-//     }
-// });
 
 $("#confirmDelete").on("click", function () {
 
@@ -1296,6 +1298,8 @@ function DisplayCarouselImg(images) {
         const filePart = parts.slice(2).join("_");
         
         const displayName = filePart.substring(0, 10) + "...";
+
+        console.log("cc",ImgPosition);
 
        $("#imgContainer").append(`
         <div  class="flex w-full justify-center relative hover:z-50 carousel-item">
@@ -1586,35 +1590,7 @@ function hasChanges() {
     );
 }
 
-// $(document).on("input", ".searchBar", function () {
-//     $(".searchBar").removeClass("border");
-//     const keyword = this.value.toLowerCase().trim();
-//     let found = false;
-//     const matchedImages = [];
-
-//     $("#imgContainer .uploaderSort[data-file]").each(function () {
-//     const fileName = ($(this).data("file") || "").toLowerCase();
-//     const match = keyword === "" || fileName.includes(keyword);
-
-//     $(this).parent().toggle(match);
-
-//     if (match) {
-//         found = true;
-//         matchedImages.push(fileName);
-//     }
-// });
-//     console.log(matchedImages);
-
-//     $("#CarouselError").toggleClass("hidden", found || keyword === "");
-
-//     if (!found && keyword !== "") {
-//         $("#CarouselError").text("No image found");
-//     }
-// });
-
 $(document).on("input", ".searchBar", function () {
-
-    $(".searchBar").removeClass("border");
 
     const keyword = this.value.toLowerCase().trim();
     let found = false;
@@ -1651,3 +1627,27 @@ $(document).on("focus", ".searchBar", function () {
 $(document).on("blur", ".searchBar", function () {
     $(this).addClass("border");
 });
+
+function normalizeFileName(name) {
+    const parts = name.split(".");
+    const extension = parts.pop().toLowerCase();
+
+    const base = parts.join(".")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+    return `${base}.${extension}`;
+}
+
+function getCarouselCounts() {
+    const all = document.querySelectorAll("#imgContainer .uploaderSort");
+    const existing = document.querySelectorAll('#imgContainer .uploaderSort[data-type="existing"]');
+    const newFiles = document.querySelectorAll('#imgContainer .uploaderSort[data-type="new"]');
+
+    return {
+        total: all.length,
+        existing: existing.length,
+        new: newFiles.length,
+    };
+}
