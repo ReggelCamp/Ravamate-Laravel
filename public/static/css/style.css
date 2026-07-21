@@ -33,7 +33,7 @@
 
 /* Side images */
 .owl-item.active:not(.center) .item {
-    transform: scale(1.1);
+    transform: scale(1.9);
     /* opacity: 0.7; */
 }
 
@@ -43,13 +43,13 @@
 }
 
 .owl-item.center .item {
-    transform: scale(2.5) rotateX(5deg) rotateY(-10deg);
+    transform: scale(2.9) rotateX(5deg) rotateY(-10deg);
     transition: all 0.4s ease;        
 }
 
 .owl-item .item img {
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    height: 400px;
     object-fit: contain;
     display: block;
 }
@@ -267,7 +267,7 @@ summary::-webkit-details-marker {
 
     .mainBG{
         background-image: 
-            linear-gradient(to top, var(--primary) 0%, #c9818d 60%, #c9818d 80%, transparent 100%),
+            linear-gradient(to top, var(--primary) 0%, var(--primary) 60%, var(--primary) 80%, transparent 100%),
             radial-gradient(ellipse 70% 55% at 50% 100%, var(--secondary) 0%, transparent 100%),
             radial-gradient(circle at center, var(--primary) 0%, var(--primary) 65%, var(--secondary) 100%);
         background-repeat: no-repeat, no-repeat, no-repeat;

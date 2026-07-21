@@ -118,8 +118,8 @@
                             </div>
                         </div>
                         <div class="flex flex-col-reverse sm:flex-row  gap-5 w-full items-center h-full md:w-auto">
-                            <div class="  flex w-full  sm:w-auto">
-                                <x-button id="ExpandBtn" class="!rounded-2xl h-[30px] text-[13px] w-full">
+                            <div class="  flex w-full sm:w-auto">
+                                <x-button id="ExpandBtn" class="!rounded-2xl h-[30px] text-[13px] w-full ">
                                     <x-slot:buttonName class="">Expand</x-slot:buttonName>
                                 </x-button>
                             </div>

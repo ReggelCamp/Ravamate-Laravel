@@ -39,19 +39,19 @@
         href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.min.css">
 
     <style>
-        .owl-carousel {
+        /* .owl-carousel {
             perspective: 1200px;
         }
 
         .owl-carousel .owl-item .item {
-            transform: scale(0.8);
+            transform: scale(1.0);
             transition: all 0.4s ease;
         }
 
         .owl-carousel .owl-item.center .item {
-            transform: scale(1.9) rotateX(5deg) rotateY(-10deg);
+            transform: scale(2.3) rotateX(5deg) rotateY(-10deg);
             
-        }
+        } */
 
         /* Light mode (default) */
         /* :root {

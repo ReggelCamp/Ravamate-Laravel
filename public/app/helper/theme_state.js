@@ -1,5 +1,45 @@
 import Api from "./Api.js";
 
+function isLightColor(hex) {
+    if (!hex) return true; // default to light if no color
+
+    hex = hex.replace("#", "");
+
+    
+    if (hex.length === 3) {
+        hex = hex.split("").map(c => c + c).join("");
+    }
+
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    
+    const brightness = (0.299 * r) + (0.587 * g) + (0.114 * b);
+
+    return brightness > 186;
+}
+
+function determineFontColorForMainBG(primaryColor, secondaryColor) {
+    const isPrimaryLight = isLightColor(primaryColor);
+    const isSecondaryLight = isLightColor(secondaryColor);
+
+    if (!isPrimaryLight && !isSecondaryLight) {
+        return "#FFFFFF"; 
+    } else if (isPrimaryLight && isSecondaryLight) {
+        return "#000000";
+    } else if (!isPrimaryLight) {
+        return "#FFFFFF";
+    } else {
+       
+        return "#000000";
+    }
+}
+
+function determineFontColorForButton(){
+    
+}
+
 export default function getActive() {
     Api.get({
         url: "/customize_theme/getActive",
@@ -17,8 +57,17 @@ export default function getActive() {
                 
                 document.documentElement.style.setProperty('--header-font', activeTheme.header_font);
                 document.documentElement.style.setProperty('--body-font', activeTheme.body_font);
-                document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
-                document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
+
+                 const fontColor = determineFontColorForMainBG(
+                    activeTheme.primary_color,
+                    activeTheme.secondary_color
+                );
+
+                document.documentElement.style.setProperty('--body-color', fontColor);
+                document.documentElement.style.setProperty('--header-color', fontColor);
+
+                // document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
+                // document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
                 
                 // $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
 
@@ -48,7 +97,7 @@ export default function getActive() {
 
                     $container.owlCarousel({
                         loop: true,
-                        margin:-20,
+                        margin:20,
                         center: true,
                         nav: false,
                         autoplay: true,

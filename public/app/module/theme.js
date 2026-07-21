@@ -826,6 +826,12 @@ function extractColorsFromLogo(imageUrl) {
             updateColorPicker("#secondary_color", "#secondaryColorWrapper", "#secondaryColorHex", secondaryHex);
             updateColorPicker("#accent_color", "#accentColorWrapper", "#accentColorHex", accentHex);
             updateColorPicker("#background_color", "#backgroundColorWrapper", "#backgroundColorHex", bgHex);
+            
+            // console.warn("Color", palette);
+            //console.warn("RGB", dominantHex,secondaryHex,accentHex,bgHex);
+
+            const colorPalette = [dominantHex,secondaryHex,accentHex,bgHex]
+            console.warn("Color", colorPalette);
 
         } catch (e) {
             console.warn("Color Thief extraction failed:", e);
@@ -855,6 +861,7 @@ function lightenColor(hex, percent) {
     const r = Math.min(255, (num >> 16) + Math.round(255 * percent / 100));
     const g = Math.min(255, ((num >> 8) & 0x00ff) + Math.round(255 * percent / 100));
     const b = Math.min(255, (num & 0x0000ff) + Math.round(255 * percent / 100));
+    
     return rgbToHex(r, g, b);
 }
 
