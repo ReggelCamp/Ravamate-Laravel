@@ -5,25 +5,25 @@
     }
 </style>
 
-<div class="dropdown dropdownTrigger bodyFont rounded-lg flex justify-between h-full">
-    
-    <div 
-        tabindex="0" 
-        role="button" 
-        class="p-2 w-full h-full  shine-bg rounded-lg gap-2 flex justify-between items-center"
+<div {{ $attributes->merge([
+    'class' => 'dropdown dropdownTrigger bodyFont flex justify-between font-bold h-full'
+]) }}>
+    <div
+        tabindex="0"
+        role="button"
+        class="p-2 w-full h-full shine-bg gap-2 flex justify-between items-center"
     >
-        <span class="dropdownName">{{$dropdownName}}</span>
-
-        <i class="fa-solid fa-angle-down text-sm"></i>
+        <span class="dropdownName">{{ $dropdownName }}</span>
+        
+        @isset($icon)
+            {{ $icon }}
+        @endisset
     </div>
 
-    <ul 
-        tabindex="-1"
-        class="dropdown-content menu bg-base-100 rounded-box z-[1] w-full p-2 shadow-sm"
+    <ul
+        tabindex="0"
+        class="dropdown-content menu bg-base-100 rounded-box z-[1] w-max min-w-full whitespace-nowrap p-2 shadow-sm"
     >
-        {{$slot}}
-        <div id="noRec" class="p-5 noRec" hidden>
-            No Recrds found</div>
-    </ul>
-
+    {{ $slot }}
+</ul>
 </div>

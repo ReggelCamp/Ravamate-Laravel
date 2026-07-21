@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 // Date BTN
 $(document).ready(function () {
-    $("#dateButton").text(moment().format("LLL"));
+    $("#dateButton").text(moment().format("ddd | MMM D, YYYY | h:mm A"));
 });
 
 // Expand collapse

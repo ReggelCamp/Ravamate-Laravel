@@ -938,11 +938,11 @@ function renderCarouselPreviews(files) {
         .replace(/[^a-z0-9]+/g, "-")   // similar to Str::slug()
         .replace(/^-|-$/g, "");
         
-        const reader = new FileReader();
+        //const reader = new FileReader();
 
-        
+        const imageUrl = URL.createObjectURL(file);
 
-        reader.onload = function (e) {
+        //reader.onload = function (e) {
             $("#imgContainer").append(`
                 <div class="flex w-full carousel-item justify-center relative hover:z-50">
                     <div class="uploaderSort newCarouselImage"
@@ -959,7 +959,7 @@ function renderCarouselPreviews(files) {
                                 </button>
                             </div>
 
-                            <img src="${e.target.result}" class=" object-cover rounded">
+                            <img src="${imageUrl}" class=" object-cover rounded">
                             <div class="img-position absolute top-2 left-2 z-10 flex border border-white
                                     items-center justify-center bg-[#3B81E9] rounded-xl
                                     text-white text-[10px] w-[20px] h-[20px]">
@@ -970,9 +970,9 @@ function renderCarouselPreviews(files) {
                 </div>
             `);
             Filecount();
-        };
-        reader.readAsDataURL(file);
-        console.log("gee",ImgArray);
+        //};
+        // reader.readAsDataURL(file);
+        // console.log("gee",ImgArray);
     });
 }
 
@@ -989,7 +989,10 @@ $("#carouselImg").on("change", function () {
     let RejectedFilesbyDuplicate = [];
     let ErrorHandler = "";
 
-    const files = Array.from(this.files);
+    // const files = Array.from(this.files);
+    const files = Array.from(this.files).sort((a, b) =>
+        a.name.localeCompare(b.name)
+    );
 
     console.log("lp",files.length);
 
@@ -1114,6 +1117,7 @@ $("#confirmDelete").on("click", function () {
         $carouselItem.remove();
 
         reindexCarousel();
+        renumberPositions();
         deleted = true;
     }
 

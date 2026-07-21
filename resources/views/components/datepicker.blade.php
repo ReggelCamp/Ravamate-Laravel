@@ -98,7 +98,7 @@
     'id' => 'datePicker'
 ])
 
-<div class="w-full flex h-full justify-end pr-2">
+<div class=" flex h-full justify-end pr-2">
 
     {{-- <div class="w-[250px] dateColor flex items-center h-full justify-end "> --}}
     <div class="dateColor flex items-center h-full justify-end ">

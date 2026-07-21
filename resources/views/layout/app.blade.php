@@ -7,8 +7,8 @@
   
     <title>@yield('title', 'Dashboard')</title>
 
-    {{-- Tailwind --}}
-    @vite(['resources/css/app.css'])
+    {{-- Tailwind + Lucide --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Fontawesome --}}
     <link rel="stylesheet"
@@ -82,9 +82,9 @@
 
 </head>
 
-<body class="w-full h-screen">
+<body class="w-full h-full mainBG">
 
-    {{-- <x-header/> --}}
+    <x-header/>
     
      @yield('content')
 
@@ -127,7 +127,9 @@
     <script type="module" src="/app/module/salesman.js"></script>
     <script type="module" src="/app/module/dropdown.js"></script>
     <script type="module" src="/app/module/user.js"></script>
-    <script type="module" src="/app/module/dashboard.js"></script>
+    {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
+
+    @vite("public/app/module/dashboard.js")
 
     @stack('scripts')
     
