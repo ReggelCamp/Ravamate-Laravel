@@ -18,7 +18,7 @@
                 </div>
 
                 {{-- Carousel --}}
-                <div class="w-full max-w-[500px] lg:max-w-[2000px] mx-auto overflow-hidden">
+                <div class="w-full max-w-[500px] lg:max-w-[2000px] mx-auto">
                     <div class="owl-carousel" id="carouselContainer"></div>
                 </div>
 
@@ -101,7 +101,7 @@
                                             <span>Icon</span>
                                         </span>
                                     </x-slot:dropdownName>
-                                    <div class="">
+                                    <div class=" ulMenu">
                                         <li><a>Off</a></li>
                                         <li><a>1 Minute</a></li>
                                         <li><a>5 Minutes</a></li>

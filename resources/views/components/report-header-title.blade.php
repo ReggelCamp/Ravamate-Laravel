@@ -4,6 +4,7 @@
     <div class="flex header_title items-center gap-1">
 
         <i class="fa-solid fa-globe"></i>
+        
         <span class="site_name" id="site_name"></span>
 
         <span  class="headerFont " id="report_header"> </span>

@@ -24,7 +24,7 @@
     <ul
         tabindex="0"
         {{ $attributes -> merge([
-            'class'=>"dropdown-content ulMenu menu rounded-box z-[1] min-w-full whitespace-nowrap p-2 font-medium text-[16px]"
+            'class'=>"dropdown-content menu rounded-box z-[1] min-w-full whitespace-nowrap p-2 font-medium text-[16px]"
         ]) }}
     >
 

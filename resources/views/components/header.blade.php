@@ -8,9 +8,9 @@
         <label for="my-drawer-1" class="rounded-lg p-2 cursor-pointer hover-secondary hover:scale-110 transition-transform duration-200">
 
             <i class="fa-solid fa-bars  text-xl"></i>
-
+             {{-- <span class="bodyFont">{{ $Maintitle }}</span> --}}
         </label>
-
+        
     </div>
 
     <div class="flex justify-center w-1/3">
