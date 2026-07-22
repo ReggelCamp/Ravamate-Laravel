@@ -8,7 +8,9 @@
 </style>
 
 <div class="w-full flex h-full dropdownTrigger">
-    <button {{ $attributes->merge(['class' => 'btn  shine-bg ']) }}>
-        <span class="bodyFont">{{$buttonName}}</span>
+    <button {{ $attributes->merge(['class' => '  shine-bg ']) }}>
+        <span {{ $attributes-> merge(['class'=>"bodyFont"]) }} >
+            {{$buttonName}}
+        </span>
     </button>
 </div>

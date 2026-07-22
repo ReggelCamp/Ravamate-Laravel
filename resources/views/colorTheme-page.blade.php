@@ -232,8 +232,8 @@
                             class="text-red-500 text-xs hidden animate-bounce">
                         </span>
                     </div>
-                    <div class="w-64">
-                        <x-searchbar />
+                    <div class="w-64 ">
+                        <x-searchbar class="border rounded-[8px]"/>
                     </div>
                 </div>
 

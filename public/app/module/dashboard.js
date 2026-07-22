@@ -9,7 +9,13 @@ $(document).ready(function () {
 
 // Date BTN
 $(document).ready(function () {
-    $("#dateButton").text(moment().format("ddd | MMM D, YYYY | h:mm A"));
+        $("#dateButton").html(`
+        <strong>${moment().format("ddd")}</strong>
+        <span class="mx-2">|</span>
+        <span>${moment().format("YYYY-DD-MM")}</span>
+        <span class="mx-2">|</span>
+        <span>${moment().format("h:mm A")}</span>
+    `);
 });
 
 // Expand collapse

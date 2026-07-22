@@ -28,11 +28,7 @@ function getAllSalesman() {
                         data:'productive'
                     },
                     {
-                        title:'Productive',
-                        data:'productive'
-                    },
-                    {
-                        title:'UnProductive',
+                        title:'Unproductive',
                         data:'unproductive'
                     },
                     {
@@ -64,6 +60,16 @@ $(document).on('input', '#customSearch', function () {
         .DataTable()
         .search(this.value)
         .draw();
+});
+
+$(document).on("focus", "#customSearch", function () {
+    // $(this).addClass("outline-2 outline outline-[#0060df]");
+    $(this).addClass("search-focus");
+});
+
+$(document).on("blur", "#customSearch", function () {
+    // $(this).addClass("outline-2 outline outline-[#0060df]");
+    $(this).removeClass("search-focus");
 });
 
 //for copy

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<div class="flex w-full h-[50px] pt-[30px] px-6 items-center headerFont justify-between">
+<div class="flex w-full h-[50px] pt-[30px] px-6 items-center headerFont headerColor justify-between">
 {{-- <div class="flex w-full h-[70px] px-6 items-center headerFont justify-between border-b headerTheme"> --}}
 
     <div class="flex items-center w-1/3">
@@ -133,7 +133,7 @@
                 <li>
 
                     <a href="{{ route('dashboard') }}"
-                        class="shine-bg headerFont rounded-xl px-4 py-3 text-sm font-medium">
+                        class="shine-bg headerFont  rounded-xl px-4 py-3 text-sm font-medium">
 
                         <i class="fa-solid fa-house"></i>
 

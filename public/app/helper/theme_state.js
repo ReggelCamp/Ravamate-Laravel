@@ -36,8 +36,15 @@ function determineFontColorForMainBG(primaryColor, secondaryColor) {
     }
 }
 
-function determineFontColorForButton(){
-    
+function determineFontColorForTableBG(backgroundColor){
+    const isBackgroundLight = isLightColor(backgroundColor);
+
+    if(!isBackgroundLight){
+        return "#FFFFFF";
+    }
+    else{
+        return "#333";
+    }
 }
 
 export default function getActive() {
@@ -58,13 +65,18 @@ export default function getActive() {
                 document.documentElement.style.setProperty('--header-font', activeTheme.header_font);
                 document.documentElement.style.setProperty('--body-font', activeTheme.body_font);
 
-                 const fontColor = determineFontColorForMainBG(
+                 const HeaderFontColor = determineFontColorForMainBG(
                     activeTheme.primary_color,
                     activeTheme.secondary_color
                 );
 
-                document.documentElement.style.setProperty('--body-color', fontColor);
-                document.documentElement.style.setProperty('--header-color', fontColor);
+                const BodyFontColor = determineFontColorForTableBG(
+                    activeTheme.background_color
+                );
+
+                // document.documentElement.style.setProperty('--body-color', fontColor);
+                document.documentElement.style.setProperty('--header-color', HeaderFontColor);
+                document.documentElement.style.setProperty('--body-color', BodyFontColor);
 
                 // document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
                 // document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
@@ -109,7 +121,7 @@ export default function getActive() {
                         }
                     });
                 }
-                                $("#report_header").text(activeTheme.report_header);
+                                $("#site_name").text(activeTheme.site_name);
                                 $("#company_name").text(activeTheme.company_name);
                             }
                         }

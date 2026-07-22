@@ -77,7 +77,7 @@ function getAll() {
 
             // Theme to display as checked
             const checkedThemeId = activeTheme ? activeTheme.id : defaultTheme;
-            
+            console.log("active",activeTheme.company_name);
              if (array.length === 0) {
                 $("#table").html(`
                     <div class="flex flex-col w-full h-full justify-center items-center">
@@ -234,6 +234,9 @@ function getAll() {
                 `);
             });
             // console.log("aaa",array);
+            // $("#company_name").html(`
+            //     <span>${activeTheme.company_name}</span>
+            // `);
         },
     });
 }
@@ -1133,7 +1136,13 @@ $("#confirmDelete").on("click", function () {
     // If no images remain
     if ($("#imgContainer .uploaderSort").length === 0) {
 
+        // Save deleted URLs before clearing so hasChanges() can detect them
+        const pendingDeletions = [...DeleteCarouselImg];
+
         ClearImgContainer();
+
+        // Restore deleted URLs so the update flow sees the changes
+        DeleteCarouselImg = pendingDeletions;
 
     } else {
 
@@ -1633,10 +1642,11 @@ $(document).on("input", ".searchBar", function () {
 
 $(document).on("focus", ".searchBar", function () {
     $(this).removeClass("border");
+    // $(this).parent().addClass("border-transparent");
 });
 
 $(document).on("blur", ".searchBar", function () {
-    $(this).addClass("border");
+    $(this).addClass("border rounded-[8px]");
 });
 
 function normalizeFileName(name) {

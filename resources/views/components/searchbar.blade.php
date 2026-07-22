@@ -1,8 +1,12 @@
+@props([
+    'placeholder' => 'Search...'
+])
+
 <div class="w-full flex sm:justify-end">
     
     <div class="relative items-center ">
         
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+        {{-- <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2"></i> --}}
         
         {{-- <input 
             type="text" 
@@ -11,13 +15,15 @@
             placeholder="Search..."
         > --}}
         <input
-        id="SearchInput"
+        {{-- id="SearchInput" --}}
             type="text"
             {{ $attributes->merge([
-                'class' => 'bodyFont searchBar pl-10 pr-3'
+                'id' => 'SearchInput',
+                'class' => 'bodyFont searchBar pl-3 '
+                // 'class' => 'bodyFont searchBar pl-10 pr-3'
                 // 'class' => 'border rounded-lg bodyFont searchBar w-full h-[40px] pl-10 pr-3'
             ]) }}
-            placeholder="Search..."
+            placeholder="{{ $placeholder }}"
         >
         
     </div>
