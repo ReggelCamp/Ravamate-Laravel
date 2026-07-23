@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('content')
+@section('showLogo', false)
 
     <div class="w-full flex flex-col bg-transparent ">
 
@@ -7,7 +8,7 @@
 
             {{-- Carousel Panel --}}
             <div
-                class="order-last DarkMode  lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center ">
+                class="order-last DarkMode lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center ">
 
                 {{-- Logo --}}
                 <div class="flex w-full justify-center items-center">
@@ -75,33 +76,41 @@
                     {{-- Toolbar --}}
                     <div
                         class="w-full h-[217px] sm:h-[60px] flex-shrink-0 flex flex-col-reverse  sm:flex-row justify-between gap-5 ">
-                        <div class="flex flex-col h-full items-center justify-center sm:flex-row gap-[5px] w-full md:w-auto">
+                        <div class="flex flex-col h-full items-center justify-center sm:flex-row gap-[5px] w-full md:w-auto ">
                             <div class="w-full sm:text-[10px] whitespace-nowrap sm:w-[110px]">
-                                <x-dropdown class="w-full h-[26px] rounded-2xl ">
-                                    <x-slot:dropdownName class="font-semibold">
-                                        Operation Type
+                                <x-dropdown
+                                    class="w-full"
+                                    buttonClass="h-[26px] rounded-2xl px-3 shine-bgBtn"
+                                >
+                                    <x-slot:dropdownName>
+                                        <span class="text-[11.2px] items-center font-semibold gap-5">
+                                            Operation Type
+                                            <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                        </span>
                                     </x-slot:dropdownName>
 
-                                    <x-slot:icon>
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </x-slot:icon>
-
-                                    <li><a>Edit</a></li>
-                                    <li><a>Duplicate</a></li>
-                                    <li><a>Archive</a></li>
-                                    <li><a>Move</a></li>
+                                    <div class="bg-white text-[13px]">
+                                        <li><a>Edit</a></li>
+                                        <li><a>Edit</a></li>
+                                        <li><a>Edit</a></li>
+                                        <li><a>Edit</a></li>
+                                    </div>
                                 </x-dropdown>
                             </div>
-                            <div class="w-full sm:text-[10px] rounded-2xl whitespace-nowrap sm:w-fit ">
-                                <x-dropdown class="rounded-2xl w-[100px] h-[26px]">
+                            <div class="w-full sm:text-[10px] rounded-2xl whitespace-nowrap sm:w-fit">
+                                <x-dropdown
+                                    class="w-[100px]"
+                                    buttonClass="rounded-2xl items-center justify-center h-[26px] shine-bgBtn"
+                                >
                                     <x-slot:dropdownName>
-                                        <span class="flex items-center font-semibold justify-evenly w-full">
-                                            <i class="fa-solid fa-angle-down"></i>
+                                        <span class="flex items-center text-[11.2px] justify-evenly w-full h-full font-semibold">
+                                            <i class="fa-solid fa-angle-down text-[8px]"></i>
                                             <i class="fa-regular fa-clock"></i>
                                             <span>Icon</span>
                                         </span>
                                     </x-slot:dropdownName>
-                                    <div class=" ulMenu">
+
+                                    <div class="bg-white text-[13px] w-[150px] whitespace-nowrap">
                                         <li><a>Off</a></li>
                                         <li><a>1 Minute</a></li>
                                         <li><a>5 Minutes</a></li>
@@ -112,15 +121,15 @@
                                     </div>
                                 </x-dropdown>
                             </div>
-                            <div class="w-[26px] h-[26px] shine-bg rounded-4xl flex justify-center border items-center ">
+                            <div class="w-[26px] h-[26px] shine-bgBtn rounded-4xl flex justify-center border items-center ">
                                 <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                             </div>
                         </div>
                         <div class="flex flex-col-reverse sm:flex-row gap-2 w-full items-center h-full md:w-auto">
                             <div class="  flex w-full sm:w-auto">
-                                <x-button class="h-[26px] w-[70px] rounded-2xl items-center justify-center flex">
+                                <x-button class="h-[26px] w-[70px] rounded-2xl shine-bgBtn items-center justify-center flex">
                                     <x-slot:buttonName>
-                                        <span class="bodyFont font-semibold text-[10px]">
+                                        <span class="bodyFont font-semibold text-[11.2px]">
                                             Expand
                                         </span>
                                     </x-slot:buttonName>

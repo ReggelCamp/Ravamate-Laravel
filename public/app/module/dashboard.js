@@ -9,13 +9,18 @@ $(document).ready(function () {
 
 // Date BTN
 $(document).ready(function () {
+    function updateClock() {
         $("#dateButton").html(`
-        <strong>${moment().format("ddd")}</strong>
-        <span class="mx-2">|</span>
-        <span>${moment().format("YYYY-DD-MM")}</span>
-        <span class="mx-2">|</span>
-        <span>${moment().format("h:mm A")}</span>
-    `);
+            <strong>${moment().format("ddd")}</strong>
+            <span class="mx-2">|</span>
+            <span>${moment().format("YYYY-DD-MM")}</span>
+            <span class="mx-2">|</span>
+            <span>${moment().format("h:mm:ss A")}</span>
+        `);
+    }
+
+    updateClock();               // run immediately so there's no 1s blank delay
+    setInterval(updateClock, 1000); // then run every 1000ms (1 second)
 });
 
 // Expand collapse

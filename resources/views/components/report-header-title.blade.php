@@ -10,7 +10,7 @@
         <span  class="headerFont " id="report_header"> </span>
         <span >|</span>
 
-        <span class="bodyFont">{{ $title }}</span>
+        <span class="bodyFont ">{{ $title }}</span>
 
     </div>
 </div>

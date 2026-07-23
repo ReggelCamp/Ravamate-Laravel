@@ -84,9 +84,13 @@
 
 <body class="w-full h-full mainBG">
 
-    <x-header/>
+    {{-- <x-header/> --}}
     
-     @yield('content')
+<x-header
+    :mainTitle="$__env->yieldContent('headerTitle', '')"
+    :showLogo="filter_var($__env->yieldContent('showLogo', 'true'), FILTER_VALIDATE_BOOLEAN)"
+/>    
+    @yield('content')
 
     {{-- jQuery FIRST --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

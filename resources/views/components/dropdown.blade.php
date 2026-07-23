@@ -5,17 +5,24 @@
     }
 </style>
 
+@props([
+    'buttonClass' => '',
+    'menuClass' => '',
+])
+
 <div {{ $attributes->merge([
-    'class' => 'dropdown dropdownTrigger bodyFont flex justify-between font-bold'
+    'class' => 'dropdown dropdownTrigger bodyFont'
 ]) }}>
+
     <div
         tabindex="0"
-        role="button"{{ $attributes->merge([
-            'class' => "p-2 w-full shine-bg gap-2 flex justify-between items-center"
-        ]) }}
+        role="button"
+        class="flex justify-between items-center {{ $buttonClass }}"
     >
-        <span class="dropdownName flex-1">{{ $dropdownName }}</span>
-        
+        <span class="dropdownName flex-1">
+            {{ $dropdownName }}
+        </span>
+
         @isset($icon)
             {{ $icon }}
         @endisset
@@ -23,11 +30,9 @@
 
     <ul
         tabindex="0"
-        {{ $attributes -> merge([
-            'class'=>"dropdown-content menu rounded-box z-[1] min-w-full whitespace-nowrap p-2 font-medium text-[16px]"
-        ]) }}
+        class="dropdown-content menu rounded-box z-[1] min-w-full whitespace-nowrap p-2 font-medium text-[16px] {{ $menuClass }}"
     >
+        {{ $slot }}
+    </ul>
 
-    {{ $slot }}
-</ul>
 </div>

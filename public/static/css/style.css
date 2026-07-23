@@ -251,6 +251,11 @@ summary::-webkit-details-marker {
         animation: gradientShift 3s ease-in-out infinite;
         /* background-color: var(--background); */
         color: var(--header-color);
+        background: linear-gradient(
+            to bottom,
+            var(--primary),
+            color-mix(in srgb, var(--primary) 50%, black)
+        );
     }
      .headerTheme {
         /* background: linear-gradient(90deg, var(--background), var(--primary), var(--accent), var(--secondary));
@@ -267,13 +272,43 @@ summary::-webkit-details-marker {
             white 0%,
             color-mix(in srgb, white 80%, var(--primary)) 15%,
             color-mix(in srgb, white 50%, var(--primary)) 35%,
-            color-mix(in srgb, white 20%, var(--primary)) 60%,
-            var(--primary) 85%,
-            color-mix(in srgb, var(--primary) 80%, black) 100%
+            color-mix(in srgb, white 20%, var(--primary)) 55%,
+            color-mix(in srgb, var(--primary) 70%, black) 80%,
+            color-mix(in srgb, var(--primary) 60%, #B0004F)
         );
 } */
 
-    .mainBG{
+.mainBG {
+     --primary-dark: color-mix(in srgb, var(--primary) 75%, black);
+
+    background-image:
+        radial-gradient(
+            ellipse 120% 80% at center,
+            white 0%,
+            color-mix(in srgb, white 80%, var(--primary)) 15%,
+            color-mix(in srgb, white 60%, var(--primary)) 35%,
+            color-mix(in srgb, white 15%, var(--primary)) 55%,
+            color-mix(in srgb, var(--primary-dark) 70%, black) 85%,
+            color-mix(in srgb, var(--primary-dark) 60%, #000000) 100%
+        );
+}
+
+/* .mainBG {
+    --primary-dark: color-mix(in srgb, var(--primary) 75%, black);
+
+    background-image:
+        radial-gradient(
+            ellipse 120% 80% at center,
+            white 0%,
+            color-mix(in srgb, white 85%, var(--primary-dark)) 25%,
+            color-mix(in srgb, white 60%, var(--primary-dark)) 45%,
+            color-mix(in srgb, white 30%, var(--primary-dark)) 65%,
+            color-mix(in srgb, var(--primary-dark) 70%, black) 85%,
+            color-mix(in srgb, var(--primary-dark) 60%, #000000) 100%
+        );
+} */
+
+    /* .mainBG{
         background-image: 
             linear-gradient(to top, var(--primary) 0%, var(--primary) 60%, var(--primary) 80%, transparent 100%),
             radial-gradient(ellipse 70% 55% at 50% 100%, var(--secondary) 0%, transparent 100%),
@@ -281,7 +316,7 @@ summary::-webkit-details-marker {
         background-repeat: no-repeat, no-repeat, no-repeat;
         background-size: 100% 70%, 100% 100%, 100% 100%;
         background-position: bottom, center, center;
-    }
+    } */
 
     .tableSec{
         /* background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
@@ -294,7 +329,7 @@ summary::-webkit-details-marker {
     .dropdownTrigger{
         /* background-color: var(--background) !important; */
         /* color: var(--header-color); */
-        color: var(--primary);
+        /* color: var(--primary); */
     }
     .dropdown-content{
         /* background-color: var(--background) !important; */
@@ -329,7 +364,7 @@ summary::-webkit-details-marker {
         font-family: var(--body-font);
     }
 
-    .shine-bg {
+    .shine-bgNav {
         position: relative;
         overflow: hidden;
         background: var(--background);
@@ -337,6 +372,33 @@ summary::-webkit-details-marker {
         color: var(--primary);
         /* border-radius: inherit; */
         
+    }
+
+    .shine-bgNav:hover {
+        background: linear-gradient(
+            to right,
+            var(--secondary),
+            var(--primary)
+        );
+        color: white; /* optional — your default text color is var(--primary), which may be hard to read against this new bg */
+    }
+
+    .shine-bgBtn {
+        position: relative;
+        overflow: hidden;
+        background: var(--background);
+        /* color: var(--body-color); */
+        color: var(--primary);
+        /* border-radius: inherit; */
+        
+    }
+    .shine-bgBtn:hover {
+        background: linear-gradient(
+            to right,
+            var(--secondary),
+            var(--primary)
+        );
+        color: white; /* optional — your default text color is var(--primary), which may be hard to read against this new bg */
     }
 
     .primaryBg{
@@ -349,7 +411,7 @@ summary::-webkit-details-marker {
 
     .dropdownName{
         /* color: var(--body-color); */
-        color: var(--primary);
+        /* color: var(--primary); */
     }
 
     .dateColor{
@@ -384,7 +446,7 @@ summary::-webkit-details-marker {
 
     #salesmanTable th{
         color: var(--header-color) !important;
-        background: red !important;
+        background: var(--primary) !important;
         
     }
 
@@ -518,7 +580,7 @@ summary::-webkit-details-marker {
     .bodyFont {
         font-family: var(--body-font);
     }
-    .shine-bg {
+    .shine-bgNav {
         position: relative;
         overflow: clip;
         background: var(--background);
@@ -528,6 +590,25 @@ summary::-webkit-details-marker {
         z-index: 0;
         border-radius: inherit;
     }
+    .shine-bgBtn {
+        position: relative;
+        overflow: clip;
+        background: var(--accent);
+        /* background: var(--primary); */
+        /* color: var(--body-color); */
+        color: var(--background);
+        z-index: 0;
+    }
+
+    .shine-bgBtn:hover {
+        position: relative;
+        overflow: clip;
+        background: var(--background);
+        /* background: var(--primary); */
+        /* color: var(--body-color); */
+        color: var(--accent);
+        z-index: 0; 
+    }
 
     #salesmanTable_info{
         color: white;
@@ -536,13 +617,16 @@ summary::-webkit-details-marker {
 
     #salesmanTable th{
         color: white !important;
-        background-color: red !important;
+        background-color: var(--primary) !important;
     }
 
-    .dropdownName{
-        /* color: white; */
+    /* .dropdownName{
         color: var(--accent);
     }
+    .dropdownName:hover{
+        color: var(--accent);
+    } */
+
     .dateColor{
         color: white;
     }
@@ -621,7 +705,7 @@ summary::-webkit-details-marker {
 }
 
 /* Sheen layer */
-.shine-bg::after {
+.shine-bgNav::after {
     content: "";
     position: absolute;
     top: 0;
@@ -641,7 +725,31 @@ summary::-webkit-details-marker {
     pointer-events: none;
 }
 
-.shine-bg:hover::after {
+.shine-bgBtn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    z-index: 1;
+
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 100%
+    );
+
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+
+.shine-bgNav:hover::after {
+    animation: sheen 0.8s ease-in-out forwards;
+}
+
+.shine-bgBtn:hover::after {
     animation: sheen 0.8s ease-in-out forwards;
 }
 
@@ -920,7 +1028,7 @@ th{
 
 /* From Uiverse.io by Galahhad */ 
 .theme-switch {
-  --toggle-size: 10px;
+  --toggle-size: 8px;
   /* the size is adjusted using font-size,
      this is not transform scale,
      so you can choose any size */

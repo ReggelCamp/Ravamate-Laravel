@@ -122,7 +122,7 @@
             <button
                 id="{{ $id }}"
                 {{ $attributes->merge([
-                    'class' => 'date-picker border text-xs md:text-base w-[200px] h-full headerFont flex items-center justify-center shine-bg transition'
+                    'class' => 'date-picker  headerFont flex items-center justify-center transition'
                 ]) }}>
                 Filter by Date
             </button>

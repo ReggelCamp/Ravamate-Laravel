@@ -41,7 +41,8 @@
     }
     
     .dt-scroll-head{
-        background-color: red !important;
+        /* background-color: red !important; */
+        background-color: var(--primary) !important;
         font-weight: 500;
         font-size: 11px;
     }
