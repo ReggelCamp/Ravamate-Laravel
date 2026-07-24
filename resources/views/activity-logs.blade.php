@@ -37,7 +37,7 @@
     
             {{-- Right Side --}}
             <div class="flex items-center gap-3">
-                <x-datepicker id="datePickerBtn" class="w-[220px] rounded-[8px] h-10" />
+                <x-datepicker id="datePickerBtn" class="w-[220px] border rounded-[8px] h-10" />
                 <x-searchbar id="searchLogs" class="w-72 border rounded-[8px]" />
             </div>
     

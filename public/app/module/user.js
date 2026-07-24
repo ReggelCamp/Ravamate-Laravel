@@ -14,7 +14,7 @@ Api.get({
     }
 
     })
-    console.log("response: ",res);
+    // console.log("response: ",res);
 }
 
 $(document).ready(function(){

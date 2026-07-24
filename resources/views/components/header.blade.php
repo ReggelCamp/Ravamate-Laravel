@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 @props([
     'mainTitle' => 'Dashboard',
     'showLogo' => true,
@@ -15,7 +13,8 @@
             </label>
             @if($showLogo)
                 <div class="flex h-[50px] px-6">
-                    <img src="/${item.logo[0]?.url}" class="w-[50px] object-contain themeLogo" />
+                    {{-- <img src="/${item.logo[0]?.url}" class="w-[50px] object-contain themeLogo" /> --}}
+                    <img class="w-[50px] object-contain themeLogo" />
                 </div>
             @endif
         </div>

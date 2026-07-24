@@ -43,14 +43,14 @@
     }
     .daterangepicker .ranges{
         background-color:var(--background);
-        color: var(--header-color);
+        color: var(--body-color);
         
     }
     .daterangepicker .ranges ul li:hover,
     .daterangepicker .ranges li:hover,
     .daterangepicker .ranges li.active {
         background-color: var(--secondary) !important;
-        color: var(--body-color) !important;
+        color: var(--header-color) !important;
     }
     .cancelBtn{
         background-color: var(--primary);
@@ -69,12 +69,12 @@
     .daterangepicker .month{
        color: var(--primary);
     }
-    /* .daterangepicker .today.active{
-       background-color: aqua;
-       color: black;
-    } */
+    .daterangepicker .today.active{
+       background-color: var(--primary) !important;
+       color: var(--header-color) !important;
+    }
     .daterangepicker .drp-selected {
-        color: var(--body-color);
+        color: var(--header-color);
         height: 25px;
     }
     
@@ -82,16 +82,11 @@
 </style>
 
 
-{{-- <script 
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js">
-</script>
-
 <link
     rel="stylesheet"
     type="text/css"
     href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
-/> --}}
+/>
 
 @props([
     'displayOnly' => false,
@@ -119,13 +114,13 @@
                 Filter by Date
             </button> --}}
 
-            <button
-                id="{{ $id }}"
-                {{ $attributes->merge([
-                    'class' => 'date-picker  headerFont flex items-center justify-center transition'
-                ]) }}>
-                Filter by Date
-            </button>
+        <button
+            id="{{ $id }}"
+            {{ $attributes->merge([
+                'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition'
+            ]) }}>
+            Filter by Date
+        </button>
 
         @endif
 
@@ -133,57 +128,3 @@
 
 </div>
 
-{{-- <script>
-    $(function () {
-
-        $('#dateButton').daterangepicker({
-
-            showWeekNumbers: false,
-            alwaysShowCalendars: true,
-            autoUpdateInput: false,            
-            //  opens: window.innerWidth < 370 ? 'center' : 'left',
-            opens: 'left',
-            //  opens: 'center',
-
-            locale: {
-                format: 'MMM DD, YYYY',
-                cancelLabel: 'Clear'
-            },
-
-            ranges: {
-                'Today': [
-                    moment(),
-                    moment()
-                ],
-
-                'Last 7 Days': [
-                    moment().subtract(6, 'days'),
-                    moment()
-                ],
-
-                'This Month': [
-                    moment().startOf('month'),
-                    moment().endOf('month')
-                ]
-            }
-
-        }, function (start, end) {
-
-            if (start.format('L') === end.format('L')) {
-
-                $('#dateButton').text(
-                    start.format('ll')
-                );
-
-            } else {
-
-                $('#dateButton').text(
-                    `${start.format('ll')} → ${end.format('ll')}`
-                );
-
-            }
-
-        });
-
-    });
-</script> --}}
