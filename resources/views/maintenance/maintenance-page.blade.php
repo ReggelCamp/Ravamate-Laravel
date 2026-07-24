@@ -1,236 +1,429 @@
 @extends('layout.app')
 @section('content')
 
-    <body class="w-full h-full ">
-        <div class="bodyBg w-full h-full flex flex-col overflow-scroll">
-            <div class="flex flex-col w-full px-5 gap-5 ">
+        <div class="transparentBg w-full h-full flex flex-col gap-10 overflow-scroll">
+
+            <div class="flex flex-col w-full px-5 ">
 
                 <!--Cutomer-->
-                <h1 class="text-2xl text-center py-5">
+                <h1 class="text-2xl text-center ">
                     Customer
                 </h1>
 
                 <!-- DIVIDER -->
-                <div class="flex justify-center w-full">
+                <div class="flex justify-center p-0 w-full">
+                    <div class="divider w-full max-w-[1200px]"></div>
+                </div>
+
+                <!-- CARDS WRAPPER -->
+                <div class="flex flex-col h-[200px] sm:flex-row gap-3 w-full justify-center items-stretch sm:flex-wrap">
+
+                    <!-- CARD 1 -->
+                    <div class=" w-[200px] h-[150px] gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard">
+                            Customer
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('customer') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 -->
+                    <div class="  w-[200px] h-[150px] flex-shrink-0 gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard">
+                            CMF
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center  w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('cmf') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="  w-[200px] h-[150px] gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard">
+                            Georeset
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center  w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <div class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs" onclick="georeset_modal.showModal()">
+                                        See Details
+                                    </span>
+                                </div>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="  w-[200px] h-[150px] gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard">
+                            Customer Tagging
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center  w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('customertagging') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- <div class="  w-[200px] h-[150px] gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard">
+                            Channel Mapping
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center  w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('channelmapping') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div> --}}
+
+                    <div class="  w-[200px] h-[150px] gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 flex justify-center maintinanceCard">
+                            MCP Layout
+                        </h2>
+
+                        <div class="card-actions
+                                    rounded-b-2xl
+                                            flex justify-center items-center  w-full
+                                            bg-white hover:bg-gray-500 group
+                                            transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('mcplayout') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                            opacity-0 group-hover:opacity-100
+                                            transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col  w-full px-5 ">
+                <!--Product-->
+                <h1 class="text-2xl text-center ">
+                    Product
+                </h1>
+
+                <!-- DIVIDER -->
+                <div class="flex justify-center p-0 w-full">
+                    <div class="divider w-full max-w-[1200px]"></div>
+                </div>
+
+                <!-- CARDS WRAPPER -->
+                <div class="flex flex-col sm:flex-row gap-5 w-full justify-center items-stretch sm:flex-wrap">
+                   
+                    <!-- CARD 1 -->
+                    <div class="  gap-0">
+                        <h2 class="card-title w-[250px] rounded-t-2xl py-2 flex justify-center maintinanceCard">
+                            Product
+                        </h2>
+
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('product') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300 py-5">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 -->
+                    <div class="  gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-[250px] flex justify-center maintinanceCard">
+                            Placement
+                        </h2>
+
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center  w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('placementmaintenance') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="   gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-[250px] flex justify-center maintinanceCard">
+                            Must Carry
+                        </h2>
+
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('mustcarry') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col w-full px-5 pt-10">
+                <!--Others-->
+                <h1 class="text-2xl text-center">
+                    Others
+                </h1>
+
+                <!-- DIVIDER -->
+                <div class="flex justify-center p-0 w-full">
                     <div class="divider w-full max-w-[1200px]"></div>
                 </div>
 
                 <!-- CARDS WRAPPER -->
                 <div class="flex flex-col sm:flex-row gap-5 w-full justify-center  items-stretch sm:flex-wrap">
-
                     <!-- CARD 1 -->
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
+                    <div class="   gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-[250px] flex justify-center maintinanceCard">
+                            Bank
+                        </h2>
 
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center  w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
 
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">Customer</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <a href="{{ route('customer') }}" class="btn btn-primary">Buy Now</a>
-                            </div>
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('bankmaintenance') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
                         </div>
-
                     </div>
 
                     <!-- CARD 2 -->
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
+                    <div class="   gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-[250px] flex justify-center maintinanceCard">
+                            Salesman
+                        </h2>
 
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
 
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">Card CMF</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <a href="{{route('cmf')}}" class="btn btn-primary">Buy Now</a>
-                            </div>
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
+
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('salesman') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300">
+
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
+
+                            </span>
                         </div>
                     </div>
 
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
+                    <div class="  gap-0">
+                        <h2 class="card-title rounded-t-2xl py-2 w-[250px] flex justify-center maintinanceCard">
+                            Sales Objective
+                        </h2>
 
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
+                        <div class="card-actions
+                                rounded-b-2xl
+                                        flex justify-center items-center  w-[250px]
+                                        bg-white hover:bg-gray-500 group
+                                        transition-colors duration-300 py-5">
+                            <span
+                                class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
 
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">Georeset</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <button class="btn btn-primary" id="georesetbtn">Buy Now</button>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- Icon -->
+                                <i class="fa-solid fa-user text-4xl relative z-10"></i>
 
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
+                                <!-- Hover Overlay -->
+                                <a href="{{ route('salesmanobjective') }}" class="absolute inset-0 z-20 flex items-center justify-center
+                                        opacity-0 group-hover:opacity-100
+                                        transition-opacity duration-300">
 
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
+                                    <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
+                                        See Details
+                                    </span>
+                                </a>
 
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">Customer Tagging</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <a href="{{route('customertagging')}}" class="btn btn-primary">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
-
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">MCP Layout</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <a href="{{route('mcplayout')}}" class="btn btn-primary">Buy Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                                alt="Shoes" />
-                        </figure>
-
-                        <div class="card-body p-4">
-                            <h2 class="card-title w-full flex justify-center bg-background_color">Channel Mapping</h2>
-                            <div class="card-actions justify-center items-center h-full flex ">
-                                <a href="{{route('channelmapping')}}" class="btn btn-primary">Buy Now</a>
-                            </div>
+                            </span>
                         </div>
                     </div>
 
                 </div>
 
             </div>
-
-            <!--Product-->
-            <h1 class="text-2xl text-center py-5">
-                Product
-            </h1>
-
-            <!-- DIVIDER -->
-            <div class="flex justify-center w-full">
-                <div class="divider w-full max-w-[1200px]"></div>
-            </div>
-
-            <!-- CARDS WRAPPER -->
-            <div class="flex flex-col sm:flex-row gap-5 w-full justify-center  items-stretch sm:flex-wrap">
-                <!-- CARD 1 -->
-                <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-                    <figure>
-                        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                    </figure>
-
-                    <div class="card-body p-4">
-                        <h2 class="card-title w-full flex justify-center bg-background_color">Product</h2>
-                        <div class="card-actions justify-center items-center h-full flex ">
-                            <a href="{{route('product')}}" class="btn btn-primary">Buy Now</a>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- CARD 2 -->
-                <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-                    <figure>
-                        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                    </figure>
-
-                    <div class="card-body p-4">
-                        <h2 class="card-title w-full flex justify-center bg-background_color">Placement</h2>
-                        <div class="card-actions justify-center items-center h-full flex ">
-                            <a href="{{route('placementmaintenance')}}" class="btn btn-primary">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-                    <figure>
-                        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                    </figure>
-
-                    <div class="card-body p-4">
-                        <h2 class="card-title w-full flex justify-center bg-background_color">Must Carry</h2>
-                        <div class="card-actions justify-center items-center h-full flex ">
-                            <a href="{{route('mustcarry')}}" class="btn btn-primary">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        <!--Others-->
-        <h1 class="text-2xl text-center py-5">
-            Others
-        </h1>
-
-        <!-- DIVIDER -->
-        <div class="flex justify-center w-full">
-            <div class="divider w-full max-w-[1200px]"></div>
-        </div>
-
-        <!-- CARDS WRAPPER -->
-        <div class="flex flex-col sm:flex-row gap-5 w-full justify-center  items-stretch sm:flex-wrap">
-            <!-- CARD 1 -->
-            <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-
-                <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                </figure>
-
-                <div class="card-body p-4">
-                    <h2 class="card-title w-full flex justify-center bg-background_color">Bank</h2>
-                    <div class="card-actions justify-center items-center h-full flex ">
-                        <a href="{{route('bankmaintenance')}}" class="btn btn-primary">Buy Now</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- CARD 2 -->
-            <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-                <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                </figure>
-
-                <div class="card-body p-4">
-                    <h2 class="card-title w-full flex justify-center bg-background_color">Salesman</h2>
-                    <div class="card-actions justify-center items-center h-full flex ">
-                        <a href="{{route('salesman')}}" class="btn btn-primary">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card bg-base-100 image-full w-full md:w-full lg:w-96 h-[200px] shadow-sm">
-
-                <figure>
-                    <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" />
-                </figure>
-
-                <div class="card-body p-4">
-                    <h2 class="card-title w-full flex justify-center">Sales Objective</h2>
-                    <div class="card-actions justify-center items-center h-full flex ">
-                        <a href="{{ route('salesmanobjective') }}" class="btn btn-primary">Buy Now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         </div>
-    </div>
-    
-</body>
 
     <script>
         $(document).on("click", "#georesetbtn", function () {
@@ -239,31 +432,49 @@
     </script>
 
     <dialog id="georeset_modal" class="modal">
+    <div class="modal-box w-11/12 max-w-md rounded-2xl p-0 overflow-hidden shadow-xl">
 
-        <div class="modal-box w-11/12 max-w-2xl rounded-2xl shadow-xl p-0 overflow-hidden">
+        <!-- Header -->
+        <div class="report_title relative px-5 py-4">
+            <x-report-header-title title="GEORESET" />
 
-            <form method="dialog">
+            <form method="dialog" class="absolute to right-3">
                 <button
-                    class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 items-center h-full hover:text-black text-white">
-                    ✕
+                    class=" ">
+                    <i class="fa-regular fa-circle-xmark text-2xl"></i>
                 </button>
             </form>
+        </div>
 
-            {{-- Header --}}
-            <div class="w-full h-full no-hover bg-primary text-white p-5">
-                <x-report-header-title title="GEORESET" />
+        <!-- Body -->
+        <div class="p-6 flex flex-col gap-5">
+
+            <div class="flex flex-col gap-2">
+                <label for="customerCode" class="font-medium">
+                    Customer Code
+                </label>
+
+                <input
+                    id="customerCode"
+                    type="text"
+                    class="input input-bordered w-full rounded-xl"
+                    placeholder="Enter Customer Code">
             </div>
 
-            <div class="flex flex-col w-full h-[250px] justify-center items-center gap-2">
-                <h1>
-                    GEORESET by Customer:
-                </h1>
-                <input class="border rounded-2xl p-2" placeholder="Type Customer Code"></input>
-                <button class="w-fit p-2 primary_color rounded-2xl text-white">Reset</button>
+            <div class="flex justify-end gap-2">
+                <button class="btn primary_color rounded-xl text-white report_title">
+                    Reset
+                </button>
             </div>
 
         </div>
 
-    </dialog>
+    </div>
+
+    <!-- Click outside to close -->
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
 
 @endsection

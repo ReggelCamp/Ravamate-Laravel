@@ -55,8 +55,8 @@
                                     <x-searchbar class="w-[250px] " id="customSearch" />
                                 </div>
                             </div>
-                            <div class="overflow-auto pt-5">
-                                <x-datatable />
+                            <div class="w-full pt-2 overflow-auto rounded-2xl">
+                                <x-datatable id="PendingTable" />
                             </div>
                         </div>
                     </div>

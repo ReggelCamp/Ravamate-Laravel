@@ -15,7 +15,10 @@
             <div class="flex  h-[30px]">
                 <x-dropdown> 
                     <x-slot:dropdownName>
-                            Export
+                           <span class="border px-2 rounded-2xl">
+                                        Export
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </span>
                         </x-slot:dropdownName>
             
                         <li><a class="printBtn">Print</a></li>

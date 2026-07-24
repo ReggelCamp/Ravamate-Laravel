@@ -1,23 +1,32 @@
 @extends('layout.app')
+@section('headerTitle', 'PRODUCT')
 @section('content')
 
-<body class="w-full h-full">
-    <div class="flex w-full h-[50px] justify-between items-center pl-5 pr-5 report_title">
-         <div class="w-full h-full items-center ">
-            <x-report-header-title title="Product" />
-        </div>
-        <div class="w-fit h-[30px]">
-            <x-datepicker/>
-        </div>
-    </div>
-    <div class="flex flex-col bodyBg w-full h-full p-5">
-        <div class="flex justify-start sm:justify-end">
-            <x-searchbar id="customSearch"/>
-        </div>
-        <div class="overflow-auto pt-5">
-            <x-datatable/>
+    <div class="flex w-full h-screen pt-5 px-3">
+        <div class="card w-full h-96 flex flex-col">
+            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+                <x-report-header-title title="Product List" />
+                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                    <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
+                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
+                    <i class="fa-solid fa-caret-down text-xs"></i>
+                </span>
+            </div>
+            <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
+                <div class="flex items-center w-full h-[60px] py-3">
+                    <div class="flex gap-5 w-full">
+    
+                    </div>
+                    <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <x-searchbar class="w-[250px] " id="customSearch" />
+                    </div>
+                </div>
+                <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
+                    <x-datatable />
+                </div>
+            </div>
         </div>
     </div>
 
-</body>
 @endsection

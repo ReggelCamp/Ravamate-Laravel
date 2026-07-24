@@ -1,16 +1,14 @@
 @extends('layout.app')
 @section('content')
 
-<body class="w-full min-h-screen">
-
-<div class="flex flex-col bodyBg bodyFont items-center p-5 gap-5">
+<div class="flex flex-col h-screen mainBg bodyFont items-center p-5 gap-5">
 
     <!-- HEADER WRAPPER -->
     <div class="w-full">
 
         <div class="flex w-full justify-between flex-row-reverse sm:flex-row mb-5">
 
-            <button class="bg-blue-500 text-sm rounded-lg h-[50px] text-white px-4">
+            <button class="bg-blue-500  bg-opacity-50 text-sm rounded-lg h-[50px] text-white px-4">
                 Dynamic Load Planning
             </button>
 
@@ -30,7 +28,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5 w-full">
 
             <!-- Card 1 -->
-            <div class="bg-blue-500 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
+            <div class="bg-blue-500/85 hover:bg-violet-600 h-[180px] w-full cursor-pointer"
                 onclick="SOtoEric()">
                 <div class="flex justify-between h-full p-5">
 
@@ -122,10 +120,11 @@
         </div>
 
         <!-- TABLE -->
-        <div class="overflow-auto mt-5">
-            <x-datatable/>
+        <div class="pt-5">
+        <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
+            <x-datatable />
         </div>
-
+        </div>
     </div>
 </div>
 
@@ -144,6 +143,5 @@
     }
 </script>
 
-</body>
 
 @endsection

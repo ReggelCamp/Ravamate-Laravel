@@ -52,9 +52,9 @@
                             </div>
                         </div>
                     </div>
-                   <div class="overflow-auto pt-5">
-                        <x-datatable />
-                    </div>
+                   <div class="w-full  overflow-auto rounded-2xl">
+                    <x-datatable id="PendingTable"/>
+                </div>
                 </div>
 
                 <input type="radio" name="my_tabs_3" class="tab" aria-label="Rejected Bo" checked="checked" />
@@ -62,10 +62,12 @@
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">
                         <div class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full p-2">
                             <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
-                                <div class="h-[30px]  datepicker">
-                                    <x-datepicker/>
-                                </div>
-                                <div class="w-[150px] h-[30px]">
+                                <div
+                                    class="flex rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                    <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                    <x-datepicker class="!text-black" />
+                                    </div>
+                                    <div class="flex  items-center h-[30px]  gap-5">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             <span class="flex border px-5 rounded-2xl items-center gap-3">
@@ -88,9 +90,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-auto">
-                        <x-datatable id="rejectedBo"/>
-                    </div>
+                    <div class="w-full  overflow-auto rounded-2xl">
+                    <x-datatable id="Rejectedtable"/>
+                </div>
                 </div>
 
                 <input type="radio" name="my_tabs_3" class="tab" aria-label="Approved BO" />
@@ -98,10 +100,12 @@
                     <div class="w-full flex h-full md:justify-end gap-5 items-center">
                         <div class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end  w-full h-full p-2">
                             <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
-                                <div class="h-[30px]  datepicker">
-                                    <x-datepicker/>
-                                </div>
-                               <div class="w-[150px] h-[30px]">
+                                <div
+                                    class="flex rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                    <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                    <x-datepicker class="!text-black" />
+                                    </div>
+                                    <div class="flex  items-center h-[30px]  gap-5">
                                     <x-dropdown> 
                                         <x-slot:dropdownName>
                                             <span class="flex border px-5 rounded-2xl items-center gap-3">
@@ -124,9 +128,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="overflow-auto">
-                        <x-datatable id="approveB0"/>
-                    </div>
+                    <div class="w-full  overflow-auto rounded-2xl">
+                    <x-datatable id="Approvedtable"/>
+                </div>
                 </div>
             </div>
         </div>

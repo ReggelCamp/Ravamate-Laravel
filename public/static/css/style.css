@@ -265,6 +265,11 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
 
+    .maintinanceCard{
+        background-color: var(--primary);
+        color: var(--body-color);
+    }
+
 /* .mainBG {
     background-image:
         radial-gradient(
