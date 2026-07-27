@@ -23,6 +23,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
 
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
     {{-- Owl Carousel CSS --}}
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
@@ -128,6 +132,7 @@
 
     {{-- Your JS --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
+    <script type="module" src="/app/helper/dataMaintenanceModal.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
     <script type="module" src="/app/module/daterange.js"></script>
     <script type="module" src="/app/module/dropdown.js"></script>

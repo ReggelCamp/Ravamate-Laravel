@@ -1,37 +1,25 @@
 @extends('layout.app')
 @section('content')
-<div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 report_title">
-    <div class="w-full h-full items-center ">
-        <x-report-header-title title="Channel Mapping" />
+    <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 report_title">
+        <div class="w-full h-full items-center ">
+            <x-report-header-title title="Channel Mapping" />
+        </div>
+        <div class="w-fit h-[30px]">
+            <x-datepicker />
+        </div>
     </div>
-    <div class="w-fit h-[30px]">
-        <x-datepicker/>
-    </div>
-</div>
 
-<body class="w-full h-full">
-    <div class="flex flex-col w-full h-full p-5 bodyBg">
-        <div class="flex w-full max-h-[100px] justify-between flex-col-reverse sm:flex-row gap-5">
-            <div class="flex  h-[30px]">
-                <x-dropdown> 
-                    <x-slot:dropdownName>
-                           <span class="border px-2 rounded-2xl">
-                                        Export
-                                        <i class="fa-solid fa-caret-down"></i>
-                                    </span>
-                        </x-slot:dropdownName>
-            
-                        <li><a class="printBtn">Print</a></li>
-                        <li><a class="csvBtn">CSV</a></li>
-                        <li><a class="excelBtn">Excel</a></li>
-                        <li><a class="copyBtn">Copy</a></li>
-                </x-dropdown>
+    <body class="w-full h-full">
+        <div class="flex flex-col w-full h-full p-5 bodyBg">
+            <div class="flex w-full max-h-[100px] justify-between flex-col-reverse sm:flex-row gap-5">
+                <div>
+                    <x-exportDataTable />
+                </div>
+                <x-searchbar id="customSearch" />
             </div>
-            <x-searchbar id="customSearch"/>
+            <div class="overflow-auto pt-5">
+                <x-datatable />
+            </div>
         </div>
-        <div class="overflow-auto pt-5">
-            <x-datatable/>
-        </div>
-    </div>
-</body>
+    </body>
 @endsection

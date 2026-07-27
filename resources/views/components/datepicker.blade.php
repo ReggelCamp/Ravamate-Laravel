@@ -1,11 +1,6 @@
 {{-- Date Range Picker --}}
 <style>
     .daterangepicker{
-        /* width: 860px;
-        height: 350px;
-        color: black;
-        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-        background-size: 200% auto; */
         width: auto;
         max-width: 500px;
         /* margin-right: 20px; */
@@ -44,6 +39,7 @@
     .daterangepicker .ranges{
         background-color:var(--background);
         color: var(--body-color);
+        float: right !important;
         
     }
     .daterangepicker .ranges ul li:hover,

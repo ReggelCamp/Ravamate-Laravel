@@ -28,34 +28,25 @@
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked />
                     <div class="tab-content bg-base-100 border-base-300 p-6">
                         <div class="flex w-full justify-between h-full flex-col">
-                            <div class="flex w-full flex-col-reverse sm:flex-row justify-between items-center h-full">
+                            <div class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
                                 <div class="flex  items-center h-[30px]  w-full gap-5">
-                                    <x-dropdown>
-                                        <x-slot:dropdownName>
-                                            <span class="flex border px-5 rounded-2xl items-center gap-3">
-                                                Export
-                                                <i class="fa-solid fa-caret-down text-[10px]"></i>
-                                            </span>
-                                        </x-slot:dropdownName>
-                                        <div class="w-auto bg-white">
-                                            <li><a class="printBtn">Print</a></li>
-                                            <li><a class="csvBtn">CSV</a></li>
-                                            <li><a class="excelBtn">Excel</a></li>
-                                            <li><a class="copyBtn">Copy</a></li>
-                                        </div>
-                                    </x-dropdown>
+                                    <div>
+                                        <x-exportDataTable />
+                                    </div>
                                     <div
                                         class="flex rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                                         <x-datepicker class="!text-black" />
                                     </div>
                                 </div>
-                                <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                    <x-searchbar class="w-[250px] " id="customSearch" />
+                                <div class="flex w-full justify-start md:justify-end items-center">
+                                    <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                        <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                                        <x-searchbar class="w-full" id="customSearch" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="w-full pt-2 overflow-auto rounded-2xl">
+                            <div class="w-full overflow-auto rounded-t-2xl">
                                 <x-datatable id="PendingTable" />
                             </div>
                         </div>

@@ -20,7 +20,8 @@
                                 <x-slot:dropdownName>
                                     <span
                                         class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
-                                        Filter by Transaction
+                                        <i class="mdi mdi-filter-variant"></i> 
+                                        Filter by Salesman
                                     </span>
                                 </x-slot:dropdownName>
                                 <ul class="dropdown_item border bg-white" id="dsrItems">
@@ -30,21 +31,8 @@
                                 </ul>
                             </x-dropdown>
                         </div>
-                        <div class="flex rounded-2xl h-[25px]">
-                            <x-dropdown>
-                                <x-slot:dropdownName>
-                                    <span class="border px-2 rounded-2xl">
-                                        Export
-                                        <i class="fa-solid fa-caret-down"></i>
-                                    </span>
-                                </x-slot:dropdownName>
-                                <div class="w-full text-[13px] bg-white">
-                                    <li><a class="printBtn">Print</a></li>
-                                    <li><a class="csvBtn">CSV</a></li>
-                                    <li><a class="excelBtn">Excel</a></li>
-                                    <li><a class="copyBtn">Copy</a></li>
-                                </div>
-                            </x-dropdown>
+                        <div>
+                            <x-exportDataTable />
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

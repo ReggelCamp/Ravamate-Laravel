@@ -14,8 +14,11 @@
     }
 
     #salesmanTable td.dt-empty {
-        text-align: center !important;
-    }
+    text-align: center !important;
+    white-space: normal !important;
+    word-break: break-word;
+    padding: 1rem;
+}
 
     /* #salesmanTable .dt-container {
         display: flex !important;

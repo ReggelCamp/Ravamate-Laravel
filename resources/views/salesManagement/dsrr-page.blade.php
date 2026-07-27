@@ -13,13 +13,14 @@
                 </span>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex items-center w-full h-[60px] py-3">
+                <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div class="h-[25px]">
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
                                         class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
+                                        <i class="mdi mdi-filter-variant"></i> 
                                         Filter by Salesman
                                     </span>
                                 </x-slot:dropdownName>
@@ -30,26 +31,15 @@
                                 </ul>
                             </x-dropdown>
                         </div>
-                        <div class="flex rounded-2xl h-[25px]">
-                            <x-dropdown>
-                                <x-slot:dropdownName>
-                                    <span class="border px-2 rounded-2xl">
-                                        Export
-                                        <i class="fa-solid fa-caret-down"></i>
-                                    </span>
-                                </x-slot:dropdownName>
-                                <div class="w-full text-[13px] bg-white">
-                                    <li><a class="printBtn">Print</a></li>
-                                    <li><a class="csvBtn">CSV</a></li>
-                                    <li><a class="excelBtn">Excel</a></li>
-                                    <li><a class="copyBtn">Copy</a></li>
-                                </div>
-                            </x-dropdown>
+                        <div>
+                            <x-exportDataTable/>
                         </div>
                     </div>
-                    <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                    <div class="flex w-full justify-start md:justify-end items-center">
+                        <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                            <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                            <x-searchbar class="w-full" id="customSearch" />
+                        </div>
                     </div>
                 </div>
                 <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">

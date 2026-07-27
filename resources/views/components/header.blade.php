@@ -183,7 +183,7 @@
 
                                     <summary
                                         class="dropdownIcon rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
-
+                                        <i class="mdi mdi-file-multiple"></i>
                                         Sales Management
                                         <div class="flex w-full arrowIcon justify-end">
                                             <i class="fa-solid fa-angle-down"></i>
@@ -320,6 +320,7 @@
 
                                     <summary
                                         class="rounded-lg dropdownIcon headerFont shine-bgNav  px-4 py-2 text-sm">
+                                        <i class="mdi mdi-file-multiple"></i>
                                         Inventory Management
                                         <div class="flex w-full arrowIcon justify-end">
                                             <i class="fa-solid fa-angle-down"></i>
@@ -368,7 +369,7 @@
 
                                     <summary
                                         class="rounded-lg dropdownIcon headerFont  shine-bgNav px-4 py-2 text-sm">
-
+                                        <i class="mdi mdi-file-multiple"></i>
                                         Audit Trail
                                         <div class="flex w-full arrowIcon justify-end">
                                             <i class="fa-solid fa-angle-down"></i>
@@ -400,7 +401,7 @@
 
                                     <summary
                                         class="rounded-lg dropdownIcon headerFont shine-bgNav px-4 py-2 text-sm">
-
+                                        <i class="mdi mdi-file-multiple"></i>
                                         Others
                                         <div class="flex w-full arrowIcon justify-end">
                                             <i class="fa-solid fa-angle-down"></i>
@@ -464,7 +465,7 @@
                             <li>
                                 <a href="{{ route('maintenance') }}"
                                     class="rounded-lg shine-bgNav headerFont px-4 py-2 text-sm">
-
+                                    <i class="mdi mdi-wrench-cog"></i>
                                     Data Maintenance
 
                                 </a>
@@ -473,7 +474,7 @@
                             <li>
                                 <a href="{{ route('datamaintenance') }}"
                                     class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
-
+                                    <i class="mdi mdi-archive-sync"></i>
                                     Eric Data Alignment
 
                                 </a>
@@ -482,7 +483,7 @@
                             <li>
                                 <a href="{{ route('sfaqueuing') }}"
                                     class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
-
+                                    <i class="mdi mdi-file-sync"></i>
                                     SFA Queuing
 
                                 </a>
@@ -516,75 +517,95 @@
                         <ul class="mt-2 space-y-1 max-h-[300px] overflow-y-auto">
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">Fast
-                                    Unimerchant Cebu</a></li>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>
+                                    Fast Unimerchant Cebu</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">Fast
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>
+                                    Fast
                                     Unimerchant Bohol</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MNC
                                     PDB</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MNC
                                     SYL</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm"> <i class="mdi mdi-map-marker-radius"></i>
+                                    MNC
                                     MCM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>
+                                    MNC
                                     RAC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MNC
                                     DCI</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MNC
                                     NVM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MNC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MNC
                                     ABRI CAVITE</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP CALBAYOG</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP TACLOBAN</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">IMDC
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP ORMOC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">MEM</a>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>MEM</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">Fast
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>Fast
                                     Unimerchants P.O.D</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">DGV</a>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>DGV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">SMI</a>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>SMI</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">DBV</a>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>DBV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">DCMI</a>
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    <i class="mdi mdi-map-marker-radius"></i>DCMI</a>
                             </li>
 
                         </ul>

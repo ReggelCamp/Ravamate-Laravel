@@ -23,20 +23,9 @@
                                     </span>
                                 </x-slot:buttonName>
                             </x-button>
-                            <x-dropdown>
-                                <x-slot:dropdownName>
-                                    <span class="border px-2 rounded-2xl">
-                                        Export
-                                        <i class="fa-solid fa-caret-down"></i>
-                                    </span>
-                                </x-slot:dropdownName>
-                                <div class="w-full text-[13px] bg-white">
-                                    <li><a class="printBtn">Print</a></li>
-                                    <li><a class="csvBtn">CSV</a></li>
-                                    <li><a class="excelBtn">Excel</a></li>
-                                    <li><a class="copyBtn">Copy</a></li>
-                                </div>
-                            </x-dropdown>
+                            <div>
+                                <x-exportDataTable />
+                            </div>
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

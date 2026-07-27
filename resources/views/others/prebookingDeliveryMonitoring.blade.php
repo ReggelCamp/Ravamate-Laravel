@@ -12,20 +12,8 @@
                 </div>
             </div>
             <div class="flex flex-col-reverse sm:flex-row w-full justify-between gap-5 p-5 background_color">
-                <div class="flex  h-[30px]">
-                    <x-dropdown>
-                        <x-slot:dropdownName>
-                            <span class="border px-2 rounded-2xl">
-                                Export
-                                <i class="fa-solid fa-caret-down"></i>
-                            </span>
-                        </x-slot:dropdownName>
-
-                        <li><a class="printBtn">Print</a></li>
-                        <li><a class="csvBtn">CSV</a></li>
-                        <li><a class="excelBtn">Excel</a></li>
-                        <li><a class="copyBtn">Copy</a></li>
-                    </x-dropdown>
+                <div>
+                    <x-exportDataTable />
                 </div>
                 <div class="flex w-full h-[40px]">
                     <x-searchbar id="customSearch" />

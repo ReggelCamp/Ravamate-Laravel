@@ -2,7 +2,7 @@
     'placeholder' => 'Search...'
 ])
 
-<div class="w-full flex sm:justify-end">
+
     
     <div class="relative items-center ">
         
@@ -28,4 +28,3 @@
         
     </div>
 
-</div>
