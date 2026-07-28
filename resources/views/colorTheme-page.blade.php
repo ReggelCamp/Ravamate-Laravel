@@ -233,7 +233,7 @@
                         </span>
                     </div>
                     <div class="w-64 ">
-                        <x-searchbar class="border rounded-[8px]"/>
+                        <x-searchbar class="border w-[250px] rounded-[8px]"/>
                     </div>
                 </div>
 

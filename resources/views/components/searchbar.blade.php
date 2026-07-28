@@ -1,5 +1,5 @@
 @props([
-    'placeholder' => 'Search...'
+    'placeholder' => 'Search'
 ])
 
 
@@ -19,7 +19,7 @@
             type="text"
             {{ $attributes->merge([
                 'id' => 'SearchInput',
-                'class' => 'bodyFont searchBar pl-3 '
+                'class' => 'bodyFont pl-3 searchBar'
                 // 'class' => 'bodyFont searchBar pl-10 pr-3'
                 // 'class' => 'border rounded-lg bodyFont searchBar w-full h-[40px] pl-10 pr-3'
             ]) }}

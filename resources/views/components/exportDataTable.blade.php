@@ -8,35 +8,35 @@
         <x-slot:dropdownName>
             <span
                 id="{{ $id }}"
-                class="border px-2 rounded-2xl flex items-center gap-2 cursor-pointer">
+                class="border shine-bgExportBtn px-2 rounded-2xl flex items-center gap-2 cursor-pointer">
                 {{ $label }}
                 <i class="fa-solid fa-caret-down"></i>
             </span>
         </x-slot:dropdownName>
 
         <div class="w-full text-[13px] bg-white">
-            <li>
+            <li class="shine-bgExportBtn">
                 <a class="printBtn">
                     <i class="fa-solid fa-print"></i>
                     Print
                 </a>
             </li>
 
-            <li>
+            <li class="shine-bgExportBtn">
                 <a class="csvBtn">
                     <i class="fa-solid fa-file-csv"></i>
                     CSV
                 </a>
             </li>
 
-            <li>
+            <li class="shine-bgExportBtn">
                 <a class="excelBtn">
                     <i class="fa-solid fa-file-excel"></i>
                     Excel
                 </a>
             </li>
 
-            <li>
+            <li class="shine-bgExportBtn">
                 <a class="copyBtn">
                     <i class="fa-solid fa-copy"></i>
                     Copy

@@ -25,7 +25,7 @@
                                     </span>
                                 </x-slot:dropdownName>
                                 <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" />
+                                    <x-searchbar id="dsrSearch"/>
                                     <li><a>Item 1</a></li>
                                     <li><a>Item 2</a></li>
                                 </ul>
@@ -38,7 +38,7 @@
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar class="w-full" id="customSearch" />
+                            <x-searchbar class="w-full customSearch" id="customSearch" />
                         </div>
                     </div>
                 </div>

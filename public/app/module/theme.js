@@ -203,14 +203,14 @@ function getAll() {
                                 <div class="flex w-full h-full justify-between items-center ">
                                     <div class="gap-[8px] flex flex-col ">
                                         <span class="text-[#9599A1] font-normal text-[16px]">HEADER FONT</span>
-                                        <div class="text-[12px]" font-normal>${item.header_font}</div>
+                                        <div class="text-[12px] font-normal leading-none">${item.header_font}</div>
                                     </div>
                                 </div>
 
                                 <div class="flex w-full   justify-between items-center ">
                                     <div class="gap-[8px] flex flex-col" >
                                         <span class="text-[#9599A1] font-normal text-[16px]">BODY FONT</span>
-                                        <div class="text-[12px]" font-normal>${item.body_font}</div>
+                                        <div class="text-[12px] font-normal leading-none">${item.body_font}</div>
                                     </div>
                                 </div>
 
@@ -1362,7 +1362,7 @@ const carouselSortable = new Sortable(document.getElementById("imgContainer"), {
 function ClearImgContainer() {
     $("#imgContainer").empty();
     $("#carouselImg").val("");
-    $(".searchbar").val("");
+    $(".searchBar").val("");
     //$("#primary_color").val("");
 
     ImgArray = [];

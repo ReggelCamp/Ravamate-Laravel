@@ -20,7 +20,7 @@
         </div>
         {{-- <h1 class="report_header animate__backInLeft text-2xl font-semibold truncate" id="company_name">
         </h1> --}}
-        <span class="text-2xl">{{ $mainTitle }}</span>
+        <span class="text-[32px] font-medium">{{ $mainTitle }}</span>
 
         <!-- RIGHT -->
         <div class="flex items-center justify-end gap-5 ">

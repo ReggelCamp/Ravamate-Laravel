@@ -10,6 +10,6 @@
 
     <span>|</span>
 
-    <span>{{ $title }}</span>
+    <span class="font-medium text-[16px]">{{ $title }}</span>
 </div>
 </div>
