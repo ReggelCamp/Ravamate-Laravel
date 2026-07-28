@@ -61,10 +61,17 @@
     }
 </style>
 
-
-
-<div class="w-full h-full text-sm bodyFont ">
+{{-- <div class="w-full h-full text-sm bodyFont ">
     <table id="salesmanTable" class="w-full bodyFont headerColor text-center tableBg">
 
+    </table>
+</div> --}}
+
+<div class="w-full h-full">
+    <table
+        {{ $attributes->merge([
+            'class' => 'w-full bodyFont headerColor text-center tableBg'
+        ]) }}
+        id="salesmanTable">
     </table>
 </div>

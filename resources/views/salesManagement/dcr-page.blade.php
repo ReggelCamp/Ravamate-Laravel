@@ -38,13 +38,13 @@
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar class="w-full customSearch" id="customSearch" />
+                            <x-searchbar class="w-full font-medium customSearch" id="customSearch" />
                         </div>
                     </div>
                 </div>
                 <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
                     <div class="min-w-[550px]">
-                        <x-datatable />
+                        <x-datatable class="font-bold" />
                     </div>
                 </div>
             </div>
