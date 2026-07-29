@@ -59,6 +59,16 @@
         /* color: black; */
         color: var(--body-color);
     }
+
+    .dt-scroll-head th, #dcrTable th {
+        font-size: small;
+        color: var(--header-color);
+    }
+    /* .dt-scroll-head th,
+    #salesmanTable th {
+        color: var(--header-color);
+    } */
+
 </style>
 
 {{-- <div class="w-full h-full text-sm bodyFont ">
@@ -67,11 +77,15 @@
     </table>
 </div> --}}
 
+@props([
+    'id' => 'salesmanTable',
+])
+
 <div class="w-full h-full">
     <table
         {{ $attributes->merge([
-            'class' => 'w-full bodyFont headerColor text-center tableBg'
+            'class' => 'w-full bodyFont tableBg'
         ]) }}
-        id="salesmanTable">
+        id="{{ $id }}">
     </table>
 </div>

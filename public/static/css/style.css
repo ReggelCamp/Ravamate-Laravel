@@ -292,7 +292,10 @@ summary::-webkit-details-marker {
             color-mix(in srgb, var(--primary) 60%, #B0004F)
         );
 } */
-
+    .reportBg{
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+        color: var(--header-color);
+    }
     .mainBG {
         --primary-dark: color-mix(in srgb, var(--primary) 75%, black);
 
@@ -355,7 +358,7 @@ summary::-webkit-details-marker {
 
     .searchBar {
         /* background-color:white; */
-        color: black;
+        /* color: black; */
     }
 
     .bodyBg {

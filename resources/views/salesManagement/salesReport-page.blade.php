@@ -4,7 +4,7 @@
 
 
     <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-full flex flex-col">
+        <div class="card w-full h-[500px] flex flex-col">
             <div class="report_title w-full justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Report" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">

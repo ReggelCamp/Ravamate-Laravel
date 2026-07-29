@@ -46,9 +46,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full overflow-auto rounded-2xl">
-                            <x-datatable id="PendingTable" />
-                        </div>
+                         <div class="min-w-[550px] ">
+                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
+                            </div>
                     </div>
                 </div>
             </div>

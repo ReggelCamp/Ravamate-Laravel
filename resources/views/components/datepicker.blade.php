@@ -89,38 +89,26 @@
     'id' => 'datePicker'
 ])
 
-<div class=" flex h-full justify-end pr-2">
-
-    {{-- <div class="w-[250px] dateColor flex items-center h-full justify-end "> --}}
+<div class="flex h-full justify-end pr-2">
     <div class="dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)
-
-            <div
-                id="dateButton"
-                class="cursor-pointer text-sm flex items-center">
-            </div>
-
+            <div id="dateButton" class="cursor-pointer text-sm flex items-center"></div>
         @else
-
-            {{-- <button
-                id="dateButton"
-                {{ $attributes }}
-                class="border text-xs md:text-base w-[200px] h-full headerFont rounded-2xl flex items-center justify-center shine-bg transition">
+            <button
+                type="button"
+                name="datePicker"
+                id="{{ $id }}"
+                {{ $attributes->merge([
+                    'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition'
+                ]) }}>
                 Filter by Date
-            </button> --}}
+            </button>
 
-        <button
-            id="{{ $id }}"
-            {{ $attributes->merge([
-                'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition'
-            ]) }}>
-            Filter by Date
-        </button>
-
+            {{-- holds the selected range as a plain string, e.g. "2026-01-01 - 2026-01-31" --}}
+            <input type="hidden" id="{{ $id }}_value" name="date_range">
         @endif
 
     </div>
-
 </div>
 

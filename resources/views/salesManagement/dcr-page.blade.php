@@ -2,7 +2,7 @@
 @section('headerTitle', 'DAILY COLLECTION REPORT')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
+    <div class="flex w-full h-screen pt-10 px-3">
         <div class="card w-full h-96 flex flex-col">
             <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DCR" />
@@ -17,22 +17,22 @@
                     <div class="flex gap-5 w-full">
                         <div class="h-[25px]">
                             <x-dropdown>
-                                <x-slot:dropdownName>
+                                <x-slot:dropdownName class="w-[100px]">
                                     <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex items-center w-fit px-5  whitespace-nowrap border rounded-2xl h-[25px]">
                                         <i class="mdi mdi-filter-variant"></i>
-                                        Filter by Salesman
+                                        Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch"/>
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
+                                <ul class="dropdown_item border w-[300px]  bg-white border" id="dsrItems">
+                                    <x-searchbar id="dsrSearch" class="w-[300px]"/>
+                                    {{-- <li><a>Item 1</a></li>
+                                    <li><a>Item 2</a></li> --}}
                                 </ul>
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable class="" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -42,9 +42,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
-                    <div class="min-w-[550px]">
-                        <x-datatable class="font-bold" />
+                <div class="w-full">
+                    <div id="DcrReportname" class="reportBg items-center flex justify-center w-[200px] h-[50px] bg-red-500 rounded-t-2xl">
+                        <span>Select Salesman</span>
+                    </div>
+                    <div class="w-full h-[250px] overflow-auto rounded-r-2xl" id="DataTable">
+                        <x-datatable />
                     </div>
                 </div>
             </div>

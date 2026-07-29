@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\dcrController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
@@ -205,6 +206,10 @@ Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
 
 //getsalesman
 Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
+
+Route::get('/getDCRtable',[dcrController::class,'getDCRtable']);
+
+Route::get('/salesmen', [dcrController::class, 'getSalesmen']);
 
 //for the fonts
 Route::get('/fonts',[ThemeController::class,'getFonts']);

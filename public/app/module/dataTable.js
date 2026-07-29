@@ -1,5 +1,6 @@
 export default class MyDataTables{
     static tableData(id, json, columns, options = {}){
+        
         $(id).DataTable({
             data:json,
                 searching: true,

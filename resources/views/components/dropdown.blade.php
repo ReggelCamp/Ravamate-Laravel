@@ -11,7 +11,7 @@
 ])
 
 <div {{ $attributes->merge([
-    'class' => 'dropdown dropdownTrigger bodyFont'
+    'class' => 'dropdown dropdownTrigger bodyFont '
 ]) }}>
 
     <div
@@ -19,7 +19,7 @@
         role="button"
         class="flex justify-between items-center {{ $buttonClass }}"
     >
-        <span class="dropdownName flex-1">
+        <span class="dropdownName flex-1  ">
             {{ $dropdownName }}
         </span>
 

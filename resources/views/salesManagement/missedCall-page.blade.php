@@ -24,8 +24,10 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-               <div class="w-full pt-2 overflow-auto rounded-2xl">
-                    <x-datatable id="PendingTable"/>
+              <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
+                    <div class="min-w-[550px]">
+                        <x-datatable class="font-bold text-[15px]" id="dcrTable"/>
+                    </div>
                 </div>
             </div>
         </div>

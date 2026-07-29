@@ -8,7 +8,9 @@
         <x-slot:dropdownName>
             <span
                 id="{{ $id }}"
-                class="border shine-bgExportBtn px-2 rounded-2xl flex items-center gap-2 cursor-pointer">
+                {{ $attributes->merge([
+                    "class"=>"border shine-bgExportBtn rounded-2xl flex items-center gap-2 cursor-pointer w-fit px-5"
+                ]) }}>
                 {{ $label }}
                 <i class="fa-solid fa-caret-down"></i>
             </span>

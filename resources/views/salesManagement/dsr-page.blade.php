@@ -19,7 +19,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex items-center w-fit px-5 whitespace-nowrap border rounded-2xl h-[25px]">
                                         <i class="mdi mdi-filter-variant"></i> 
                                         Filter by Salesman
                                     </span>
@@ -42,8 +42,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable />
+                <div class="w-full">
+                    <div class="reportBg items-center flex justify-center w-[200px] h-[50px] bg-red-500 rounded-t-2xl">
+                        caa
+                    </div>
+                    <div class="w-full h-[250px] overflow-auto rounded-r-2xl" id="DataTable">
+                        <x-datatable />
+                    </div>
                 </div>
             </div>
         </div>
