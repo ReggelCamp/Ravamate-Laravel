@@ -6,7 +6,7 @@
 
         <div class="flex flex-col w-full px-25 pt-5 ">
             <!--Cutomer-->
-            <h1 class="text-2xl text-center headerColor ">
+            <h1 class="text-2xl text-center font-medium text-[30px] headerColor ">
                 Customer
             </h1>
             <!-- DIVIDER -->
@@ -15,9 +15,8 @@
             </div>
 
             <!-- CARDS WRAPPER -->
-            <div class="customerCardContent flex flex-col sm:flex-row gap-5 w-full items-stretch sm:flex-wrap">
+            <div class="customerCardContent font-medium text-[12px] flex flex-col sm:flex-row gap-5 w-full items-stretch sm:flex-wrap">
               
-
                 <div class="w-[250px] min-h-[150px] gap-0">
                     <h2 class="card-title rounded-t-2xl py-2 w-full flex justify-center maintinanceCard headerColor">
                         Georeset
@@ -60,7 +59,7 @@
 
         <div class="flex flex-col w-full px-25 pt-5 ">
             <!--Product-->
-            <h1 class="text-2xl text-center headerColor">
+            <h1 class="text-2xl text-center font-medium text-[30px] headerColor">
                 Product
             </h1>
 
@@ -78,7 +77,7 @@
 
         <div class="flex flex-col w-full px-25 pt-10">
             <!--Others-->
-            <h1 class="text-2xl text-center headerColor">
+            <h1 class="text-2xl text-center font-medium text-[30px] headerColor">
                 Others
             </h1>
 

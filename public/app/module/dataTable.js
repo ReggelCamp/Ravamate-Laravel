@@ -1,6 +1,6 @@
 export default class MyDataTables{
     static tableData(id, json, columns, options = {}){
-        
+        console.log(options);
         $(id).DataTable({
             data:json,
                 searching: true,
@@ -9,7 +9,7 @@ export default class MyDataTables{
                 responsive: true,
                 data: json,
                 columns: columns,
-                // pageLength: 5,
+                // pageLength: pageLength,
                 scrollX:true,
                 
                 dom: '<"top">rt<"dataTable-info"ip><"clear">',

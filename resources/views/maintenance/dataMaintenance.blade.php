@@ -19,7 +19,7 @@
         <div class="flex flex-col w-full px-25 pt-5">
 
             <!-- TITLE -->
-            <h1 class="text-2xl text-center headerColor">
+            <h1 class="text-2xl text-center text-[30px] font-medium headerColor">
                 CDO Sync
             </h1>
 
@@ -33,7 +33,7 @@
 
             </div>
 
-            <h1 class="text-2xl text-center headerColor">
+            <h1 class="text-2xl text-center text-[30px] font-medium headerColor">
                 SFA Plus Sync
             </h1>
 

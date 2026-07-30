@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
+        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
             <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DSR" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -24,10 +24,10 @@
                                         Filter by Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" />
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
+                                <ul class="dropdown_item border w-[300px]  bg-white border" id="dsrItems">
+                                    <x-searchbar id="dsrSearch" class="w-[300px]"/>
+                                    {{-- <li><a>Item 1</a></li>
+                                    <li><a>Item 2</a></li> --}}
                                 </ul>
                             </x-dropdown>
                         </div>
@@ -43,11 +43,11 @@
                     </div>
                 </div>
                 <div class="w-full">
-                    <div class="reportBg items-center flex justify-center w-[200px] h-[50px] bg-red-500 rounded-t-2xl">
-                        caa
+                    <div class=" items-center flex justify-center w-[200px] h-[50px] bg-red-500 rounded-t-2xl">
+                        <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png" alt="">
                     </div>
-                    <div class="w-full h-[250px] overflow-auto rounded-r-2xl" id="DataTable">
-                        <x-datatable />
+                     <div class="w-full flex-1 overflow-auto pb-5 rounded-r-2xl">
+                        <x-datatable id="DcrDataTable" />
                     </div>
                 </div>
             </div>

@@ -133,8 +133,11 @@
     {{-- Your JS --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
     <script type="module" src="/app/helper/dataMaintenanceModal.js"></script>
+    <script type="module" src="/app/helper/dataTableLoader.js"></script>
+    <script type="module" src="/app/helper/dataTableLoader.js"></script>
     <script type="module" src="/app/module/salesman.js"></script>
     <script type="module" src="/app/module/dcrTable.js"></script>
+    <script type="module" src="/app/module/dsrTable.js"></script>
     <script type="module" src="/app/module/dataMaintenanceCard.js"></script>
     <script type="module" src="/app/module/ericDataAlignmentCard.js"></script>
     <script type="module" src="/app/module/daterange.js"></script>

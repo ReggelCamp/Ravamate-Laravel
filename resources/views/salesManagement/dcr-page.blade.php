@@ -3,36 +3,37 @@
 @section('content')
 
     <div class="flex w-full h-screen pt-10 px-3">
-        <div class="card w-full h-96 flex flex-col">
+        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
             <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DCR" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
-                    <x-datepicker id="dcrDatepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
-                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
-                    <i class="fa-solid fa-caret-down text-xs"></i>
-                </span>
+
+                <div class="sheenFilterBtn border rounded-xl">
+                    <span class="flex  items-center justify-center px-5 gap-[5px]">
+                        <x-datepicker id="dcrDatepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
+                        <i class="fa-solid fa-caret-down text-xs"></i>
+                    </span>
+                </div>
             </div>
-            <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
+            <div class="w-full items-center flex-1 bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div class="h-[25px]">
                             <x-dropdown>
-                                <x-slot:dropdownName class="w-[100px]">
+                                <x-slot:dropdownName class="w-[100px] ">
                                     <span
-                                        class="flex items-center w-fit px-5  whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex items-center sheenFilterBtn w-fit px-5  whitespace-nowrap border rounded-2xl h-[25px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border w-[300px]  bg-white border" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" class="w-[300px]"/>
-                                    {{-- <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li> --}}
+                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dcrItems">
+                                    {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
                                 </ul>
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class="" />
+                            <x-exportDataTable class=" " />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -42,12 +43,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full">
-                    <div id="DcrReportname" class="reportBg items-center flex justify-center w-[200px] h-[50px] bg-red-500 rounded-t-2xl">
-                        <span>Select Salesman</span>
+                <div class="w-full flex flex-col gap-2">
+                    <div id="DcrReportname"
+                        class="relative min-w-[200px] max-w-[500px] min-h-[50px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
+                        <!-- Background Image -->
+                        <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png" alt=""
+                            class="absolute inset-0 w-full h-full object-cover z-0">
+                        <!-- Salesman Name -->
+                        <span id="salesmanName" class="relative z-10 text-white font-semibold text-sm">
+                        </span>
                     </div>
-                    <div class="w-full h-[250px] overflow-auto rounded-r-2xl" id="DataTable">
-                        <x-datatable />
+                    <div class="w-full flex-1 overflow-auto pb-5 rounded-r-2xl">
+                        <x-datatable id="DcrDataTable" />
                     </div>
                 </div>
             </div>

@@ -1,84 +1,65 @@
-import Api from "../helper/Api.js";
-import MyDataTables from "./dataTable.js";
+import { loadTable } from "../helper/dataTableLoader.js";
+import { loadDropdown } from "../helper/DropDownLoader.js";
 
-function getDCRtableContent(salesman = "") {
-    Api.get({
-        url: "/getDCRtable",
-        data: {
-            salesman_name: salesman
-        },
-        onSuccess: (data) => {
-            console.log("feq",data);
-            MyDataTables.tableData("#dcrTable", data, [
-                {
-                    title: "Salesman",
-                    data: "salesman_name",
-                },
-                {
-                    title: "O.R",
-                    data: "or_no",
-                },
-                {
-                    title: "CUSTOMER",
-                    data: "customer",
-                },
-                {
-                    title: "S.I NO.",
-                    data: "si_no",
-                },
-                {
-                    title: "S.I AMT",
-                    data: "si_amount",
-                },
-                {
-                    title: "CHECK DATE",
-                    data: "check_date",
-                },
-                {
-                    title: "BANK CODE",
-                    data: "bank_code",
-                },
-                {
-                    title: "CHECK NO.",
-                    data: "check_no",
-                },
-                {
-                    title: "AMOUNT",
-                    data: "amount",
-                },
-            ]);
-        },
-    });
-}
+const DcrColumns = [
 
-function getSalesman() {
-    Api.get({
-        url: "/salesmen",
+            {
+                title: "Salesman",
+                data: "salesman_name",
+            },
+            {
+                title: "O.R",
+                data: "or_no",
+            },
+            {
+                title: "CUSTOMER",
+                data: "customer",
+            },
+            {
+                title: "S.I NO.",
+                data: "si_no",
+            },
+            {
+                title: "S.I AMT",
+                data: "si_amount",
+            },
+            {
+                title: "CHECK DATE",
+                data: "check_date",
+            },
+            {
+                title: "BANK CODE",
+                data: "bank_code",
+            },
+            {
+                title: "CHECK NO.",
+                data: "check_no",
+            },
+            {
+                title: "AMOUNT",
+                data: "amount",
+            },
+        ]
 
-        onSuccess: (data) => {
-            console.log("daaw", data);
-            let html = "";
+loadTable({
+    url: "getDCRtable",
+    tableId: "#DcrDataTable",
+    columns: DcrColumns,
+    pageLength: 5,
 
-            $.each(data, function (index, item) {
-                html += `
-                    <li>
-                        <a href="#" class="salesman-item"
-                           data-salesman="${item.salesman_name}">
-                            ${item.salesman_name}
-                        </a>
-                    </li>
-                `;
-            });
+    onSuccess: (data) => {
+        console.log(data.length);
+        console.log("dcr");
+    }
+});
 
-            $("#dsrItems").html(html);
-        },
-    });
-}
+loadDropdown({
+    url: "/salesmen",
+    dropdownId: "dcrItems",
 
-$(document).ready(function () {
-    getDCRtableContent();
-    getSalesman();
-    console.log("deym");
+    onSuccess: (data) => {
+
+    }
 });
 
 $(document).on("click", ".salesman-item", function (e) {
@@ -86,9 +67,9 @@ $(document).on("click", ".salesman-item", function (e) {
 
     const salesman = $(this).data("salesman");
 
-    $("#DcrReportname").text(salesman || "Select Salesman");
+    $("#salesmanName").text(salesman || "Select Salesman");
     
-    getDCRtableContent(salesman);
+    loadTable(salesman);
 
     $(this).blur();
     $('.dropdownTrigger [role="button"]').blur();

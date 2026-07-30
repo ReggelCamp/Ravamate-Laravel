@@ -9,7 +9,7 @@
             <span
                 id="{{ $id }}"
                 {{ $attributes->merge([
-                    "class"=>"border shine-bgExportBtn rounded-2xl flex items-center gap-2 cursor-pointer w-fit px-5"
+                    "class"=>"border sheenFilterBtn rounded-2xl flex items-center gap-2 cursor-pointer w-fit px-5"
                 ]) }}>
                 {{ $label }}
                 <i class="fa-solid fa-caret-down"></i>

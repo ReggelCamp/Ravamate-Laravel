@@ -24,6 +24,20 @@ $(document).ready(function () {
             }
         });
 
+         // Move Apply/Clear below the ranges
+        $btn.on('show.daterangepicker', function (ev, picker) {
+            picker.container
+                .find('.drp-buttons')
+                .appendTo(picker.container.find('.ranges'));
+        });
+
+$btn.on('show.daterangepicker', function (ev, picker) {
+    const $container = picker.container;
+
+    // Move the selected text above everything
+    $container.find('.drp-selected').prependTo($container);
+});
+
         // Handle Clear/Cancel - reset button text back to default
         $btn.on('cancel.daterangepicker', function () {
             $btn.text('Filter by Date');

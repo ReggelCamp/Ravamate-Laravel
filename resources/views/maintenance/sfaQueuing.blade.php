@@ -1,4 +1,5 @@
 @extends('layout.app')
+@section('headerTitle', 'SFA Queuing')
 @section('content')
 
 <div class="flex flex-col h-screen mainBg bodyFont items-center p-5 gap-5">

@@ -1,4 +1,7 @@
 export default class Dropdown {
+
+    
+
     static search(id, list_id){
         $(document).on('input',id, function(){
             let search = $(this).val().toLowerCase();

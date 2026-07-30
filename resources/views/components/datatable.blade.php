@@ -1,73 +1,111 @@
 <style>
-    /* center everything by default */
-    #salesmanTable th,
-    #salesmanTable td {
-        text-align: center !important;
-        vertical-align: middle;
-        overflow-x: scroll;
-    }
+/* ===========================
+   DataTable Header
+=========================== */
 
-    /* first column (name) stays left */
-    #salesmanTable th:first-child,
-    #salesmanTable td:first-child:not(.dt-empty) {
-        text-align: left !important;
-    }
+.dt-scroll-head {
+    background-color: var(--primary) !important;
+}
 
-    #salesmanTable td.dt-empty {
+.dt-scroll-head table thead th {
+    color: var(--header-color) !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left !important;
+    padding-left: 12px !important;
+}
+
+/* Header cell */
+.dt-scroll-head th {
+    position: relative;
+    text-align: left !important;
+    padding-right: 28px !important; /* room for sort icon */
+}
+
+/* Header title */
+.dt-scroll-head .dt-column-title {
+    display: block;
+    text-align: left !important;
+}
+
+/* Sort icon */
+.dt-scroll-head .dt-column-order {
+    position: absolute !important;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ===========================
+   Table Body
+=========================== */
+
+.dt-scroll-body {
+    background-color: var(--background);
+    color: var(--body-color);
+}
+
+.dt-scroll-body table tbody td {
+    text-align: left !important;
+    vertical-align: middle;
+    padding-left: 12px !important;
+}
+
+/* Empty table message */
+.dt-empty {
     text-align: center !important;
+    color: var(--body-color);
     white-space: normal !important;
     word-break: break-word;
     padding: 1rem;
 }
 
-    /* #salesmanTable .dt-container {
-        display: flex !important;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    } */
+/* ===========================
+   Pagination
+=========================== */
 
-    .dataTable-info{
-        display: flex !important;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 2px;
-    }
+.dataTable-info {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 2px;
+}
 
-    .dt-paging {
-        width: fit-content;
-        display: flex;
-        justify-content: flex-end;
-        border-radius: 8px;
-        background-color: var(--background);
-    }
-    
-    .dt-scroll-head{
-        /* background-color: red !important; */
-        background-color: var(--primary) !important;
-        font-weight: 500;
-        font-size: 11px;
-    }
+.dt-paging {
+    display: flex;
+    justify-content: flex-end;
+    width: fit-content;
+    border-radius: 8px;
+    background-color: var(--background);
+}
 
-    .dt-scroll-body{
-        background-color: var(--background);
-        /* color: black; */
-        color: var(--body-color);
-    }
-    .dt-empty{
-        /* color: black; */
-        color: var(--body-color);
-    }
+/* .dt-paging-button:hover {
+    padding: 1 !important;
+    background-color: var(--primary) !important;
+    color:var(--header-color) !important;
+} */
 
-    .dt-scroll-head th, #dcrTable th {
-        font-size: small;
-        color: var(--header-color);
-    }
-    /* .dt-scroll-head th,
-    #salesmanTable th {
-        color: var(--header-color);
-    } */
+.dt-paging-button:hover,
+.dt-paging-button:focus,
+.dt-paging-button:active {
+    background: var(--primary) !important;
+    color: var(--accent) !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button.current,
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    color: var(--header-color) !important;
+    background-color: var(--primary) !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button.disabled:hover{
+    color: var(--header-color) !important;
+    background-color: var(--primary) !important;
+}
 
 </style>
 
