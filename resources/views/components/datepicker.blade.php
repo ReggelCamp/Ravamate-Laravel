@@ -89,7 +89,7 @@
     'id' => 'datePicker'
 ])
 
-<div class="flex h-full justify-end pr-2">
+<div class="flex h-full justify-end">
     <div class="dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)

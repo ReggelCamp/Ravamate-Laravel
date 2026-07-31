@@ -1,5 +1,5 @@
 import Api from "../helper/Api.js";
-import MyDataTables from "./dataTable.js";
+import TableLoader from "../helper/TableLoader.js";
 
 function getAllSalesman() {
 
@@ -8,7 +8,7 @@ function getAllSalesman() {
 
         onSuccess: (data) => {
             
-            MyDataTables.tableData(
+            TableLoader.tableData(
                 '#salesmanTable',
                 data,[
                     {

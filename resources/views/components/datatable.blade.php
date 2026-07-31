@@ -5,6 +5,7 @@
 
 .dt-scroll-head {
     background-color: var(--primary) !important;
+    
 }
 
 .dt-scroll-head table thead th {
@@ -15,7 +16,6 @@
     padding-left: 12px !important;
 }
 
-/* Header cell */
 .dt-scroll-head th {
     position: relative;
     text-align: left !important;
@@ -43,6 +43,8 @@
 .dt-scroll-body {
     background-color: var(--background);
     color: var(--body-color);
+    position: relative;
+    z-index: 1;
 }
 
 .dt-scroll-body table tbody td {

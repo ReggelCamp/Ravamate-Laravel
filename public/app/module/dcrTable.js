@@ -1,4 +1,4 @@
-import { loadTable } from "../helper/dataTableLoader.js";
+import TableLoader  from "../helper/TableLoader.js";
 import { loadDropdown } from "../helper/DropDownLoader.js";
 
 const DcrColumns = [
@@ -41,7 +41,7 @@ const DcrColumns = [
             },
         ]
 
-loadTable({
+TableLoader.loadTable({
     url: "getDCRtable",
     tableId: "#DcrDataTable",
     columns: DcrColumns,

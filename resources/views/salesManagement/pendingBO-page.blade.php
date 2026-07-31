@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="DcrDataTable" />
                         </div>
                     </div>
 
@@ -66,9 +66,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
-                            </div>
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="DcrDataTable" />
+                        </div>
                     </div>
 
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="Approved BO" />
@@ -92,9 +92,9 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
-                            </div>
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="DcrDataTable" />
+                        </div>
                     </div>
                 </div>
             </div>

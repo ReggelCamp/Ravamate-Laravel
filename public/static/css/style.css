@@ -317,6 +317,43 @@ summary::-webkit-details-marker {
         outline: none;
     }
 
+    /* SFA MAINTENANCE */
+    .ericPendingVal{
+        font-size: 50px !important;
+        font-weight: 800 !important;
+        color: var(--accent);
+    }
+
+    .sfaqueuingHeader{
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        color: var(--header-color);
+    }
+    
+    .sfaqueuingSubHeader{
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        color: var(--header-color);
+    }
+
+    .sfaqueuingBtn{
+        color: var(--header-color) !important;
+    }
+
+    .sfaqueuingLogs{
+        color: var(--header-color);
+    }
+    
+    .sfaqueuingLogs:hover{
+        /* color: var(--body-color); */
+        /* background-color: var(--background); */
+        border: 1px solid var(--background);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    /* END */
+
     .report_title {
         /* background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary)); */
         /* background: radial-gradient(at 50% 75%, var(--primary), var(--secondary), var(--accent)); */

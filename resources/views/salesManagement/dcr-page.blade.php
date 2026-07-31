@@ -33,7 +33,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class=" " />
+                            <x-exportDataTable class=" w-fit px-5" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -45,15 +45,16 @@
                 </div>
                 <div class="w-full flex flex-col gap-2">
                     <div id="DcrReportname"
-                        class="relative min-w-[200px] max-w-[500px] min-h-[50px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
-                        <!-- Background Image -->
-                        <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png" alt=""
-                            class="absolute inset-0 w-full h-full object-cover z-0">
-                        <!-- Salesman Name -->
+                        class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
+
+                        <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
+                            class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+
                         <span id="salesmanName" class="relative z-10 text-white font-semibold text-sm">
                         </span>
+
                     </div>
-                    <div class="w-full flex-1 overflow-auto pb-5 rounded-r-2xl">
+                    <div class="w-full flex-1 overflow-auto pb-5">
                         <x-datatable id="DcrDataTable" />
                     </div>
                 </div>

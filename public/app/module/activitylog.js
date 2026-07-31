@@ -1,5 +1,5 @@
 import Api from "../helper/Api.js";
-import LogsTable from "./dataTable.js";
+import TableLoader from "../helper/TableLoader.js";
 
 let $logs = [];
 let filterStart = null;
@@ -20,7 +20,7 @@ function getActivityLogs() {
             $logs = response.data ?? response;
             console.log("daaas",$logs);
 
-            LogsTable.tableData(
+            TableLoader.tableData(
                 '#activityLogsTable',
                 $logs,[
                     {
@@ -227,7 +227,7 @@ $(document).on("click", ".descModal", function () {
         $("#changesSection").show();
     }
 
-    LogsTable.tableData(
+    TableLoader.tableData(
         "#changesTable",
         changes,
         [
