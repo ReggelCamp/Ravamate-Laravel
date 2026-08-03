@@ -119,3 +119,5 @@
 </body>
 
 @endsection
+
+ <script type="module" src="/app/module/user.js"></script>

@@ -133,6 +133,11 @@ Route::get('/customer', function () {
     return view('maintenance.customer.customer-page');
 })->name('customer');
 
+    //Customer Tiering
+    Route::get('/customertiering', function () {
+        return view('maintenance.customer.customerTiering');
+    })->name('customertiering');
+
 //Maintenance Customer
 Route::get('/cmf', function () {
     return view('maintenance.customer.cmf-page');
@@ -239,3 +244,12 @@ Route::get('/activitylogs', function () {
 })->name('activitylogs');
 
 Route::get('/activitylogs/data', [ThemeController::class, 'getActivityLogs']);
+
+//SFA Queuing
+Route::get('/adm-sync-logs', function () {
+    return view('maintenance.sfaQueuing.adm-sync-logs');
+})->name('adm-sync-logs');
+
+Route::get('/dynamic-route-list', function () {
+    return view('maintenance.sfaQueuing.dynamic-route-list');
+})->name('dynamic-route-list');

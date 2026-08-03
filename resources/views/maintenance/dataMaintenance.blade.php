@@ -65,3 +65,6 @@
     </dialog>
     
 @endsection
+
+<script type="module" src="/app/module/ericDataAlignmentCard.js"></script>
+

@@ -55,3 +55,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/dsrTable.js"></script>

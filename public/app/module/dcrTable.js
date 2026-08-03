@@ -1,5 +1,5 @@
 import TableLoader  from "../helper/TableLoader.js";
-import { loadDropdown } from "../helper/DropDownLoader.js";
+import DropDownLoader  from "../helper/DropDownLoader.js";
 
 const DcrColumns = [
 
@@ -53,7 +53,7 @@ TableLoader.loadTable({
     }
 });
 
-loadDropdown({
+DropDownLoader.loadDropdown({
     url: "/salesmen",
     dropdownId: "dcrItems",
 

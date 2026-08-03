@@ -144,3 +144,6 @@
     </dialog>
 
 @endsection
+
+<script type="module" src="/app/module/dataMaintenanceCard.js"></script>
+<script type="module" src="/app/helper/dataMaintenanceModal.js"></script>

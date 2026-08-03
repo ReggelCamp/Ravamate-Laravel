@@ -129,3 +129,5 @@ div.dt-container .dt-paging .dt-paging-button.disabled:hover{
         id="{{ $id }}">
     </table>
 </div>
+
+<script type="module" src="/app/helper/TableLoader.js"></script>

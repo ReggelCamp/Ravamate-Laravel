@@ -2,33 +2,46 @@
 @section('headerTitle', 'PLACEMENT MAINTENANCE')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
-                <x-report-header-title title="Placement Maintenance" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
-                    <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
-                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
-                    <i class="fa-solid fa-caret-down text-xs"></i>
-                </span>
-            </div>
-            <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex items-center w-full h-[60px] py-3">
-                    <div class="flex gap-5 w-full">
-                        <div>
-                            <x-exportDataTable />
+        <div class="flex w-full h-screen pt-5 px-3">
+            <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
+                <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+                    <x-report-header-title title="Placement Maintenance" />
+                    <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                        <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
+                        <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
+                        <i class="fa-solid fa-caret-down text-xs"></i>
+                    </span>
+                </div>
+                <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
+                    <div class="flex items-center w-full h-[60px] py-3">
+                        <div class="flex gap-5 w-full">
+                            <div>
+                                <x-exportDataTable />
+                            </div>
+                            <div>
+                                <button class="btn rounded-xl" onclick="AddPlacement.showModal()">Add Placement</button>
+                            </div>
+                        </div>
+                        <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <x-searchbar class="w-[250px] " id="customSearch" />
                         </div>
                     </div>
-                    <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                    <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
+                        <x-datatable />
                     </div>
-                </div>
-                <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable />
                 </div>
             </div>
         </div>
-    </div>
+
+    <dialog id="AddPlacement" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <h3 class="text-lg font-bold">Hello!</h3>
+            <p class="py-4">Press ESC key or click on ✕ button to close</p>
+        </div>
+    </dialog>
 
 @endsection

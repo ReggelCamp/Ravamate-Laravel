@@ -34,6 +34,53 @@
             color: var(--body-color) !important;
             border-color: var(--header-color) !important;
         }
+
+        .container_trigger.active {
+            background-color: #a78ca0; /* violet-600 */
+        }
+
+        .container_trigger.active:hover {
+            background-color: #a78ca0; /* keep the same color on hover */
+        }
+
+        .sfaShine_Btn{
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            border: 1px solid var(--header-color);
+            color: var(--header-color);
+        }
+        
+        .sfaShine_Btn:hover{
+            background: linear-gradient(to right,
+                var(--secondary),
+                var(--primary));
+            border: 1px solid var(--header-color);
+            color: var(--header-color);
+        }
+
+        .sfaShine_Btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            z-index: 1;
+
+            background: linear-gradient(120deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.25) 50%,
+                    transparent 100%);
+
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
+
+        .sfaShine_Btn:hover::after {
+            animation: sheen 0.8s ease-in-out forwards;
+        }
+
     </style>
 
     <div class="mainBg bodyFont min-h-screen p-25">
@@ -42,16 +89,22 @@
             <!-- HEADER -->
             <div class="flex justify-between flex-row-reverse sm:flex-row">
 
-                <button class=" text-sm rounded-lg h-12 sfaqueuingBtn px-4">
-                    Dynamic Load Planning
-                </button>
+       
+                    <a href="{{ route('dynamic-route-list') }}"
+                        class=" text-sm rounded-lg sfaShine_Btn h-12 px-4 items-center gap-2 inline-flex">
+                        <i class="fas fa-truck"></i>
+                        Dynamic Load Planning
+                    </a>
 
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <button class="bg-blue-500 text-sm rounded-xl text-white px-4 py-2">
-                        Admin Sync Logs
-                    </button>
+                    <a href="{{ route('adm-sync-logs') }}"
+                        class="text-sm rounded-lg sfaShine_Btn h-12 px-4 inline-flex items-center gap-2">
+                            <i class="fas fa-truck"></i>
+                            Admin Sync Logs
+                    </a>
 
-                    <button class="bg-blue-500 text-sm rounded-xl text-white px-4 py-2">
+                    <button class="bg-transparent text-sm rounded-xl sfaShine_Btn px-4 py-2">
+                        <i class="fas fa-refresh"></i>
                         Refresh
                     </button>
                 </div>
@@ -61,8 +114,7 @@
             <!-- CARDS -->
             <div class="grid grid-cols-1 md:grid-cols-2">
 
-                <div id="SoToFdis"
-                    data-id="#SoFdisContainer"
+                <div id="SoToFdis" data-id="#SoFdisContainer"
                     class="bg-transparent container_trigger border-r border-b hover:bg-violet-600 min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
@@ -88,7 +140,8 @@
                     </div>
                 </div>
 
-                <div data-id="#PaymentFdisTable" id="PaymentToFdis" class="bg-transparent container_trigger hover:bg-violet-600 border-b  min-h-[130px] cursor-pointer">
+                <div data-id="#PaymentFdisTable" id="PaymentToFdis"
+                    class="bg-transparent container_trigger hover:bg-violet-600 border-b  min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -113,7 +166,8 @@
                     </div>
                 </div>
 
-                <div id="ReturnToFdis" class="bg-transparent hover:bg-violet-600 border-r min-h-[130px] cursor-pointer">
+                <div id="ReturnToFdis" data-id="#ReturnFdisTable"
+                    class="bg-transparent container_trigger hover:bg-violet-600 border-r min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -138,7 +192,8 @@
                     </div>
                 </div>
 
-                <div id="TransferFdis" class="bg-transparent hover:bg-violet-600 min-h-[130px] cursor-pointer">
+                <div id="TransferFdis" data-id="#AutoStockFdisTable"
+                    class="bg-transparent container_trigger hover:bg-violet-600 min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -170,10 +225,10 @@
 
                 <div class="flex w-full items-center justify-between px-5 py-3">
                     <div class="flex items-center gap-2">
-                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Return.svg"
-                            alt="Returns to FDIS">
+                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_SO.svg"
+                            alt="Sales Orders to FDIS">
                         <span class="text-[18px] font-bold text-white">
-                            Returns to FDIS Logs
+                            Sales Order to FDIS Logs
                         </span>
                     </div>
                     <div class="flex items-center gap-3">
@@ -197,40 +252,98 @@
                 </div>
 
                 <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PendingLogsTab"
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOPendingLogsTab"
                         aria-label="Pending Logs ()" />
                     <div class="tab-content bg-base-100 border-base-300 ">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PendingLogs" />
+                            <x-datatable id="SOPendingLogs" />
                         </div>
                     </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="FailedLogsTab" aria-label="Failed Logs ()"
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOFailedLogsTab" aria-label="Failed Logs ()"
                         checked="checked" />
                     <div class="tab-content bg-base-100 border-base-300 ">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="FailedLogs" />
+                            <x-datatable id="SOFailedLogs" />
                         </div>
                     </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SuccessLogsTab"
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOSuccessLogsTab"
                         aria-label="Success Logs ()" />
                     <div class="tab-content bg-base-100 border-base-300">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="SuccessLogs" />
+                            <x-datatable id="SOSuccessLogs" />
                         </div>
                     </div>
                 </div>
 
             </div>
-            
-             <!-- TABLE payment To FDIS-->
+
+            <!-- TABLE payment To FDIS-->
             <div id="PaymentFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
 
                 <div class="flex w-full items-center justify-between px-5 py-3">
                     <div class="flex items-center gap-2">
+                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Payment.svg"
+                            alt="Payments to FDIS">
+                        <span class="text-[18px] font-bold text-white">
+                            Payments to FDIS Logs
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
+                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                            <x-datepicker class="" displayOnly="true" />
+                        </div>
+
+                        <div class="h-[30px] text-white flex items-center">
+                            <x-exportDataTable class="px-2" />
+                        </div>
+
+                        <div class="text-white h-[30px] flex items-center">
+                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs tabs-lift">
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentPendingLogsTab"
+                        aria-label="Pending Logs ()" />
+                    <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="PaymentPendingLogs" />
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentFailedLogsTab"
+                        aria-label="Failed Logs ()" checked="checked" />
+                    <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="PaymentFailedLogs" />
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentSuccessLogsTab"
+                        aria-label="Success Logs ()" />
+                    <div class="tab-content bg-base-100 border-base-300">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="PaymentSuccessLogs" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE Return To FDIS-->
+            <div id="ReturnFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+
+                <div class="flex w-full items-center justify-between px-5 py-3">
+                    <div class="flex items-center gap-2">
                         <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Return.svg"
-                            alt="Returns to FDIS">
+                            alt="Return to FDIS">
                         <span class="text-[18px] font-bold text-white">
                             Returns to FDIS Logs
                         </span>
@@ -256,27 +369,86 @@
                 </div>
 
                 <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PendingLogsTab"
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnPendingLogsTab"
                         aria-label="Pending Logs ()" />
                     <div class="tab-content bg-base-100 border-base-300 ">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PendingLogs" />
+                            <x-datatable id="ReturnPendingLogs" />
                         </div>
                     </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="FailedLogsTab" aria-label="Failed Logs ()"
-                        checked="checked" />
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnFailedLogsTab"
+                        aria-label="Failed Logs ()" checked="checked" />
                     <div class="tab-content bg-base-100 border-base-300 ">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="FailedLogs" />
+                            <x-datatable id="ReturnFailedLogs" />
                         </div>
                     </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SuccessLogsTab"
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnSuccessLogsTab"
                         aria-label="Success Logs ()" />
                     <div class="tab-content bg-base-100 border-base-300">
                         <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="SuccessLogs" />
+                            <x-datatable id="ReturnSuccessLogs" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TABLE Auto Stock Transfer To FDIS-->
+            <div id="AutoStockFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+
+                <div class="flex w-full items-center justify-between px-5 py-3">
+                    <div class="flex items-center gap-2">
+                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Transfer.svg"
+                            alt="Auto Transfer to FDIS">
+                        <span class="text-[18px] font-bold text-white">
+                            Auto Transfer to FDIS Logs
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
+                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                            <x-datepicker class="" displayOnly="true" />
+                        </div>
+
+                        <div class="h-[30px] text-white flex items-center">
+                            <x-exportDataTable class="px-2" />
+                        </div>
+
+                        <div class="text-white h-[30px] flex items-center">
+                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabs tabs-lift">
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockPendingLogsTab"
+                        aria-label="Pending Logs ()" />
+                    <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="AutoStockPendingLogs" />
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockFailedLogsTab"
+                        aria-label="Failed Logs ()" checked="checked" />
+                    <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="AutoStockFailedLogs" />
+                        </div>
+                    </div>
+
+                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockSuccessLogsTab"
+                        aria-label="Success Logs ()" />
+                    <div class="tab-content bg-base-100 border-base-300">
+                        <div class="w-full flex-1 overflow-auto pb-5">
+                            <x-datatable id="AutoStockSuccessLogs" />
                         </div>
                     </div>
                 </div>
@@ -287,3 +459,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/sfaQueuingTable.js"></script>

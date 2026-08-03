@@ -2,7 +2,7 @@
 @section('content')
 @section('showLogo', false)
 
-    <div class="w-full flex flex-col bg-transparent ">
+    <div class="w-full h-full flex flex-col bg-transparent ">
 
         <div class="w-full h-full flex flex-col lg:flex-row overflow-y-scroll ">
 
@@ -14,7 +14,8 @@
                 <div class="flex w-full justify-center items-center">
                     <div
                         class="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] flex items-center justify-center pt-[30px] lg:pt-[80px]">
-                        <img src="/${item.logo[0]?.url}" class="object-cover themeLogo" />
+                        <img src="}" class="object-cover themeLogo" />
+                        {{-- <img src="/${item.logo[0]?.url}" class="object-cover themeLogo" /> --}}
                     </div>
                 </div>
 
@@ -153,3 +154,5 @@
         </div>
     </div>
 @endsection
+
+<script type="module" src="/app/module/dashboard.js"></script>

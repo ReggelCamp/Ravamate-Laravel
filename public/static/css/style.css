@@ -312,6 +312,44 @@ summary::-webkit-details-marker {
 
     }
 
+    .sfaShine_Btn{
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            border: 1px solid var(--header-color);
+            color: var(--header-color);
+        }
+        
+        .sfaShine_Btn:hover{
+            background: linear-gradient(to right,
+                var(--secondary),
+                var(--primary));
+            border: 1px solid var(--header-color);
+            color: var(--header-color);
+        }
+
+        .sfaShine_Btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 50%;
+            height: 100%;
+            z-index: 1;
+
+            background: linear-gradient(120deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.25) 50%,
+                    transparent 100%);
+
+            transform: skewX(-20deg);
+            pointer-events: none;
+        }
+
+        .sfaShine_Btn:hover::after {
+            animation: sheen 0.8s ease-in-out forwards;
+        }
+
     .customSearch {
         color: var(--primary);
         outline: none;
@@ -336,9 +374,9 @@ summary::-webkit-details-marker {
         color: var(--header-color);
     }
 
-    .sfaqueuingBtn{
+    /* .sfaqueuingBtn{
         color: var(--header-color) !important;
-    }
+    } */
 
     .sfaqueuingLogs{
         color: var(--header-color);

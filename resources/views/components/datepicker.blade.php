@@ -86,7 +86,8 @@
 
 @props([
     'displayOnly' => false,
-    'id' => 'datePicker'
+    'id' => 'datePicker',
+    'label' => 'Filter by Date',
 ])
 
 <div class="flex h-full justify-end">
@@ -102,7 +103,7 @@
                 {{ $attributes->merge([
                     'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition'
                 ]) }}>
-                Filter by Date
+                {{ $label }}
             </button>
 
             {{-- holds the selected range as a plain string, e.g. "2026-01-01 - 2026-01-31" --}}
@@ -112,3 +113,4 @@
     </div>
 </div>
 
+<script type="module" src="/app/module/daterange.js"></script>

@@ -334,8 +334,7 @@
     </div>
 </dialog>
 
-<script type="module" src="/app/module/theme.js"></script>
-<script type="module" src="/app/helper/theme_state.js"></script>
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -346,3 +345,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 
 @endsection
+
+<script type="module" src="/app/module/theme.js"></script>
+{{-- <script type="module" src="/app/helper/theme_state.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>

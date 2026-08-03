@@ -1,7 +1,10 @@
 import Api from "../helper/Api.js";
 
-export function loadDropdown(config) {
-    Api.get({
+//export function loadDropdown(config) {
+export default class loadDropdown {
+    
+    static loadDropdown(config) {
+        Api.get({
         url: config.url,
         data: config.filters,
 
@@ -29,8 +32,11 @@ export function loadDropdown(config) {
             });
 
             $("#dcrItems").html(html);
-        },
-    });
+            },
+        });
+    }
+
+    
 }
 
 $(document).on("input", ".DropdownSearchBar", function(){

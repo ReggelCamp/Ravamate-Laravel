@@ -127,24 +127,24 @@
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     {{-- Sortabble-js --}}
-    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script> --}}
 
     {{-- Your JS --}}
     <script type="module" src="/app/helper/theme_state.js"></script>
-    <script type="module" src="/app/helper/dataMaintenanceModal.js"></script>
-    <script type="module" src="/app/helper/TableLoader.js"></script>
+    {{-- <script type="module" src="/app/helper/dataMaintenanceModal.js"></script> --}}
+    {{-- <script type="module" src="/app/helper/TableLoader.js"></script> --}}
     {{-- <script type="module" src="/app/helper/dataTableLoader.js"></script> --}}
     <script type="module" src="/app/module/salesman.js"></script>
-    <script type="module" src="/app/module/dcrTable.js"></script>
-    <script type="module" src="/app/module/dsrTable.js"></script>
-    <script type="module" src="/app/module/sfaQueuingTable.js"></script>
-    <script type="module" src="/app/module/dataMaintenanceCard.js"></script>
-    <script type="module" src="/app/module/ericDataAlignmentCard.js"></script>
-    <script type="module" src="/app/module/daterange.js"></script>
-    <script type="module" src="/app/module/dropdown.js"></script>
-    <script type="module" src="/app/module/user.js"></script>
-    <script type="module" src="/app/module/dashboard.js"></script>
+    {{-- <script type="module" src="/app/module/dcrTable.js"></script> --}}
+    {{-- <script type="module" src="/app/module/dsrTable.js"></script> --}}
+    {{-- <script type="module" src="/app/module/sfaQueuingTable.js"></script> --}}
+    {{-- <script type="module" src="/app/module/dataMaintenanceCard.js"></script> --}}
+    {{-- <script type="module" src="/app/module/ericDataAlignmentCard.js"></script> --}}
+    {{-- <script type="module" src="/app/module/daterange.js"></script> --}}
+    {{-- <script type="module" src="/app/module/dropdown.js"></script> --}}
+    {{-- <script type="module" src="/app/module/user.js"></script> --}}
+    {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
 
     @stack('scripts')
     

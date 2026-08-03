@@ -63,3 +63,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/dcrTable.js"></script>
