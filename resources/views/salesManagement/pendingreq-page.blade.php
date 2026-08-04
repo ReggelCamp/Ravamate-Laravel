@@ -26,11 +26,11 @@
             <div class="w-full carouselBg h-screen p-5">
                 <div class="tabs tabs-lift">
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="SO Transactions" checked />
-                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div class="tab-content bg-base-100 border-base-300 p-2">
                         <div class="w-full flex md:justify-end gap-5 items-center">
                             <div
                                 class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-5">
-                                <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
+                                <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-start">
                                     <div
                                         class="flex rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                          <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
+                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="PendingRequestTable" />
                             </div>
                     </div>
                 </div>
@@ -57,3 +57,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/pendingRequest.js"></script>

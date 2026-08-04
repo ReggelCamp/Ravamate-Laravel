@@ -66,5 +66,5 @@
     
 @endsection
 
-<script type="module" src="/app/module/ericDataAlignmentCard.js"></script>
+<script type="module" src="/app/module/Maintenance/ericDataAlignmentCard.js"></script>
 

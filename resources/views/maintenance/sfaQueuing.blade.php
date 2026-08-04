@@ -83,7 +83,7 @@
 
     </style>
 
-    <div class="mainBg bodyFont min-h-screen p-25">
+    <div class="mainBg bodyFont overflow-y-auto h-full p-25">
         <div class="flex flex-col h-full gap-10">
 
             <!-- HEADER -->
@@ -460,4 +460,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/sfaQueuingTable.js"></script>
+<script type="module" src="/app/module/Maintenance/SFA_Queuing/sfaQueuingTable.js"></script>

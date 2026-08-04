@@ -33,12 +33,17 @@
                                 class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
                                 <div class="flex  items-center h-[30px]  w-full gap-5">
                                     <div>
-                                        <x-exportDataTable />
+                                        <x-exportDataTable class="font-medium text-[12px] h-[28px]"/>
                                     </div>
                                     <div
-                                        class="flex rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                        class="flex rounded-2xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[28px] items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black" />
+                                        <x-datepicker class="!text-black " />
+                                    </div>
+                                    <div>
+                                        <button onclick="ExportEcmfRecords.showModal()" class="text-[12px] font-medium h-[28px] border rounded-2xl px-5">
+                                            Export Salesman CMF Records
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="flex w-full justify-start md:justify-end items-center">
@@ -50,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="dcrTable" />
+                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="EcmfTable" />
                             </div>
                         </div>
                     </div>
@@ -59,4 +64,40 @@
         </div>
     </div>
 
+<dialog id="ExportEcmfRecords" class="modal">
+  <div class="modal-box p-0">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-lg font-bold p-5">Generate Salesman Registered CMF Records:</h3>
+    <div class="border-t-1 w-full text-gray-500"></div>
+    <div class="flex w-full p-5 flex-col gap-5">
+        <div class="flex w-full justify-between items-center">
+            <span>
+                Salesman Name:
+            </span>
+            <select id="select_items" class="select">
+                <option disabled selected>Choose Here</option>
+            </select>
+        </div>
+        <div class="flex w-full justify-between items-center">
+            <span class="w-[225px]">
+                Date:
+            </span>
+            <div class="w-full items-start flex gap-2">
+                <x-datepicker/>
+                <span>
+                    <i class="mdi mdi-calendar-month-outline"></i>
+                </span>
+            </div>
+        </div>
+        <div class="w-full flex items-end justify-end text-white">
+            <button class="btn bg-blue-500 rounded-lg flex">Generate Records</button>
+        </div>
+    </div>
+  </div>
+</dialog>
+
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/ecmfTable.js"></script>

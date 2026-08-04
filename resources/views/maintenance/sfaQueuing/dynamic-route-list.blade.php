@@ -138,4 +138,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/DynamicRouteList.js"></script>
+<script type="module" src="/app/module/Maintenance/SFA_Queuing/DynamicRouteList.js"></script>

@@ -10,7 +10,7 @@
 
 .dt-scroll-head table thead th {
     color: var(--header-color) !important;
-    font-size: 13px;
+    font-size: 10px !important;
     font-weight: 600;
     text-align: left !important;
     padding-left: 12px !important;
@@ -51,15 +51,17 @@
     text-align: left !important;
     vertical-align: middle;
     padding-left: 12px !important;
-}
-
+} 
 /* Empty table message */
 .dt-empty {
     text-align: center !important;
+    vertical-align: middle !important;
     color: var(--body-color);
     white-space: normal !important;
     word-break: break-word;
     padding: 1rem;
+    font-size: 10px;
+    align-items: center !important;
 }
 
 /* ===========================

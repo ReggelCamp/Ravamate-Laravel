@@ -1,8 +1,8 @@
 <style>
-    .btn{
+    /* .btn{
         height: 100%;
         width: 100%;
-    }
+    } */
 </style>
 
 @props([

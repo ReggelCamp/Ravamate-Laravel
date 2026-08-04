@@ -73,6 +73,12 @@
         --salesmanTable: #1e1e1e;
         } */
 
+        body{
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
     </style>
 
     @stack('styles')
@@ -86,7 +92,7 @@
 
 </head>
 
-<body class="w-full h-full mainBG">
+<body class="mainBG">
 
     {{-- <x-header/> --}}
     

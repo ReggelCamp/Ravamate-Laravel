@@ -2,7 +2,7 @@
 @section('content')
 
 
-    <div class="transparentBg w-full h-full overflow-y-auto px-4 py-6">
+    <div class="transparentBg w-full h-full overflow-y-auto px-4 pb-20">
 
         <div class="flex flex-col w-full px-25 pt-5 ">
             <!--Cutomer-->
@@ -145,5 +145,5 @@
 
 @endsection
 
-<script type="module" src="/app/module/dataMaintenanceCard.js"></script>
+<script type="module" src="/app/module/Maintenance/dataMaintenanceCard.js"></script>
 <script type="module" src="/app/helper/dataMaintenanceModal.js"></script>

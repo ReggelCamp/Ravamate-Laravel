@@ -15,31 +15,31 @@
                     </span>
                 </div>
             </div>
-            <div class="w-full items-center flex-1 bg-grey-500 flex flex-col px-5">
+            <div class="w-full items-center h-full flex-1 bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div class="h-[25px]">
                             <x-dropdown>
                                 <x-slot:dropdownName class="w-[100px] ">
                                     <span
-                                        class="flex items-center sheenFilterBtn w-fit px-5  whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex font-medium text-[12px] items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[28px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dcrItems">
+                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border " id="dcrItems">
                                     {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
                                 </ul>
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class=" w-fit px-5" />
+                            <x-exportDataTable class=" w-fit px-5 h-[28px] font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar class="w-full font-medium customSearch" id="customSearch" />
+                            <x-searchbar class="w-full h-[28px] font-medium customSearch" id="customSearch" />
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
                             class="absolute top-0 left-0 w-full h-full object-cover" alt="">
 
-                        <span id="salesmanName" class="relative z-10 text-white font-semibold text-sm">
+                        <span id="salesmanName" class="relative z-10 text-white font-semibold text-[20px]">
                         </span>
 
                     </div>
@@ -64,4 +64,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/dcrTable.js"></script>
+<script type="module" src="/app/module/Sale_Management/dcrTable.js"></script>

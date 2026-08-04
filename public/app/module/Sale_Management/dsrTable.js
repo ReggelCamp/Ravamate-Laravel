@@ -1,7 +1,8 @@
-import TableLoader  from "../helper/TableLoader.js";
-import DropDownLoader  from "../helper/DropDownLoader.js";
+console.log("DSR TABLE JS LOADED");
 
-const DcrColumns = [
+import TableLoader from "../../helper/TableLoader.js";
+
+const DsrColumns = [
 
             {
                 title: "Salesman",
@@ -43,35 +44,11 @@ const DcrColumns = [
 
 TableLoader.loadTable({
     url: "getDCRtable",
-    tableId: "#DcrDataTable",
-    columns: DcrColumns,
-    pageLength: 5,
+    tableId: "#DsrDataTable",
+    columns: DsrColumns,
 
     onSuccess: (data) => {
         console.log(data.length);
-        console.log("dcr");
+        console.log("dsr");
     }
-});
-
-DropDownLoader.loadDropdown({
-    url: "/salesmen",
-    dropdownId: "dcrItems",
-
-    onSuccess: (data) => {
-
-    }
-});
-
-$(document).on("click", ".salesman-item", function (e) {
-    e.preventDefault();
-
-    const salesman = $(this).data("salesman");
-
-    $("#salesmanName").text(salesman || "Select Salesman");
-    
-    loadTable(salesman);
-
-    $(this).blur();
-    $('.dropdownTrigger [role="button"]').blur();
-    console.log(salesman);
 });

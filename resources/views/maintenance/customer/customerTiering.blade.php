@@ -32,4 +32,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/CustomerTiering.js"></script>
+<script type="module" src="/app/module/Maintenance/Customer/CustomerTiering.js"></script>

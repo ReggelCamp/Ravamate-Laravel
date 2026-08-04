@@ -1,8 +1,9 @@
-console.log("DCR TABLE JS LOADED");
+import TableLoader  from "../../helper/TableLoader.js";
+import ComponentHelper  from "../../helper/ComponentHelper.js";
 
-import TableLoader from "../helper/TableLoader.js";
+const SearchedWord = "";
 
-const DsrColumns = [
+const DcrColumns = [
 
             {
                 title: "Salesman",
@@ -44,11 +45,32 @@ const DsrColumns = [
 
 TableLoader.loadTable({
     url: "getDCRtable",
-    tableId: "#DsrDataTable",
-    columns: DsrColumns,
+    tableId: "#DcrDataTable",
+    columns: DcrColumns,
+    pageLength: 5,
 
     onSuccess: (data) => {
         console.log(data.length);
-        console.log("dsr");
+        console.log("dcr");
     }
+});
+
+ComponentHelper.dropdown().loadByApi({
+    url: "/salesmen",
+    dropdownId: "dcrItems",
+    noDataText: "No SalesMan Found123"
+});
+
+$(document).on("click", ".salesman-item", function (e) {
+    e.preventDefault();
+
+    const salesman = $(this).data("salesman");
+
+    $("#salesmanName").text(salesman || "Select Salesman");
+    
+    loadTable(salesman);
+
+    $(this).blur();
+    $('.dropdownTrigger [role="button"]').blur();
+    console.log(salesman);
 });

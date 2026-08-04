@@ -40,4 +40,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/DynamicSyncLogs.js"></script>
+<script type="module" src="/app/module/Maintenance/SFA_Queuing/DynamicSyncLogs.js"></script>

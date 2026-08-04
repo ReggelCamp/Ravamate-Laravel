@@ -1,4 +1,4 @@
-import TableLoader from "../helper/TableLoader.js";
+import TableLoader from "../../../helper/TableLoader.js";
 
 const CustomerTieringColumns = [
     {
