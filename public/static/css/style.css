@@ -121,63 +121,7 @@
    Date Range Picker Layout
 ========================== */
 
-.daterangepicker {
-    padding: 12px;
-}
 
-/* Top selected dates */
-.daterangepicker .drp-selected {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-
-    margin-bottom: 12px;
-    padding: 10px 15px;
-
-    border: 1px solid #ddd;
-    border-radius: 6px;
-
-    font-weight: 600;
-}
-
-/* Calendar container */
-.daterangepicker .drp-calendar {
-    padding-top: 0;
-}
-
-/* Month title */
-.daterangepicker .calendar-table th.month {
-    font-size: 24px;
-    font-weight: 600;
-}
-
-/* Ranges */
-.daterangepicker .ranges {
-    display: flex;
-    flex-direction: column;
-    width: 170px;
-}
-
-/* Range buttons */
-.daterangepicker .ranges li {
-    padding: 10px 14px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-}
-
-/* Apply / Cancel */
-.daterangepicker .drp-buttons {
-    display: flex;
-    gap: 8px;
-    border-top: none;
-    padding-top: 10px;
-}
-
-.daterangepicker .drp-buttons .btn {
-    flex: 1;
-    height: 38px;
-    border-radius: 6px;
-}
 
 .card {
     /* width: 265px; */

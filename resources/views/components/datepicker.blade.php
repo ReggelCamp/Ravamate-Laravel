@@ -1,79 +1,33 @@
-{{-- Date Range Picker --}}
+
 <style>
-    .daterangepicker{
-        width: auto;
-        max-width: 500px;
-        /* margin-right: 20px; */
-        height: auto !important;
-        color: black;
-        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
-        background-size: 200% auto;
-    }
-    /* .daterangepicker .drp-calendar.left {
-        width: 350px;
-        max-width: 350px;
-        background-color: var(--primary);
-        color: black;
-    }
-    .daterangepicker .drp-calendar.right {
-        width: 350px;
-        max-width: 350px;
-        background-color: var(--primary);
-        color: black;
-        padding-right: 8px !important;
-    } */
-   
-    .daterangepicker .drp-calendar.left,
-    .daterangepicker .drp-calendar.right {
-    padding-right: 3px !important;
-    }
-
-    .daterangepicker .drp-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 5px;
-        height: auto !important;
-        padding-bottom: 20px !important;
-        padding-right: 20px !important;
-    }
-    .daterangepicker .ranges{
-        background-color:var(--background);
-        color: var(--body-color);
-        float: right !important;
-        
-    }
-    .daterangepicker .ranges ul li:hover,
-    .daterangepicker .ranges li:hover,
-    .daterangepicker .ranges li.active {
-        background-color: var(--secondary) !important;
-        color: var(--header-color) !important;
-    }
-    .cancelBtn{
-        background-color: var(--primary);
-        color: var(--body-color);
-        border: 1px solid var(--background) !important;
-
-    }
-    .applyBtn{
-        background-color: var(--accent);
-        border: 1px solid #555 !important;
-        box-shadow: none !important;
-        color: var(--body-color);
-        border: 1px solid var(--background) !important;
-
-    }
-    .daterangepicker .month{
-       color: var(--primary);
-    }
-    .daterangepicker .today.active{
-       background-color: var(--primary) !important;
-       color: var(--header-color) !important;
-    }
-    .daterangepicker .drp-selected {
-        color: var(--header-color);
-        height: 25px;
-    }
     
+.daterangepicker{
+    display:flex;
+    flex-wrap:wrap;
+    width:900px;
+}
+
+.drp-header{
+    width:100%;
+    display:flex;
+    gap:12px;
+    padding:12px;
+}
+
+.daterangepicker .drp-calendar{
+    width:320px;
+}
+
+.daterangepicker .ranges{
+    order:3;
+    width:180px;
+    margin-left:15px;
+}
+
+.daterangepicker .drp-buttons{
+    margin-top:15px;
+    border-top:none;
+}
     
 </style>
 
@@ -113,4 +67,5 @@
     </div>
 </div>
 
-<script type="module" src="/app/module/daterange.js"></script>
+{{-- <script type="module" src="/app/module/daterange.js"></script> --}}
+<script type="module" src="/app/helper/datePicker.js"></script>

@@ -26,7 +26,7 @@
                 </div>
               <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
                     <div class="min-w-[550px]">
-                        <x-datatable class="font-bold text-[15px]" id="dcrTable"/>
+                        <x-datatable class="font-medium text-[10px]" id="missedCallTable"/>
                     </div>
                 </div>
             </div>
@@ -34,3 +34,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/missedCall.js"></script>

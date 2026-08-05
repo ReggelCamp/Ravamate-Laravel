@@ -24,7 +24,7 @@
                                         Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dcrItems">
+                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dsrrItems">
                                     {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
                                 </ul>
                             </x-dropdown>
@@ -34,21 +34,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full flex-1 pb-5 rounded-r-2xl">
-                    <div id="DcrReportname"
-                        class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
+                <div class="w-full flex-1 pb-5 rounded-r-2xl full">
+                    <div id="DsrrReportname"
+                        class="relative min-w-[200px] max-w-[500px] h-[74px] rounded-tl-3xl rounded-br-3xl overflow-hidden flex items-center justify-center">
 
                         <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
                             class="absolute top-0 left-0 w-full h-full object-cover" alt="">
 
-                        <span id="salesmanName" class="relative z-10 text-white font-semibold text-[18px]">
+                        <span id="dsrrSalesmanName" class="relative z-10 text-white font-semibold text-[18px]">
                         </span>
-
                     </div>
-                    <x-datatable id="DcrDataTable" />
                 </div>
+                <div class="flex justify-center items-center py-4">
+                    <i class="mdi mdi-calendar-month-outline text-[#7d7d7d] text-[100px]"></i>
+                </div>
+                <x-datatable id="DsrrTable" />
             </div>
         </div>
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/dsrrTable.js
+"></script>

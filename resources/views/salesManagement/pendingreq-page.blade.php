@@ -47,7 +47,7 @@
                             </div>
                         </div>
                          <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="PendingRequestTable" />
+                                <x-datatable class=" rounded-t-2xl pt-5 " id="PendingRequestTable" />
                             </div>
                     </div>
                 </div>

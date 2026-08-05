@@ -19,15 +19,14 @@
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
-                                        <i class="mdi mdi-filter-variant"></i>
-                                        Filter by Salesman
+                                        class="flex items-center justify-center w-fit px-5 gap-2 whitespace-nowrap border rounded-2xl h-[25px]">
+                                            <i class="mdi mdi-filter-variant"></i>
+                                            Filter by Salesman
+                                            <i class="fa-solid fa-caret-down"></i>
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" />
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
+                                <ul class="dropdown_item border bg-white" id="innValuationItems">
+                                    
                                 </ul>
                             </x-dropdown>
                         </div>
@@ -44,7 +43,7 @@
                 </div>
                 <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
                     <div class="min-w-[550px]">
-                        <x-datatable />
+                        <x-datatable id="innValuationTable"/>
                     </div>
                 </div>
             </div>
@@ -53,3 +52,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Inventory_Management/innValuation.js"></script>

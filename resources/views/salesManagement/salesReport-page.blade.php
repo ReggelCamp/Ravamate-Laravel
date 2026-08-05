@@ -2,9 +2,23 @@
 @section('headerTitle', 'SALES REPORT')
 @section('content')
 
+    <style>
+        .finance_Icon {
+            padding: 1px 7px;
+            margin-right: 10px;
+            margin-left: 10px;
+            font-size: 25px;
+            border-radius: 50%;
+            box-shadow: 2px 2px 10px gray;
+            color: rgb(184, 184, 184);
+            border: 1px solid;
+        }
+
+    </style>
+
 
     <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-[500px] flex flex-col">
+        <div class="card w-full max-h-[500px] flex flex-col">
             <div class="report_title w-full justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Report" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -13,11 +27,16 @@
                     <i class="fa-solid fa-caret-down text-xs"></i>
                 </span>
             </div>
-            <div class="flex-col-reverse gap-5 items-end flex sm:flex-row w-full justify-end py-2 px-5 h-[50px] sm:h-[100px]">
+            <div class="flex-col-reverse gap-5 items-end flex sm:flex-row w-full justify-end py-2 px-5 h-[50px] sm:h-[80px]">
                 <div class="card card-border h-[50px] bg-secondary w-full sm:w-96 bodyColor">
-                    <div class="card-body border rounded-xl justify-center flex h-full w-full ">
+                    <div class=" border rounded-xl justify-start items-center flex h-full w-[236px] ">
+                        <span class="mdi mdi-finance finance_Icon">
+                        </span>
                         <span>
                             Total Sales:
+                        </span>
+                        <span>
+                            ₱ 0 (₱ 0)
                         </span>
                     </div>
                 </div>
@@ -37,8 +56,8 @@
                             </span>
                         </x-slot:dropdownName>
 
-                        <x-searchbar id="salesRepSearch" />
-                        <ul id="otherReports">
+                        {{-- <x-searchbar id="salesRepSearch" /> --}}
+                        <ul id="otherReports" class="bg-white w-[200px] h-[200px] overflow-y-auto">
                             <li><a>Sales Summary</a></li>
                             <li><a>Range Summary</a></li>
                             <li><a>Range Monitoring</a></li>
@@ -57,10 +76,12 @@
             </div>
             <div class="px-5 flex-1 min-h-0 pb-5">
                 <div class="w-full h-full overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable />
+                    <x-datatable id="salesReportTable"/>
                 </div>
             </div>
         </div>
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/salesReport.js"></script>

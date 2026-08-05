@@ -1,6 +1,7 @@
 console.log("DSR TABLE JS LOADED");
 
 import TableLoader from "../../helper/TableLoader.js";
+import ComponentHelper from "../../helper/ComponentHelper.js";
 
 const DsrColumns = [
 
@@ -51,4 +52,24 @@ TableLoader.loadTable({
         console.log(data.length);
         console.log("dsr");
     }
+});
+
+ComponentHelper.dropdown().loadByApi({
+    url: "/salesmen",
+    displayField: "salesman_name",
+    dataField: "salesman_id",
+    dropdownId: "dsrItems"
+});
+
+$(document).on("click", "#dropdown_Item", function (e) {
+    e.preventDefault();
+     const salesman = $(this).data("value");
+
+    $("#DsrSalesmanName").text(salesman || "Select Salesman");
+    
+    //loadTable(salesman);
+
+    $(this).blur();
+    $('.dropdownTrigger [role="button"]').blur();
+    console.log("man",salesman);
 });

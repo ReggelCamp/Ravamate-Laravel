@@ -9,8 +9,8 @@ export default class ComponentHelper {
                 let html = "";
 
                 html += `
-                    <div class="flex flex-col">
-                        <input id="dropdown_search" class="DropdownSearchBar border p-2 w-[280px] h-[30px] rounded-lg" type="search" required placeholder="Search" />
+                    <div class="flex flex-col pt-5 px-2">
+                        <input id="dropdown_search" class="DropdownSearchBar border p-2 w-[250px] h-[30px] rounded-lg" type="search" required placeholder="Search" />
                         <span id="NoResult" class="hidden">
                            ${data.noDataText ?? "No Match Result"}
                         </span>
@@ -18,13 +18,16 @@ export default class ComponentHelper {
                     `;
                 $.each(data.json, function (index, item) {
                     html += `
-                    <li>
-                        <a href="#" class="salesman-item"
-                           data-salesman="${item.salesman_name}">
-                            ${item.salesman_name}
-                        </a>
-                    </li>
-                `;
+                        <li>
+                            <a href="#"
+                            id= "dropdown_Item"
+                            class="dropdown-item"
+                            data-value="${item[data.displayField]}"
+                            data-id="${item[data.dataField]}">
+                                ${item[data.displayField]}
+                            </a>
+                        </li>
+                    `;
                 });
 
                 // $(".Load_DropDown_Items").html(html);

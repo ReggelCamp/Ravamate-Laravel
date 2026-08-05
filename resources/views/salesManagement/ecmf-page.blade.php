@@ -33,29 +33,28 @@
                                 class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
                                 <div class="flex  items-center h-[30px]  w-full gap-5">
                                     <div>
-                                        <x-exportDataTable class="font-medium text-[12px] h-[28px]"/>
+                                        <x-exportDataTable class="font-medium rounded-xl text-[12px] h-[31px]"/>
                                     </div>
                                     <div
-                                        class="flex rounded-2xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[28px] items-center font-medium border justify-end">
+                                        class="flex rounded-xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[28px] items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                                         <x-datepicker class="!text-black " />
                                     </div>
                                     <div>
-                                        <button onclick="ExportEcmfRecords.showModal()" class="text-[12px] font-medium h-[28px] border rounded-2xl px-5">
+                                        <button onclick="ExportEcmfRecords.showModal()" class="text-[12px] font-medium h-[31px] border rounded-xl px-5">
                                             Export Salesman CMF Records
                                         </button>
                                     </div>
                                 </div>
-                                <div class="flex w-full justify-start md:justify-end items-center">
-                                    <div
-                                        class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                               <div class="flex w-full justify-start md:justify-end items-center">
+                                    <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                         <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                                        <x-searchbar class="w-full" id="customSearch" />
+                                        <x-searchbar class="w-full h-[28px] font-medium customSearch" id="customSearch" />
                                     </div>
                                 </div>
                             </div>
                             <div class="min-w-[550px] ">
-                                <x-datatable class="font-bold rounded-t-2xl pt-5 text-[15px]" id="EcmfTable" />
+                                <x-datatable class="font-medium rounded-t-2xl pt-5 text-[10px]" id="EcmfTable" />
                             </div>
                         </div>
                     </div>

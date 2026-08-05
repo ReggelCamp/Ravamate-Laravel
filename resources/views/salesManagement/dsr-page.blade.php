@@ -34,9 +34,9 @@
                             </x-slot:dropdownName>
 
                             <ul class="dropdown_item w-[300px] border bg-white" id="dsrItems">
-                                <x-searchbar
+                                {{-- <x-searchbar
                                     id="dsrSearch"
-                                    class="w-[300px] h-[28px] text-[12px] font-medium" />
+                                    class="w-[300px] h-[28px] text-[12px] font-medium" /> --}}
                             </ul>
                         </x-dropdown>
                     </div>
@@ -50,7 +50,7 @@
 
                         <x-searchbar
                             id="customSearch"
-                            class="w-full h-[28px] text-[12px] font-medium" />
+                            class="w-full h-[28px] text-[14px] font-medium customSearch" />
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
                     <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
                             class="absolute top-0 left-0 w-full h-full object-cover" alt="">
 
-                    <span id="salesmanName"
+                    <span id="DsrSalesmanName"
                         class="relative z-10 text-white font-semibold text-sm">
                     </span>
 

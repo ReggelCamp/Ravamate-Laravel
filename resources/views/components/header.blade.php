@@ -419,14 +419,14 @@
                                             </a>
                                         </li>
 
-                                        <li>
+                                        {{-- <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
                                                 class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
 
                                                 Prebooking Delivery Monitoring
 
                                             </a>
-                                        </li>
+                                        </li> --}}
 
                                     </ul>
 

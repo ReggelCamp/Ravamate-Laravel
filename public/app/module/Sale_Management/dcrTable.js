@@ -1,5 +1,6 @@
 import TableLoader  from "../../helper/TableLoader.js";
 import ComponentHelper  from "../../helper/ComponentHelper.js";
+import DatePicker from "../../helper/datePicker.js";
 
 const SearchedWord = "";
 
@@ -58,19 +59,25 @@ TableLoader.loadTable({
 ComponentHelper.dropdown().loadByApi({
     url: "/salesmen",
     dropdownId: "dcrItems",
-    noDataText: "No SalesMan Found123"
+    noDataText: "No SalesMan Found",
+    displayField: "salesman_name",
+    dataField: "salesman_id"
 });
 
-$(document).on("click", ".salesman-item", function (e) {
+$(document).on("click", "#dropdown_Item", function (e) {
     e.preventDefault();
 
-    const salesman = $(this).data("salesman");
+    const salesman = $(this).data("value");
 
     $("#salesmanName").text(salesman || "Select Salesman");
     
-    loadTable(salesman);
+    //loadTable(salesman);
 
     $(this).blur();
     $('.dropdownTrigger [role="button"]').blur();
-    console.log(salesman);
+    console.log("man",salesman);
+});
+
+$(document).ready(function () {
+    DatePicker.init();
 });

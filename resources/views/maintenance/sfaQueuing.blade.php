@@ -81,9 +81,13 @@
             animation: sheen 0.8s ease-in-out forwards;
         }
 
+        .linearbg{
+            background: linear-gradient(to top, var(--primary), transparent);
+        }
+
     </style>
 
-    <div class="mainBg bodyFont overflow-y-auto h-full p-25">
+    <div class="linearbg bodyFont overflow-y-auto h-full p-25">
         <div class="flex flex-col h-full gap-10">
 
             <!-- HEADER -->

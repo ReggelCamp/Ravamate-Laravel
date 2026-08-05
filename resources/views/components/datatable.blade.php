@@ -126,7 +126,7 @@ div.dt-container .dt-paging .dt-paging-button.disabled:hover{
 <div class="w-full h-full">
     <table
         {{ $attributes->merge([
-            'class' => 'w-full bodyFont tableBg'
+            'class' => 'w-full bodyFont tableBg text-medium text-[10px]'
         ]) }}
         id="{{ $id }}">
     </table>

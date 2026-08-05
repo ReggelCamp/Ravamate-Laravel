@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+        <div class="card w-full max-h-[500px] flex flex-col">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Offsite Transaction" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -14,27 +14,9 @@
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
-                    <div class="flex gap-5 w-full">
-                        <div class="h-[25px]">
-                            <x-dropdown>
-                                <x-slot:dropdownName>
-                                    <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
-                                        <i class="mdi mdi-filter-variant"></i>
-                                        Filter by Salesman
-                                    </span>
-                                </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" />
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
-                                </ul>
-                            </x-dropdown>
-                        </div>
                         <div>
                             <x-exportDataTable />
                         </div>
-                    </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
@@ -44,7 +26,7 @@
                 </div>
                 <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
                     <div class="min-w-[550px]">
-                        <x-datatable />
+                        <x-datatable id="offsiteTransTable"/>
                     </div>
                 </div>
             </div>
@@ -52,3 +34,5 @@
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Sale_Management/offsiteTrans.js"></script>
