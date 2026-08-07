@@ -72,19 +72,19 @@
                 </div>
 
                 {{-- Table --}}
-                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[400px] sm:h-[350px] lg:h-[300px] ">
+                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[400px] sm:h-[350px] lg:h-[300px] pb-20">
 
                     {{-- Toolbar --}}
-                    <div
-                        class="w-full h-[217px] sm:h-[60px] flex-shrink-0 flex flex-col-reverse  sm:flex-row justify-between gap-5 ">
-                        <div class="flex flex-col h-full items-center justify-center sm:flex-row gap-[5px] w-full md:w-auto ">
-                            <div class="w-full sm:text-[10px] whitespace-nowrap sm:w-[110px]">
+                    <div class="w-full h-[217px] sm:h-[60px] flex-shrink-0 flex flex-col-reverse  sm:flex-row justify-between gap-5 ">
+                        
+                        <div class="flex justify-start flex-col h-full flex-1 items-center sm:flex-row gap-2 w-full md:w-auto ">
+                            
+                            <div class="sm:text-[10px] whitespace-nowrap sm:w-fit">
                                 <x-dropdown
                                     class="w-full"
-                                    buttonClass="h-[26px] rounded-2xl px-3 shine-bgBtn"
-                                >
+                                    buttonClass="h-[26px] w-fit px-5 items-center border flex justify-center rounded-2xl px-3 shine-bgBtn">
                                     <x-slot:dropdownName>
-                                        <span class="text-[11.2px] items-center font-semibold gap-5">
+                                        <span class="text-[11.2px]  font-semibold gap-5">
                                             Operation Type
                                             <i class="fa-solid fa-angle-down text-[8px]"></i>
                                         </span>
@@ -98,13 +98,14 @@
                                     </div>
                                 </x-dropdown>
                             </div>
-                            <div class="w-full sm:text-[10px] rounded-2xl whitespace-nowrap sm:w-fit">
+
+                            <div class="w-full sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
                                 <x-dropdown
                                     class="w-[100px]"
-                                    buttonClass="rounded-2xl items-center justify-center h-[26px] shine-bgBtn"
+                                    buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[26px] shine-bgBtn"
                                 >
                                     <x-slot:dropdownName>
-                                        <span class="flex items-center text-[11.2px] justify-evenly w-full h-full font-semibold">
+                                        <span class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
                                             <i class="fa-solid fa-angle-down text-[8px]"></i>
                                             <i class="fa-regular fa-clock"></i>
                                             <span>Icon</span>
@@ -122,11 +123,14 @@
                                     </div>
                                 </x-dropdown>
                             </div>
-                            <div class="w-[26px] h-[26px] shine-bgBtn rounded-4xl flex justify-center border items-center ">
+
+                            <div class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center border items-center ">
                                 <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                             </div>
+
                         </div>
-                        <div class="flex flex-col-reverse sm:flex-row gap-2 w-full items-center h-full md:w-auto">
+
+                        <div class="flex flex-1 justify-end flex-col-reverse sm:flex-row gap-2 w-full items-center h-full md:w-auto">
                             <div class="  flex w-full sm:w-auto">
                                 <x-button class="h-[26px] w-[70px] rounded-2xl shine-bgBtn items-center justify-center flex">
                                     <x-slot:buttonName>
@@ -141,6 +145,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <span>
+                        Total (6) : ₱455,064.59
+                    </span>
 
                     {{-- DataTable --}}
                     <div class="w-full  overflow-auto rounded-2xl" id="DataTable">
