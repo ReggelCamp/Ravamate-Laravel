@@ -49,10 +49,11 @@
             </div>
             <div class="flex w-full h-[50px] gap-5 pl-5">
                 <div class="flex h-[30px]">
-                    <x-dropdown>
-                        <x-slot:dropdownName>
-                            <span class="border px-2 rounded-2xl">
+                    <x-dropdown class="">
+                        <x-slot:dropdownName class="h-[30px]">
+                            <span class="inline-flex h-[30px] items-center border px-3 gap-2 justify-center rounded-2xl">
                                 Other Reports
+                                <i class="fa-solid fa-caret-down"></i>
                             </span>
                         </x-slot:dropdownName>
 

@@ -14,7 +14,7 @@
         }
     </style>
 
-    <div class="transparentBg w-full h-screen overflow-y-auto px-4 py-6">
+    <div class="Linear_BG w-full h-screen overflow-y-auto px-4 py-6">
 
         <div class="flex flex-col w-full px-25 pt-5">
 

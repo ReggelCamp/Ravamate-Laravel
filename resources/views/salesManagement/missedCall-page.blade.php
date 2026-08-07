@@ -19,9 +19,9 @@
                             <x-exportDataTable/>
                         </div>
                     </div>
-                    <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
+                    <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                        <x-searchbar class="w-[250px]" id="customSearch" />
                     </div>
                 </div>
               <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">

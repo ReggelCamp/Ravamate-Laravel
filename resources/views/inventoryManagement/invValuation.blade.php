@@ -19,7 +19,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
-                                        class="flex items-center justify-center w-fit px-5 gap-2 whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex items-center justify-center w-fit px-5 gap-2 h-[30px] whitespace-nowrap border rounded-2xl h-[25px]">
                                             <i class="mdi mdi-filter-variant"></i>
                                             Filter by Salesman
                                             <i class="fa-solid fa-caret-down"></i>

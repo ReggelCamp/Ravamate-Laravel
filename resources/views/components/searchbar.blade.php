@@ -19,7 +19,7 @@
             type="text"
             {{ $attributes->merge([
                 'id' => 'SearchInput',
-                'class' => 'bodyFont pl-3 searchBar text-[14px] font-medium '
+                'class' => 'bodyFont pl-3 searchBar text-[14px] h-[30px] font-medium '
                 // 'class' => 'bodyFont searchBar pl-10 pr-3'
                 // 'class' => 'border rounded-lg bodyFont searchBar w-full h-[40px] pl-10 pr-3'
             ]) }}

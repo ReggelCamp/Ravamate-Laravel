@@ -200,130 +200,537 @@ const AutoLogsColumns = [
     },
 ];
 
+// Sample Data
+const soToFdisSampleData = [
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100001",
+        salesman_name: "Juan Dela Cruz",
+        order_type: "Regular",
+        customercode: "CUST-1001",
+        item_no: "FG00233",
+        site: "CEBU",
+        um: "CASE",
+        quantity: 10,
+        api_status: 'Success',
+        api_response: "Transaction Posted",
+        last_updated: "2026-08-07 10:15 AM",
+        date_added: "2026-08-07 09:50 AM"
+    },
+    {
+        transactionId: "SO-100002",
+        salesman_name: "Maria Santos",
+        order_type: "Promo",
+        customercode: "CUST-1002",
+        item_no: "FG00452",
+        site: "MANDAUE",
+        um: "PCS",
+        quantity: 24,
+        api_status: 'Pending',
+        api_response: "Waiting for Sync",
+        last_updated: "2026-08-07 10:20 AM",
+        date_added: "2026-08-07 10:00 AM"
+    }
+];
+
+const returnLogsSampleData = [
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    }
+];
+
+const paymentLogsSampleData = [
+    {
+        transactionId: "PAY-300001",
+        invoice_no: "INV-300001",
+        document_no: "DOC-001",
+        mode: "Cash",
+        transaction_amt: "₱5,250.00",
+        bank: "-",
+        check_no: "-",
+        check_date: "-",
+        api_status: 'Success',
+        api_response: "Payment Posted",
+        last_updated: "2026-08-07 01:30 PM",
+        date_added: "2026-08-07 01:00 PM"
+    },
+    {
+        transactionId: "PAY-300002",
+        invoice_no: "INV-300002",
+        document_no: "DOC-002",
+        mode: "Check",
+        transaction_amt: "₱12,800.00",
+        bank: "BDO",
+        check_no: "CHK123456",
+        check_date: "2026-08-07",
+        api_status: 'Pending',
+        api_response: "Awaiting Confirmation",
+        last_updated: "2026-08-07 01:45 PM",
+        date_added: "2026-08-07 01:15 PM"
+    }
+];
+
+const autoLogsSampleData = [
+    {
+        transactionId: "AT-400001",
+        source: "Warehouse A",
+        destination: "Warehouse B",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 15,
+        api_status: 'Success',
+        api_response: "Transfer Completed",
+        last_updated: "2026-08-07 02:00 PM",
+        date_added: "2026-08-07 01:30 PM"
+    },
+    {
+        transactionId: "AT-400002",
+        source: "Warehouse B",
+        destination: "Warehouse C",
+        item_no: "FG00452",
+        um: "PCS",
+        quantity: 30,
+        api_status: 'Failed',
+        api_response: "Insufficient Stock",
+        last_updated: "2026-08-07 02:15 PM",
+        date_added: "2026-08-07 01:45 PM"
+    }
+];
+
+
 
 // SOLogsColumns
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#SOPendingLogs",
-    columns: SoToFdisColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#SOPendingLogs",
+//     columns: SoToFdisColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#SOFailedLogs",
-    columns:  SoToFdisColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#SOFailedLogs",
+//     columns:  SoToFdisColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#SOSuccessLogs",
-    columns:  SoToFdisColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#SOSuccessLogs",
+//     columns:  SoToFdisColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
 // ReturnLogsColumns
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#ReturnPendingLogs",
-    columns: ReturnLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#ReturnPendingLogs",
+//     columns: ReturnLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#ReturnFailedLogs",
-    columns: ReturnLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#ReturnFailedLogs",
+//     columns: ReturnLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#ReturnSuccessLogs",
-    columns: ReturnLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#ReturnSuccessLogs",
+//     columns: ReturnLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
 // PaymentLogColumns
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#PaymentPendingLogs",
-    columns: PaymentLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#PaymentPendingLogs",
+//     columns: PaymentLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#PaymentFailedLogs",
-    columns: PaymentLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#PaymentFailedLogs",
+//     columns: PaymentLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#PaymentSuccessLogs",
-    columns: PaymentLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#PaymentSuccessLogs",
+//     columns: PaymentLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
+//     onSuccess: (data) => {
+//     },
+// });
 
 // AutoLogsColumns
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#AutoStockPendingLogs",
-    columns: AutoLogsColumns,
-    pageLength: 5,
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#AutoStockPendingLogs",
+//     columns: AutoLogsColumns,
+//     pageLength: 5,
 
-    onSuccess: (data) => {
-    },
+//     onSuccess: (data) => {
+//     },
+// });
+
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#AutoStockFailedLogs",
+//     columns: AutoLogsColumns,
+//     pageLength: 5,
+
+//     onSuccess: (data) => {
+//     },
+// });
+
+// TableLoader.loadTable({
+//     url: "getDCRtable",
+//     tableId: "#AutoStockSuccessLogs",
+//     columns: AutoLogsColumns,
+//     pageLength: 5,
+
+//     onSuccess: (data) => {
+//     },
+// });
+
+
+// Sample Data
+
+//sotofdis
+TableLoader.tableData(
+    "#SOPendingLogs",
+    soToFdisSampleData,
+    SoToFdisColumns,
+    5,
+);
+
+TableLoader.tableData(
+    "#SOFailedLogs",
+    soToFdisSampleData,
+    SoToFdisColumns,
+    5,
+);
+
+TableLoader.tableData(
+    "#SOSuccessLogs",
+    soToFdisSampleData,
+    SoToFdisColumns,
+    5,
+);
+
+//return
+TableLoader.tableData(
+    "#ReturnPendingLogs",
+    returnLogsSampleData,
+    ReturnLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#ReturnFailedLogs",
+    returnLogsSampleData,
+    ReturnLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#ReturnSuccessLogs",
+    returnLogsSampleData,
+    ReturnLogsColumns,
+    5,
+);
+
+//payment
+TableLoader.tableData(
+    "#PaymentPendingLogs",
+    paymentLogsSampleData,
+    PaymentLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#PaymentFailedLogs",
+    paymentLogsSampleData,
+    PaymentLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#PaymentSuccessLogs",
+    paymentLogsSampleData,
+    PaymentLogsColumns,
+    5,
+);
+
+//autostock
+TableLoader.tableData(
+    "#AutoStockPendingLogs",
+    autoLogsSampleData,
+    AutoLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#AutoStockFailedLogs",
+    autoLogsSampleData,
+    AutoLogsColumns,
+    5,
+);
+TableLoader.tableData(
+    "#AutoStockSuccessLogs",
+    autoLogsSampleData,
+    AutoLogsColumns,
+    5,
+);
+
+// Hide button initially
+$(".reprocess_btn").addClass("hidden");
+
+// When any tab is clicked
+$(".tab").on("click", function () {
+
+    if ($(this).attr("id").includes("Failed")) {
+        $(".reprocess_btn").removeClass("hidden");
+    } else {
+        $(".reprocess_btn").addClass("hidden");
+    }
+
 });
 
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#AutoStockFailedLogs",
-    columns: AutoLogsColumns,
-    pageLength: 5,
 
-    onSuccess: (data) => {
-    },
-});
-
-TableLoader.loadTable({
-    url: "getDCRtable",
-    tableId: "#AutoStockSuccessLogs",
-    columns: AutoLogsColumns,
-    pageLength: 5,
-
-    onSuccess: (data) => {
-    },
-});
 
 $(".container_trigger").on("click", function () {
     
@@ -343,3 +750,7 @@ $(".container_trigger").on("click", function () {
 });
 
 $(".container_trigger").first().click();
+
+$(document).ready(function () {
+    DatePicker.init();
+});

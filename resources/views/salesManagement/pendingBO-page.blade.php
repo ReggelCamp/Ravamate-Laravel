@@ -13,12 +13,12 @@
 
 
     <div class="flex w-full h-screen pt-5 px-3 ">
-        <div class="card w-full max-h-[500px] flex flex-col">
+        <div class="card w-full h-[500px] flex flex-col">
             <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Pending BO" />
             </div>
-            <div class="w-full carouselBg h-screen p-5">
-                <div class="tabs tabs-lift">
+<div class="w-full carouselBg flex-1 p-5 overflow-hidden">
+                    <div class="tabs tabs-lift">
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="Pending BO" />
                     <div class="tab-content bg-base-100 border-base-300 p-2 ">
                         <div class="w-full flex md:justify-end gap-5 items-center">
@@ -40,8 +40,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PendingDataTable" />
+                        <div class="w-full overflow-x-auto">
+                            <div class="min-w-max">
+                                <x-datatable id="PendingDataTable" />
+                            </div>
                         </div>
                     </div>
 
@@ -66,8 +68,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="RejectedDataTable" />
+                        <div class="w-full overflow-x-auto">
+                            <div class="min-w-max">
+                                <x-datatable id="RejectedDataTable" />
+                            </div>
                         </div>
                     </div>
 
@@ -92,8 +96,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="ApprovedDataTable" />
+                        <div class="w-full overflow-x-auto">
+                            <div class="min-w-max">
+                                <x-datatable id="ApprovedDataTable" />
+                            </div>
                         </div>
                     </div>
                 </div>

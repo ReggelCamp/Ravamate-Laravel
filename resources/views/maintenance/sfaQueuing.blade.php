@@ -81,14 +81,19 @@
             animation: sheen 0.8s ease-in-out forwards;
         }
 
-        .linearbg{
-            background: linear-gradient(to top, var(--primary), transparent);
+        .reprocess_btn{
+            font-size: 11px;
+            font-weight: 500;
         }
+
+        /* .linearbg{
+            background: linear-gradient(to top, var(--primary), transparent);
+        } */
 
     </style>
 
-    <div class="linearbg bodyFont overflow-y-auto h-full p-25">
-        <div class="flex flex-col h-full gap-10">
+    <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 mb-40">
+        <div class="flex flex-col h-full gap-10 pb-25">
 
             <!-- HEADER -->
             <div class="flex justify-between flex-row-reverse sm:flex-row">
@@ -225,240 +230,255 @@
             </div>
 
             <!-- TABLE So To FDIS -->
-            <div id="SoFdisContainer" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+            <div class="flex h-full pb-40">
+                <div id="SoFdisContainer" class="table_container  max-h-[300px] hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
 
-                <div class="flex w-full items-center justify-between px-5 py-3">
-                    <div class="flex items-center gap-2">
-                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_SO.svg"
-                            alt="Sales Orders to FDIS">
-                        <span class="text-[18px] font-bold text-white">
-                            Sales Order to FDIS Logs
-                        </span>
+                    <div class="flex w-full items-center justify-between px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_SO.svg"
+                                alt="Sales Orders to FDIS">
+                            <span class="text-[18px] font-bold text-white">
+                                Sales Order to FDIS Logs
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button class="reprocess_btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
+                                Reprocess Returns
+                            </button>
+                            <div
+                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
+                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                <x-datepicker class="text-[11px]" displayOnly="true" />
+                            </div>
+
+                            <div class="h-[30px] text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] font-medium rounded-lg" />
+                            </div>
+
+                            <div class="text-white h-[30px] flex items-center">
+                                <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                    <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
-                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                            <x-datepicker class="" displayOnly="true" />
+
+                    <div class="tabs tabs-lift">
+                        <input type="radio" name="SoFdis" class="tab SfaTab" id="SOPendingLogsTab"
+                            aria-label="Pending Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="SOPendingLogs" />
+                            </div>
                         </div>
 
-                        <div class="h-[30px] text-white flex items-center">
-                            <x-exportDataTable class="px-2" />
+                        <input type="radio" name="SoFdis" class="tab SfaTab failedlogs_Btn" id="SOFailedLogsTab" aria-label="Failed Logs ()"
+                            checked="checked" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="SOFailedLogs" />
+                            </div>
                         </div>
 
-                        <div class="text-white h-[30px] flex items-center">
-                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
-                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                        <input type="radio" name="SoFdis" class="tab SfaTab" id="SOSuccessLogsTab"
+                            aria-label="Success Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="SOSuccessLogs" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TABLE payment To FDIS-->
+                <div id="PaymentFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+
+                    <div class="flex w-full items-center justify-between px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Payment.svg"
+                                alt="Payments to FDIS">
+                            <span class="text-[18px] font-bold text-white">
+                                Payments to FDIS Logs
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button class="reprocess_btn hidden flex w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                                Reprocess Returns
+                            </button>
+                            <div
+                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
+                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                <x-datepicker class="" displayOnly="true" />
+                            </div>
+
+                            <div class="h-[30px] text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px]" />
+                            </div>
+
+                            <div class="text-white h-[30px] flex items-center">
+                                <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                    <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tabs tabs-lift">
+                        <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentPendingLogsTab"
+                            aria-label="Pending Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="PaymentPendingLogs" />
+                            </div>
+                        </div>
+
+                        <input type="radio" name="PaymentFdis" class="tab SfaTab failedlogs_Btn" id="PaymentFailedLogsTab"
+                            aria-label="Failed Logs ()" checked="checked" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="PaymentFailedLogs" />
+                            </div>
+                        </div>
+
+                        <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentSuccessLogsTab"
+                            aria-label="Success Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="PaymentSuccessLogs" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOPendingLogsTab"
-                        aria-label="Pending Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="SOPendingLogs" />
+                <!-- TABLE Return To FDIS-->
+                <div id="ReturnFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+
+                    <div class="flex w-full items-center justify-between px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Return.svg"
+                                alt="Return to FDIS">
+                            <span class="text-[18px] font-bold text-white">
+                                Returns to FDIS Logs
+                            </span>
                         </div>
-                    </div>
+                        <div class="flex items-center gap-3">
+                            <button class="reprocess_btn flex w-fit px-5 hidden h-[30px] items-center justify-center text-white rounded-2xl border">
+                                Reprocess Returns
+                            </button>
+                            <div
+                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
+                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                <x-datepicker id="return_DatePicker" class="" displayOnly="true" />
+                            </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOFailedLogsTab" aria-label="Failed Logs ()"
-                        checked="checked" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="SOFailedLogs" />
-                        </div>
-                    </div>
+                            <div class="h-[30px] text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px]"
+                                itemClass="border border-gray-300 bg-red-400 rounded-lg"
+                                />
+                            </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="SOSuccessLogsTab"
-                        aria-label="Success Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="SOSuccessLogs" />
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- TABLE payment To FDIS-->
-            <div id="PaymentFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
-
-                <div class="flex w-full items-center justify-between px-5 py-3">
-                    <div class="flex items-center gap-2">
-                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Payment.svg"
-                            alt="Payments to FDIS">
-                        <span class="text-[18px] font-bold text-white">
-                            Payments to FDIS Logs
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
-                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                            <x-datepicker class="" displayOnly="true" />
-                        </div>
-
-                        <div class="h-[30px] text-white flex items-center">
-                            <x-exportDataTable class="px-2" />
-                        </div>
-
-                        <div class="text-white h-[30px] flex items-center">
-                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
-                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                            <div class="text-white h-[30px] flex items-center">
+                                <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                    <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentPendingLogsTab"
-                        aria-label="Pending Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PaymentPendingLogs" />
-                        </div>
-                    </div>
-
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentFailedLogsTab"
-                        aria-label="Failed Logs ()" checked="checked" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PaymentFailedLogs" />
-                        </div>
-                    </div>
-
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="PaymentSuccessLogsTab"
-                        aria-label="Success Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="PaymentSuccessLogs" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TABLE Return To FDIS-->
-            <div id="ReturnFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
-
-                <div class="flex w-full items-center justify-between px-5 py-3">
-                    <div class="flex items-center gap-2">
-                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Return.svg"
-                            alt="Return to FDIS">
-                        <span class="text-[18px] font-bold text-white">
-                            Returns to FDIS Logs
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
-                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                            <x-datepicker class="" displayOnly="true" />
+                    <div class="tabs tabs-lift">
+                        <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnPendingLogsTab"
+                            aria-label="Pending Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="ReturnPendingLogs" />
+                            </div>
                         </div>
 
-                        <div class="h-[30px] text-white flex items-center">
-                            <x-exportDataTable class="px-2" />
+                        <input type="radio" name="ReturnFdis" class="tab SfaTab failedlogs_Btn" id="ReturnFailedLogsTab"
+                            aria-label="Failed Logs ()" checked="checked" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="ReturnFailedLogs" />
+                            </div>
                         </div>
 
-                        <div class="text-white h-[30px] flex items-center">
-                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
-                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                        <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnSuccessLogsTab"
+                            aria-label="Success Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="ReturnSuccessLogs" />
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnPendingLogsTab"
-                        aria-label="Pending Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="ReturnPendingLogs" />
+                <!-- TABLE Auto Stock Transfer To FDIS-->
+                <div id="AutoStockFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+
+                    <div class="flex w-full items-center justify-between px-5 py-3">
+                        <div class="flex items-center gap-2">
+                            <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Transfer.svg"
+                                alt="Auto Transfer to FDIS">
+                            <span class="text-[18px] font-bold text-white">
+                                Auto Transfer to FDIS Logs
+                            </span>
                         </div>
-                    </div>
+                        <div class="flex items-center gap-3">
+                            <button class="flex reprocess_btn hidden w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                                Reprocess Returns
+                            </button>
+                            <div
+                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
+                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                <x-datepicker class="" displayOnly="true" />
+                            </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnFailedLogsTab"
-                        aria-label="Failed Logs ()" checked="checked" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="ReturnFailedLogs" />
-                        </div>
-                    </div>
+                            <div class="h-[30px] text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px]" />
+                            </div>
 
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="ReturnSuccessLogsTab"
-                        aria-label="Success Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="ReturnSuccessLogs" />
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- TABLE Auto Stock Transfer To FDIS-->
-            <div id="AutoStockFdisTable" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
-
-                <div class="flex w-full items-center justify-between px-5 py-3">
-                    <div class="flex items-center gap-2">
-                        <img class="w-[30px] h-[30px]" src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_Transfer.svg"
-                            alt="Auto Transfer to FDIS">
-                        <span class="text-[18px] font-bold text-white">
-                            Auto Transfer to FDIS Logs
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="h-[30px] w-fit px-5 flex gap-2 items-center justify-center text-white rounded-2xl border ">
-                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                            <x-datepicker class="" displayOnly="true" />
-                        </div>
-
-                        <div class="h-[30px] text-white flex items-center">
-                            <x-exportDataTable class="px-2" />
-                        </div>
-
-                        <div class="text-white h-[30px] flex items-center">
-                            <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
-                                <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                <x-searchbar class="w-full font-medium " id="customSearch" />
+                            <div class="text-white h-[30px] flex items-center">
+                                <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
+                                    <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
+                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="tabs tabs-lift">
+                        <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockPendingLogsTab"
+                            aria-label="Pending Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="AutoStockPendingLogs" />
+                            </div>
+                        </div>
+
+                        <input type="radio" name="AutoStockFdis" class="tab SfaTab failedlogs_Btn" id="AutoStockFailedLogsTab"
+                            aria-label="Failed Logs ()" checked="checked" />
+                        <div class="tab-content bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="AutoStockFailedLogs" />
+                            </div>
+                        </div>
+
+                        <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockSuccessLogsTab"
+                            aria-label="Success Logs ()" />
+                        <div class="tab-content bg-base-100 border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-5">
+                                <x-datatable id="AutoStockSuccessLogs" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="tabs tabs-lift">
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockPendingLogsTab"
-                        aria-label="Pending Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="AutoStockPendingLogs" />
-                        </div>
-                    </div>
-
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockFailedLogsTab"
-                        aria-label="Failed Logs ()" checked="checked" />
-                    <div class="tab-content bg-base-100 border-base-300 ">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="AutoStockFailedLogs" />
-                        </div>
-                    </div>
-
-                    <input type="radio" name="my_tabs_3" class="tab SfaTab" id="AutoStockSuccessLogsTab"
-                        aria-label="Success Logs ()" />
-                    <div class="tab-content bg-base-100 border-base-300">
-                        <div class="w-full flex-1 overflow-auto pb-5">
-                            <x-datatable id="AutoStockSuccessLogs" />
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
         </div>
     </div>
 

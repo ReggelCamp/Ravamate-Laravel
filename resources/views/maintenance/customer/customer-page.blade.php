@@ -4,7 +4,7 @@
 
     <div class="flex w-full h-screen pt-5 px-3">
         <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Customer" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -16,10 +16,11 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable 
+                            leftIcon="fa-solid fa-download"/>
                         </div>
-                        <div>
-                            <a href="{{ route('customertiering') }}" class="btn">
+                        <div class="h-[30px] rounded-2xl">
+                            <a href="{{ route('customertiering') }}" class="btn h-[30px] rounded-2xl">
                                 Customer Tiering
                             </a>
                         </div>

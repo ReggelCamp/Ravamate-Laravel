@@ -4,7 +4,7 @@
 
     <div class="flex w-full h-screen pt-5 px-3">
         <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="MCP Layout" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -17,25 +17,28 @@
                     <div class="flex gap-5 w-full">
                         <div class="flex rounded-2xl whitespace-nowrap h-[25px] gap-5">
                             <div>
-                                <x-exportDataTable />
+                                <x-exportDataTable leftIcon="mdi mdi-export"/>
                             </div>
-                            <x-button>
+                            <x-button class="">
                                 <x-slot:buttonName>
-                                    <span class="border rounded-2xl px-2">
+                                    <span class="inline-flex items-center  inline-flex items-center  border rounded-2xl px-2 h-[30px] h-[30px]">
+                                        <i class="mdi mdi-file-download-outline"></i>
                                         Download Template
                                     </span>
                                 </x-slot:buttonName>
                             </x-button>
                             <x-button>
                                 <x-slot:buttonName>
-                                    <span class="border rounded-2xl px-2">
+                                    <span class="inline-flex items-center  border rounded-2xl px-2 h-[30px]">
+                                        <i class="mdi mdi-upload-outline"></i>
                                         Upload Template
                                     </span>
                                 </x-slot:buttonName>
                             </x-button>
                             <x-button>
                                 <x-slot:buttonName>
-                                    <span class="border rounded-2xl px-2">
+                                    <span class="inline-flex items-center  border rounded-2xl px-2 h-[30px]">
+                                        <i class="mdi mdi-filter-cog-outline"></i>
                                         Filter Result
                                     </span>
                                 </x-slot:buttonName>
@@ -47,6 +50,11 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
+                </div>
+                <div class="w-full flex p-5 pt-0 text-[16px] font-medium">
+                    <span>
+                        Today's Week No: 32 (Even week)
+                    </span>
                 </div>
                 <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
                     <x-datatable />

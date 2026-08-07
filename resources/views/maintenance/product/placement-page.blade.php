@@ -4,7 +4,7 @@
 
         <div class="flex w-full h-screen pt-5 px-3">
             <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
-                <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+                <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                     <x-report-header-title title="Placement Maintenance" />
                     <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                         <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
-                        <x-datatable />
+                        <x-datatable id="productPlacementTable"/>
                     </div>
                 </div>
             </div>
@@ -107,3 +107,5 @@
     </dialog>
 
 @endsection
+
+<script type="module" src="/app/module/Product/productPlacement.js"></script>

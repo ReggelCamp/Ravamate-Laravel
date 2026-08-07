@@ -3,8 +3,8 @@
 @section('content')
 
     <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+        <div class="card w-full max-h-[500px] flex flex-col">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Customer Maintenance Form" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -30,9 +30,12 @@
                                 </ul>
                             </x-dropdown>
                         </div> --}}
-                        <div>
-                            <x-exportDataTable />
-                        </div>
+                        
+                        <button class="btn rounded-2xl w-fit px-5 h-[30px]">
+                            <i class="mdi mdi-refresh"></i>
+                        </button>    
+                        <x-exportDataTable />
+                        
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
                         <i class="fa-solid fa-magnifying-glass"></i>

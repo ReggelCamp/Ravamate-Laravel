@@ -117,12 +117,6 @@
     }
 }
 
-/* ==========================
-   Date Range Picker Layout
-========================== */
-
-
-
 .card {
     /* width: 265px; */
     /* width: 500px; */
@@ -254,6 +248,10 @@ summary::-webkit-details-marker {
         /* outline: 2px solid #0060df; */
         outline: 5px solid #c9a7c1;
 
+    }
+
+    .Linear_BG{
+        background: linear-gradient(to top, var(--primary), transparent);
     }
 
     .sfaShine_Btn{

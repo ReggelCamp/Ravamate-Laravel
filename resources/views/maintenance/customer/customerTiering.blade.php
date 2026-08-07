@@ -11,7 +11,7 @@
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable class=" w-fit px-5" />
+                            <x-exportDataTable />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

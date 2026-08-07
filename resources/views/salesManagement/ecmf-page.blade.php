@@ -21,7 +21,7 @@
 
     <div class="flex w-full h-screen pt-5 px-3 ">
         <div class="card w-full h-[500px] flex flex-col">
-            <div class=" report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+            <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Electronic CMF" />
             </div>
             <div class="w-full carouselBg h-screen p-5">

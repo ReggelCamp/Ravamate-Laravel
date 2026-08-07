@@ -48,7 +48,7 @@
     <div class="dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)
-            <div id="dateButton" class="cursor-pointer text-sm flex items-center"></div>
+            <div id="dateButton" class="cursor-pointer flex items-center"></div>
         @else
             <button
                 type="button"

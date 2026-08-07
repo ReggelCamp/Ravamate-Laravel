@@ -6,7 +6,7 @@
         <div class="card w-full max-h-[500px] flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Offsite Transaction" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex border rounded-xl bg-transparent items-center h-[30px] justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -17,7 +17,7 @@
                         <div>
                             <x-exportDataTable />
                         </div>
-                    <div class="flex w-full justify-start md:justify-end items-center">
+                    <div class="flex w-full h-[30px] justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
                             <x-searchbar class="w-full" id="customSearch" />
