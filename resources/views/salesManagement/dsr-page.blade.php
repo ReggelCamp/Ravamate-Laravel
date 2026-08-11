@@ -2,6 +2,12 @@
 @section('headerTitle', 'DAILY SALES REPORT')
 @section('content')
 
+    <style>
+        table, th, td {
+            border:1px solid black;
+        }   
+    </style>
+
     <div class="flex w-full h-full pb-20 pt-5 px-3">
     <div class="card w-full min-h-96 max-h-[500px] flex flex-col min-h-0">
 
@@ -44,14 +50,10 @@
                     <x-exportDataTable class="h-[28px] text-[12px] font-medium" />
                 </div>
 
-                <div class="flex w-full justify-start md:justify-end">
-                    <div class="flex items-center w-[280px] sm:w-[550px] md:w-[300px] px-2 border rounded-2xl">
-                        <i class="fa-solid fa-magnifying-glass mr-2"></i>
-
-                        <x-searchbar
-                            id="customSearch"
-                            class="w-full h-[28px] text-[14px] font-medium customSearch" />
-                    </div>
+                <div>
+                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
+                        Generate
+                    </button>
                 </div>
 
             </div>
@@ -71,12 +73,9 @@
                     </span>
 
                 </div>
-
-                {{-- DataTable --}}
-                <div class="flex-1 min-h-0 w-full overflow-auto">
-                    <x-datatable id="DsrDataTable" />
+                <div id="DsrTableContainer" class="">
+                    
                 </div>
-
             </div>
 
         </div>

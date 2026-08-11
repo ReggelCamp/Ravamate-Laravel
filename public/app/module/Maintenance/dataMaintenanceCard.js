@@ -4,24 +4,35 @@ const CustomermaintenanceCards = [
         route: 'customer',
         img: "https://cdo.sfa-plus.com/SFA/v2/img/maintenance02_customer.png",
         id: "customerMaintenance",
+        isModal: false,
     },
     {
         label: 'CMF',
         route: 'cmf',
         img: "https://cdo.sfa-plus.com/SFA/v2/img/maintenance03_CMF.png",
         id: "cmfMaintenace",
+        isModal: false,
+    },
+    {
+        label: 'Georeset',
+        img: "https://cdo.sfa-plus.com/SFA/v2/img/maintenance04_georeset.png",
+        id: "georesetMaintenance",
+        isModal: true,
+        modalId: 'georeset_modal',
     },
     {
         label: 'Customer Tagging',
         route: 'customertagging',
         img: "https://cdo.sfa-plus.com/SFA/v2/img/maintenance08_customerTagging.png",
         id: "taggingMaintenace",
+        isModal: false,
     },
     {
         label: 'MCP Layout',
         route: 'mcplayout',
         img: "https://cdo.sfa-plus.com/SFA/v2/img/maintenance11_mcpLayout.png",
         id: "mcpMaintenace",
+        isModal: false,
     },
 
 ];
@@ -82,26 +93,27 @@ CustomermaintenanceCards.forEach(card => {
                          bg-white hover:bg-gray-500 group
                         transition-colors duration-300 py-5">
                 <span
-                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+                    style="box-shadow: 0 0 15px 5px rgba(0,0,0,0.3) !important;"
+                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full shadow-xl/30  overflow-hidden transition-colors duration-300 ">
 
                    <span class="relative flex items-center justify-center w-[50px] h-[50px] overflow-hidden">
 
                     <img
                         src="${card.img}"
                         alt="${card.label}"
-                        class="w-full h-full object-cover">
+                        class="w-full h-full object-cover ">
 
                     </span>
 
                     <!-- Hover Overlay -->
-                    <a href="${card.route}" class="absolute inset-0 z-20 flex items-center justify-center
+                    ${card.isModal ? `<button type="button" onclick="document.getElementById('${card.modalId}').showModal()"` : `<a href="${card.route}"`} class="absolute inset-0 z-20 flex items-center justify-center
                         opacity-0 group-hover:opacity-100
                         transition-opacity duration-300">
 
                         <span class="shine-bgBtn px-3 py-2 rounded-xl text-xs">
                             See Details
                         </span>
-                    </a>
+                    ${card.isModal ? '</button>' : '</a>'}
 
                 </span>
             </div>
@@ -125,14 +137,15 @@ ProductmaintenanceCards.forEach(card => {
                                          bg-white hover:bg-gray-500 group
                                 transition-colors duration-300 py-5">
                 <span
-                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full shadow-xl/30 overflow-hidden transition-colors duration-300"
+                    style="box-shadow: 0 0 15px 5px rgba(0,0,0,0.3) !important;">
 
                     <span class="relative flex items-center justify-center w-[50px] h-[50px] overflow-hidden">
 
                         <img
                             src="${card.img}"
                             alt="${card.label}"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full object-cover ">
 
                     </span>
 
@@ -165,14 +178,15 @@ OthermaintenanceCards.forEach(card => {
                                         bg-white hover:bg-gray-500 group
                                         transition-colors duration-300 py-5">
                 <span
-                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full border overflow-hidden transition-colors duration-300 ">
+                    class=" relative flex items-center justify-center w-[100px] h-[100px] rounded-full shadow-xl/30 overflow-hidden transition-colors duration-300"
+                    style="box-shadow: 0 0 15px 5px rgba(0,0,0,0.3) !important;">
 
                     <span class="relative flex items-center justify-center w-[50px] h-[50px] overflow-hidden">
 
                         <img
                             src="${card.img}"
                             alt="${card.label}"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full object-cover ">
 
                     </span>
 

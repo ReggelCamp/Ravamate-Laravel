@@ -1,5 +1,9 @@
 import Api from "./Api.js";
 
+if(localStorage.getItem("savedTheme")){
+    renderActive(JSON.parse(localStorage.getItem("savedTheme")));
+}
+
 function isLightColor(hex) {
     if (!hex) return true; // default to light if no color
 
@@ -54,7 +58,90 @@ export default function getActive() {
 
             let activeTheme = data;
 
-            if (activeTheme) {
+            localStorage.setItem("savedTheme", JSON.stringify(activeTheme));
+
+            //renderActive(activeTheme);
+
+            // if (activeTheme) {
+
+            //     localStorage.setItem("savedTheme", JSON.stringify(activeTheme));
+            
+            
+            //     document.documentElement.style.setProperty('--primary', activeTheme.primary_color);
+            //     document.documentElement.style.setProperty('--secondary', activeTheme.secondary_color);
+            //     document.documentElement.style.setProperty('--accent', activeTheme.accent_color);
+            //     document.documentElement.style.setProperty('--background', activeTheme.background_color);
+
+                
+            //     document.documentElement.style.setProperty('--header-font', activeTheme.header_font);
+            //     document.documentElement.style.setProperty('--body-font', activeTheme.body_font);
+
+            //      const HeaderFontColor = determineFontColorForMainBG(
+            //         activeTheme.primary_color,
+            //         activeTheme.secondary_color
+            //     );
+
+            //     const BodyFontColor = determineFontColorForTableBG(
+            //         activeTheme.background_color
+            //     );
+
+            //     // document.documentElement.style.setProperty('--body-color', fontColor);
+            //     document.documentElement.style.setProperty('--header-color', HeaderFontColor);
+            //     document.documentElement.style.setProperty('--body-color', BodyFontColor);
+
+            //     // document.documentElement.style.setProperty('--body-color', activeTheme.body_color);
+            //     // document.documentElement.style.setProperty('--header-color', activeTheme.header_color);
+                
+            //     // $(".themeLogo").attr("src", activeTheme.logo[0]?.url);
+
+            //     $(".themeLogo").attr(
+            //         "src",
+            //         activeTheme.logo[0]?.url + "?t=" + Date.now()
+            //     );
+               
+            //     const $container = $("#carouselContainer");
+
+            //     if ($container.length) {
+            //         let html = "";
+                    
+            //         activeTheme.carouselImg?.forEach(img => {
+            //             html += `
+            //                 <div class="item ">
+            //                     <img src="${img.url}" class=" " id="${img.id}" />
+            //                 </div>
+            //             `;
+            //         });
+
+            //         $container.html(html);
+
+            //         if ($container.data("owl.carousel")) {
+            //             $container.trigger("destroy.owl.carousel");
+            //         }
+
+            //         $container.owlCarousel({
+            //             loop: true,
+            //             margin:20,
+            //             center: true,
+            //             nav: false,
+            //             autoplay: true,
+            //             autoplayTimeout: 3000,
+            //             responsive: {
+            //                 0: { items: 1 },
+            //                 768: { items: 3 },
+            //                 1024: { items: 3 }
+            //             }
+            //         });
+            //     }
+            //                     $("#site_name").text(activeTheme.site_name);
+            //                     $("#company_name").text(activeTheme.company_name);
+            //                 }
+                        }
+                    });
+                }
+
+function renderActive(activeTheme){
+    if (activeTheme) {
+
             
                 document.documentElement.style.setProperty('--primary', activeTheme.primary_color);
                 document.documentElement.style.setProperty('--secondary', activeTheme.secondary_color);
@@ -85,7 +172,7 @@ export default function getActive() {
 
                 $(".themeLogo").attr(
                     "src",
-                    activeTheme.logo[0]?.url + "?t=" + Date.now()
+                    activeTheme?.logo[0]?.url + "?t=" + Date.now()
                 );
                
                 const $container = $("#carouselContainer");
@@ -124,10 +211,8 @@ export default function getActive() {
                                 $("#site_name").text(activeTheme.site_name);
                                 $("#company_name").text(activeTheme.company_name);
                             }
-                        }
-                    });
-                }
-
+}
+                
 $(document).ready(function () {
     getActive();
 });

@@ -250,6 +250,10 @@ summary::-webkit-details-marker {
 
     }
 
+    .font_color{
+        color: var(--header-color);
+    }
+
     .Linear_BG{
         background: linear-gradient(to top, var(--primary), transparent);
     }

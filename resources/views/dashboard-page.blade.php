@@ -17,6 +17,7 @@
         .dashboard-datatable .dt-scroll-head th:last-child {
             border-top-right-radius: 1rem;
         }
+
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10">
@@ -49,12 +50,12 @@
                 <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto ">
 
                     {{-- Map Header --}}
-                    <div class="w-full h-[50px] flex-shrink-0 flex font-medium justify-between report_title items-center ">
-                        <div class="w-full  items-center">
+                    <div class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">
+                        <div class="w-full  items-center ">
                             <x-report-header-title class="font-[16px]" title="Dashboard" />
                         </div>
                         <div
-                            class="flex w-[150px] sm:w-full h-[50px] whitespace-nowrap gap-1 pr-5 items-center font-medium justify-end">
+                            class="flex w-[150px] sm:w-full h-[50px] whitespace-nowrap gap-1 pr-5 items-center font-medium justify-end font_color">
                             <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                             <x-datepicker displayOnly="true" />
                         </div>
@@ -101,7 +102,7 @@
 
                             <div class="sm:text-[10px] whitespace-nowrap sm:w-fit">
                                 <x-dropdown id="OperationTypeDropdown" class="w-full"
-                                    buttonClass="h-[26px] w-fit px-5 items-center border flex justify-center rounded-2xl px-3 shine-bgBtn">
+                                    buttonClass="h-[26px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                     <x-slot:dropdownName>
                                         <span class="text-[11.2px]  font-semibold gap-5">
                                             Operation Type
@@ -140,7 +141,7 @@
                             </div>
 
                             <div
-                                class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center border items-center ">
+                                class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center items-center ">
                                 <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                             </div>
 
