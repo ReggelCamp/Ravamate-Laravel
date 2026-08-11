@@ -18,18 +18,18 @@
         }
     </style>
 
-    <div class="flex w-full h-screen pt-5 px-3 ">
-        <div class="card w-full flex flex-col max-h-[500px]">
+    <div class="flex w-full pt-5 px-3 ">
+        <div class="card w-full flex flex-col h-full">
             <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-5 flex ">
                 <x-report-header-title title="Pending Request" />
             </div>
-            <div class="w-full carouselBg h-screen p-5">
-                <div class="tabs tabs-lift">
+            <div class="w-full carouselBg h-full">
+                <div class="tabs tabs-lift p-5">
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="SO Transactions" checked />
-                    <div class="tab-content bg-base-100 border-base-300 p-2">
+                    <div class="tab-content bg-base-100 border-base-300 p-5">
                         <div class="w-full flex md:justify-end gap-5 items-center">
                             <div
-                                class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-5">
+                                class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-2">
                                 <div class="flex w-full items-center sm:flex-row gap-2 sm:justify-start">
                                     <div
                                         class="flex rounded-2xl max-h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
@@ -37,7 +37,7 @@
                                         <x-datepicker class="!text-black h-[30px]" />
                                     </div>
                                   
-                                        <x-exportDataTable />
+                                        <x-exportDataTable class="border px-5 rounded-2xl"/>
                                    
                                 </div>
                                 <div class="h-[30px] border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

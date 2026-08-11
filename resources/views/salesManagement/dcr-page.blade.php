@@ -2,6 +2,12 @@
 @section('headerTitle', 'DAILY COLLECTION REPORT')
 @section('content')
 
+    <style>
+        .dataTable-info{
+            padding-top: 20px;
+        }
+    </style>
+
     <div class="flex w-full h-screen pt-10 px-3">
         <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
@@ -22,7 +28,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName class="w-[100px] ">
                                     <span
-                                        class="flex font-medium text-[12px] items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[28px]">
+                                        class="flex font-medium text-[12px] items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Select Salesman
                                     </span>
@@ -33,7 +39,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class=" w-fit px-5 h-[28px] font-medium text-[12px]" />
+                            <x-exportDataTable class=" w-fit px-5 h-[28px] sheenFilterBtn border rounded-2xl font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

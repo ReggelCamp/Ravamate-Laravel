@@ -69,5 +69,8 @@ const sampleData = [
 TableLoader.tableData(
     "#BankDataTable",
     sampleData,
-    BankColumns
+    BankColumns,
+    {
+        scrollY: "300px"
+    }
 );

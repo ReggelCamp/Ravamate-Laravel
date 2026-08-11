@@ -19,29 +19,29 @@
         
     </style>
 
-    <div class="flex w-full h-screen pt-5 px-3 ">
-        <div class="card w-full h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3 ">
+        <div class="card w-full h-full flex flex-col">
             <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Electronic CMF" />
             </div>
-            <div class="w-full carouselBg h-screen p-5">
-                <div class="tabs tabs-lift">
+            <div class="w-full carouselBg h-full">
+                <div class="tabs tabs-lift p-5">
                     <input type="radio" name="my_tabs_3" class="tab" aria-label="E-CMF Records" checked />
-                    <div class="tab-content bg-base-100 border-base-300 p-6">
+                    <div class="tab-content bg-base-100 border-base-300 p-5">
                         <div class="flex w-full justify-between h-full flex-col">
                             <div
                                 class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
                                 <div class="flex  items-center h-[30px]  w-full gap-5">
                                     <div>
-                                        <x-exportDataTable class="font-medium rounded-xl text-[12px] h-[31px]"/>
+                                        <x-exportDataTable class="font-medium border rounded-xl px-5 text-[12px] h-[30px]"/>
                                     </div>
                                     <div
-                                        class="flex rounded-xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[28px] items-center font-medium border justify-end">
+                                        class="flex rounded-xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                                         <x-datepicker class="!text-black " />
                                     </div>
                                     <div>
-                                        <button onclick="ExportEcmfRecords.showModal()" class="text-[12px] font-medium h-[31px] border rounded-xl px-5">
+                                        <button onclick="ExportEcmfRecords.showModal()" class="text-[12px] font-medium h-[30px] border rounded-xl px-5">
                                             Export Salesman CMF Records
                                         </button>
                                     </div>

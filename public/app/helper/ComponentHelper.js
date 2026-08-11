@@ -51,7 +51,9 @@ export default class ComponentHelper {
             },
 
             search: (data) => {
-                $(document).on("input","#" + data.dropdownId + " #dropdown_search",
+                $(document).on(
+                    "input",
+                    "#" + data.dropdownId + " #dropdown_search",
                     function () {
                         let found = false;
                         let keyword = $(this).val();
@@ -80,6 +82,25 @@ export default class ComponentHelper {
             },
             clear: () => {},
             loading: () => {},
+
+            LoadDropdownItems(config) {
+                console.log("fea", config);
+                let html = "";
+
+                $.each(config.items, function (index, item) {
+                    html += `
+    <li>
+        <a href="#"
+            class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
+            data-value="${item.data}">
+            ${item.title}
+        </a>
+    </li>
+`;
+                });
+                
+                $(config.id).html(html);
+            },
         };
     }
 
@@ -130,6 +151,10 @@ export default class ComponentHelper {
 
         }
     }
+
+    // static LoadDropdownItems(){
+
+    // }
 }
 
 // $(document).on("input", ".DropdownSearchBar", function(){

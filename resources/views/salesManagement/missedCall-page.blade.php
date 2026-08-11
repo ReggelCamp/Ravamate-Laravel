@@ -2,9 +2,9 @@
 @section('headerTitle', 'Missed Call')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Miss Call" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -16,7 +16,7 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex w-full">
                          <div>
-                            <x-exportDataTable/>
+                            <x-exportDataTable class="border rounded-2xl px-5"/>
                         </div>
                     </div>
                     <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -24,10 +24,9 @@
                         <x-searchbar class="w-[250px]" id="customSearch" />
                     </div>
                 </div>
-              <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
-                    <div class="min-w-[550px]">
+              <div class="w-full pb-5 overflow-x-auto rounded-2xl" id="DataTable">
                         <x-datatable class="font-medium text-[10px]" id="missedCallTable"/>
-                    </div>
+
                 </div>
             </div>
         </div>

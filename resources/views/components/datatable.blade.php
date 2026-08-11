@@ -52,6 +52,7 @@
     vertical-align: middle;
     padding-left: 12px !important;
 } 
+
 /* Empty table message */
 .dt-empty {
     text-align: center !important;
@@ -73,7 +74,10 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 2px;
+    padding-top: 20px;
+    font-size: 16px;
+    height: 30px !important;
+    /* padding: 2; */
 }
 
 .dt-paging {
@@ -82,6 +86,8 @@
     width: fit-content;
     border-radius: 8px;
     background-color: var(--background);
+    height: 30px;
+    align-items: center;
 }
 
 /* .dt-paging-button:hover {
@@ -98,17 +104,53 @@
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
+    height: 30px !important;
+    
 }
 
 div.dt-container .dt-paging .dt-paging-button.current,
 div.dt-container .dt-paging .dt-paging-button.current:hover {
     color: var(--header-color) !important;
-    background-color: var(--primary) !important;
+    background: var(--primary) !important;
+
+    height: 27px !important;
+    min-height: 27px !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: none !important;
+    box-shadow: none !important;
 }
 
 div.dt-container .dt-paging .dt-paging-button.disabled:hover{
     color: var(--header-color) !important;
     background-color: var(--primary) !important;
+}
+
+div.dt-container div.dt-paging nav button.dt-paging-button{
+  color: var(--body-color) !important;   
+}
+
+div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current{
+    height: 30px !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button {
+    height: 27px !important;
+    min-height: 27px !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    line-height: 1 !important;
+    box-sizing: border-box !important;
 }
 
 </style>

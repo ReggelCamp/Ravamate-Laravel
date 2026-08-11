@@ -142,5 +142,8 @@ const sampleData = [
 TableLoader.tableData(
     "#salesmanMaintenanceTable", // Replace with your actual table ID
     sampleData,
-    SalesmanMaintenanceTable
+    SalesmanMaintenanceTable,
+    {
+        scrollY: "300"
+    }
 );

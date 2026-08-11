@@ -9,7 +9,7 @@ export default class TableLoader{
             lengthChange: false,
             responsive: true,
             scrollX: true,
-            scrollY: '400px',      // fixed height -> body becomes scrollable, header stays put
+            scrollY: options.scrollY ?? '100px',      // fixed height -> body becomes scrollable, header stays put
             scrollCollapse: true,  // shrinks scrollY if there aren't enough rows to fill it
             dom: '<"top">rt<"dataTable-info"ip><"clear">',
             buttons: [
@@ -33,6 +33,7 @@ export default class TableLoader{
             onSuccess: (data) => {
                 TableLoader.tableData(config.tableId, data, config.columns, {
                     pageLength: config.pageLength,
+                    scrollY: config.scrollY
                 });
 
                 if (config.onSuccess) {

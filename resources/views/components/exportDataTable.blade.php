@@ -76,7 +76,8 @@
 
 <div class="dropdown dropdown-end">
     <button id="{{ $id }}" {{ $attributes->merge([
-    'class' => 'btn btn-sm flex items-center justify-center gap-2'
+    'class' => 'btn-sm flex items-center justify-center gap-2 h-[30px] rounded-2xl border px-5'
+    // 'class' => 'btn btn-sm flex items-center justify-center gap-2'
 ]) }}>
         {{ $label }}
 

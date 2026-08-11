@@ -2,8 +2,8 @@
 @section('headerTitle', 'BANK MAINTENANCE')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Bank Maintenance" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -30,7 +30,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
+                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
                     <x-datatable id="BankDataTable" />
                 </div>
             </div>

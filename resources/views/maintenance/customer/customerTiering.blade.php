@@ -2,8 +2,8 @@
 @section('headerTitle', 'Customer Tiering')
 @section('content')
 
-    <div class="flex w-full h-screen pt-10 px-3">
-        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-10 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[63px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Customer Tiering" />
             </div>
@@ -21,11 +21,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full flex flex-col gap-2">
-                    <div class="w-full flex-1 overflow-auto pb-5">
-                        <x-datatable id="CustomerTieringDataTable" />
-                    </div>
+
+                <div class="w-full flex-1 overflow-auto pb-5">
+                    <x-datatable id="CustomerTieringDataTable" />
                 </div>
+
             </div>
         </div>
     </div>

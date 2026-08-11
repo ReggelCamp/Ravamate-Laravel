@@ -444,7 +444,217 @@ const returnLogsSampleData = [
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
         date_added: "2026-08-07 10:55 AM"
-    }
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
+    {
+        transactionId: "RT-200001",
+        salesman_name: "Pedro Reyes",
+        customercode: "CUST-2001",
+        invoice_no: "INV-100001",
+        site: "CEBU",
+        item_no: "FG00233",
+        um: "CASE",
+        quantity: 2,
+        reason_code: "DAMAGED",
+        api_status: 'Success',
+        api_response: "Return Accepted",
+        last_updated: "2026-08-07 11:00 AM",
+        date_added: "2026-08-07 10:45 AM"
+    },
+    {
+        transactionId: "RT-200002",
+        salesman_name: "John Cruz",
+        customercode: "CUST-2002",
+        invoice_no: "INV-100002",
+        site: "LAPU-LAPU",
+        item_no: "FG00120",
+        um: "PCS",
+        quantity: 1,
+        reason_code: "EXPIRED",
+        api_status: 'Failed',
+        api_response: "Invoice Not Found",
+        last_updated: "2026-08-07 11:10 AM",
+        date_added: "2026-08-07 10:55 AM"
+    },
 ];
 
 const paymentLogsSampleData = [
@@ -639,21 +849,27 @@ TableLoader.tableData(
     "#SOPendingLogs",
     soToFdisSampleData,
     SoToFdisColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 TableLoader.tableData(
     "#SOFailedLogs",
     soToFdisSampleData,
     SoToFdisColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 TableLoader.tableData(
     "#SOSuccessLogs",
     soToFdisSampleData,
     SoToFdisColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 //return
@@ -661,19 +877,25 @@ TableLoader.tableData(
     "#ReturnPendingLogs",
     returnLogsSampleData,
     ReturnLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#ReturnFailedLogs",
     returnLogsSampleData,
     ReturnLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#ReturnSuccessLogs",
     returnLogsSampleData,
     ReturnLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 //payment
@@ -681,19 +903,25 @@ TableLoader.tableData(
     "#PaymentPendingLogs",
     paymentLogsSampleData,
     PaymentLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#PaymentFailedLogs",
     paymentLogsSampleData,
     PaymentLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#PaymentSuccessLogs",
     paymentLogsSampleData,
     PaymentLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 //autostock
@@ -701,19 +929,25 @@ TableLoader.tableData(
     "#AutoStockPendingLogs",
     autoLogsSampleData,
     AutoLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#AutoStockFailedLogs",
     autoLogsSampleData,
     AutoLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 TableLoader.tableData(
     "#AutoStockSuccessLogs",
     autoLogsSampleData,
     AutoLogsColumns,
-    5,
+    {
+        scrollY : "200px"
+    }
 );
 
 // Hide button initially

@@ -44,7 +44,7 @@
     'label' => 'Filter by Date',
 ])
 
-<div class="flex h-full justify-end">
+<div class="flex h-[30px] justify-end">
     <div class="dateColor flex items-center h-full justify-end ">
 
         @if($displayOnly)

@@ -104,5 +104,8 @@ const sampleData = [
 TableLoader.tableData(
     "#productPlacementTable", // Replace with your actual table ID
     sampleData,
-    PlacementProductColumns
+    PlacementProductColumns,
+    {
+        scrollY: "300px"
+    }
 );

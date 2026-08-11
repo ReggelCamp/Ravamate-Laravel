@@ -121,5 +121,8 @@ const sampleData = [
 TableLoader.tableData(
     "#SalesTargetDataTable",
     sampleData,
-    SalesTargetColumns
+    SalesTargetColumns,
+    {
+        scrollY: "300px"
+    }
 );

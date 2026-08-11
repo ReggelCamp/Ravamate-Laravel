@@ -4,6 +4,42 @@
 @section('content')
 
     <style>
+
+            /* SFA MAINTENANCE */
+    .ericPendingVal{
+        font-size: 50px !important;
+        font-weight: 800 !important;
+        color: var(--accent);
+    }
+
+    .sfaqueuingHeader{
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        color: var(--header-color);
+    }
+    
+    .sfaqueuingSubHeader{
+        font-size: 14px !important;
+        font-weight: 300 !important;
+        color: var(--header-color);
+    }
+
+    /* .sfaqueuingBtn{
+        color: var(--header-color) !important;
+    } */
+
+    .sfaqueuingLogs{
+        color: var(--header-color);
+    }
+    
+    .sfaqueuingLogs:hover{
+        /* color: var(--body-color); */
+        /* background-color: var(--background); */
+        border: 1px solid var(--background);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
         #PendingLogs_wrapper .dt-scroll-head th,
         #FailedLogs_wrapper .dt-scroll-head th,
         #SuccessLogs_wrapper .dt-scroll-head th {
@@ -47,7 +83,7 @@
             position: relative;
             overflow: hidden;
             background: transparent;
-            border: 1px solid var(--header-color);
+            /* border: 1px solid var(--header-color); */
             color: var(--header-color);
         }
         
@@ -55,7 +91,7 @@
             background: linear-gradient(to right,
                 var(--secondary),
                 var(--primary));
-            border: 1px solid var(--header-color);
+            /* border: 1px solid var(--header-color); */
             color: var(--header-color);
         }
 
@@ -90,9 +126,13 @@
             background: linear-gradient(to top, var(--primary), transparent);
         } */
 
+        .dataTable-info{
+            font-size: 15px !important;
+        }
+
     </style>
 
-    <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 mb-40">
+    <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
         <div class="flex flex-col h-full gap-10 pb-25">
 
             <!-- HEADER -->
@@ -100,19 +140,19 @@
 
        
                     <a href="{{ route('dynamic-route-list') }}"
-                        class=" text-sm rounded-lg sfaShine_Btn h-12 px-4 items-center gap-2 inline-flex">
+                        class=" text-sm rounded-lg sfaShine_Btn h-[30px] px-4 items-center gap-2 inline-flex">
                         <i class="fas fa-truck"></i>
                         Dynamic Load Planning
                     </a>
 
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ route('adm-sync-logs') }}"
-                        class="text-sm rounded-lg sfaShine_Btn h-12 px-4 inline-flex items-center gap-2">
+                        class="text-sm rounded-lg sfaShine_Btn h-[30px] px-4 inline-flex items-center gap-2">
                             <i class="fas fa-truck"></i>
                             Admin Sync Logs
                     </a>
 
-                    <button class="bg-transparent text-sm rounded-xl sfaShine_Btn px-4 py-2">
+                    <button class="bg-transparent text-sm rounded-xl h-[30px] sfaShine_Btn px-4 py-2">
                         <i class="fas fa-refresh"></i>
                         Refresh
                     </button>
@@ -231,7 +271,7 @@
 
             <!-- TABLE So To FDIS -->
             <div class="flex h-full pb-40">
-                <div id="SoFdisContainer" class="table_container  max-h-[300px] hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
+                <div id="SoFdisContainer" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
 
                     <div class="flex w-full items-center justify-between px-5 py-3">
                         <div class="flex items-center gap-2">
@@ -242,8 +282,8 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
-                                Reprocess Returns
+                            <button class="reprocess_btn sfaShine_Btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
+                                Reprocess SO
                             </button>
                             <div
                                 class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
@@ -251,7 +291,7 @@
                                 <x-datepicker class="text-[11px]" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] text-white flex items-center">
+                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
                                 <x-exportDataTable class="px-2 text-[11px] font-medium rounded-lg" />
                             </div>
 
@@ -264,27 +304,27 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift">
+                    <div class="tabs tabs-lift  ">
                         <input type="radio" name="SoFdis" class="tab SfaTab" id="SOPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 pb-5">
                                 <x-datatable id="SOPendingLogs" />
                             </div>
                         </div>
 
                         <input type="radio" name="SoFdis" class="tab SfaTab failedlogs_Btn" id="SOFailedLogsTab" aria-label="Failed Logs ()"
                             checked="checked" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
+                            <div class="w-full flex-1 pb-5">
                                 <x-datatable id="SOFailedLogs" />
                             </div>
                         </div>
 
                         <input type="radio" name="SoFdis" class="tab SfaTab" id="SOSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300">
-                            <div class="w-full flex-1 overflow-auto pb-5">
+                        <div class="tab-content h-full bg-base-100 border-base-300">
+                            <div class="w-full flex-1 pb-5">
                                 <x-datatable id="SOSuccessLogs" />
                             </div>
                         </div>
@@ -304,8 +344,8 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn hidden flex w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
-                                Reprocess Returns
+                            <button class="reprocess_btn sfaShine_Btn hidden flex w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                                Reprocess Payment
                             </button>
                             <div
                                 class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
@@ -313,7 +353,7 @@
                                 <x-datepicker class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] text-white flex items-center">
+                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
                                 <x-exportDataTable class="px-2 text-[11px]" />
                             </div>
 
@@ -326,10 +366,10 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift">
+                    <div class="tabs tabs-lift ">
                         <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="PaymentPendingLogs" />
                             </div>
@@ -337,7 +377,7 @@
 
                         <input type="radio" name="PaymentFdis" class="tab SfaTab failedlogs_Btn" id="PaymentFailedLogsTab"
                             aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="PaymentFailedLogs" />
                             </div>
@@ -345,7 +385,7 @@
 
                         <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300">
+                        <div class="tab-content h-full bg-base-100 border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="PaymentSuccessLogs" />
                             </div>
@@ -365,7 +405,7 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn flex w-fit px-5 hidden h-[30px] items-center justify-center text-white rounded-2xl border">
+                            <button class="reprocess_btn sfaShine_Btn flex sfaShine_Btn w-fit px-5 hidden h-[30px] items-center justify-center text-white rounded-2xl border">
                                 Reprocess Returns
                             </button>
                             <div
@@ -374,7 +414,7 @@
                                 <x-datepicker id="return_DatePicker" class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] text-white flex items-center">
+                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
                                 <x-exportDataTable class="px-2 text-[11px]"
                                 itemClass="border border-gray-300 bg-red-400 rounded-lg"
                                 />
@@ -389,10 +429,10 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift">
+                    <div class="tabs tabs-lift ">
                         <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="ReturnPendingLogs" />
                             </div>
@@ -400,7 +440,7 @@
 
                         <input type="radio" name="ReturnFdis" class="tab SfaTab failedlogs_Btn" id="ReturnFailedLogsTab"
                             aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="ReturnFailedLogs" />
                             </div>
@@ -408,7 +448,7 @@
 
                         <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300">
+                        <div class="tab-content h-full bg-base-100 border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="ReturnSuccessLogs" />
                             </div>
@@ -429,8 +469,8 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="flex reprocess_btn hidden w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
-                                Reprocess Returns
+                            <button class="flex reprocess_btn sfaShine_Btn hidden w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                                Reprocess Transfer
                             </button>
                             <div
                                 class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
@@ -438,8 +478,8 @@
                                 <x-datepicker class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px]" />
+                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] " />
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -451,10 +491,10 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift">
+                    <div class="tabs tabs-lift ">
                         <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="AutoStockPendingLogs" />
                             </div>
@@ -462,7 +502,7 @@
 
                         <input type="radio" name="AutoStockFdis" class="tab SfaTab failedlogs_Btn" id="AutoStockFailedLogsTab"
                             aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content bg-base-100 border-base-300 ">
+                        <div class="tab-content h-full bg-base-100 border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="AutoStockFailedLogs" />
                             </div>
@@ -470,7 +510,7 @@
 
                         <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content bg-base-100 border-base-300">
+                        <div class="tab-content h-full bg-base-100 border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-5">
                                 <x-datatable id="AutoStockSuccessLogs" />
                             </div>

@@ -17,8 +17,8 @@
     </style>
 
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Report" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -40,14 +40,8 @@
                         </span>
                     </div>
                 </div>
-                <div class="flex w-full h-full items-end justify-end">
-                    <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
-                    </div>
-                </div>
-            </div>
-            <div class="flex w-full h-[50px] gap-5 pl-5">
+
+                <div class="flex w-full items-end h-[50px] gap-5 pl-5">
                 <div class="flex h-[30px]">
                     <x-dropdown class="">
                         <x-slot:dropdownName class="h-[30px]">
@@ -75,10 +69,19 @@
                     <x-exportDataTable />
                 </div>
             </div>
-            <div class="px-5 flex-1 min-h-0 pb-5">
-                <div class="w-full h-full overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable id="salesReportTable"/>
+
+                <div class="flex w-full h-full items-end justify-end">
+                    <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <x-searchbar class="w-[250px] " id="customSearch" />
+                    </div>
                 </div>
+            </div>
+            
+            <div class=" pb-5 p-5">
+
+                    <x-datatable id="salesReportTable"/>
+   
             </div>
         </div>
     </div>

@@ -2,8 +2,8 @@
 @section('headerTitle', 'MCP LAYOUT')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="MCP Layout" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -56,11 +56,13 @@
                         Today's Week No: 32 (Even week)
                     </span>
                 </div>
-                <div class="w-full h-[250px] overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable />
+                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
+                    <x-datatable id="mcpTable"/>
                 </div>
             </div>
         </div>
     </div>
 
 @endsection
+
+<script type="module" src="/app/module/Maintenance/Customer/mcpLayout.js"></script>

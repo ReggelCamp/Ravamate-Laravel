@@ -1,3 +1,16 @@
+import ComponentHelper from "../helper/ComponentHelper.js"
+
+const OperationItems = [
+    {
+        title : "All",
+        data : "all_type"
+    },
+    {
+        title : "Van Sales",
+        data : "van_sales"
+    },
+];
+
 // data table
 $(document).ready(function () {
     $("#myTable").DataTable({
@@ -41,4 +54,9 @@ $("#ExpandBtn").click(function () {
     } else {
         table.page.len(5).draw(false);
     }
+});
+
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#OperationTypeItems",
+    items: OperationItems
 });

@@ -2,8 +2,8 @@
 @section('headerTitle', 'Offsite Transaction')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Offsite Transaction" />
                 <span class="flex border rounded-xl bg-transparent items-center h-[30px] justify-center px-5 gap-[5px]">
@@ -15,7 +15,7 @@
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable class="px-5 border rounded-2xl"/>
                         </div>
                     <div class="flex w-full h-[30px] justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
@@ -24,10 +24,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
-                    <div class="min-w-[550px]">
+                <div class="w-full pb-5 overflow-x-auto rounded-2xl" id="DataTable">
+
                         <x-datatable id="offsiteTransTable"/>
-                    </div>
+
                 </div>
             </div>
         </div>

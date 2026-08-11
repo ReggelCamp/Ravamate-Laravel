@@ -95,9 +95,9 @@ const sfaSyncCards = [
                        data-url="${card.route}"
                        data-label="${card.label}">
 
-                        <span class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
+                        <button onclick="cdo_sync.showModal()" class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
                             Execute
-                        </span>
+                        </button>
 
                     </a>
                 </div>
@@ -112,7 +112,7 @@ sfaSyncCards.forEach(card => {
     $('.SfaContent').append(`
         <div id="${card.id}" class="sfaSyncCards flex flex-col gap-0 w-full max-w-[300px] mx-auto h-[240px]">
 
-              <h2 class="card-title rounded-t-4xl py-2 w-full flex justify-center headerColor maintinanceCard">
+            <h2 class="card-title rounded-t-4xl py-2 w-full flex justify-center headerColor maintinanceCard">
                 ${card.label}
             </h2>
 
@@ -120,25 +120,25 @@ sfaSyncCards.forEach(card => {
 
                 <!-- Centered Content -->
                 <div class="flex items-center justify-center w-full h-full">
-    <span class="cardContentWrapper flex flex-col items-center justify-center transition-all duration-300">
+                    <span class="cardContentWrapper flex flex-col items-center justify-center transition-all duration-300">
 
-        <i class="${card.icon} sfaIcon text-[80px] leading-none text-[#c1c1c1] transition-all duration-300"></i>
+                        <i class="${card.icon} sfaIcon text-[80px] leading-none text-[#c1c1c1] transition-all duration-300"></i>
 
-        <span class="descContainer hidden text-[12px] text-center px-4 mt-2">
-            ${card.desc}
-        </span>
+                        <span class="descContainer hidden text-[12px] text-center px-4 mt-2">
+                            ${card.desc}
+                        </span>
 
-    </span>
-</div>
+                    </span>
+            </div>
 
                 <!-- Bottom Right Button -->
                 <div class="absolute bottom-4 right-4">
                     <a class="execute-sync-btn"
                         data-url="${card.route}"
                         data-label="${card.label}">
-                        <span class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
+                        <button class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
                             Execute
-                        </span>
+                        </button>
                     </a>
                 </div>
 

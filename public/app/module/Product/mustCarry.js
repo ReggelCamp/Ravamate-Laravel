@@ -89,5 +89,8 @@ const sampleData = [
 TableLoader.tableData(
     "#mustCarryTable", // Replace with your actual table ID
     sampleData,
-    MustCarryColumns
+    MustCarryColumns,
+    {
+        scrollY: "300px"
+    }
 );

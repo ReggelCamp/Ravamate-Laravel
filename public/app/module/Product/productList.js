@@ -93,5 +93,8 @@ const sampleData = [
 TableLoader.tableData(
     "#producListTable",
     sampleData,
-    ProductListColumns
+    ProductListColumns,
+    {
+        scrollY: "300px"
+    }
 );

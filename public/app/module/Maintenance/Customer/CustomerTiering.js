@@ -82,5 +82,8 @@ const sampleData = [
 TableLoader.tableData(
     "#CustomerTieringDataTable",
     sampleData,
-    CustomerTieringColumns
+    CustomerTieringColumns,
+    {
+        scrollY: "300px"
+    }
 );

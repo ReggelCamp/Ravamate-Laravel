@@ -2,9 +2,9 @@
 @section('headerTitle', 'INVENTORY VALUATION')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full h-96 flex flex-col">
-            <div class="report_title w-full h-[100px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="INVENTORY VALUATION" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
@@ -20,13 +20,13 @@
                                 <x-slot:dropdownName>
                                     <span
                                         class="flex items-center justify-center w-fit px-5 gap-2 h-[30px] whitespace-nowrap border rounded-2xl h-[25px]">
-                                            <i class="mdi mdi-filter-variant"></i>
-                                            Filter by Salesman
-                                            <i class="fa-solid fa-caret-down"></i>
+                                        <i class="mdi mdi-filter-variant"></i>
+                                        Filter by Salesman
+                                        <i class="fa-solid fa-caret-down"></i>
                                     </span>
                                 </x-slot:dropdownName>
                                 <ul class="dropdown_item border bg-white" id="innValuationItems">
-                                    
+
                                 </ul>
                             </x-dropdown>
                         </div>
@@ -41,12 +41,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full overflow-x-auto rounded-2xl" id="DataTable">
-                    <div class="min-w-[550px]">
-                        <x-datatable id="innValuationTable"/>
-                    </div>
+                <div class="w-full pb-5 overflow-x-auto rounded-2xl" id="DataTable">
+                    <x-datatable id="innValuationTable" />
                 </div>
-            </div>
             </div>
         </div>
     </div>

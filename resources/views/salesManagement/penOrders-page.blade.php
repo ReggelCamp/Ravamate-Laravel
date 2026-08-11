@@ -19,8 +19,8 @@
 
     </style>
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-5 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Unprocessed Order" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px] h-[30px]">
@@ -64,7 +64,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable class="rounded-2xl border px-5"/>
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px] h-[30px] ">
@@ -82,7 +82,7 @@
                     </span>
 
                 </div>
-                <div class="w-full h-[250px] overflow-auto pt-1" id="DataTable">
+                <div class="w-full pb-5 overflow-auto pt-1" id="DataTable">
                     <x-datatable id="pendingOrdersTable" />
                 </div>
             </div>
