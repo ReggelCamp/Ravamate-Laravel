@@ -34,7 +34,7 @@
                                         <x-datepicker class="!text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#PendingDataTable" class="border px-5 rounded-2xl" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -60,7 +60,7 @@
                                         <x-datepicker class="!text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#RejectedDataTable" class="border px-5 rounded-2xl" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -86,7 +86,7 @@
                                         <x-datepicker class="!text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#ApprovedDataTable" class="border px-5 rounded-2xl" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

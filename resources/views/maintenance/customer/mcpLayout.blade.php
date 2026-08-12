@@ -17,7 +17,7 @@
                     <div class="flex gap-5 w-full">
                         <div class="flex rounded-2xl whitespace-nowrap h-[25px] gap-5">
                             <div>
-                                <x-exportDataTable leftIcon="mdi mdi-export"/>
+                                <x-exportDataTable tableId="#mcpTable" leftIcon="mdi mdi-export"/>
                             </div>
                             <x-button class="">
                                 <x-slot:buttonName>

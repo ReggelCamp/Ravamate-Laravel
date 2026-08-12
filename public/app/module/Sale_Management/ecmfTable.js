@@ -107,6 +107,8 @@
 
 import TableLoader from "../../helper/TableLoader.js";
 import ComponentHelper from "../../helper/ComponentHelper.js";
+import DatePicker from "../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const EcmfColumns = [
     {
@@ -624,4 +626,8 @@ ComponentHelper.select().loadByApi({
     url: "/salesmen",
     selectID: "select_items",
     noDataText: "No salesman Found"
+});
+
+$(document).ready(function () {
+    DatePicker.init();
 });

@@ -31,7 +31,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable tableId="#innValuationTable"/>
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

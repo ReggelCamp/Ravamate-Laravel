@@ -2,8 +2,14 @@
 @section('headerTitle', 'DAILY SALES REMITTANCE REPORT')
 @section('content')
 
-    <div class="flex w-full h-screen pt-5 px-3">
-        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
+<style>
+    table, th, td {
+            border:1px solid black;
+    } 
+</style>
+
+    <div class="flex w-full pb-20 pt-5 px-3">
+    <div class="card w-full max-h-[600px] flex flex-col min-h-96">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DSRR" />
                 <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
@@ -29,12 +35,15 @@
                                 </ul>
                             </x-dropdown>
                         </div>
-                        <div>
-                            <x-exportDataTable class="font-medium h-[28px] text-[12px]"/>
+                        <div class="flex gap-5">
+                            <button id="generateDsrrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
+                                Generate
+                            </button>
+                            <x-exportDataTable tableId="#DsrrTable" class="h-[28px] text-[12px] font-medium"/>
                         </div>
                     </div>
                 </div>
-                <div class="w-full flex-1 pb-5 rounded-r-2xl full">
+                <div class="w-full flex-1 pb-5 rounded-r-2xl">
                     <div id="DsrrReportname"
                         class="relative min-w-[200px] max-w-[500px] h-[74px] rounded-tl-3xl rounded-br-3xl overflow-hidden flex items-center justify-center">
 
@@ -45,15 +54,17 @@
                         </span>
                     </div>
                 </div>
-                <div class="flex justify-center items-center py-4">
+                <div class="flex justify-center items-center py-4 hidden">
                     <i class="mdi mdi-calendar-month-outline text-[#7d7d7d] text-[100px]"></i>
                 </div>
-                <x-datatable id="DsrrTable" />
+                <div
+                    id="DsrrTableContainer"
+                    class="flex-1 min-h-0 overflow-auto mb-5"
+                ></div>
             </div>
         </div>
     </div>
 
 @endsection
 
-<script type="module" src="/app/module/Sale_Management/dsrrTable.js
-"></script>
+<script type="module" src="/app/module/Sale_Management/dsrrTable.js"></script>

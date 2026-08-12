@@ -33,7 +33,7 @@
                                 class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
                                 <div class="flex  items-center h-[30px]  w-full gap-5">
                                     <div>
-                                        <x-exportDataTable class="font-medium border rounded-xl px-5 text-[12px] h-[30px]"/>
+                                        <x-exportDataTable tableId="#EcmfTable" class="font-medium border rounded-xl px-5 text-[12px] h-[30px]"/>
                                     </div>
                                     <div
                                         class="flex rounded-xl px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center font-medium border justify-end">

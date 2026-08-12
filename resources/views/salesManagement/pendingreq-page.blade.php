@@ -37,7 +37,7 @@
                                         <x-datepicker class="!text-black h-[30px]" />
                                     </div>
                                   
-                                        <x-exportDataTable class="border px-5 rounded-2xl"/>
+                                        <x-exportDataTable tableId="#PendingRequestTable" class="border px-5 rounded-2xl"/>
                                    
                                 </div>
                                 <div class="h-[30px] border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

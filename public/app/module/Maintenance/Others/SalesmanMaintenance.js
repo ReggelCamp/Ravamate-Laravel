@@ -41,7 +41,8 @@
 
 
 import TableLoader from "../../../helper/TableLoader.js";
-
+import DatePicker from "../../../helper/datePicker.js";
+import "../../../helper/exportDataTable.js";
 const SalesmanMaintenanceTable = [
     {
         title: "Md Code",
@@ -147,3 +148,6 @@ TableLoader.tableData(
         scrollY: "300"
     }
 );
+$(document).ready(function () {
+    DatePicker.init();
+});

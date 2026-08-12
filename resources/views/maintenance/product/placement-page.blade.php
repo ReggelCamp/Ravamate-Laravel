@@ -16,7 +16,7 @@
                     <div class="flex items-center w-full h-[60px] py-3">
                         <div class="flex gap-5 w-full">
                             <div class="items-center justify-center flex">
-                                <x-exportDataTable />
+                                <x-exportDataTable tableId="#productPlacementTable"/>
                             </div>
                             <div>
                                 <button class="btn border rounded-xl w-[150px] h-[30px]" onclick="AddPlacement.showModal()">

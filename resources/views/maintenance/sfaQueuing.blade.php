@@ -292,8 +292,8 @@
                                 <x-datepicker class="text-[11px]" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px] font-medium rounded-lg" />
+                            <div class="h-[30px]  px-2 text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] font-medium roun sfaShine_Btn" />
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -354,8 +354,8 @@
                                 <x-datepicker class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px]" />
+                            <div class="h-[30px]  px-2 text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />          
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -415,10 +415,8 @@
                                 <x-datepicker id="return_DatePicker" class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px]"
-                                itemClass="border border-gray-300 bg-red-400 rounded-lg"
-                                />
+                            <div class="h-[30px] px-2 text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn"/>
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -479,8 +477,8 @@
                                 <x-datepicker class="" displayOnly="true" />
                             </div>
 
-                            <div class="h-[30px] border rounded-2xl sfaShine_Btn px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px] " />
+                            <div class="h-[30px] px-2 text-white flex items-center">
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />                                             
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">

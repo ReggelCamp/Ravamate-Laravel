@@ -16,7 +16,7 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable />
+                            <x-exportDataTable tableId="#salesRetBoTable"/>
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

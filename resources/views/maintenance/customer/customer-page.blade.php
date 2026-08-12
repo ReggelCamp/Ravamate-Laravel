@@ -16,7 +16,7 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable 
+                            <x-exportDataTable tableId="#customerMaintenance"
                             leftIcon="fa-solid fa-download"/>
                         </div>
                         <div class="h-[30px] rounded-2xl">

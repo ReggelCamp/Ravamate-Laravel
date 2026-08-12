@@ -66,7 +66,7 @@
                     </x-dropdown>
                 </div>
                 <div>
-                    <x-exportDataTable />
+                    <x-exportDataTable tableId="#salesReportTable" />
                 </div>
             </div>
 

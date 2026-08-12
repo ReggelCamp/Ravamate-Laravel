@@ -6,10 +6,34 @@
         table, th, td {
             border:1px solid black;
         }   
+
+        .report-print-title {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px;
+        }
+
+        .report-left {
+            text-align: left;
+        }
+
+        .report-center {
+            text-align: center;
+        }
+
+        .report-right {
+            text-align: right;
+        }
+
+        /* Daterange */
+        .daterangepicker .ranges li{
+            
+        }
+
     </style>
 
-    <div class="flex w-full h-full pb-20 pt-5 px-3">
-    <div class="card w-full min-h-96 max-h-[500px] flex flex-col min-h-0">
+    <div class="flex w-full pb-20 pt-5 px-3">
+    <div class="card w-full max-h-[600px] flex flex-col min-h-96">
 
         {{-- Header --}}
         <div class="report_title h-[50px] flex items-center justify-center rounded-t-xl px-5 py-3 shrink-0">
@@ -47,35 +71,45 @@
                         </x-dropdown>
                     </div>
 
-                    <x-exportDataTable class="h-[28px] text-[12px] font-medium" />
                 </div>
 
-                <div>
+                <div class="flex gap-5">
                     <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
                         Generate
                     </button>
+                    <x-exportDataTable
+                        tableId="#DsrTable"
+                        class="h-[28px] text-[12px] font-medium"
+                    />
                 </div>
 
             </div>
 
             {{-- Table Section --}}
-            <div class="flex-1 min-h-0 flex flex-col gap-2">
+            <div class="flex-1 min-h-0 flex flex-col gap-2 ">
 
                 {{-- Table Title --}}
                 <div id="DsrReportname"
                     class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
 
-                    <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
-                            class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                    <img
+                        src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
+                        class="absolute inset-0 w-full h-full object-contain"
+                        alt=""
+                    >
 
                     <span id="DsrSalesmanName"
                         class="relative z-10 text-white font-semibold text-sm">
                     </span>
 
                 </div>
-                <div id="DsrTableContainer" class="">
-                    
+                <div class="flex justify-center items-center py-4 hidden">
+                    <i class="mdi mdi-calendar-month-outline text-[#7d7d7d] text-[100px]"></i>
                 </div>
+               <div
+                    id="DsrTableContainer"
+                    class="flex-1 min-h-0 overflow-auto mb-5"
+                ></div>
             </div>
 
         </div>

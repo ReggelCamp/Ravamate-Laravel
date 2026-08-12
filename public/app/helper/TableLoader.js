@@ -1,29 +1,53 @@
 import Api from "./Api.js";
 
-export default class TableLoader{
-    
-    static tableData(id, json, columns, options = {}){
-        $(id).DataTable({
+export default class TableLoader {
+
+    static tableData(id, json, columns, options = {}) {
+
+        const table = $(id).DataTable({
             data: json,
+
             searching: true,
             lengthChange: false,
             responsive: true,
+
             scrollX: true,
-            scrollY: options.scrollY ?? '100px',      // fixed height -> body becomes scrollable, header stays put
-            scrollCollapse: true,  // shrinks scrollY if there aren't enough rows to fill it
+            scrollY: options.scrollY ?? '100px',
+            scrollCollapse: true,
+
             dom: '<"top">rt<"dataTable-info"ip><"clear">',
+
             buttons: [
-                { extend: 'copy', className: 'btn btn-sm btn-primary' },
-                { extend: 'csv', className: 'btn btn-sm btn-secondary' },
-                { extend: 'excel', text: 'Export Excel', className: 'btn btn-sm btn-success' },
-                { extend: 'print', className: 'btn btn-sm btn-info' }
+                {
+                    extend: 'copy',
+                    className: 'dt-hidden-copy'
+                },
+                {
+                    extend: 'csv',
+                    className: 'dt-hidden-csv'
+                },
+                {
+                    extend: 'excel',
+                    text: 'Export Excel',
+                    className: 'dt-hidden-excel'
+                },
+                {
+                    extend: 'print',
+                    className: 'dt-hidden-print'
+                }
             ],
+
             columns,
+
             ...options
         });
+
+        return table;
     }
 
+
     static loadTable(config) {
+
         console.log("loadTable called");
 
         Api.get({
@@ -31,16 +55,24 @@ export default class TableLoader{
             data: config.filters,
 
             onSuccess: (data) => {
-                TableLoader.tableData(config.tableId, data, config.columns, {
-                    pageLength: config.pageLength,
-                    scrollY: config.scrollY
-                });
+
+                const table = TableLoader.tableData(
+                    config.tableId,
+                    data,
+                    config.columns,
+                    {
+                        pageLength: config.pageLength,
+                        scrollY: config.scrollY
+                    }
+                );
+
+                // Store the DataTable instance if you need it
+                config.table = table;
 
                 if (config.onSuccess) {
-                    config.onSuccess(data);
+                    config.onSuccess(data, table);
                 }
             },
         });
     }
-    
 }

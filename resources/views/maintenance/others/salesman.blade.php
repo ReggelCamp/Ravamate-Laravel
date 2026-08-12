@@ -21,7 +21,7 @@
                                 New Salesman
                             </button>
                             <div>
-                                <x-exportDataTable />
+                                <x-exportDataTable tableId="#salesmanMaintenanceTable"/>
                             </div>
                         </div>
                     </div>

@@ -58,6 +58,8 @@
 // );
 
 import TableLoader from "../../helper/TableLoader.js";
+import DatePicker from "../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const SalesRetRgsColumns = [
     {
@@ -541,3 +543,7 @@ TableLoader.tableData(
         scrollY: "300px"
     }
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

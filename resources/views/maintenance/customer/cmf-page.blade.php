@@ -34,7 +34,7 @@
                         <button class="btn rounded-2xl w-fit px-5 h-[30px]">
                             <i class="mdi mdi-refresh"></i>
                         </button>    
-                        <x-exportDataTable />
+                        <x-exportDataTable tableId="#cmfTable"/>
                         
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

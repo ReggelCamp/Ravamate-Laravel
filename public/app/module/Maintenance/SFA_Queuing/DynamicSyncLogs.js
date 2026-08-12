@@ -1,4 +1,6 @@
 import TableLoader from "../../../helper/TableLoader.js";
+import DatePicker from "../../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const DynamicSyncLogsColumns = [
     {
@@ -20,3 +22,7 @@ TableLoader.tableData(
     [],
     DynamicSyncLogsColumns,
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

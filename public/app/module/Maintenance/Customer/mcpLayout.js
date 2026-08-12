@@ -1,4 +1,6 @@
 import TableLoader from "../../../helper/TableLoader.js";
+import "../../../helper/exportDataTable.js";
+import DatePicker from "../../../helper/datePicker.js";
 
 const MCPColumns = [
     {
@@ -292,3 +294,7 @@ TableLoader.tableData(
         scrollY: "300px"
     }
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

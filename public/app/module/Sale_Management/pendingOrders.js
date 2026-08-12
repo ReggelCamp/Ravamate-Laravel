@@ -53,6 +53,8 @@
 
 import TableLoader from "../../helper/TableLoader.js";
 import ComponentHelper from "../../helper/ComponentHelper.js";
+import DatePicker from "../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const PendingOrdersColumns = [
     {
@@ -324,3 +326,7 @@ TableLoader.tableData(
         scrollY: "300px"
     }
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

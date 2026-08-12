@@ -6,10 +6,94 @@
         .dataTable-info{
             padding-top: 20px;
         }
+
+        /* Main daterangepicker */
+.daterangepicker.dcr-picker {
+    width: 900px;
+    padding: 10px;
+}
+
+/* Date inputs at the top */
+.daterangepicker.dcr-picker .custom-date-inputs {
+    display: flex;
+    gap: 14px;
+    width: calc(100% - 210px);
+    margin-bottom: 8px;
+}
+
+/* Start/end input */
+.daterangepicker.dcr-picker .drp-start,
+.daterangepicker.dcr-picker .drp-end {
+    width: 50%;
+    height: 38px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+/* Calendar area */
+.daterangepicker.dcr-picker .custom-calendars {
+    display: flex;
+    width: calc(100% - 210px);
+}
+
+/* Left/right calendar */
+.daterangepicker.dcr-picker .calendar {
+    width: 50%;
+    max-width: none;
+}
+
+/* Right-side preset ranges */
+.daterangepicker.dcr-picker .ranges {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 200px;
+}
+
+/* Range buttons */
+.daterangepicker.dcr-picker .ranges li {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    color: #0077b6;
+}
+
+/* Active range */
+.daterangepicker.dcr-picker .ranges li.active {
+    background: #078ac5;
+    color: white;
+}
+
+/* Buttons */
+.daterangepicker.dcr-picker .drp-buttons {
+    margin-top: 8px;
+    padding: 0;
+    border-top: none;
+    text-align: left;
+}
+
+/* Hide daterangepicker's selected text */
+.daterangepicker.dcr-picker .drp-selected {
+    display: none;
+}
+
+/* Apply */
+.daterangepicker.dcr-picker .applyBtn {
+    border-radius: 4px;
+}
+
+/* Cancel */
+.daterangepicker.dcr-picker .cancelBtn {
+    background: transparent;
+    border: none;
+}
     </style>
 
-    <div class="flex w-full h-screen pt-10 px-3">
-        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
+    <div class="flex w-full pt-10 px-3">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DCR" />
 
@@ -39,7 +123,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class=" w-fit px-5 h-[28px] sheenFilterBtn border rounded-2xl font-medium text-[12px]" />
+                            <x-exportDataTable tableId="#DcrDataTable" class=" w-fit px-5 h-[28px] sheenFilterBtn border rounded-2xl font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

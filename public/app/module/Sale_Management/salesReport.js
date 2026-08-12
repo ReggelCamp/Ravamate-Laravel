@@ -70,6 +70,8 @@
 // );
 
 import TableLoader from "../../helper/TableLoader.js";
+import DatePicker from "../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const StockRequestColumns = [
     {
@@ -567,6 +569,10 @@ TableLoader.tableData(
     sampleData,
     StockRequestColumns,
     {
-        scrollY:'300px'
+        scrollY:'350px'
     }
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

@@ -42,6 +42,8 @@
 // );
 
 import TableLoader from "../../helper/TableLoader.js";
+import DatePicker from "../../helper/datePicker.js";
+import "../../helper/exportDataTable.js";
 
 const PlacementCheckColumns = [
     {
@@ -339,3 +341,7 @@ TableLoader.tableData(
         scrollY: "500px"
     }
 );
+
+$(document).ready(function () {
+    DatePicker.init();
+});

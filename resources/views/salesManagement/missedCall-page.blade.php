@@ -16,7 +16,7 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex w-full">
                          <div>
-                            <x-exportDataTable class="border rounded-2xl px-5"/>
+                            <x-exportDataTable tableId="#missedCallTable" class="border rounded-2xl px-5"/>
                         </div>
                     </div>
                     <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
