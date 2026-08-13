@@ -11,6 +11,10 @@
     'leftIcon' => null,
     'rightIcon' => 'fa-solid fa-caret-down',
     'tableId' => null,
+    'report' => null,
+    'hideCsv' => false,
+    'hideCopy' => false,
+
 ])
 
 <div class="dropdown dropdown-end">
@@ -18,7 +22,7 @@
     <button
         id="{{ $id }}"
         {{ $attributes->merge([
-            'class' => 'btn-sm flex items-center justify-center gap-2 h-[30px] rounded-2xl border px-5'
+            'class' => 'btn-sm flex items-center justify-center gap-2 h-[30px] rounded-2xl text-[12px] border px-5'
         ]) }}
     >
         {{ $label }}
@@ -28,7 +32,7 @@
         @endif
     </button>
 
-    <ul
+    {{-- <ul
         tabindex="0"
         class="dropdown-content menu rounded-lg overflow-hidden font-medium shadow-lg p-0 w-fit z-50"
     >
@@ -79,5 +83,67 @@
 
         {{ $slot }}
 
-    </ul>
+    </ul> --}}
+
+    <ul
+    tabindex="0"
+    class="dropdown-content menu rounded-lg overflow-hidden font-medium shadow-lg p-0 w-fit z-50"
+>
+
+    {{-- Print --}}
+    <li class="shine-bgExportBtn">
+        <a
+            href="#"
+            class="printBtn"
+            data-table="{{ $tableId }}"
+            data-report="{{ $report }}"
+        >
+            <i class="fa-solid fa-print"></i>
+            Print
+        </a>
+    </li>
+
+    {{-- CSV --}}
+    @if(!$hideCsv)
+        <li class="shine-bgExportBtn">
+            <a
+                href="#"
+                class="csvBtn"
+                data-table="{{ $tableId }}"
+            >
+                <i class="fa-solid fa-file-csv"></i>
+                CSV
+            </a>
+        </li>
+    @endif
+
+    {{-- Excel --}}
+    <li class="shine-bgExportBtn">
+        <a
+            href="#"
+            class="excelBtn"
+            data-table="{{ $tableId }}"
+        >
+            <i class="fa-solid fa-file-excel"></i>
+            Excel
+        </a>
+    </li>
+
+    {{-- Copy --}}
+    @if(!$hideCopy)
+        <li class="shine-bgExportBtn">
+            <a
+                href="#"
+                class="copyBtn"
+                data-table="{{ $tableId }}"
+            >
+                <i class="fa-solid fa-copy"></i>
+                Copy
+            </a>
+        </li>
+    @endif
+
+    {{ $slot }}
+
+</ul>
 </div>

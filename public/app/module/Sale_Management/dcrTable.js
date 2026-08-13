@@ -62,7 +62,7 @@ ComponentHelper.dropdown().loadByApi({
     dropdownId: "dcrItems",
     noDataText: "No SalesMan Found",
     displayField: "salesman_name",
-    dataField: "salesman_id"
+    dataField: "salesman_id",
 });
 
 $(document).on("click", "#dropdown_Item", function (e) {

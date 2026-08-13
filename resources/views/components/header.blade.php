@@ -137,7 +137,7 @@
                 <li>
 
                     <a href="{{ route('dashboard') }}"
-                        class="shine-bgNav headerFont  rounded-xl px-4 py-3 text-sm font-medium">
+                        class=" headerFont  rounded-xl px-4 py-3 text-sm font-medium {{ request()->routeIs('dashboard') ? 'active_page' : 'shine-bgNav' }}">
 
                         <i class="fa-solid fa-house"></i>
 
@@ -151,7 +151,7 @@
                 <li>
 
                     <a href="{{ route('analytics') }}"
-                        class="shine-bgNav  rounded-xl headerFont px-4 py-3 text-sm font-medium">
+                        class="  rounded-xl headerFont px-4 py-3 text-sm font-medium {{ request()->routeIs('analytics') ? 'active_page' : 'shine-bgNav' }}">
 
                         <i class="fa-solid fa-chart-line"></i>
 
@@ -194,7 +194,7 @@
 
                                         <li>
                                             <a href="{{ route('dcr') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dcr') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Daily Collection Report
 
@@ -203,7 +203,7 @@
 
                                         <li>
                                             <a href="{{ route('dsr') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsr') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Daily Sales Report
 
@@ -212,7 +212,7 @@
 
                                         <li>
                                             <a href="{{ route('dsrr') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }} ">
 
                                                 Daily Sales Remittance Report
 
@@ -221,7 +221,7 @@
 
                                         <li>
                                             <a href="{{ route('ecmf') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('ecmf') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Electronic CMF
 
@@ -230,7 +230,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingbo') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('pendingbo') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Hold Bad Orders
 
@@ -239,7 +239,7 @@
 
                                         <li>
                                             <a href="{{ route('pendingrequest') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('pendingrequest') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Hold Sales Orders
 
@@ -248,7 +248,7 @@
 
                                         <li>
                                             <a href="{{ route('missedcall') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('missedcall') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Missed Calls
 
@@ -257,14 +257,14 @@
 
                                         <li>
                                             <a href="{{ route('offsitetransaction') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont py-2 text-sm {{ request()->routeIs('offsitetransaction') ? 'active_page' : 'shine-bgNav' }}">
                                                 Offsite Transactions
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="{{ route('pendingorders') }}"
-                                                class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                                class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('pendingorders') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Pending Orders
 
@@ -273,7 +273,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreport') }}"
-                                                class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('salesreport') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Sales Report
 
@@ -282,7 +282,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnBO') }}"
-                                                class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('salesreturnBO') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Sales Return (BO)
 
@@ -291,7 +291,7 @@
 
                                         <li>
                                             <a href="{{ route('salesreturnRGS') }}"
-                                                class="rounded-lg headerFont shine-bgNav  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont   px-4 py-2 text-sm {{ request()->routeIs('salesreturnRGS') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Sales Return (RGS)
 
@@ -300,7 +300,7 @@
 
                                         <li>
                                             <a href="{{ route('salessummary') }}"
-                                                class="rounded-lg headerFont shine-bgNav  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont   px-4 py-2 text-sm {{ request()->routeIs('salessummary') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Sales Summary
 
@@ -319,7 +319,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon headerFont shine-bgNav  px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont shine-bgNav px-4 py-2 text-sm ">
                                         <i class="mdi mdi-file-multiple"></i>
                                         Inventory Management
                                         <div class="flex w-full arrowIcon justify-end">
@@ -331,7 +331,7 @@
 
                                         <li>
                                             <a href="{{ route('invValuation') }}"
-                                                class="rounded-lg shine-bgNav headerFont px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont px-4 py-2 text-sm {{ request()->routeIs('invValuation') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Inventory Valuation
 
@@ -340,7 +340,7 @@
 
                                         <li>
                                             <a href="{{ route('placementCheck') }}"
-                                                class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('placementCheck') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Placement Check
 
@@ -349,7 +349,7 @@
 
                                         <li>
                                             <a href="{{ route('stockcheck') }}"
-                                                class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('stockcheck') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Store Inventory
 
@@ -368,7 +368,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon headerFont  shine-bgNav px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont  shine-bgNav px-4 py-2 text-sm ">
                                         <i class="mdi mdi-file-multiple"></i>
                                         Audit Trail
                                         <div class="flex w-full arrowIcon justify-end">
@@ -381,7 +381,7 @@
 
                                         <li>
                                             <a href="{{ route('syncReport') }}"
-                                                class="rounded-lg headerFont shine-bgNav  px-4 py-2 text-sm">
+                                                class="rounded-lg headerFont   px-4 py-2 text-sm {{ request()->routeIs('syncReport') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Salesman Data Sync
 
@@ -400,7 +400,7 @@
                                 <details>
 
                                     <summary
-                                        class="rounded-lg dropdownIcon headerFont shine-bgNav px-4 py-2 text-sm">
+                                        class="rounded-lg dropdownIcon headerFont shine-bgNav px-4 py-2 text-sm ">
                                         <i class="mdi mdi-file-multiple"></i>
                                         Others
                                         <div class="flex w-full arrowIcon justify-end">
@@ -412,7 +412,7 @@
 
                                         <li>
                                             <a href="{{ route('deliveryMonitoring') }}"
-                                                class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                                class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('deliveryMonitoring') ? 'active_page' : 'shine-bgNav' }}">
 
                                                 Delivery Monitoring
 
@@ -445,7 +445,7 @@
 
                     <details>
 
-                        <summary class="w-full shine-bgNav dropdownIcon rounded-xl px-4 py-3 text-sm font-medium">
+                        <summary class="w-full shine-bgNav dropdownIcon rounded-xl px-4 py-3 text-sm font-medium ">
 
                             <div class="flex w-full headerFont items-center gap-3">
 
@@ -464,7 +464,7 @@
 
                             <li>
                                 <a href="{{ route('maintenance') }}"
-                                    class="rounded-lg shine-bgNav headerFont px-4 py-2 text-sm">
+                                    class="rounded-lg  headerFont px-4 py-2 text-sm {{ request()->routeIs('maintenance') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-wrench-cog"></i>
                                     Data Maintenance
 
@@ -473,7 +473,7 @@
 
                             <li>
                                 <a href="{{ route('datamaintenance') }}"
-                                    class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                    class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('datamaintenance') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-archive-sync"></i>
                                     Eric Data Alignment
 
@@ -482,7 +482,7 @@
 
                             <li>
                                 <a href="{{ route('sfaqueuing') }}"
-                                    class="rounded-lg shine-bgNav headerFont  px-4 py-2 text-sm">
+                                    class="rounded-lg  headerFont  px-4 py-2 text-sm {{ request()->routeIs('sfaqueuing') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-file-sync"></i>
                                     SFA Queuing
 
@@ -501,7 +501,7 @@
                     <details>
 
                         <summary
-                            class="shine-bgNav dropdownIcon rounded-xl px-4 py-3 text-sm font-medium">
+                            class="shine-bgNav dropdownIcon rounded-xl px-4 py-3 text-sm font-medium ">
 
                             <div class="flex items-center headerFont gap-3 ">
 
@@ -517,94 +517,94 @@
                         <ul class="mt-2 space-y-1 max-h-[300px] overflow-y-auto">
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>
                                     Fast Unimerchant Cebu</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>
                                     Fast
                                     Unimerchant Bohol</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MNC
                                     PDB</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MNC
                                     SYL</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm"> <i class="mdi mdi-map-marker-radius"></i>
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}"> <i class="mdi mdi-map-marker-radius"></i>
                                     MNC
                                     MCM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>
                                     MNC
                                     RAC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MNC
                                     DCI</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MNC
                                     NVM</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MNC
                                     ABRI CAVITE</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP CALBAYOG</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP TACLOBAN</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>IMDC
                                     GROUP ORMOC</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>MEM</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>Fast
                                     Unimerchants P.O.D</a></li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>DGV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>SMI</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>DBV</a>
                             </li>
 
                             <li><a href="{{ route('maintenance') }}"
-                                    class="rounded-lg px-4 shine-bgNav headerFont  py-2 text-sm">
+                                    class="rounded-lg px-4  headerFont  py-2 text-sm {{ request()->routeIs('dsrr') ? 'active_page' : 'shine-bgNav' }}">
                                     <i class="mdi mdi-map-marker-radius"></i>DCMI</a>
                             </li>
 

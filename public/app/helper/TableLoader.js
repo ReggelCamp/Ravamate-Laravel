@@ -42,7 +42,20 @@ export default class TableLoader {
             ...options
         });
 
+        const searchSelector = options.searchInput
+            || `[data-table-search="${id}"]`;
+
+        TableLoader.bindSearch(searchSelector, table);
+
         return table;
+    }
+
+    static bindSearch(selector, table) {
+        $(selector)
+            .off("input.tableSearch")
+            .on("input.tableSearch", function () {
+                table.search(this.value).draw();
+            });
     }
 
 
@@ -62,7 +75,8 @@ export default class TableLoader {
                     config.columns,
                     {
                         pageLength: config.pageLength,
-                        scrollY: config.scrollY
+                        scrollY: config.scrollY,
+                        searchInput: config.searchInput
                     }
                 );
 
@@ -75,4 +89,5 @@ export default class TableLoader {
             },
         });
     }
+    
 }

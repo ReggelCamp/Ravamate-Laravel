@@ -171,7 +171,7 @@
                     </span>
 
                     {{-- DataTable --}}
-                    <div class="dashboard-datatable pt-2 h-full rounded-2xl">
+                    <div id="dashboardDataTable" class="dashboard-datatable pt-2 h-[100px] rounded-2xl">
                         <x-datatable />
                     </div>
 

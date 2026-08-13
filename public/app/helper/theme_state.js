@@ -59,8 +59,7 @@ export default function getActive() {
             let activeTheme = data;
 
             localStorage.setItem("savedTheme", JSON.stringify(activeTheme));
-
-            //renderActive(activeTheme);
+            renderActive(activeTheme);
 
             // if (activeTheme) {
 

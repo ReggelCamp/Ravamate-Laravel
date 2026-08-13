@@ -18,7 +18,7 @@
                     <i class="fa-solid fa-caret-down text-xs"></i>
                 </span>
             </div>
-            <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
+            <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5 overflow-hidden">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex justify-between w-full">
                         <div class="h-[25px]">
@@ -39,13 +39,19 @@
                             <button id="generateDsrrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
                                 Generate
                             </button>
-                            <x-exportDataTable tableId="#DsrrTable" class="h-[28px] text-[12px] font-medium"/>
+                            <x-exportDataTable 
+                                tableId="#DsrrTable"
+                                report="DSRR"
+                                :hideCsv="true"
+                                :hideCopy="true"
+                                class="h-[28px] text-[12px] font-medium"
+                            />
                         </div>
                     </div>
                 </div>
-                <div class="w-full flex-1 pb-5 rounded-r-2xl">
+                <div class="w-full pb-5 rounded-r-2x">
                     <div id="DsrrReportname"
-                        class="relative min-w-[200px] max-w-[500px] h-[74px] rounded-tl-3xl rounded-br-3xl overflow-hidden flex items-center justify-center">
+                        class="relative min-w-[200px] max-w-[500px] h-[74px]  rounded-tl-3xl rounded-br-3xl overflow-hidden flex items-center justify-center">
 
                         <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
                             class="absolute top-0 left-0 w-full h-full object-cover" alt="">

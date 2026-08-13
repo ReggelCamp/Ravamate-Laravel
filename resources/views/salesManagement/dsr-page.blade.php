@@ -77,8 +77,11 @@
                     <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
                         Generate
                     </button>
-                    <x-exportDataTable
+                    <x-exportDataTable 
                         tableId="#DsrTable"
+                        report="DSR"
+                        :hideCsv="true"
+                        :hideCopy="true"
                         class="h-[28px] text-[12px] font-medium"
                     />
                 </div>

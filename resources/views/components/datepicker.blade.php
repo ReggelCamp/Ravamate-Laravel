@@ -63,6 +63,10 @@
     line-height: 0px !important;
 }
 
+.daterangepicker .drp-buttons{
+    text-align: center !important;
+}
+
 </style>
 
 
@@ -79,7 +83,7 @@
 ])
 
 <div class="flex h-[30px] justify-end">
-    <div class="dateColor flex items-center h-full justify-end ">
+    <div class="dateColor flex items-center h-full justify-end text-[12px]">
 
         @if($displayOnly)
             <div id="dateButton" class="cursor-pointer flex items-center"></div>

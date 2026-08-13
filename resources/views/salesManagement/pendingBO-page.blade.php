@@ -31,7 +31,7 @@
                                     <div
                                         class="flex rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black" />
+                                        <x-datepicker class="!text-black " />
                                     </div>
                                     <div>
                                         <x-exportDataTable tableId="#PendingDataTable" class="border px-5 rounded-2xl" />

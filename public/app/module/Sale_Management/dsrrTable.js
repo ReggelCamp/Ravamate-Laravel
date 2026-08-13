@@ -3,7 +3,7 @@ import ComponentHelper from "../../helper/ComponentHelper.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/ExportTable.js";
 
-let selectedSalesman = "";
+let selectedSalesman = sessionStorage.getItem("selectedSalesman_DSRR") || "";
 
 const DsrrColumns = [
     "NO.",
@@ -483,14 +483,15 @@ ComponentHelper.dropdown().loadByApi({
     dataField: "salesman_id",
 })
 
-$(document).on("click", "#dropdown_Item", function (e) {
+$(document).on("click", "#dsrrItems #dropdown_Item", function (e) {
     e.preventDefault();
     
-    const salesman = $(this).data("value");
+    const salesman = $(this).data("value") || "";
     console.log("ge",salesman);
 
     $("#dsrrSalesmanName").text(salesman || "Select Salesman");
-    
+    selectedSalesman = salesman;
+    sessionStorage.setItem("selectedSalesman_DSRR", selectedSalesman);
     //loadTable(salesman);
 
     $(this).blur();
@@ -503,24 +504,24 @@ $(document).on("click", "#generateDsrrReport", function () {
     console.log("clicked");
 
     let html = `
-        <table class="w-full border-collapse border border-gray-400 text-[11px]">
+        <table id = "DsrrTable" class="w-full border-collapse border border-gray-400 text-[11px]">
             <thead>
                 <tr>
-                    <th rowspan="2" class="border border-gray-400 px-3 py-2">NO.</th>
-                    <th rowspan="2" class="border border-gray-400 px-3 py-2">CS#</th>
-                    <th rowspan="3" class="border border-gray-400 px-3 py-2">CUSTOMER</th>
-                    <th rowspan="2" class="border border-gray-400 px-3 py-2">ADDRESS</th>
-                    <th rowspan="2" class="border border-gray-400 px-3 py-2">AMOUNT</th>
+                    <th rowspan="2" class=" border border-gray-400 px-3 py-2">NO.</th>
+                    <th rowspan="2" class=" border border-gray-400 px-3 py-2">CS#</th>
+                    <th rowspan="3" class=" border border-gray-400 px-3 py-2">CUSTOMER</th>
+                    <th rowspan="2" class=" border border-gray-400 px-3 py-2">ADDRESS</th>
+                    <th rowspan="2" class=" border border-gray-400 px-3 py-2">AMOUNT</th>
 
-                    <th colspan="3" class="border border-gray-400 px-3 py-2">
+                    <th colspan="3" class=" border border-gray-400 px-3 py-2">
                         ADJUSTMENT
                     </th>
                 </tr>
 
                 <tr>
-                    <th class="border border-gray-400 px-3 py-2">CMA</th>
-                    <th class="border border-gray-400 px-3 py-2">AMOUNT</th>
-                    <th class="border border-gray-400 px-3 py-2">TOTAL</th>
+                    <th class=" border border-gray-400 px-3 py-2">CMA</th>
+                    <th class=" border border-gray-400 px-3 py-2">AMOUNT</th>
+                    <th class=" border border-gray-400 px-3 py-2">TOTAL</th>
                 </tr>
             </thead>
 
@@ -530,8 +531,8 @@ $(document).on("click", "#generateDsrrReport", function () {
     sampleData.forEach((row,index) => {
         html += `
             <tr>
-                <td>${index + 1}</td>
-                ${row.map(cell => `<td>${cell}</td>`).join("")}
+                <td class ="px-5">${index + 1}</td>
+                ${row.map(cell => `<td class = "px-5">${cell}</td>`).join("")}
             </tr>
         `;        
     });
@@ -540,7 +541,139 @@ $(document).on("click", "#generateDsrrReport", function () {
         </tbody>
         
         <tfoot>
+            <tr>
+                <th colspan = "2">Total:</th>
+                <th colspan = "2"></th>
+                <td class="text-center">20,000</td>
+            </tr>
+            <tr>
+                <th colspan = "2"></th>
+                <th colspan = "2"></th>
+                <th colspan = "2">Online Payment</th>
+                <th colspan = "2">Amount</th>
+            </tr>
+            <tr>
+                <th colspan = "8"></th>
+            </tr>
+            <tr>
+                <td colspan = "4" class = "py-[10px]">
+                    <div class = "flex justify-evenly ">
+                        <div class="flex flex-col items-center justify-evenly gap-10">
+                            <span class = "font-bold">Prepared by:</span>
+                            <div class = "flex flex-col text-center">
+                                <span class = "border-b w-[150px]"></span>
+                                <span>Ex - Truck/Saturator Salesman </span>
+                            </div>
 
+                            <span class = "font-bold ">Recieved by:</span>
+                            <div class = "flex flex-col text-center">
+                                <span class = "border-b w-[150px]"></span>
+                                <span>Site Accountant </span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-evenly gap-10">
+                            <span class = "font-bold">Received & Checked by:</span>
+                            <div class = "flex flex-col text-center">
+                                <span class = "border-b w-[150px]"></span>
+                                <span> SITE CASHIER </span>
+                            </div>
+                            <span class = "font-bold">Noted by:</span>
+                            <div class = "flex flex-col text-center">
+                                <span class = "border-b w-[150px]"></span>
+                                <span> BRANCH MANAGER </span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="4" class="p-0 align-top">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="p-0! bg-black text-white" colspan = "4">DENOMINATION</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+
+                            <tr>
+                                <td colspan = "1" class="text-center border w-[200px] px-2">
+                                    1,000.00 x
+                                </td>
+                                
+                            </tr>
+
+                            <tr>
+                                <td colspan = "1" class="text-center border px-2">
+                                    500.00 x
+                                </td>
+                                <td colspan = "1" class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    200.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    100.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    50.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    20.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    10.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    5.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    1.00 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center border px-2">
+                                    0.25 x
+                                </td>
+                                <td class="border px-2"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan = "1" class ="p-0! bg-black text-white">
+                                    TOTAL
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
         </tfoot>
 
         </table>
@@ -553,4 +686,10 @@ $(document).on("click", "#generateDsrrReport", function () {
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+$(function () {
+    if (selectedSalesman) {
+        $("#dsrrSalesmanName").text(selectedSalesman);
+    }
 });

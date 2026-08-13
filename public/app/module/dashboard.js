@@ -13,10 +13,14 @@ const OperationItems = [
 
 // data table
 $(document).ready(function () {
-    $("#myTable").DataTable({
+    $("#dashboardDataTable").DataTable({
         searching: false,
         ordering: false,
         lengthChange: false,
+        scrollY: "100px",
+        scrollCollapse: true,
+
+        searchInput: "#DcrSearch"
     });
 });
 

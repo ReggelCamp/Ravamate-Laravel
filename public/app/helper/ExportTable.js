@@ -1,14 +1,12 @@
-console.log("DataTable Export JS loaded");
 
-
-// ==============================
 // PRINT
-// ==============================
 
 $(document).on("click", ".printBtn", function (e) {
     e.preventDefault();
 
-    const tableId = $(this).data("table");
+    const button = $(this);
+    const tableId = button.data("table");
+    const report = String(button.data("report") || "").toUpperCase();
 
     if (!tableId) {
         console.error("No table ID specified");
@@ -21,6 +19,23 @@ $(document).on("click", ".printBtn", function (e) {
         console.error("Table not found:", tableId);
         return;
     }
+
+    const reportName = report || (tableId.toLowerCase().includes("dsrr") ? "DSRR" : "DSR");
+    const salesmanKey = `selectedSalesman_${reportName}`;
+    const salesman = sessionStorage.getItem(salesmanKey) || "All Salesmen";
+    const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;",
+    }[char]));
+    const printHeader = `
+        <div class="report-header">
+            <span><strong>Salesman:</strong> ${escapeHtml(salesman)}</span>
+            <span><strong>Report:</strong> ${escapeHtml(reportName)}</span>
+        </div>
+    `;
 
     const printWindow = window.open("", "_blank");
 
@@ -47,6 +62,8 @@ $(document).on("click", ".printBtn", function (e) {
 
         pages += `
             <div class="print-page">
+
+                ${printHeader}
 
                 <table>
 
@@ -91,6 +108,14 @@ $(document).on("click", ".printBtn", function (e) {
                 body {
                     margin: 0;
                     padding: 0;
+                }
+
+                .report-header {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 8px;
+                    font-size: 12px;
+                    font-weight: normal;
                 }
 
                 body {
@@ -187,9 +212,7 @@ $(document).on("click", ".printBtn", function (e) {
     };
 });
 
-// ==============================
 // EXCEL
-// ==============================
 
 $(document).on("click", ".excelBtn", function (e) {
 

@@ -87,6 +87,7 @@ function getActivityLogs() {
                     ordering: true,
                     order: [[ "desc"]], // Log ID descending (latest first)
                     pageLength: 10,
+                    scrollY: "500px",
                 }
             )
 

@@ -5,7 +5,7 @@ import ComponentHelper from "../../helper/ComponentHelper.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/ExportTable.js";
 
-let selectedSalesman = "";
+let selectedSalesman = sessionStorage.getItem("selectedSalesman_DSR") || "";
 
 
 // DSR TABLE COLUMNS
@@ -751,6 +751,8 @@ $(document).on("click", "#dropdown_Item", function (e) {
 
     $("#DsrSalesmanName").text(selectedSalesman || "Select Salesman");
 
+    sessionStorage.setItem("selectedSalesman_DSR", selectedSalesman);
+
     $(this).blur();
     $('.dropdownTrigger [role="button"]').blur();
 
@@ -818,8 +820,8 @@ DsrSampleData.forEach((row, index) => {
 
     html += `
         <tr>
-            <td>${index + 1}</td>
-            ${row.map(cell => `<td>${cell}</td>`).join("")}
+            <td class = "text-center">${index + 1}</td>
+            ${row.map(cell => `<td class = "text-center">${cell}</td>`).join("")}
         </tr>
     `;
 

@@ -250,6 +250,11 @@ summary::-webkit-details-marker {
 
     }
 
+    .active_page{
+        background-color: var(--accent);
+        color: var(--header-color);
+    }
+
     .font_color{
         color: var(--header-color);
     }

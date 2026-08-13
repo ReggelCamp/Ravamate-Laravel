@@ -84,7 +84,7 @@
             position: relative;
             overflow: hidden;
             background: transparent;
-            /* border: 1px solid var(--header-color); */
+            border: 1px solid var(--header-color);
             color: var(--header-color);
         }
         
@@ -92,7 +92,7 @@
             background: linear-gradient(to right,
                 var(--secondary),
                 var(--primary));
-            /* border: 1px solid var(--header-color); */
+            border: 1px solid var(--header-color);
             color: var(--header-color);
         }
 
@@ -153,7 +153,7 @@
                             Admin Sync Logs
                     </a>
 
-                    <button class="bg-transparent text-sm rounded-xl h-[30px] sfaShine_Btn px-4 py-2">
+                    <button class="bg-transparent text-sm rounded-xl h-[30px] items-center inline-flex gap-2 sfaShine_Btn px-4 py-2">
                         <i class="fas fa-refresh"></i>
                         Refresh
                     </button>

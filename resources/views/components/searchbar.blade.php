@@ -1,5 +1,6 @@
 @props([
     'placeholder' => 'Search',
+    'tableId' => null,
 ])
 
 
@@ -17,6 +18,7 @@
         <input
         {{-- id="SearchInput" --}}
             type="text"
+            @if($tableId) data-table-search="{{ $tableId }}" @endif
             {{ $attributes->merge([
                 'id' => 'SearchInput',
                 'class' => 'bodyFont pl-3 searchBar text-[14px] h-[30px] font-medium '
@@ -27,4 +29,3 @@
         >
         
     </div>
-
