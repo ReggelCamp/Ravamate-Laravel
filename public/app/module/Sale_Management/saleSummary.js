@@ -536,7 +536,7 @@ TableLoader.tableData(
     sampleData,
     SaleSummaryColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

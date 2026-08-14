@@ -18,7 +18,7 @@
        }
     </style>
 
-    <div class="flex w-full pt-5 px-3 ">
+    <div class="flex w-full h-full pb-20 pt-5 px-3 ">
         <div class="card w-full h-full flex flex-col">
             <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Electronic CMF" />
@@ -37,8 +37,8 @@
                                     </div>
                                     <div
                                         class="flex rounded-xl sheenFilterBtn  px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center border justify-end">
-                                        <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="sheenFilterBtn" />
+                                        <i class="items-center justify-center w-5 h-5 flex font-medium" data-lucide="calendar-days"></i>
+                                        <x-datepicker class="sheenFilterBtn text-[12px] font-medium" />
                                     </div>
                                     <div>
                                         <button onclick="ExportEcmfRecords.showModal()"

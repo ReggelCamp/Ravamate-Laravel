@@ -323,7 +323,7 @@ TableLoader.tableData(
     sampleData,
     PendingOrdersColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

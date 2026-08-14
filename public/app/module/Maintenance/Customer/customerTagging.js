@@ -195,7 +195,7 @@ TableLoader.tableData(
     CustomerTaggingSampleData,
     CustomerTaggingColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

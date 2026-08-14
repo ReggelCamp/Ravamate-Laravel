@@ -97,7 +97,7 @@ TableLoader.tableData(
     sampleData,
     ProductListColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

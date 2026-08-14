@@ -108,7 +108,7 @@ TableLoader.tableData(
     sampleData,
     PlacementProductColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

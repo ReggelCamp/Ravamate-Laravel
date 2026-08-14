@@ -515,7 +515,7 @@ TableLoader.tableData(
     CustomerMaintenanceSampleData,
     CustomerListColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 
 

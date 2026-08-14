@@ -17,7 +17,7 @@
     </style>
 
 
-    <div class="flex w-full pt-5 px-3">
+    <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Report" />

@@ -173,7 +173,7 @@ TableLoader.tableData(
     sampleData,
     syncReportcolumns,
     {
-        scrollY: "200px"
+        scrollY: "500px"
     }
 );
 

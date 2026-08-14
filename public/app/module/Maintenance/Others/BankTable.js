@@ -74,7 +74,7 @@ TableLoader.tableData(
     sampleData,
     BankColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

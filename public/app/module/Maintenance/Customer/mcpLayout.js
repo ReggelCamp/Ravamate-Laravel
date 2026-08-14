@@ -291,7 +291,7 @@ TableLoader.tableData(
     MCPSampleData,
     MCPColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

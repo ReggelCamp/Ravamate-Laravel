@@ -2,15 +2,17 @@
 @section('headerTitle', 'INVENTORY VALUATION')
 @section('content')
 
-    <div class="flex w-full pt-5 px-3">
+    <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="INVENTORY VALUATION" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px] sheenFilterBtn">
-                    <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
-                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
-                    <i class="fa-solid fa-caret-down text-xs"></i>
-                </span>
+               <div class="sheenFilterBtn border rounded-xl">
+                    <span class="flex  items-center justify-center px-5 gap-[5px]">
+                        <x-datepicker id="innVal_rDatepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <i class=" w-[35px] " data-lucide="calendar-days"></i>
+                        <i class="fa-solid fa-caret-down text-xs"></i>
+                    </span>
+                </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
@@ -31,7 +33,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable class="sheenFilterBtn" tableId="#innValuationTable"/>
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#innValuationTable" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

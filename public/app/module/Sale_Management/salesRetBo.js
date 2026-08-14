@@ -541,7 +541,7 @@ TableLoader.tableData(
     sampleData,
     SalesReturnColumns,
     {
-        scrollY:'300px'
+        scrollY:'500px'
     }
 );
 

@@ -580,7 +580,7 @@ TableLoader.tableData(
     sampleData,
     PendingBoColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 
@@ -589,7 +589,7 @@ TableLoader.tableData(
     sampleData,
     RejectedBoColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 
@@ -598,7 +598,7 @@ TableLoader.tableData(
     sampleData,
     ApprovedBoColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

@@ -338,7 +338,7 @@ TableLoader.tableData(
     sampleData,
     StockCheckColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

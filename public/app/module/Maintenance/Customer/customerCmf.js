@@ -442,7 +442,7 @@ TableLoader.tableData(
     CustomerCMFSampleData,
     CustomerCMFColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

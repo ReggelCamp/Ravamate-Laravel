@@ -49,7 +49,7 @@ TableLoader.loadTable({
     url: "getDCRtable",
     tableId: "#DcrDataTable",
     columns: DcrColumns,
-    scrollY: "300px",
+    scrollY: "500px",
 
     onSuccess: (data) => {
         console.log(data.length);

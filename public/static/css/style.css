@@ -2,6 +2,11 @@
            color: black;
        }
 
+       .generate_btn{
+            font-size: 12px;
+            align-items: center;
+       }
+
        /* data table header */
        .dataTable th,
        .dataTable td {

@@ -852,7 +852,7 @@ TableLoader.tableData(
     soToFdisSampleData,
     SoToFdisColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 
@@ -861,7 +861,7 @@ TableLoader.tableData(
     soToFdisSampleData,
     SoToFdisColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 
@@ -870,7 +870,7 @@ TableLoader.tableData(
     soToFdisSampleData,
     SoToFdisColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 
@@ -880,7 +880,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -888,7 +888,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -896,7 +896,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 
@@ -906,7 +906,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -914,7 +914,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -922,7 +922,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 
@@ -932,7 +932,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -940,7 +940,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 TableLoader.tableData(
@@ -948,7 +948,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "200px"
+        scrollY : "500px"
     }
 );
 

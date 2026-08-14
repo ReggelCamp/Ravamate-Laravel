@@ -153,8 +153,5 @@
     {{-- <script type="module" src="/app/module/dashboard.js"></script> --}}
 
     @stack('scripts')
-    
-   
-</label>
 </body>
 </html>

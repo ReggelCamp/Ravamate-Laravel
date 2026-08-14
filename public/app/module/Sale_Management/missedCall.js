@@ -193,7 +193,7 @@ TableLoader.tableData(
     MissedCallSampleData,
     MissedCallColumns,
     {
-        scrollY : "300px"
+        scrollY : "500px"
     }
 );
 

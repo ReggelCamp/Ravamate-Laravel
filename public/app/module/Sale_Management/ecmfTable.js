@@ -618,7 +618,7 @@ TableLoader.tableData(
     EcmfSampleData,
     EcmfColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

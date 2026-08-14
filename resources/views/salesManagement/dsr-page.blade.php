@@ -36,8 +36,8 @@
 
     </style>
 
-    <div class="flex w-full pb-20 pt-5 px-3">
-    <div class="card w-full max-h-[600px] flex flex-col min-h-96">
+    <div class="flex w-full h-full pb-20 pt-5 px-3">
+    <div class="card w-full h-full flex flex-col min-h-96">
 
         {{-- Header --}}
         <div class="report_title h-[50px] flex items-center justify-center rounded-t-xl px-5 py-3 shrink-0">
@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="flex gap-5">
-                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border sheenFilterBtn rounded-2xl">
+                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] generate_btn border sheenFilterBtn rounded-2xl">
                         Generate
                     </button>
                     <x-exportDataTable 

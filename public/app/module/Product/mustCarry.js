@@ -93,7 +93,7 @@ TableLoader.tableData(
     sampleData,
     MustCarryColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

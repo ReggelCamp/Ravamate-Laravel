@@ -609,7 +609,7 @@ TableLoader.tableData(
     sampleData,
     StockRequestColumns,
     {
-        scrollY:'350px'
+        scrollY:'500px'
     }
 );
 

@@ -399,7 +399,7 @@ TableLoader.tableData(
     transactionListSampleData,
     DynamicRouteColumns,
     {
-        scrollY:"300px"
+        scrollY:"500px"
     }
 );
 

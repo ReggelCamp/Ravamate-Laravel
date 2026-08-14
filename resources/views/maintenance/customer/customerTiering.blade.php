@@ -2,7 +2,7 @@
 @section('headerTitle', 'Customer Tiering')
 @section('content')
 
-    <div class="flex w-full pt-10 px-3">
+    <div class="flex w-full h-full pb-20 pt-10 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[63px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Customer Tiering" />

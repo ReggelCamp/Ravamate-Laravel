@@ -17,12 +17,11 @@
         .dashboard-datatable .dt-scroll-head th:last-child {
             border-top-right-radius: 1rem;
         }
-
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10">
 
-    <div class="w-full h-full flex flex-col lg:flex-row">
+        <div class="w-full h-full flex flex-col lg:flex-row">
             {{-- Carousel Panel --}}
             <div
                 class="order-last DarkMode lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center lg:sticky lg:top-0 lg:self-start">
@@ -50,7 +49,8 @@
                 <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto ">
 
                     {{-- Map Header --}}
-                    <div class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">
+                    <div
+                        class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">
                         <div class="w-full  items-center ">
                             <x-report-header-title class="font-[16px]" title="Dashboard" />
                         </div>
@@ -116,6 +116,17 @@
                                 </x-dropdown>
                             </div>
 
+                            <div class="  flex w-full sm:w-auto">
+                                <x-button
+                                    class="h-[30px] w-fit px-2 rounded-2xl shine-bgBtn items-center justify-center flex">
+                                    <x-slot:buttonName>
+                                        <span class="bodyFont font-semibold text-[11.2px]">
+                                            Expand
+                                        </span>
+                                    </x-slot:buttonName>
+                                </x-button>
+                            </div>
+
                             <div class="w-full sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
                                 <x-dropdown class="w-[100px]"
                                     buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[26px] shine-bgBtn">
@@ -140,8 +151,7 @@
                                 </x-dropdown>
                             </div>
 
-                            <div
-                                class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center items-center ">
+                            <div class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center items-center ">
                                 <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                             </div>
 
@@ -149,26 +159,22 @@
 
                         <div
                             class="flex flex-1 justify-end flex-col-reverse sm:flex-row gap-2 w-full items-center h-full md:w-auto">
-                            <div class="  flex w-full sm:w-auto">
-                                <x-button
-                                    class="h-[26px] w-[70px] rounded-2xl shine-bgBtn items-center justify-center flex">
-                                    <x-slot:buttonName>
-                                        <span class="bodyFont font-semibold text-[11.2px]">
-                                            Expand
-                                        </span>
-                                    </x-slot:buttonName>
-                                </x-button>
-                            </div>
+
+                            <span
+                                class="text-black border bg-white h-[30px] text-[12px] items-center px-5 flex rounded-2xl">
+                                Total (6) : ₱455,064.59
+                            </span>
+
                             <div class="w-full h-[26px] sm:w-auto">
                                 <x-searchbar id="customSearch" placeholder="Search Salesman"
                                     class="h-[26px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
                             </div>
+
                         </div>
+
                     </div>
 
-                    <span class="text-black">
-                        Total (6) : ₱455,064.59
-                    </span>
+
 
                     {{-- DataTable --}}
                     <div id="dashboardDataTable" class="dashboard-datatable pt-2 h-[100px] rounded-2xl">

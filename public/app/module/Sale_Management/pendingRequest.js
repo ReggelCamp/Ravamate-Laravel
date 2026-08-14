@@ -322,7 +322,7 @@ TableLoader.tableData(
     sampleData,
     SoColumns,
     {
-        scrollY : "300px"
+        scrollY : "500px"
     }
 );
 

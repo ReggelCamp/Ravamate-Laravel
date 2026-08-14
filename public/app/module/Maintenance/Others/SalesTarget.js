@@ -125,7 +125,7 @@ TableLoader.tableData(
     sampleData,
     SalesTargetColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 

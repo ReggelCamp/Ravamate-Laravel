@@ -540,7 +540,7 @@ TableLoader.tableData(
     sampleData,
     SalesRetRgsColumns,
     {
-        scrollY: "300px"
+        scrollY: "500px"
     }
 );
 
