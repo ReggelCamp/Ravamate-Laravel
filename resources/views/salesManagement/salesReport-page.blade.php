@@ -21,15 +21,17 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Report" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
-                    <x-datepicker id="salesReportDatepicker" class="whitespace-nowrap h-[30px] text-[13px] " />
-                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
-                    <i class="fa-solid fa-caret-down text-xs"></i>
-                </span>
+                <div class="sheenFilterBtn border rounded-xl">
+                    <span class="flex  items-center justify-center px-5 gap-[5px]">
+                        <x-datepicker id="report_Datepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <i class=" w-[35px] " data-lucide="calendar-days"></i>
+                        <i class="fa-solid fa-caret-down text-xs"></i>
+                    </span>
+                </div>
             </div>
             <div class="flex-col-reverse gap-5 items-end flex sm:flex-row w-full justify-end py-2 px-5 h-[50px] sm:h-[80px]">
                 <div class="card card-border h-[50px] bg-secondary w-full sm:w-96 bodyColor">
-                    <div class=" border rounded-xl justify-start items-center flex h-full w-[236px] ">
+                    <div class=" border rounded-xl justify-start items-center flex h-full w-[236px] sheenFilterBtn">
                         <span class="mdi mdi-finance finance_Icon">
                         </span>
                         <span>
@@ -45,15 +47,15 @@
                 <div class="flex h-[30px]">
                     <x-dropdown class="">
                         <x-slot:dropdownName class="h-[30px]">
-                            <span class="inline-flex h-[30px] items-center border px-3 gap-2 justify-center rounded-2xl">
+                            <span class="inline-flex sheenFilterBtn h-[30px] items-center border px-3 gap-2 text-[12px] justify-center rounded-2xl">
                                 Other Reports
                                 <i class="fa-solid fa-caret-down"></i>
                             </span>
                         </x-slot:dropdownName>
 
                         {{-- <x-searchbar id="salesRepSearch" /> --}}
-                        <ul id="otherReports" class="bg-white w-[200px] h-[200px] overflow-y-auto">
-                            <li><a>Sales Summary</a></li>
+                        <ul id="salesReports" class="bg-white w-[200px] h-[200px] overflow-y-auto">
+                            {{-- <li><a>Sales Summary</a></li>
                             <li><a>Range Summary</a></li>
                             <li><a>Range Monitoring</a></li>
                             <li><a>Geocall Rate</a></li>
@@ -61,12 +63,12 @@
                             <li><a>Salesrep SKU Details</a></li>
                             <li><a>Unproductive</a></li>
                             <li><a>Sosyo Transaction</a></li>
-                            <li><a>Voucher History</a></li>
+                            <li><a>Voucher History</a></li> --}}
                         </ul>
                     </x-dropdown>
                 </div>
                 <div>
-                    <x-exportDataTable tableId="#salesReportTable" />
+                    <x-exportDataTable class="sheenFilterBtn" tableId="#salesReportTable" />
                 </div>
             </div>
 

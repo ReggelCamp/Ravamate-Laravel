@@ -2,9 +2,9 @@
 @section('headerTitle', 'Admin Sync Logs')
 @section('content')
 
-    <div class="flex w-full h-screen pt-10 px-3">
-        <div class="card w-full min-h-96 max-h-[500px] flex flex-col">
-            <div class="report_title w-full h-[63px] justify-center items-center rounded-t-xl px-3 py-3 flex ">
+    <div class="flex w-full pt-10 px-3">
+        <div class="card w-full h-full flex flex-col">
+            <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-3 py-3 flex ">
                 <x-report-header-title title="Admin Sync Logs" />
 
                 <div class="sheenFilterBtn border rounded-xl">
@@ -19,7 +19,7 @@
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable tableId="#AdminSyncLogsDataTable" class=" w-fit px-5" />
+                            <x-exportDataTable tableId="#AdminSyncLogsDataTable" class=" w-fit px-5 sheenFilterBtn" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">

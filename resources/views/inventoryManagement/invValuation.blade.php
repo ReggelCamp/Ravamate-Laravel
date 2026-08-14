@@ -6,7 +6,7 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="INVENTORY VALUATION" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px] sheenFilterBtn">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -19,7 +19,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
-                                        class="flex items-center justify-center w-fit px-5 gap-2 h-[30px] whitespace-nowrap border rounded-2xl h-[25px]">
+                                        class="flex sheenFilterBtn items-center justify-center w-fit px-5 gap-2 text-[12px] h-[30px] whitespace-nowrap border rounded-2xl h-[25px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Filter by Salesman
                                         <i class="fa-solid fa-caret-down"></i>
@@ -31,7 +31,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable tableId="#innValuationTable"/>
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#innValuationTable"/>
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-x-auto rounded-2xl" id="DataTable">
+                <div class="w-full pb-5 overflow-x-auto" id="DataTable">
                     <x-datatable id="innValuationTable" />
                 </div>
             </div>

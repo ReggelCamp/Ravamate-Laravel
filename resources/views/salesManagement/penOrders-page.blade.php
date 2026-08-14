@@ -23,11 +23,13 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Unprocessed Order" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px] h-[30px]">
-                    <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
-                    <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
-                    <i class="fa-solid fa-caret-down text-xs"></i>
-                </span>
+                <div class="sheenFilterBtn border rounded-xl">
+                    <span class="flex  items-center justify-center px-5 gap-[5px]">
+                        <x-datepicker id="pending_Datepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <i class=" w-[35px] " data-lucide="calendar-days"></i>
+                        <i class="fa-solid fa-caret-down text-xs"></i>
+                    </span>
+                </div>
             </div>
             <div class="w-full h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex items-center w-full h-[60px] py-3">
@@ -36,7 +38,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName>
                                     <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap justify-center border rounded-2xl h-[30px]">
+                                        class="flex sheenFilterBtn items-center px-5 whitespace-nowrap text-[12px] gap-2 justify-center border rounded-2xl h-[30px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Filter Transaction
                                     </span>
@@ -64,7 +66,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable tableId="#pendingOrdersTable" class="rounded-2xl border px-5"/>
+                            <x-exportDataTable tableId="#pendingOrdersTable" class="rounded-2xl border px-5 sheenFilterBtn"/>
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px] h-[30px] ">

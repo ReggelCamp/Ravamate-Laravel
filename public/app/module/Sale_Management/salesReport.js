@@ -69,6 +69,7 @@
 //     StockRequestColumns
 // );
 
+import ComponentHelper from "../../helper/ComponentHelper.js";
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
@@ -564,6 +565,45 @@ const sampleData = [
     },
 ];
 
+const salesReportsItems = [
+    {
+        title: "Sales Summary",
+        data: "sales_summary",
+    },
+    {
+        title: "Range Summary",
+        data: "range_summary",
+    },
+    {
+        title: "Range Monitoring",
+        data: "range_monitoring",
+    },
+    {
+        title: "Geocall Rate",
+        data: "geocall_rate",
+    },
+    {
+        title: "Strike Rate",
+        data: "strike_rate",
+    },
+    {
+        title: "Salesrep SKU Details",
+        data: "salesrep_sku_details",
+    },
+    {
+        title: "Unproductive",
+        data: "unproductive",
+    },
+    {
+        title: "Sosyo Transaction",
+        data: "sosyo_transaction",
+    },
+    {
+        title: "Voucher History",
+        data: "voucher_history",
+    },
+];
+
 TableLoader.tableData(
     "#salesReportTable",
     sampleData,
@@ -575,4 +615,9 @@ TableLoader.tableData(
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#salesReports",
+    items: salesReportsItems
 });

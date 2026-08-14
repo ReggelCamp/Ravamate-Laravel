@@ -4,131 +4,343 @@ export default class DatePicker {
             const $btn = $(this);
             const $modal = $btn.closest(".modal");
 
+            // Read whether this specific date picker should be single-date
+            const singleDate = $btn.data("single-date") === true;
+
             $btn.daterangepicker(
                 {
                     parentEl: $modal.length ? $modal : "body",
+
+                    // TRUE  = single date
+                    // FALSE = date range
+                    singleDatePicker: singleDate,
+
                     showWeekNumbers: false,
                     alwaysShowCalendars: true,
                     autoUpdateInput: false,
                     opens: "left",
+
                     locale: {
                         format: "MMM DD, YYYY",
                         cancelLabel: "Clear",
                     },
-                    ranges: {
-                        Today: [moment(), moment()],
-                        "Yesterday":[moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                        "Last 7 Days": [moment().subtract(6, "days"), moment()],
-                        "This Month": [
-                            moment().startOf("month"),
-                            moment().endOf("month"),
-                        ],
-                        "Last Month": [
-                            moment().subtract(1, "month").startOf("month"),
-                            moment().subtract(1, "month").endOf("month")
-                        ],
-                    },
+
+                    // Only show ranges when using range mode
+                    ...(singleDate
+                        ? {}
+                        : {
+                              ranges: {
+                                  Today: [
+                                      moment(),
+                                      moment(),
+                                  ],
+
+                                  Yesterday: [
+                                      moment().subtract(1, "days"),
+                                      moment().subtract(1, "days"),
+                                  ],
+
+                                  "Last 7 Days": [
+                                      moment().subtract(6, "days"),
+                                      moment(),
+                                  ],
+
+                                  "This Month": [
+                                      moment().startOf("month"),
+                                      moment().endOf("month"),
+                                  ],
+
+                                  "Last Month": [
+                                      moment()
+                                          .subtract(1, "month")
+                                          .startOf("month"),
+
+                                      moment()
+                                          .subtract(1, "month")
+                                          .endOf("month"),
+                                  ],
+                              },
+                          }),
                 },
+
                 function (start, end) {
+
+                    // ==========================
+                    // SINGLE DATE
+                    // ==========================
+
+                    if (singleDate) {
+                        $btn.text(
+                            `${start.format("ddd").toUpperCase()} | ${start.format(
+                                "YYYY-MM-DD"
+                            )}`
+                        );
+
+                        return;
+                    }
+
+                    // ==========================
+                    // DATE RANGE
+                    // ==========================
+
                     if (start.isSame(end, "day")) {
                         $btn.text(start.format("ll"));
                     } else {
                         $btn.text(
-                            `${start.format("ll")} → ${end.format("ll")}`,
+                            `${start.format("ll")} → ${end.format("ll")}`
                         );
                     }
-                },
+                }
             );
+
+            // ==========================================
+            // SHOW DATE PICKER
+            // ==========================================
 
             $btn.on("show.daterangepicker", function (ev, picker) {
                 const $container = picker.container;
 
-                // Add a date field above each calendar.  The daterangepicker
-                // plugin does not render these fields by default.
-                $container.find(".drp-calendar.left, .drp-calendar.right").each(function () {
-                    const $calendar = $(this);
-                    if (!$calendar.find(".drp-date-input").length) {
-                        $calendar.prepend(`
-                            <div class="drp-date-input-wrap">
-                                <i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
-                                <input type="text" class="drp-date-input" readonly>
-                            </div>
-                        `);
-                    }
-                });
+                // ==========================================
+                // ADD CUSTOM DATE INPUT
+                // ==========================================
+
+                $container
+                    .find(".drp-calendar.left, .drp-calendar.right")
+                    .each(function () {
+
+                        const $calendar = $(this);
+
+                        if (!$calendar.find(".drp-date-input").length) {
+                            $calendar.prepend(`
+                                <div class="drp-date-input-wrap">
+                                    <i
+                                        class="fa-solid fa-calendar-day"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    <input
+                                        type="text"
+                                        class="drp-date-input"
+                                        readonly
+                                    >
+                                </div>
+                            `);
+                        }
+                    });
+
+                // ==========================================
+                // SYNC DATE INPUTS
+                // ==========================================
 
                 const syncDateInputs = () => {
-                    $container.find(".drp-calendar.left .drp-date-input")
-                        .val(picker.startDate.format("MM/DD/YYYY"));
-                    $container.find(".drp-calendar.right .drp-date-input")
-                        .val(picker.endDate.format("MM/DD/YYYY"));
+
+                    // LEFT CALENDAR
+                    $container
+                        .find(".drp-calendar.left .drp-date-input")
+                        .val(
+                            picker.startDate.format("MM/DD/YYYY")
+                        );
+
+                    // RIGHT CALENDAR only exists in range mode
+                    if (!singleDate) {
+                        $container
+                            .find(".drp-calendar.right .drp-date-input")
+                            .val(
+                                picker.endDate.format("MM/DD/YYYY")
+                            );
+                    }
                 };
 
                 syncDateInputs();
 
-                // Mirror the date currently under the pointer in the field
-                // above that calendar, just like the range preview.
+                // ==========================================
+                // HOVER DATE
+                // ==========================================
+
                 const showHoveredDate = (event) => {
+
                     const $day = $(event.currentTarget);
-                    const match = ($day.attr("data-title") || "").match(/^r(\d+)c(\d+)$/);
-                    if (!match) return;
 
-                    const calendar = $day.closest(".drp-calendar").hasClass("left")
-                        ? picker.leftCalendar.calendar
-                        : picker.rightCalendar.calendar;
-                    const hoveredDate = calendar?.[Number(match[1])]?.[Number(match[2])];
-                    if (!hoveredDate) return;
+                    const match = (
+                        $day.attr("data-title") || ""
+                    ).match(/^r(\d+)c(\d+)$/);
 
-                    $day.closest(".drp-calendar").find(".drp-date-input")
-                        .val(moment(hoveredDate).format("MM/DD/YYYY"));
+                    if (!match) {
+                        return;
+                    }
+
+                    const $calendarElement =
+                        $day.closest(".drp-calendar");
+
+                    let calendar;
+
+                    if ($calendarElement.hasClass("left")) {
+
+                        calendar =
+                            picker.leftCalendar.calendar;
+
+                    } else {
+
+                        calendar =
+                            picker.rightCalendar.calendar;
+                    }
+
+                    const hoveredDate =
+                        calendar?.[
+                            Number(match[1])
+                        ]?.[
+                            Number(match[2])
+                        ];
+
+                    if (!hoveredDate) {
+                        return;
+                    }
+
+                    $calendarElement
+                        .find(".drp-date-input")
+                        .val(
+                            moment(hoveredDate).format(
+                                "MM/DD/YYYY"
+                            )
+                        );
                 };
 
+                // ==========================================
+                // MOUSE ENTER
+                // ==========================================
+
                 $container
-                    .off("mouseenter.dateInputs", "td.available")
-                    .on("mouseenter.dateInputs", "td.available", showHoveredDate)
-                    .off("mouseleave.dateInputs", ".drp-calendar")
-                    .on("mouseleave.dateInputs", ".drp-calendar", syncDateInputs);
+                    .off(
+                        "mouseenter.dateInputs",
+                        "td.available"
+                    )
+                    .on(
+                        "mouseenter.dateInputs",
+                        "td.available",
+                        showHoveredDate
+                    );
 
-                $btn.off("apply.daterangepicker.dateInputs")
-                    .on("apply.daterangepicker.dateInputs", syncDateInputs);
-                $btn.off("hide.daterangepicker.dateInputs")
-                    .on("hide.daterangepicker.dateInputs", function () {
-                        $container.find(".drp-date-input-wrap").remove();
-                    });
+                // ==========================================
+                // MOUSE LEAVE
+                // ==========================================
 
-                // Move ranges to the right
-                $container.append($container.find(".ranges"));
-
-                // Move buttons under the ranges
                 $container
-                    .find(".ranges")
-                    .append($container.find(".drp-buttons"));
+                    .off(
+                        "mouseleave.dateInputs",
+                        ".drp-calendar"
+                    )
+                    .on(
+                        "mouseleave.dateInputs",
+                        ".drp-calendar",
+                        syncDateInputs
+                    );
+
+                // ==========================================
+                // APPLY
+                // ==========================================
+
+                $btn
+                    .off(
+                        "apply.daterangepicker.dateInputs"
+                    )
+                    .on(
+                        "apply.daterangepicker.dateInputs",
+                        function () {
+
+                            syncDateInputs();
+
+                            // Single date
+                            if (singleDate) {
+
+                                $btn.text(
+                                    `${picker.startDate
+                                        .format("ddd")
+                                        .toUpperCase()} | ${picker.startDate.format(
+                                        "YYYY-MM-DD"
+                                    )}`
+                                );
+
+                                return;
+                            }
+
+                            // Range
+                            if (
+                                picker.startDate.isSame(
+                                    picker.endDate,
+                                    "day"
+                                )
+                            ) {
+
+                                $btn.text(
+                                    picker.startDate.format("ll")
+                                );
+
+                            } else {
+
+                                $btn.text(
+                                    `${picker.startDate.format(
+                                        "ll"
+                                    )} → ${picker.endDate.format(
+                                        "ll"
+                                    )}`
+                                );
+                            }
+                        }
+                    );
+
+                // ==========================================
+                // HIDE
+                // ==========================================
+
+                $btn
+                    .off(
+                        "hide.daterangepicker.dateInputs"
+                    )
+                    .on(
+                        "hide.daterangepicker.dateInputs",
+                        function () {
+
+                            $container
+                                .find(".drp-date-input-wrap")
+                                .remove();
+                        }
+                    );
+
+                // ==========================================
+                // RANGE MODE ONLY
+                // ==========================================
+
+                if (!singleDate) {
+
+                    // Move ranges to the right
+                    $container.append(
+                        $container.find(".ranges")
+                    );
+
+                    // Move buttons under the ranges
+                    $container
+                        .find(".ranges")
+                        .append(
+                            $container.find(".drp-buttons")
+                        );
+                }
             });
 
-            // $btn.on("apply.daterangepicker", function (ev, picker) {
-            //     const $container = picker.container;
+            // ==========================================
+            // CANCEL
+            // ==========================================
 
-            //     $container
-            //         .find(".drp-start")
-            //         .val(picker.startDate.format("MM/DD/YYYY"));
+            $btn.on(
+                "cancel.daterangepicker",
+                function () {
 
-            //     $container
-            //         .find(".drp-end")
-            //         .val(picker.endDate.format("MM/DD/YYYY"));
-
-            //     // Update your button text
-            //     if (picker.startDate.isSame(picker.endDate, "day")) {
-            //         $btn.text(picker.startDate.format("ll"));
-            //     } else {
-            //         $btn.text(
-            //             `${picker.startDate.format("ll")} → ${picker.endDate.format("ll")}`,
-            //         );
-            //     }
-            // });
-
-            $btn.on("cancel.daterangepicker", function () {
-                $btn.text("Filter by Date");
-            });
+                    if (singleDate) {
+                        $btn.text("Pick a date");
+                    } else {
+                        $btn.text("Filter by Date");
+                    }
+                }
+            );
         });
     }
 }

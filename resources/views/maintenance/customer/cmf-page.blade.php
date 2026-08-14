@@ -6,7 +6,7 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Customer Maintenance Form" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex border rounded-xl bg-transparent sheenFilterBtn items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -31,10 +31,10 @@
                             </x-dropdown>
                         </div> --}}
                         
-                        <button class="btn rounded-2xl w-fit px-5 h-[30px]">
+                        <button class="btn rounded-2xl w-fit px-5 h-[30px] sheenFilterBtn">
                             <i class="mdi mdi-refresh"></i>
                         </button>    
-                        <x-exportDataTable tableId="#cmfTable"/>
+                        <x-exportDataTable class="sheenFilterBtn" tableId="#cmfTable"/>
                         
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -42,8 +42,8 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
-                    <x-datatable id="cmfTable"/>
+                <div class="w-full pb-5 overflow-auto whitespace-nowrap" id="DataTable">
+                    <x-datatable id="cmfTable" class="whitespace-nowrap"/>
                 </div>
             </div>
         </div>

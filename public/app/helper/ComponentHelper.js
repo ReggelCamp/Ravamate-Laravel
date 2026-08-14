@@ -9,7 +9,7 @@ export default class ComponentHelper {
                 let html = "";
 
                 html += `
-                    <div class="flex flex-col pt-5 px-2">
+                    <div class="flex flex-col pb-2 pt-5 px-2">
                         <input id="dropdown_search" class="DropdownSearchBar border p-2 w-[250px] h-[30px] rounded-lg" type="search" required placeholder="Search" />
                         <span id="NoResult" class="hidden">
                            ${data.noDataText ?? "No Match Result"}
@@ -21,7 +21,7 @@ export default class ComponentHelper {
                         <li>
                             <a href="#"
                             id= "dropdown_Item"
-                            class="dropdown-item"
+                            class="dropdown-item sheenFilterBtn"
                             data-value="${item[data.displayField]}"
                             data-id="${item[data.dataField]}">
                                 ${item[data.displayField]}
@@ -89,14 +89,14 @@ export default class ComponentHelper {
 
                 $.each(config.items, function (index, item) {
                     html += `
-    <li>
-        <a href="#"
-            class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
-            data-value="${item.data}">
-            ${item.title}
-        </a>
-    </li>
-`;
+                        <li>
+                            <a href="#"
+                                class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
+                                data-value="${item.data}">
+                                ${item.title}
+                            </a>
+                        </li>
+                    `;
                 });
                 
                 $(config.id).html(html);

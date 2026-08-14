@@ -30,6 +30,10 @@
             
         }
 
+        .daterangepicker.show-calendar .drp-buttons{
+            display: flex;
+        }
+
     </style>
 
     <div class="flex w-full pb-20 pt-5 px-3">
@@ -40,7 +44,7 @@
             <x-report-header-title title="DSR" />
 
             <span class="flex items-center justify-center gap-[5px] px-5 border rounded-xl">
-                <x-datepicker id="dsrDatepicker" class="whitespace-nowrap h-[30px] text-[13px]" />
+                <x-datepicker :singleDate="true" id="dsrDatepicker" class="whitespace-nowrap h-[30px] text-[13px]" />
                 <i class="w-[13px] h-[13px]" data-lucide="calendar-days"></i>
                 <i class="fa-solid fa-caret-down text-xs"></i>
             </span>
@@ -53,17 +57,17 @@
             <div class="flex flex-col-reverse md:flex-row items-center gap-3 w-full py-3 shrink-0">
 
                 <div class="flex gap-5 w-full">
-                    <div class="h-[28px]">
+                    <div class="">
                         <x-dropdown>
                             <x-slot:dropdownName>
                                 <span
-                                    class="flex items-center h-[28px] px-5 whitespace-nowrap border rounded-2xl text-[12px] font-medium">
+                                    class="flex items-center sheenFilterBtn h-[30px] px-5 whitespace-nowrap border rounded-2xl gap-2 text-[12px] font-medium">
                                     <i class="mdi mdi-filter-variant"></i>
                                     Filter by Salesman
                                 </span>
                             </x-slot:dropdownName>
 
-                            <ul class="dropdown_item w-[300px] border bg-white" id="dsrItems">
+                            <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dsrItems">
                                 {{-- <x-searchbar
                                     id="dsrSearch"
                                     class="w-[300px] h-[28px] text-[12px] font-medium" /> --}}
@@ -74,7 +78,7 @@
                 </div>
 
                 <div class="flex gap-5">
-                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border rounded-2xl">
+                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] border sheenFilterBtn rounded-2xl">
                         Generate
                     </button>
                     <x-exportDataTable 
@@ -82,7 +86,7 @@
                         report="DSR"
                         :hideCsv="true"
                         :hideCopy="true"
-                        class="h-[28px] text-[12px] font-medium"
+                        class="h-[28px] text-[12px] font-medium sheenFilterBtn"
                     />
                 </div>
 
@@ -102,7 +106,7 @@
                     >
 
                     <span id="DsrSalesmanName"
-                        class="relative z-10 text-white font-semibold text-sm">
+                        class="relative z-10 text-white font-semibold text-[30px]">
                     </span>
 
                 </div>

@@ -11,7 +11,7 @@
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable tableId="#CustomerTieringDataTable"/>
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#CustomerTieringDataTable"/>
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div class="w-full flex-1 overflow-auto pb-5">
+                <div class="w-full flex-1 overflow-auto pb-5 whitespace-nowrap">
                     <x-datatable id="CustomerTieringDataTable" />
                 </div>
 

@@ -18,7 +18,7 @@
                 <x-searchbar id="customSearch" />
             </div>
             <div class="overflow-auto pt-5">
-                <x-datatable />
+                <x-datatable class="whitespace-nowrap" />
             </div>
         </div>
     </body>

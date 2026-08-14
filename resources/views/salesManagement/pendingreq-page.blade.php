@@ -13,9 +13,6 @@
             white-space: nowrap;
         }
 
-        #datepicker {
-            color: black !important;
-        }
     </style>
 
     <div class="flex w-full pt-5 px-3 ">
@@ -32,12 +29,12 @@
                                 class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-2">
                                 <div class="flex w-full items-center sm:flex-row gap-2 sm:justify-start">
                                     <div
-                                        class="flex rounded-2xl max-h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                        class="flex sheenFilterBtn rounded-2xl max-h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black h-[30px]" />
+                                        <x-datepicker class="text-black h-[30px]" />
                                     </div>
                                   
-                                        <x-exportDataTable tableId="#PendingRequestTable" class="border px-5 rounded-2xl"/>
+                                        <x-exportDataTable tableId="#PendingRequestTable" class="border px-5 rounded-2xl sheenFilterBtn"/>
                                    
                                 </div>
                                 <div class="h-[30px] border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">

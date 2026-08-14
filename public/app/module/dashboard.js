@@ -9,6 +9,10 @@ const OperationItems = [
         title : "Van Sales",
         data : "van_sales"
     },
+    {
+        title : "Booking",
+        data : "booking"
+    },
 ];
 
 // data table

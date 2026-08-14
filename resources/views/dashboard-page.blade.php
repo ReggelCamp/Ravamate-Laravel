@@ -65,7 +65,7 @@
                     <div class="w-full h-[400px] bg-white ">
                         <div class="w-full h-full flex justify-center p-2 items-end">
                             <div
-                                class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-lg h-[35px] bg-gray-200">
+                                class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200">
                                 {{-- avatar --}}
                                 <div class="flex h-full items-center gap-2">
                                     <div class="avatar">

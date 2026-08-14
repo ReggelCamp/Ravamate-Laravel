@@ -6,7 +6,7 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Product List" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex sheenFilterBtn border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -15,7 +15,7 @@
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
-                        <x-exportDataTable tableId="#producListTable"
+                        <x-exportDataTable class="sheenFilterBtn" tableId="#producListTable"
                         leftIcon="fa-solid fa-download"/>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -23,7 +23,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
+                <div class="w-full pb-5 overflow-auto " id="DataTable">
                     <x-datatable id="producListTable"/>
                 </div>
             </div>

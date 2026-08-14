@@ -6,7 +6,7 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Must Carry Maintenance" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex border rounded-xl bg-transparent sheenFilterBtn items-center justify-center px-5 gap-[5px]">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -16,10 +16,10 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex items-center gap-5 w-full">
                         <div>
-                            <x-exportDataTable tableId="#mustCarryTable" />
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#mustCarryTable" />
                         </div>
                         <div>
-                            <button class="btn border rounded-xl w-[150px] h-[30px]" onclick="MustCarry.showModal()">
+                            <button class="btn border sheenFilterBtn rounded-2xl w-fit px-5 text-[12px] h-[30px]" onclick="MustCarry.showModal()">
                                 <i class="mdi mdi-printer-outline"></i>
                                 Add MustCarry</button>
                         </div>
@@ -29,7 +29,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
+                <div class="w-full pb-5 overflow-auto " id="DataTable">
                     <x-datatable id="mustCarryTable"/>
                 </div>
             </div>

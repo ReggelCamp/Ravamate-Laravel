@@ -10,6 +10,11 @@
             /* .dataTable-info{
                 margin-bottom: 10;
             } */
+
+            .dataTable th,
+            .dataTable td {
+                white-space: nowrap !important;
+            }
         </style>
     </head>
 
@@ -29,12 +34,12 @@
                                 class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-2">
                                 <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
                                     <div
-                                        class="flex rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                        class="flex sheenFilterBtn rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black " />
+                                        <x-datepicker class="text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable tableId="#PendingDataTable" class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#PendingDataTable" class="border px-5 rounded-2xl sheenFilterBtn" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -43,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full overflow-x-auto">
+                        <div class="w-full whitespace-nowrap overflow-x-auto">
                             <x-datatable id="PendingDataTable" />
                         </div>
                     </div>
@@ -55,12 +60,12 @@
                                 class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end w-full h-full py-2">
                                 <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
                                     <div
-                                        class="flex rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                        class="flex sheenFilterBtn rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black" />
+                                        <x-datepicker class="text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable tableId="#RejectedDataTable" class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#RejectedDataTable" class="border px-5 rounded-2xl sheenFilterBtn" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -69,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full overflow-x-auto">
+                        <div class="w-full whitespace-nowrap overflow-x-auto">
                             <x-datatable id="RejectedDataTable" />
                         </div>
                     </div>
@@ -81,12 +86,12 @@
                                 class="flex sm:items-center sm:flex-row gap-2 flex-col-reverse justify-start sm:justify-end  w-full h-full py-2">
                                 <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
                                     <div
-                                        class="flex rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
+                                        class="flex sheenFilterBtn rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
                                         <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="!text-black" />
+                                        <x-datepicker class="text-black" />
                                     </div>
                                     <div>
-                                        <x-exportDataTable tableId="#ApprovedDataTable" class="border px-5 rounded-2xl" />
+                                        <x-exportDataTable tableId="#ApprovedDataTable" class="border px-5 rounded-2xl sheenFilterBtn" />
                                     </div>
                                 </div>
                                 <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -95,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full overflow-x-auto">
+                        <div class="w-full whitespace-nowrap overflow-x-auto">
                             <x-datatable id="ApprovedDataTable" />
                         </div>
                     </div>

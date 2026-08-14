@@ -92,7 +92,7 @@
 }
     </style>
 
-    <div class="flex w-full pt-10 px-3">
+    <div class="flex w-full pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DCR" />
@@ -100,7 +100,7 @@
                 <div class="sheenFilterBtn border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
                         <x-datepicker id="dcrDatepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
-                        <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
+                        <i class=" w-[35px] " data-lucide="calendar-days"></i>
                         <i class="fa-solid fa-caret-down text-xs"></i>
                     </span>
                 </div>
@@ -112,7 +112,7 @@
                             <x-dropdown>
                                 <x-slot:dropdownName class="w-[100px] ">
                                     <span
-                                        class="flex font-medium text-[12px] items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
+                                        class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Select Salesman
                                     </span>
@@ -123,7 +123,7 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable tableId="#DcrDataTable" class=" w-fit px-5 h-[28px] sheenFilterBtn border rounded-2xl font-medium text-[12px]" />
+                            <x-exportDataTable tableId="#DcrDataTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -144,7 +144,7 @@
                         </span>
 
                     </div>
-                    <div class="w-full flex-1 overflow-auto pb-5">
+                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5">
                         <x-datatable id="DcrDataTable" />
                     </div>
                 </div>

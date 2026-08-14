@@ -6,7 +6,7 @@
         <div class="card w-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Bank Maintenance" />
-                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px]">
+                <span class="flex border rounded-xl bg-transparent items-center justify-center px-5 gap-[5px] sheenFilterBtn">
                     <x-datepicker class="whitespace-nowrap h-[30px] text-[13px] " />
                     <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
                     <i class="fa-solid fa-caret-down text-xs"></i>
@@ -16,10 +16,10 @@
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable tableId="#BankDataTable"/>
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#BankDataTable"/>
                         </div>
                         <div>
-                            <button class="btn border rounded-xl w-[150px] h-[30px]" onclick="AddBank.showModal()">
+                            <button class="btn border sheenFilterBtn rounded-2xl w-fit px-5 h-[30px] text-[12px]" onclick="AddBank.showModal()">
                                 <i class="mdi mdi-bank-plus"></i>
                                 Add Bank
                             </button>
@@ -30,7 +30,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto rounded-2xl" id="DataTable">
+                <div class="w-full pb-5 overflow-auto" id="DataTable">
                     <x-datatable id="BankDataTable" />
                 </div>
             </div>
