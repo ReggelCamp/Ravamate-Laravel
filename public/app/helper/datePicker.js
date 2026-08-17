@@ -7,6 +7,7 @@ export default class DatePicker {
             // Read whether this specific date picker should be single-date
             const singleDate = $btn.data("single-date") === true;
             const opens = $btn.data("opens") || "left";
+            const drops = $btn.data("drops") || "down";
 
             $btn.daterangepicker(
                 {
@@ -19,7 +20,8 @@ export default class DatePicker {
                     showWeekNumbers: false,
                     alwaysShowCalendars: true,
                     autoUpdateInput: false,
-                    opens: open,
+                    opens,
+                    drops,
 
                     locale: {
                         format: "MMM DD, YYYY",
@@ -325,6 +327,11 @@ export default class DatePicker {
                             $container.find(".drp-buttons")
                         );
                 }
+
+                // The custom content above changes the popup dimensions.
+                // Recalculate its position so the arrow remains attached to
+                // the button that opened it.
+                requestAnimationFrame(() => picker.move());
             });
 
             // ==========================================

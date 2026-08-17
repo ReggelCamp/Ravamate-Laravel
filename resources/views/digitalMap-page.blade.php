@@ -6,8 +6,6 @@
 
 @endsection
 
-<script>
-    window.googleMapsApi = @json(config('services.google_maps.api_key'));
-</script>
-
-<script type="module" src="/app/module/digital_map/digitalMap.js"></script>
+@push('scripts')
+    <script type="module" src="/app/module/digital_map/digitalMap.js"></script>
+@endpush

@@ -8,7 +8,7 @@
                 <x-report-header-title title="Product List" />
                <div class="sheenFilterBtn border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
-                        <x-datepicker id="product_Datepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <x-datepicker id="product_Datepicker" drops="down" class="whitespace-nowrap h-[30px] text-[13px]" />
                         {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
                         <i class="fa-solid fa-caret-down text-xs"></i>
                     </span>

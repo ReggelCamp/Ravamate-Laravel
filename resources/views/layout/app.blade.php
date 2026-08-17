@@ -90,6 +90,12 @@
     );
 </script>
 
+<script>
+    window.APP_CONFIG = {
+        googleMapsApiKey: "{{ config('services.google_maps.api_key') }}"
+    };
+</script>
+
 </head>
 
 <body class="mainBG">

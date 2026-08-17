@@ -86,7 +86,8 @@
     'id' => 'datePicker',
     'label' => 'Filter by Date',
     'singleDate' => false,
-    'opens' => 'left'
+    'opens' => 'left',
+    'drops' => 'down',
 ])
 
 <div class="flex h-[30px] justify-end">
@@ -101,6 +102,7 @@
                 name="datePicker"
                 data-single-date="{{ $singleDate ? 'true' : 'false' }}"
                 data-opens="{{ $opens }}"
+                data-drops="{{ $drops }}"
                 id="{{ $id }}"
                 {{ $attributes->merge([
                     'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition gap-2'
