@@ -4,42 +4,55 @@
 @section('content')
 
     <style>
+        #datepicker {
+            color: var(--header-color);
+            font-weight: 500;
+        }
 
-            /* SFA MAINTENANCE */
-    .ericPendingVal{
-        font-size: 50px !important;
-        font-weight: 800 !important;
-        color: var(--accent);
-        font-weight: bolder !important; /* This will override the numeric if supported */
-    }
+        .SfaTab:checked {
+            background-color: #a78ca0 !important;
+        }
 
-    .sfaqueuingHeader{
-        font-size: 18px !important;
-        font-weight: 600 !important;
-        color: var(--header-color);
-    }
-    
-    .sfaqueuingSubHeader{
-        font-size: 14px !important;
-        font-weight: 300 !important;
-        color: var(--header-color);
-    }
+        .dt-paging {
+            background-color: #a78ca0 !important;
+        }
 
-    /* .sfaqueuingBtn{
-        color: var(--header-color) !important;
-    } */
+        /* SFA MAINTENANCE */
+        .ericPendingVal {
+            font-size: 50px !important;
+            font-weight: 800 !important;
+            color: var(--accent);
+            font-weight: bolder !important;
+            /* This will override the numeric if supported */
+        }
 
-    .sfaqueuingLogs{
-        color: var(--header-color);
-    }
-    
-    .sfaqueuingLogs:hover{
-        /* color: var(--body-color); */
-        /* background-color: var(--background); */
-        border: 1px solid var(--background);
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
+        .sfaqueuingHeader {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: var(--header-color);
+        }
+
+        .sfaqueuingSubHeader {
+            font-size: 14px !important;
+            font-weight: 300 !important;
+            color: var(--header-color);
+        }
+
+        /* .sfaqueuingBtn{
+            color: var(--header-color) !important;
+        } */
+
+        .sfaqueuingLogs {
+            color: var(--header-color);
+        }
+
+        .sfaqueuingLogs:hover {
+            /* color: var(--body-color); */
+            /* background-color: var(--background); */
+            border: 1px solid var(--background);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
 
         #PendingLogs_wrapper .dt-scroll-head th,
         #FailedLogs_wrapper .dt-scroll-head th,
@@ -73,25 +86,27 @@
         }
 
         .container_trigger.active {
-            background-color: #a78ca0; /* violet-600 */
+            background-color: #a78ca0;
+            /* violet-600 */
         }
 
         .container_trigger.active:hover {
-            background-color: #a78ca0; /* keep the same color on hover */
+            background-color: #a78ca0;
+            /* keep the same color on hover */
         }
 
-        .sfaShine_Btn{
+        .sfaShine_Btn {
             position: relative;
             overflow: hidden;
             background: transparent;
             border: 1px solid var(--header-color);
             color: var(--header-color);
         }
-        
-        .sfaShine_Btn:hover{
+
+        .sfaShine_Btn:hover {
             background: linear-gradient(to right,
-                var(--secondary),
-                var(--primary));
+                    var(--secondary),
+                    var(--primary));
             border: 1px solid var(--header-color);
             color: var(--header-color);
         }
@@ -118,19 +133,18 @@
             animation: sheen 0.8s ease-in-out forwards;
         }
 
-        .reprocess_btn{
+        .reprocess_btn {
             font-size: 11px;
             font-weight: 500;
         }
 
         /* .linearbg{
-            background: linear-gradient(to top, var(--primary), transparent);
-        } */
+                background: linear-gradient(to top, var(--primary), transparent);
+            } */
 
-        .dataTable-info{
+        .dataTable-info {
             font-size: 15px !important;
         }
-
     </style>
 
     <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
@@ -139,21 +153,22 @@
             <!-- HEADER -->
             <div class="flex justify-between flex-row-reverse sm:flex-row">
 
-       
-                    <a href="{{ route('dynamic-route-list') }}"
-                        class=" text-sm rounded-lg sfaShine_Btn h-[30px] px-4 items-center gap-2 inline-flex">
-                        <i class="fas fa-truck"></i>
-                        Dynamic Load Planning
-                    </a>
+
+                <a href="{{ route('dynamic-route-list') }}"
+                    class=" text-sm rounded-lg sfaShine_Btn h-[30px] px-4 items-center gap-2 inline-flex">
+                    <i class="fas fa-truck"></i>
+                    Dynamic Load Planning
+                </a>
 
                 <div class="flex flex-col sm:flex-row gap-3">
                     <a href="{{ route('adm-sync-logs') }}"
                         class="text-sm rounded-lg sfaShine_Btn h-[30px] px-4 inline-flex items-center gap-2">
-                            <i class="fas fa-truck"></i>
-                            Admin Sync Logs
+                        <i class="fas fa-truck"></i>
+                        Admin Sync Logs
                     </a>
 
-                    <button class="bg-transparent text-sm rounded-xl h-[30px] items-center inline-flex gap-2 sfaShine_Btn px-4 py-2">
+                    <button
+                        class="bg-transparent text-sm rounded-xl h-[30px] items-center inline-flex gap-2 sfaShine_Btn px-4 py-2">
                         <i class="fas fa-refresh"></i>
                         Refresh
                     </button>
@@ -165,7 +180,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2">
 
                 <div id="SoToFdis" data-id="#SoFdisContainer"
-                    class="bg-transparent container_trigger border-r border-b hover:bg-violet-600 min-h-[130px] cursor-pointer">
+                    class="bg-transparent container_trigger border-r border-b hover:bg-[#a991a5] min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -191,7 +206,7 @@
                 </div>
 
                 <div data-id="#PaymentFdisTable" id="PaymentToFdis"
-                    class="bg-transparent container_trigger hover:bg-violet-600 border-b  min-h-[130px] cursor-pointer">
+                    class="bg-transparent container_trigger hover:bg-[#a991a5] border-b  min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -217,7 +232,7 @@
                 </div>
 
                 <div id="ReturnToFdis" data-id="#ReturnFdisTable"
-                    class="bg-transparent container_trigger hover:bg-violet-600 border-r min-h-[130px] cursor-pointer">
+                    class="bg-transparent container_trigger hover:bg-[#a991a5] border-r min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -243,7 +258,7 @@
                 </div>
 
                 <div id="TransferFdis" data-id="#AutoStockFdisTable"
-                    class="bg-transparent container_trigger hover:bg-violet-600 min-h-[130px] cursor-pointer">
+                    class="bg-transparent container_trigger hover:bg-[#a991a5] min-h-[130px] cursor-pointer">
                     <div class="flex justify-between h-full p-5">
 
                         <div class="flex flex-col justify-between">
@@ -271,7 +286,7 @@
             </div>
 
             <!-- TABLE So To FDIS -->
-            <div class="flex h-full pb-40">
+            <div class="flex h-full pb-20">
                 <div id="SoFdisContainer" class="table_container hidden w-full flex flex-col bg-[#a991a5] rounded-2xl">
 
                     <div class="flex w-full items-center justify-between px-5 py-3">
@@ -283,13 +298,13 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn sfaShine_Btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
+                            <button
+                                class="reprocess_btn sfaShine_Btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
                                 Reprocess SO
                             </button>
                             <div
-                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
-                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                <x-datepicker class="text-[11px]" displayOnly="true" />
+                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 gap-2 flex items-center justify-center text-white rounded-2xl border ">
+                                <x-datepicker class="text-[11px] sheenFilterBtn " />
                             </div>
 
                             <div class="h-[30px]  px-2 text-white flex items-center">
@@ -305,28 +320,28 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift  ">
-                        <input type="radio" name="SoFdis" class="tab SfaTab" id="SOPendingLogsTab"
+                    <div class="tabs tabs-lift h-full ">
+                        <input type="radio" name="SoFdis" class="tab SfaTab" id="SOPendingLogsTab" class="#a78ca0"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 pb-5">
-                                <x-datatable id="SOPendingLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 pb-20">
+                                <x-datatable id="SOPendingLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
-                        <input type="radio" name="SoFdis" class="tab SfaTab failedlogs_Btn" id="SOFailedLogsTab" aria-label="Failed Logs ()"
-                            checked="checked" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 pb-5">
-                                <x-datatable id="SOFailedLogs" />
+                        <input type="radio" name="SoFdis" class="tab SfaTab failedlogs_Btn" id="SOFailedLogsTab"
+                            aria-label="Failed Logs ()" checked="checked" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 pb-20">
+                                <x-datatable id="SOFailedLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="SoFdis" class="tab SfaTab" id="SOSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300">
-                            <div class="w-full flex-1 pb-5">
-                                <x-datatable id="SOSuccessLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
+                            <div class="w-full flex-1 pb-20">
+                                <x-datatable id="SOSuccessLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
                     </div>
@@ -345,17 +360,17 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn sfaShine_Btn hidden flex w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                            <button
+                                class="reprocess_btn sfaShine_Btn hidden flex w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
                                 Reprocess Payment
                             </button>
                             <div
-                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
-                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                <x-datepicker class="" displayOnly="true" />
+                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 gap-2 flex items-center justify-center text-white rounded-2xl border ">
+                                <x-datepicker class="text-[11px] sheenFilterBtn " />
                             </div>
 
                             <div class="h-[30px]  px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />          
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -367,28 +382,28 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift ">
+                    <div class="tabs tabs-lift h-full">
                         <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="PaymentPendingLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="PaymentPendingLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="PaymentFdis" class="tab SfaTab failedlogs_Btn" id="PaymentFailedLogsTab"
                             aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="PaymentFailedLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20 ">
+                                <x-datatable id="PaymentFailedLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="PaymentFdis" class="tab SfaTab" id="PaymentSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="PaymentSuccessLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-20 ">
+                                <x-datatable id="PaymentSuccessLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
                     </div>
@@ -406,17 +421,17 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="reprocess_btn sfaShine_Btn flex sfaShine_Btn w-fit px-5 hidden h-[30px] items-center justify-center text-white rounded-2xl border">
+                            <button
+                                class="reprocess_btn sfaShine_Btn flex sfaShine_Btn w-fit px-5 hidden h-[30px] items-center justify-center text-white rounded-2xl border">
                                 Reprocess Returns
                             </button>
                             <div
-                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
-                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                <x-datepicker id="return_DatePicker" class="" displayOnly="true" />
+                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 gap-2 flex items-center justify-center text-white rounded-2xl border ">
+                                <x-datepicker class="text-[11px] sheenFilterBtn " />
                             </div>
 
                             <div class="h-[30px] px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn"/>
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -428,28 +443,28 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift ">
+                    <div class="tabs tabs-lift h-full">
                         <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="ReturnPendingLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="ReturnPendingLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="ReturnFdis" class="tab SfaTab failedlogs_Btn" id="ReturnFailedLogsTab"
                             aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="ReturnFailedLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="ReturnFailedLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="ReturnFdis" class="tab SfaTab" id="ReturnSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="ReturnSuccessLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="ReturnSuccessLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
                     </div>
@@ -468,17 +483,17 @@
                             </span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="flex reprocess_btn sfaShine_Btn hidden w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
+                            <button
+                                class="flex reprocess_btn sfaShine_Btn hidden w-fit px-5 h-[30px] items-center justify-center text-white rounded-2xl border">
                                 Reprocess Transfer
                             </button>
                             <div
-                                class="h-[30px] sfaShine_Btn w-fit px-5 flex items-center justify-center text-white rounded-2xl border ">
-                                <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                                <x-datepicker class="" displayOnly="true" />
+                                class="h-[30px] text-[11px] sfaShine_Btn w-fit px-5 gap-2 flex items-center justify-center text-white rounded-2xl border ">
+                                <x-datepicker class="text-[11px] sheenFilterBtn " />
                             </div>
 
                             <div class="h-[30px] px-2 text-white flex items-center">
-                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />                                             
+                                <x-exportDataTable class="px-2 text-[11px] sfaShine_Btn" />
                             </div>
 
                             <div class="text-white h-[30px] flex items-center">
@@ -490,28 +505,29 @@
                         </div>
                     </div>
 
-                    <div class="tabs tabs-lift ">
+                    <div class="tabs tabs-lift h-full">
                         <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockPendingLogsTab"
                             aria-label="Pending Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="AutoStockPendingLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="AutoStockPendingLogs"
+                                    class="bg-[#a991a5]  text-white text-white text-white" />
                             </div>
                         </div>
 
-                        <input type="radio" name="AutoStockFdis" class="tab SfaTab failedlogs_Btn" id="AutoStockFailedLogsTab"
-                            aria-label="Failed Logs ()" checked="checked" />
-                        <div class="tab-content h-full bg-base-100 border-base-300 ">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="AutoStockFailedLogs" />
+                        <input type="radio" name="AutoStockFdis" class="tab SfaTab failedlogs_Btn"
+                            id="AutoStockFailedLogsTab" aria-label="Failed Logs ()" checked="checked" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white  border-base-300 ">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="AutoStockFailedLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
                         <input type="radio" name="AutoStockFdis" class="tab SfaTab" id="AutoStockSuccessLogsTab"
                             aria-label="Success Logs ()" />
-                        <div class="tab-content h-full bg-base-100 border-base-300">
-                            <div class="w-full flex-1 overflow-auto pb-5">
-                                <x-datatable id="AutoStockSuccessLogs" />
+                        <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
+                            <div class="w-full flex-1 overflow-auto pb-20">
+                                <x-datatable id="AutoStockSuccessLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
                     </div>

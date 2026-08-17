@@ -37,8 +37,8 @@
                                     </div>
                                     <div
                                         class="flex rounded-xl sheenFilterBtn  px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center border justify-end">
-                                        <i class="items-center justify-center w-5 h-5 flex font-medium" data-lucide="calendar-days"></i>
-                                        <x-datepicker class="sheenFilterBtn text-[12px] font-medium" />
+                                        {{-- <i class="items-center justify-center w-5 h-5 flex font-medium" data-lucide="calendar-days"></i> --}}
+                                        <x-datepicker opens="right" class="sheenFilterBtn text-[12px] font-medium" />
                                     </div>
                                     <div>
                                         <button onclick="ExportEcmfRecords.showModal()"

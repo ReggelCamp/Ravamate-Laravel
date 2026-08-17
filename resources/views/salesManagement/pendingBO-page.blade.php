@@ -35,7 +35,7 @@
                                 <div class="flex w-full items-center sm:flex-row gap-2 justify-between sm:justify-end">
                                     <div
                                         class="flex sheenFilterBtn rounded-2xl h-[30px] px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
-                                        <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
+                                        {{-- <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i> --}}
                                         <x-datepicker class="text-black" />
                                     </div>
                                     <div>

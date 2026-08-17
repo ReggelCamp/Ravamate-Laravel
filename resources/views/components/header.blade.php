@@ -161,6 +161,19 @@
 
                 </li>
 
+                 <li>
+
+                    <a href="{{ route('digitalMap') }}"
+                        class="  rounded-xl headerFont px-4 py-3 text-sm font-medium {{ request()->routeIs('digitalMap') ? 'active_page' : 'shine-bgNav' }}">
+
+                        <i class="mdi mdi-map-marker-radius"></i>
+
+                        Digital Mapping
+
+                    </a>
+
+                </li>
+
                 <!-- REPORTS -->
                 <li>
 

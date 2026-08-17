@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\dcrController;
+use App\Http\Controllers\Digital_mapController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,10 @@ Route::get('/dashboard', function () {
 Route::get('/analytics', function () {
     return view('analytics-page');
 })->name('analytics');
+
+Route::get('/digitalMap', function () {
+    return view('digitalMap-page');
+})->name('digitalMap');
 
 //Sales Management
 Route::get('/dcr', function () {
@@ -253,3 +258,6 @@ Route::get('/adm-sync-logs', function () {
 Route::get('/dynamic-route-list', function () {
     return view('maintenance.sfaQueuing.dynamic-route-list');
 })->name('dynamic-route-list');
+
+// Digital Map
+Route::get('/getGoogleMapsData', [Digital_mapController::class, 'getGoogleMapsData']);

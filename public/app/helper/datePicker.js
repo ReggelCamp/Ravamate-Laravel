@@ -6,6 +6,7 @@ export default class DatePicker {
 
             // Read whether this specific date picker should be single-date
             const singleDate = $btn.data("single-date") === true;
+            const opens = $btn.data("opens") || "left";
 
             $btn.daterangepicker(
                 {
@@ -18,7 +19,7 @@ export default class DatePicker {
                     showWeekNumbers: false,
                     alwaysShowCalendars: true,
                     autoUpdateInput: false,
-                    opens: "left",
+                    opens: open,
 
                     locale: {
                         format: "MMM DD, YYYY",

@@ -86,6 +86,7 @@
     'id' => 'datePicker',
     'label' => 'Filter by Date',
     'singleDate' => false,
+    'opens' => 'left'
 ])
 
 <div class="flex h-[30px] justify-end">
@@ -95,13 +96,16 @@
             <div id="dateButton" class="cursor-pointer flex items-center day"></div>
         @else
             <button
+                
                 type="button"
                 name="datePicker"
-                 data-single-date="{{ $singleDate ? 'true' : 'false' }}"
+                data-single-date="{{ $singleDate ? 'true' : 'false' }}"
+                data-opens="{{ $opens }}"
                 id="{{ $id }}"
                 {{ $attributes->merge([
-                    'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition'
+                    'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition gap-2'
                 ]) }}>
+                <i class="items-center justify-center h-5 w-5 flex"  data-lucide="calendar-days"></i>
                 {{ $label }}
             </button>
 

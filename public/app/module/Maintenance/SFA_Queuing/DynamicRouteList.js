@@ -390,7 +390,7 @@ TableLoader.tableData(
     sampleData,
     DynamicTransactionColumns,
     {
-        scrollY:"300px"
+        scrollY:"500px"
     }
 );
 

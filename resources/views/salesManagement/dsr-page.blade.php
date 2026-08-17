@@ -45,7 +45,7 @@
 
             <span class="flex items-center justify-center gap-[5px] px-5 border rounded-xl">
                 <x-datepicker :singleDate="true" id="dsrDatepicker" class="whitespace-nowrap h-[30px] text-[13px]" />
-                <i class="w-[13px] h-[13px]" data-lucide="calendar-days"></i>
+                {{-- <i class="w-[13px] h-[13px]" data-lucide="calendar-days"></i> --}}
                 <i class="fa-solid fa-caret-down text-xs"></i>
             </span>
         </div>

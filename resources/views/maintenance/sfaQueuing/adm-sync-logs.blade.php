@@ -10,7 +10,7 @@
                 <div class="sheenFilterBtn border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
                         <x-datepicker id="dcrDatepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
-                        <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i>
+                        {{-- <i class=" w-[13px] h-[13px] " data-lucide="calendar-days"></i> --}}
                         <i class="fa-solid fa-caret-down text-xs"></i>
                     </span>
                 </div>

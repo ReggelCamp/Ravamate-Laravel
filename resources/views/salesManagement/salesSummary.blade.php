@@ -3,13 +3,13 @@
 @section('content')
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">
-        <div class="card w-full h-full h-full flex flex-col">
+        <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Audit" />
                 <div class="sheenFilterBtn border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
                         <x-datepicker id="summary_Datepicker" drops="up" class="whitespace-nowrap h-[30px] text-[13px]" />
-                        <i class=" w-[35px] " data-lucide="calendar-days"></i>
+                        {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
                         <i class="fa-solid fa-caret-down text-xs"></i>
                     </span>
                 </div>
