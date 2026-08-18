@@ -1,11 +1,12 @@
 @extends('layout.app')
-
+@section('headerTitle', 'DIGITAL MAPPING')
 @section('content')
 
-    <div id="digital_map_container" class="w-full h-full"></div>
+    <div class="w-full pt-5 h-full">
+        <x-DigitalMap/>
+    </div>
 
-@endsection
+    @endsection
 
-@push('scripts')
-    <script type="module" src="/app/module/digital_map/digitalMap.js"></script>
-@endpush
+
+

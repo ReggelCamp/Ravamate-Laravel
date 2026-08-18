@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\dcrController;
+use App\Http\Controllers\DcrController;
 use App\Http\Controllers\Digital_mapController;
+use App\Http\Controllers\DsrController;
+use App\Http\Controllers\DsrrController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
@@ -217,9 +219,12 @@ Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
 //getsalesman
 Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
 
-Route::get('/getDCRtable',[dcrController::class,'getDCRtable']);
+Route::get('/getDCRtable',[DcrController::class,'getDCRtable']);
 
-Route::get('/salesmen', [dcrController::class, 'getSalesmen']);
+Route::get('/salesmen', [DcrController::class, 'getSalesmen']);
+
+Route::get('/getSalesmanNames', [DsrController::class, 'getSalesmanNames']);
+Route::get('/getSalesmanNames', [DsrrController::class, 'getSalesmanNames']);
 
 //for the fonts
 Route::get('/fonts',[ThemeController::class,'getFonts']);

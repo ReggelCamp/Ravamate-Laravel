@@ -19,7 +19,7 @@
         }
     </style>
 
-    <div class="w-full h-full flex flex-col bg-transparent pb-10">
+    <div class="w-full h-full flex flex-col bg-transparent pb-10 overflow-auto">
 
         <div class="w-full h-full flex flex-col lg:flex-row">
             {{-- Carousel Panel --}}
@@ -62,47 +62,46 @@
                     </div>
 
                     {{-- Map Body --}}
-                    <div class="w-full h-[400px] bg-white ">
-                        <div class="w-full h-full flex justify-center p-2 items-end">
-                            <div
-                                class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200">
-                                {{-- avatar --}}
-                                <div class="flex h-full items-center gap-2">
-                                    <div class="avatar">
-                                        <div class="w-[25px] h-[25px] rounded-2xl">
-                                            <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
-                                        </div>
-                                    </div>
-                                    <div class="avatar">
-                                        <div class="w-[25px] h-[25px] rounded-2xl">
-                                            <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
-                                        </div>
-                                    </div>
-                                    <div class="avatar">
-                                        <div class="w-[25px] h-[25px] rounded-2xl">
-                                            <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- end --}}
-                            </div>
-                        </div>
+                    <div class="w-full h-[400px] bg-white relative">
+    <x-DigitalMap/>
+
+    <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">
+        <div class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200 pointer-events-auto">
+            {{-- avatar --}}
+            <div class="flex h-full items-center gap-2">
+                <div class="avatar">
+                    <div class="w-[25px] h-[25px] rounded-2xl">
+                        <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
                     </div>
+                </div>
+                <div class="avatar">
+                    <div class="w-[25px] h-[25px] rounded-2xl">
+                        <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                    </div>
+                </div>
+                <div class="avatar">
+                    <div class="w-[25px] h-[25px] rounded-2xl">
+                        <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
+                    </div>
+                </div>
+            </div>
+            {{-- end --}}
+        </div>
+    </div>
+</div>
                 </div>
 
                 {{-- Table --}}
                 <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[400px] sm:h-[350px] lg:h-[300px] pb-20">
 
                     {{-- Toolbar --}}
-                    <div
-                        class="w-full h-[217px] sm:h-[60px] flex-shrink-0 flex flex-col-reverse  sm:flex-row justify-between gap-5 ">
+                    <div class="w-full h-fit py-5 sm:h-[60px] flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
 
-                        <div
-                            class="flex justify-start flex-col h-full flex-1 items-center sm:flex-row gap-2 w-full md:w-auto ">
+                        <div class="flex justify-start flex-col h-full flex-1 lg:items-center sm:flex-row gap-2 w-full md:w-auto ">
 
                             <div class="sm:text-[10px] whitespace-nowrap sm:w-fit">
                                 <x-dropdown id="OperationTypeDropdown" class="w-full"
-                                    buttonClass="h-[26px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
+                                    buttonClass="h-[30px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                     <x-slot:dropdownName>
                                         <span class="text-[11.2px]  font-semibold gap-5">
                                             Operation Type
@@ -118,7 +117,7 @@
 
                             <div class="  flex w-full sm:w-auto">
                                 <x-button
-                                    class="h-[30px] w-fit px-2 rounded-2xl shine-bgBtn items-center justify-center flex">
+                                    class="h-[30px] w-fit px-5 rounded-2xl shine-bgBtn items-center justify-center flex">
                                     <x-slot:buttonName>
                                         <span class="bodyFont font-semibold text-[11.2px]">
                                             Expand
@@ -126,48 +125,49 @@
                                     </x-slot:buttonName>
                                 </x-button>
                             </div>
+                            
+                            <div class="flex w-full gap-2">
+                            
+                                <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
+                                    <x-dropdown class="w-fit px-5"
+                                        buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
+                                        <x-slot:dropdownName>
+                                            <span
+                                                class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
+                                                <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span>Icon</span>
+                                            </span>
+                                        </x-slot:dropdownName>
 
-                            <div class="w-full sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
-                                <x-dropdown class="w-[100px]"
-                                    buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[26px] shine-bgBtn">
-                                    <x-slot:dropdownName>
-                                        <span
-                                            class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
-                                            <i class="fa-solid fa-angle-down text-[8px]"></i>
-                                            <i class="fa-regular fa-clock"></i>
-                                            <span>Icon</span>
-                                        </span>
-                                    </x-slot:dropdownName>
+                                        <div class="bg-white text-[13px] w-[150px] whitespace-nowrap">
+                                            <li><a>Off</a></li>
+                                            <li><a>1 Minute</a></li>
+                                            <li><a>5 Minutes</a></li>
+                                            <li><a>10 Minutes</a></li>
+                                            <li><a>15 Minutes</a></li>
+                                            <li><a>30 Minutes</a></li>
+                                            <li><a>60 Minutes</a></li>
+                                        </div>
+                                    </x-dropdown>
+                                </div>
 
-                                    <div class="bg-white text-[13px] w-[150px] whitespace-nowrap">
-                                        <li><a>Off</a></li>
-                                        <li><a>1 Minute</a></li>
-                                        <li><a>5 Minutes</a></li>
-                                        <li><a>10 Minutes</a></li>
-                                        <li><a>15 Minutes</a></li>
-                                        <li><a>30 Minutes</a></li>
-                                        <li><a>60 Minutes</a></li>
-                                    </div>
-                                </x-dropdown>
+                                <div class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                    <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
+                                </div>
                             </div>
-
-                            <div class="w-fit px-2 h-[26px] shine-bgBtn rounded-full flex justify-center items-center ">
-                                <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
-                            </div>
-
                         </div>
 
-                        <div
-                            class="flex flex-1 justify-end flex-col-reverse sm:flex-row gap-2 w-full items-center h-full md:w-auto">
+                        <div class="flex flex-1 justify-end items-end flex-col-reverse sm:flex-row gap-2 w-full lg:items-center h-full md:w-auto">
 
                             <span
-                                class="text-black border bg-white h-[30px] text-[12px] items-center px-5 flex rounded-2xl">
+                                class="text-black border bg-white h-[30px] text-[12px] w-fit items-center px-5 flex rounded-2xl">
                                 Total (6) : ₱455,064.59
                             </span>
 
-                            <div class="w-full h-[26px] sm:w-auto">
+                            <div class="w-full h-[30px] sm:w-auto">
                                 <x-searchbar id="customSearch" placeholder="Search Salesman"
-                                    class="h-[26px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
+                                    class="h-[30px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
                             </div>
 
                         </div>

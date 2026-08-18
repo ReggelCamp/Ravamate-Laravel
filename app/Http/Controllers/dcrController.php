@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\dcrModel;
+use App\Models\DcrModel;
 use Illuminate\Http\Request;
 
-class dcrController extends Controller
+class DcrController extends Controller
 {
     public function getDCRtable(Request $request)
     {
-        $query = dcrModel::query();
+        $query = DcrModel::query();
 
         if ($request->filled('salesman_name')) {
             $query->where('salesman_name', $request->salesman_name);
@@ -20,7 +20,7 @@ class dcrController extends Controller
 
     public function getSalesmen()
     {
-        $salesmen = dcrModel::select('salesman_name')
+        $salesmen = DcrModel::select('salesman_name')
             ->distinct()
             ->orderBy('salesman_name')
             ->get();

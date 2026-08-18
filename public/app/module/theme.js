@@ -71,7 +71,6 @@ function getAll() {
         url: "/customize_theme/getAll",
         onSuccess: (data) => {
             array = data;
-
             const activeTheme = array.find(item => item.is_active);
             const defaultTheme = array[0]?.id;
 

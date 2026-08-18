@@ -2,127 +2,139 @@
 @section('headerTitle', 'DAILY SALES REPORT')
 @section('content')
 
-    <style>
-        table, th, td {
-            border:1px solid black;
-        }   
+        <style>
+            table, th, td {
+                border:1px solid black;
+            }   
 
-        .report-print-title {
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px;
-        }
+            .report-print-title {
+                font-size: 10px;
+                font-weight: bold;
+                padding: 4px;
+            }
 
-        .report-left {
-            text-align: left;
-        }
+            .report-left {
+                text-align: left;
+            }
 
-        .report-center {
-            text-align: center;
-        }
+            .report-center {
+                text-align: center;
+            }
 
-        .report-right {
-            text-align: right;
-        }
+            .report-right {
+                text-align: right;
+            }
 
-        /* Daterange */
-        .daterangepicker .ranges li{
-            
-        }
+            /* Daterange */
+            .daterangepicker .ranges li{
 
-        .daterangepicker.show-calendar .drp-buttons{
-            display: flex;
-        }
+            }
 
-    </style>
+            .daterangepicker.show-calendar .drp-buttons{
+                display: flex;
+            }
 
-    <div class="flex w-full h-full pb-20 pt-5 px-3">
-    <div class="card w-full h-full flex flex-col min-h-96">
+            .daterangepicker td.active{
+                background-color: var(--accent) !important;
+            }
+        </style>
 
-        {{-- Header --}}
-        <div class="report_title h-[50px] flex items-center justify-center rounded-t-xl px-5 py-3 shrink-0">
-            <x-report-header-title title="DSR" />
+        <div class="flex w-full h-full pb-20 pt-5 px-3">
+        <div class="card w-full h-full flex flex-col min-h-96">
 
-            <span class="flex items-center justify-center gap-[5px] px-5 border rounded-xl">
-                <x-datepicker :singleDate="true" id="dsrDatepicker" class="whitespace-nowrap h-[30px] text-[13px]" />
-                {{-- <i class="w-[13px] h-[13px]" data-lucide="calendar-days"></i> --}}
-                <i class="fa-solid fa-caret-down text-xs"></i>
-            </span>
-        </div>
+            {{-- Header --}}
+            <div class="report_title h-[50px] flex items-center justify-center rounded-t-xl px-5 py-3 shrink-0">
+                <x-report-header-title title="DSR" />
 
-        {{-- Content --}}
-        <div class="flex-1 min-h-0 flex flex-col px-5">
+                <span class="flex items-center justify-center gap-[5px] px-5 border rounded-xl">
+                    <x-datepicker :singleDate="true" id="dsrDatepicker" class="whitespace-nowrap h-[30px] text-[13px]" />
+                    {{-- <i class="w-[13px] h-[13px]" data-lucide="calendar-days"></i> --}}
+                    <i class="fa-solid fa-caret-down text-xs"></i>
+                </span>
+            </div>
 
-            {{-- Filters --}}
-            <div class="flex flex-col-reverse md:flex-row items-center gap-3 w-full py-3 shrink-0">
+            {{-- Content --}}
+            <div class="flex-1 min-h-0 flex flex-col px-5">
 
-                <div class="flex gap-5 w-full">
-                    <div class="">
-                        <x-dropdown>
-                            <x-slot:dropdownName>
-                                <span
-                                    class="flex items-center sheenFilterBtn h-[30px] px-5 whitespace-nowrap border rounded-2xl gap-2 text-[12px] font-medium">
-                                    <i class="mdi mdi-filter-variant"></i>
-                                    Filter by Salesman
-                                </span>
-                            </x-slot:dropdownName>
+                {{-- Filters --}}
+                <div class="flex flex-col-reverse md:flex-row lg:items-center items-start gap-3 w-full py-3 shrink-0">
 
-                            <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border" id="dsrItems">
-                                {{-- <x-searchbar
-                                    id="dsrSearch"
-                                    class="w-[300px] h-[28px] text-[12px] font-medium" /> --}}
-                            </ul>
-                        </x-dropdown>
+                    <div class="flex gap-5 w-full">
+                        <div class="">
+                            <x-dropdown>
+                                <x-slot:dropdownName>
+                                    <span
+                                        id="DsrDropdown"
+                                        class="flex items-center sheenFilterBtn h-[30px] px-5 whitespace-nowrap border rounded-2xl gap-2 text-[12px] font-medium">
+                                        <i class="mdi mdi-filter-variant"></i>
+                                        Filter by Salesman
+                                    </span>
+                                </x-slot:dropdownName>
+
+                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border max-h-[300px] overflow-auto" id="dsrItems">
+                                    {{-- <x-searchbar
+                                        id="dsrSearch"
+                                        class="w-[300px] h-[28px] text-[12px] font-medium" /> --}}
+                                </ul>
+                            </x-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-5">
+                        <button id="generateDsrReport" class="flex w-full px-5 h-[30px] generate_btn border sheenFilterBtn rounded-2xl">
+                            Generate
+                        </button>
+                        <x-exportDataTable 
+                            tableId="#DsrTable"
+                            report="DSR"
+                            :hideCsv="true"
+                            :hideCopy="true"
+                            class="h-[28px] text-[12px] font-medium sheenFilterBtn"
+                        />
                     </div>
 
                 </div>
 
-                <div class="flex gap-5">
-                    <button id="generateDsrReport" class="flex w-full px-5 h-[30px] generate_btn border sheenFilterBtn rounded-2xl">
-                        Generate
-                    </button>
-                    <x-exportDataTable 
-                        tableId="#DsrTable"
-                        report="DSR"
-                        :hideCsv="true"
-                        :hideCopy="true"
-                        class="h-[28px] text-[12px] font-medium sheenFilterBtn"
-                    />
+                {{-- Table Section --}}
+                <div class="flex-1 min-h-0 flex flex-col gap-2 ">
+
+                    {{-- Table Title --}}
+                    <div id="DsrReportname"
+                        class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
+
+                        <img
+                            src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
+                            class="absolute inset-0 w-full h-full object-contain"
+                            alt=""
+                        >
+
+                        <span id="DsrSalesmanName"
+                            class="relative z-10 text-white font-semibold text-[30px]">
+                        </span>
+
+                    </div>
+                    <div class="flex justify-center items-center py-4 hidden">
+                        <i class="mdi mdi-calendar-month-outline text-[#7d7d7d] text-[100px]"></i>
+                    </div>
+                   <div
+                        id="DsrTableContainer"
+                        class="flex-1 min-h-0 overflow-auto mb-5"
+                    ></div>
                 </div>
 
-            </div>
-
-            {{-- Table Section --}}
-            <div class="flex-1 min-h-0 flex flex-col gap-2 ">
-
-                {{-- Table Title --}}
-                <div id="DsrReportname"
-                    class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
-
-                    <img
-                        src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
-                        class="absolute inset-0 w-full h-full object-contain"
-                        alt=""
-                    >
-
-                    <span id="DsrSalesmanName"
-                        class="relative z-10 text-white font-semibold text-[30px]">
-                    </span>
-
-                </div>
-                <div class="flex justify-center items-center py-4 hidden">
-                    <i class="mdi mdi-calendar-month-outline text-[#7d7d7d] text-[100px]"></i>
-                </div>
-               <div
-                    id="DsrTableContainer"
-                    class="flex-1 min-h-0 overflow-auto mb-5"
-                ></div>
             </div>
 
         </div>
-
     </div>
-</div>
+
+    <dialog id="DsrModal" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-medium">No salesman reports on selected date</h3>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
 
 @endsection
 

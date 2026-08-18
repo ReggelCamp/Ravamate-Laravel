@@ -40,13 +40,16 @@ export default class ComponentHelper {
                 console.log("fea", config);
                 Api.get({
                     url: config.url,
+                    data: config.data,
 
                     onSuccess: (data) => {
                         this.dropdown().load({
                             ...config,
                             json: data,
                         });
+                        if (config.onSuccess) config.onSuccess(data);
                     },
+                    onError: config.onError,
                 });
             },
 
@@ -104,6 +107,7 @@ export default class ComponentHelper {
         };
     }
 
+    // for Select
     static select() {
         return {
 
