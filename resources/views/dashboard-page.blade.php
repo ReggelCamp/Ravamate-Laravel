@@ -46,7 +46,7 @@
             <div class="flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
 
                 {{-- Map --}}
-                <div class="w-full flex flex-col HideMap h-[450px] sm:h-[500px] lg:flex-1 lg:h-auto ">
+                <div class="w-full flex flex-col HideMap max-h-[450px]  lg:flex-1 lg:h-auto ">
 
                     {{-- Map Header --}}
                     <div
@@ -63,32 +63,33 @@
 
                     {{-- Map Body --}}
                     <div class="w-full h-[400px] bg-white relative">
-    <x-DigitalMap/>
+                        <x-DigitalMap />
 
-    <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">
-        <div class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200 pointer-events-auto">
-            {{-- avatar --}}
-            <div class="flex h-full items-center gap-2">
-                <div class="avatar">
-                    <div class="w-[25px] h-[25px] rounded-2xl">
-                        <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                        <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">
+                            <div
+                                class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200 pointer-events-auto">
+                                {{-- avatar --}}
+                                <div class="flex h-full items-center gap-2">
+                                    <div class="avatar">
+                                        <div class="w-[25px] h-[25px] rounded-2xl">
+                                            <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+                                        </div>
+                                    </div>
+                                    <div class="avatar">
+                                        <div class="w-[25px] h-[25px] rounded-2xl">
+                                            <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                                        </div>
+                                    </div>
+                                    <div class="avatar">
+                                        <div class="w-[25px] h-[25px] rounded-2xl">
+                                            <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- end --}}
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="avatar">
-                    <div class="w-[25px] h-[25px] rounded-2xl">
-                        <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
-                    </div>
-                </div>
-                <div class="avatar">
-                    <div class="w-[25px] h-[25px] rounded-2xl">
-                        <img src="https://img.daisyui.com/images/profile/demo/averagebulk@192.webp" />
-                    </div>
-                </div>
-            </div>
-            {{-- end --}}
-        </div>
-    </div>
-</div>
                 </div>
 
                 {{-- Table --}}
@@ -97,7 +98,8 @@
                     {{-- Toolbar --}}
                     <div class="w-full h-fit py-5 sm:h-[60px] flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
 
-                        <div class="flex justify-start flex-col h-full flex-1 lg:items-center sm:flex-row gap-2 w-full md:w-auto ">
+                        <div
+                            class="flex justify-start flex-col h-full flex-1 lg:items-center sm:flex-row gap-2 w-full md:w-auto ">
 
                             <div class="sm:text-[10px] whitespace-nowrap sm:w-fit">
                                 <x-dropdown id="OperationTypeDropdown" class="w-full"
@@ -125,9 +127,9 @@
                                     </x-slot:buttonName>
                                 </x-button>
                             </div>
-                            
+
                             <div class="flex w-full gap-2">
-                            
+
                                 <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
                                     <x-dropdown class="w-fit px-5"
                                         buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
@@ -158,7 +160,8 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-1 justify-end items-end flex-col-reverse sm:flex-row gap-2 w-full lg:items-center h-full md:w-auto">
+                        <div
+                            class="flex flex-1 justify-end items-end flex-col-reverse sm:flex-row gap-2 w-full lg:items-center h-full md:w-auto">
 
                             <span
                                 class="text-black border bg-white h-[30px] text-[12px] w-fit items-center px-5 flex rounded-2xl">

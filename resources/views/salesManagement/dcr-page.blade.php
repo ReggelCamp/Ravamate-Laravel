@@ -117,7 +117,7 @@
                                         Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border w-[300px] rounded-2xl p-2 bg-white border " id="dcrItems">
+                                <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border " id="dcrItems">
                                     {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
                                 </ul>
                             </x-dropdown>

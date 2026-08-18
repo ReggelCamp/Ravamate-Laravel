@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex items-center w-full h-[60px] py-3">
+                <div class="flex flex-col-reverse lg:flex-row gap-3 items-start lg:items-center w-full h-fit py-5">
                     <div class="flex gap-5 w-full">
                         <div>
                             <x-exportDataTable class="sheenFilterBtn" tableId="#salesRetRgsTable"/>

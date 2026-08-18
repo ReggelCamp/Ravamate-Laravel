@@ -40,12 +40,9 @@
                     <div class="tab-content bg-base-100 border-base-300 p-6">
                         <div class="flex w-full justify-between h-full flex-col">
                             <div class="flex w-full justify-start md:justify-end items-center">
-                                <div
-                                    class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
-
+                                <div class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-start lg:items-center h-full">
                                     <div
                                         class="flex sheenFilterBtn rounded-2xl px-5 whitespace-nowrap gap-1 items-center font-medium border justify-end">
-                                        <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                                         <x-datepicker class="!text-black" />
                                     </div>
                                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -58,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="min-w-[550px] ">
+                            <div class=" ">
                                 <x-datatable class="" id="DynamicRouteList_Table" />
                             </div>
                         </div>
@@ -68,7 +65,7 @@
                     <div class="tab-content bg-base-100 border-base-300 p-6">
                         <div class="flex w-full justify-between h-full flex-col">
                             <div class="flex w-full justify-start md:justify-end items-center">
-                                <div class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-center h-full">
+                                <div class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-start lg:items-center h-full">
                                     <div class="flex rounded-2xl whitespace-nowrap gap-2 items-center font-medium justify-end">
                                       <button onclick="group_transaction.showModal()" class="btn h-[30px] sheenFilterBtn rounded-2xl text-[12px]">Group Transaction</button>
                                       <button class="btn rounded-2xl text-[12px] h-[30px] sheenFilterBtn" onclick="filter.showModal()">Filter</button>
@@ -83,7 +80,7 @@
                                 </div>
                             </div>
 
-                            <div class="min-w-[550px] ">
+                            <div class=" ">
                                 <x-datatable class="" id="DynamicTransactionList_Table" />
                             </div>
                         </div>

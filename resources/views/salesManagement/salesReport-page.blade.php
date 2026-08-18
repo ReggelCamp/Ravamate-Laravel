@@ -13,7 +13,6 @@
             color: rgb(184, 184, 184);
             border: 1px solid;
         }
-
     </style>
 
 
@@ -29,61 +28,70 @@
                     </span>
                 </div>
             </div>
-            <div class="flex-col-reverse gap-5 items-end flex sm:flex-row w-full justify-end py-2 px-5 h-[50px] sm:h-[80px]">
-                <div class="card card-border h-[50px] bg-secondary w-full sm:w-96 bodyColor">
-                    <div class=" border rounded-xl justify-start items-center flex h-full w-[236px] sheenFilterBtn">
-                        <span class="mdi mdi-finance finance_Icon">
-                        </span>
+
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end pt-5 w-full px-3 sm:px-5 ">
+
+                {{-- TOTAL SALES --}}
+                <div class="card card-border h-[50px] bg-secondary w-full sm:w-auto bodyColor">
+                    <div
+                        class="border rounded-xl justify-start items-center flex h-full w-full px-3 gap-2 sheenFilterBtn whitespace-nowrap">
+                        <span class="mdi mdi-finance finance_Icon"></span>
+
                         <span>
                             Total Sales:
                         </span>
+
                         <span>
                             ₱ 0 (₱ 0)
                         </span>
                     </div>
                 </div>
 
-                <div class="flex w-full items-end h-[50px] gap-5 pl-5">
-                <div class="flex h-[30px]">
-                    <x-dropdown class="">
-                        <x-slot:dropdownName class="h-[30px]">
-                            <span class="inline-flex sheenFilterBtn h-[30px] items-center border px-3 gap-2 text-[12px] justify-center rounded-2xl">
-                                Other Reports
-                                <i class="fa-solid fa-caret-down"></i>
-                            </span>
-                        </x-slot:dropdownName>
+                <div class="flex flex-col-reverse gap-3 sm:flex-row">
+                    {{-- OTHER REPORTS + EXPORT --}}
+                    <div class="flex w-full sm:w-auto items-end gap-3">
 
-                        {{-- <x-searchbar id="salesRepSearch" /> --}}
-                        <ul id="salesReports" class="bg-white w-[200px] h-[200px] overflow-y-auto">
-                            {{-- <li><a>Sales Summary</a></li>
-                            <li><a>Range Summary</a></li>
-                            <li><a>Range Monitoring</a></li>
-                            <li><a>Geocall Rate</a></li>
-                            <li><a>Strike Rate</a></li>
-                            <li><a>Salesrep SKU Details</a></li>
-                            <li><a>Unproductive</a></li>
-                            <li><a>Sosyo Transaction</a></li>
-                            <li><a>Voucher History</a></li> --}}
-                        </ul>
-                    </x-dropdown>
-                </div>
-                <div>
-                    <x-exportDataTable class="sheenFilterBtn" tableId="#salesReportTable" />
-                </div>
-            </div>
+                        {{-- OTHER REPORTS --}}
+                        <div class="h-[30px] flex shrink-0">
+                            <x-dropdown>
+                                <x-slot:dropdownName class="h-[30px]">
+                                    <span
+                                        class="inline-flex sheenFilterBtn h-[30px] items-center border px-3 gap-2 text-[12px] justify-center rounded-2xl whitespace-nowrap">
+                                        Other Reports
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </span>
+                                </x-slot:dropdownName>
 
-                <div class="flex w-full h-full items-end justify-end">
-                    <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                                <ul id="salesReports" class="bg-white w-[200px] max-h-[200px] overflow-y-auto">
+                                </ul>
+                            </x-dropdown>
+                        </div>
+
+                        {{-- EXPORT --}}
+                        <div class="h-[30px] shrink-0">
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#salesReportTable" />
+                        </div>
+
+                    </div>
+
+                    {{-- SEARCH --}}
+                    <div class="flex w-full sm:w-auto items-end justify-end">
+                        <div
+                            class="border h-[30px] w-full sm:w-auto max-w-full items-center justify-center flex px-2 rounded-2xl">
+
+                            <i class="fa-solid fa-magnifying-glass shrink-0"></i>
+
+                            <x-searchbar class="w-full sm:w-[250px]" id="customSearch" />
+
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class=" pb-5 p-5">
 
-                    <x-datatable id="salesReportTable"/>
-   
+                <x-datatable id="salesReportTable" />
+
             </div>
         </div>
     </div>

@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="min-w-[550px] whitespace-nowrap">
+                            <div class=" whitespace-nowrap">
                                 <x-datatable class="font-medium rounded-t-2xl pt-5 text-[10px]" id="EcmfTable" />
                             </div>
                         </div>
@@ -82,15 +82,12 @@
                         <option disabled selected>Choose Here</option>
                     </select>
                 </div>
-                <div class="flex w-full justify-between items-center">
-                    <span class="w-[225px]">
+                <div class="flex w-full  items-center">
+                    <span class="w-fit pr-[117px]">
                         Date:
                     </span>
-                    <div class="w-full items-start flex gap-2">
+                    <div class="w-fit px-5 rounded-lg border justify-start item flex gap-2">
                         <x-datepicker />
-                        <span>
-                            <i class="mdi mdi-calendar-month-outline"></i>
-                        </span>
                     </div>
                 </div>
                 <div class="w-full flex items-end justify-end text-white">

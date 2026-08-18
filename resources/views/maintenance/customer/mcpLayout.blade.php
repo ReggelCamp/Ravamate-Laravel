@@ -15,36 +15,43 @@
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex items-center w-full h-[60px] py-3">
+                <div class="flex flex-col-reverse lg:flex-row gap-3 items-start lg:items-center w-full h-fit py-3">
                     <div class="flex gap-5 w-full">
-                        <div class="flex rounded-2xl whitespace-nowrap h-[25px] gap-5">
-                            <div>
-                                <x-exportDataTable class="sheenFilterBtn" tableId="#mcpTable" leftIcon="mdi mdi-export"/>
+                        <div class="flex rounded-2xl whitespace-nowrap h-fit gap-3">
+                            <div class="flex flex-col gap-3 lg:flex-row ">
+                                <div class="flex gap-3">
+                                    <div>
+                                        <x-exportDataTable class="sheenFilterBtn" tableId="#mcpTable" leftIcon="mdi mdi-export"/>
+                                    </div>
+                
+                                    <x-button class="">
+                                        <x-slot:buttonName>
+                                            <span class="inline-flex items-center sheenFilterBtn  inline-flex items-center text-[12px] border rounded-2xl px-2 h-[30px] h-[30px]">
+                                                <i class="mdi mdi-file-download-outline"></i>
+                                                Download Template
+                                            </span>
+                                        </x-slot:buttonName>
+                                    </x-button>
+                                </div>
+                                <div class="flex gap-3">
+                                    <x-button>
+                                        <x-slot:buttonName>
+                                            <span class="inline-flex items-center sheenFilterBtn text-[12px] border rounded-2xl px-2 h-[30px]">
+                                                <i class="mdi mdi-upload-outline"></i>
+                                                Upload Template
+                                            </span>
+                                        </x-slot:buttonName>
+                                    </x-button>
+                                    <x-button>
+                                        <x-slot:buttonName>
+                                            <span class="inline-flex items-center sheenFilterBtn text-[12px] border rounded-2xl px-2 h-[30px]">
+                                                <i class="mdi mdi-filter-cog-outline"></i>
+                                                Filter Result
+                                            </span>
+                                        </x-slot:buttonName>
+                                    </x-button>
+                                </div>
                             </div>
-                            <x-button class="">
-                                <x-slot:buttonName>
-                                    <span class="inline-flex items-center sheenFilterBtn  inline-flex items-center text-[12px] border rounded-2xl px-2 h-[30px] h-[30px]">
-                                        <i class="mdi mdi-file-download-outline"></i>
-                                        Download Template
-                                    </span>
-                                </x-slot:buttonName>
-                            </x-button>
-                            <x-button>
-                                <x-slot:buttonName>
-                                    <span class="inline-flex items-center sheenFilterBtn text-[12px] border rounded-2xl px-2 h-[30px]">
-                                        <i class="mdi mdi-upload-outline"></i>
-                                        Upload Template
-                                    </span>
-                                </x-slot:buttonName>
-                            </x-button>
-                            <x-button>
-                                <x-slot:buttonName>
-                                    <span class="inline-flex items-center sheenFilterBtn text-[12px] border rounded-2xl px-2 h-[30px]">
-                                        <i class="mdi mdi-filter-cog-outline"></i>
-                                        Filter Result
-                                    </span>
-                                </x-slot:buttonName>
-                            </x-button>
                         </div>
 
                     </div>

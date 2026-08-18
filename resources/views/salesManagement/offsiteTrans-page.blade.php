@@ -15,8 +15,8 @@
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
-                        <div>
+                <div class="flex flex-col-reverse gap-3 md:flex-row items-start lg:items-center w-full min-h-[60px] py-3">
+                        <div class="flex justify-start ">
                             <x-exportDataTable tableId="#offsiteTransTable" class="px-5 border rounded-2xl sheenFilterBtn"/>
                         </div>
                     <div class="flex w-full h-[30px] justify-start md:justify-end items-center">

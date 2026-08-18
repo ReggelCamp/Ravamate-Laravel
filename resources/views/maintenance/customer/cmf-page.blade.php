@@ -15,24 +15,9 @@
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex items-center w-full h-[60px] py-3">
+                <div class="flex flex-col-reverse lg:flex-row gap-3 items-start lg:items-center w-full h-fit py-5">
                     <div class="flex gap-5 w-full">
-                        {{-- <div class="h-[25px]">
-                            <x-dropdown>
-                                <x-slot:dropdownName>
-                                    <span
-                                        class="flex items-center w-[180px] px-5 whitespace-nowrap border rounded-2xl h-[25px]">
-                                        Filter by Salesman
-                                    </span>
-                                </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="dsrItems">
-                                    <x-searchbar id="dsrSearch" />
-                                    <li><a>Item 1</a></li>
-                                    <li><a>Item 2</a></li>
-                                </ul>
-                            </x-dropdown>
-                        </div> --}}
-                        
+            
                         <button class="btn rounded-2xl w-fit px-5 h-[30px] sheenFilterBtn">
                             <i class="mdi mdi-refresh"></i>
                         </button>    
