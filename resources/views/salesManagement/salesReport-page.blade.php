@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'SALES REPORT')
 @section('content')
+@section('title', 'SALES REPORT')
 
     <style>
         .finance_Icon {

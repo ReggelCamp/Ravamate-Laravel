@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'INVENTORY VALUATION')
 @section('content')
+@section('title', 'INVENTORY VALUATION')
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">

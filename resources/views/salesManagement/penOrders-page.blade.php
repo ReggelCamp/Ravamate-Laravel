@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'PENDING ORDERS')
 @section('content')
+@section('title', 'PENDING ORDERS')
 
     <style>
         .transacBtnIcon {

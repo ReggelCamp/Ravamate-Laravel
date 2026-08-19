@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+@section('title', 'CHANNEL MAPPING')
+
     <div class="flex w-full h-[50px] justify-between items-center pl-2 pr-2 report_title">
         <div class="w-full h-full items-center ">
             <x-report-header-title title="Channel Mapping" />

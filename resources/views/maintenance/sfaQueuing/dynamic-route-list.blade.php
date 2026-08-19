@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'Dynamic Route List')
 @section('content')
-
+@section('title', 'DYNAMIC ROUTE LIST')
 
     <style>
         .FilterBtn{

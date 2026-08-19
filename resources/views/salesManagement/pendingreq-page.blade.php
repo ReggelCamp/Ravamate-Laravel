@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'HOLD ORDERS')
 @section('content')
+@section('title', 'PENDING REQUEST')
 
 
     <style>

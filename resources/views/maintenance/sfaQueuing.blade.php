@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'SFA Queuing')
-
 @section('content')
+@section('title', 'SFA QUEUING')
 
     <style>
         #datepicker {

@@ -1,6 +1,8 @@
 @extends('layout.app')
 @section('headerTitle', 'DAILY SALES REMITTANCE REPORT')
 @section('content')
+@section('title', 'DSRR')
+
 
         <style>
             table,

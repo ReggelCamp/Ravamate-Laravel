@@ -42,10 +42,11 @@ export default class TableLoader {
             ...options
         });
 
-        const searchSelector = options.searchInput
-            || `[data-table-search="${id}"]`;
+        const searchSelector = options.searchInput || `[data-table-search="${id}"]`;
 
         TableLoader.bindSearch(searchSelector, table);
+
+        TableLoader.getTableId(id,table);
 
         return table;
     }
@@ -58,6 +59,16 @@ export default class TableLoader {
             });
     }
 
+    static getTableId(TableId, table) {
+        $(document)
+            .off("click.tableRow", `${TableId} tbody tr`)
+            .on("click.tableRow", `${TableId} tbody tr`, function () {
+                const row_data = table.row(this).data();
+                if (!row_data) return;
+
+                console.log(row_data); // <-- replace with actual logic
+            });
+    }
 
     static loadTable(config) {
 
@@ -89,5 +100,5 @@ export default class TableLoader {
             },
         });
     }
-    
+     
 }

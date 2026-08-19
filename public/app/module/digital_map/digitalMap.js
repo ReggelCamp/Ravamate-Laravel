@@ -9,19 +9,43 @@ function initMap() {
     }
 
     const map = new google.maps.Map(container, {
-        center: { lat: 14.5995, lng: 120.9842 }, // Manila — change to your default location
-        zoom: 12,
+        center: { lat: 10.55, lng: 124.05 },
+        zoom: 8,
+        zoomControl: true,
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER,
+        },
+        mapTypeControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT,
+        },
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
+        },
+        fullscreenControlOptions: {
+            position: google.maps.ControlPosition.TOP_RIGHT,
+        },
     });
 
-    // Optional: drop a marker at the center
-    new google.maps.Marker({
-        position: { lat: 14.5995, lng: 120.9842 },
-        map: map,
-    });
 }
 
 // Expose globally so the Maps API callback can find it
 window.initMap = initMap;
+
+$(document).on("change","#heatmapToggle", function(){
+    if(this.checked){
+        console.log("checked");
+       let html = `
+        <x-datepicker id="dcrDatepicker" drops="down" opens="left" class="whitespace-nowrap h-[30px] text-[13px]" />
+       `;
+    }
+    else{
+        console.log("wwwww");
+    }
+    
+});
 
 function loadGoogleMaps() {
     // Already loaded (e.g. navigated back to this page) — just init directly
@@ -38,7 +62,7 @@ function loadGoogleMaps() {
     }
 
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,visualization&callback=initMap`;
     script.async = true;
     script.onerror = () => console.error('Failed to load Google Maps script');
     document.head.appendChild(script);

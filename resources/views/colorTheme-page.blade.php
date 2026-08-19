@@ -1,6 +1,6 @@
 @extends('layout.centralizedScript')
 @section('content')
-
+@section('title', 'COLOR THEME')
 
 <body class="w-full h-full bg-base-200 font-['Poppins']">
     <div class="flex flex-col w-full p-5 h-full">

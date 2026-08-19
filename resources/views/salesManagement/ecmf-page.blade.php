@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'ELECTRONIC CMF')
 @section('content')
+@section('title', 'ECMF')
 
 
     <style>

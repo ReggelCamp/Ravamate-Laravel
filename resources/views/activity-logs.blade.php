@@ -1,5 +1,6 @@
 @extends('layout.centralizedScript')
 @section('content')
+@section('title', 'ACTIVITY LOGS')
 
     <style>
         .applyBtn{

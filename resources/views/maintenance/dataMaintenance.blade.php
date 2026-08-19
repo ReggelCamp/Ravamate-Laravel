@@ -1,7 +1,8 @@
 @extends('layout.app')
 @section('headerTitle', 'DATA ALIGNMENT')
 @section('content')
-    
+@section('title', 'DATA ALIGNMENT')
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>

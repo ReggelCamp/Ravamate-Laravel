@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'SALES TARGET')
 @section('content')
+@section('title', 'SALES TARGET')
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">

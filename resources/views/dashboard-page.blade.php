@@ -23,7 +23,8 @@
 
         <div class="w-full h-full flex flex-col lg:flex-row">
             {{-- Carousel Panel --}}
-            <div
+            <div 
+                id="dashboardSidePanel"
                 class="order-last DarkMode lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center lg:sticky lg:top-0 lg:self-start">
 
                 {{-- Logo --}}
@@ -46,7 +47,7 @@
             <div class="flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
 
                 {{-- Map --}}
-                <div class="w-full flex flex-col HideMap max-h-[450px]  lg:flex-1 lg:h-auto ">
+                <div class="w-full flex flex-col HideMap h-full lg:flex-1 lg:h-auto ">
 
                     {{-- Map Header --}}
                     <div
@@ -62,7 +63,7 @@
                     </div>
 
                     {{-- Map Body --}}
-                    <div class="w-full h-[400px] bg-white relative">
+                    <div class="w-full h-full bg-white relative">
                         <x-DigitalMap />
 
                         <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">

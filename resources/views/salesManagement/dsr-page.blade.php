@@ -1,6 +1,8 @@
 @extends('layout.app')
 @section('headerTitle', 'DAILY SALES REPORT')
 @section('content')
+@section('title', 'DSR')
+
 
         <style>
             table, th, td {

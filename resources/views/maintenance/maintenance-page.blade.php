@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('content')
+@section('title', 'MAINTENANCE')
 
 <style>
     .divider::before,

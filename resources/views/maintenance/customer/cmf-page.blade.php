@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'CUSTOMER MAINTENANCE FORM')
 @section('content')
+@section('title', 'CMF')
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">

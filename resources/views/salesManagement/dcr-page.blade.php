@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'DAILY COLLECTION REPORT')
 @section('content')
+@section('title', 'DCR')
 
     <style>
         .dataTable-info{

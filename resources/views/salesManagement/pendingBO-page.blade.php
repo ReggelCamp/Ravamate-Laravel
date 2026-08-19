@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('headerTitle', 'Hold Bad Orders')
 @section('content')
+@section('title', 'PENDING BO')
 
     <head>
         <style>
