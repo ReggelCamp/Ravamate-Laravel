@@ -51,6 +51,9 @@ function determineFontColorForTableBG(backgroundColor){
     }
 }
 
+// window.getActive = getActive;
+// window.renderActive = renderActive;
+
 export default function getActive() {
     Api.get({
         url: "/customize_theme/getActive",

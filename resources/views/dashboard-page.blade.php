@@ -17,28 +17,34 @@
         .dashboard-datatable .dt-scroll-head th:last-child {
             border-top-right-radius: 1rem;
         }
+
+        .Carousel_Container{
+            display: none;
+        }
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10 overflow-auto">
 
         <div class="w-full h-full flex flex-col lg:flex-row">
-            {{-- Carousel Panel --}}
-            <div 
-                id="dashboardSidePanel"
-                class="order-last DarkMode lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center lg:sticky lg:top-0 lg:self-start">
+            {{-- Left Side --}}
+            <div id="dashboardSidePanel" class="lg:w-[400px] border">
 
-                {{-- Logo --}}
-                <div class="flex w-full justify-center items-center">
-                    <div
-                        class="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] flex items-center justify-center pt-[30px] lg:pt-[80px]">
-                        <img src="}" class="object-cover themeLogo" />
-                        {{-- <img src="/${item.logo[0]?.url}" class="object-cover themeLogo" /> --}}
+                
+
+                <div class="Carousel_Container order-last DarkMode lg:order-first flex flex-col w-full lg:w-[400px] h-auto py-8 sm:py-0 sm:h-screen justify-center gap-5 lg:gap-20 items-center lg:sticky lg:top-0 lg:self-start">
+                    {{-- Logo --}}
+                    <div class="flex w-full justify-center items-center">
+                        <div
+                            class="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] flex items-center justify-center pt-[30px] lg:pt-[80px]">
+                            <img src="}" class="object-cover themeLogo" />
+                            {{-- <img src="/${item.logo[0]?.url}" class="object-cover themeLogo" /> --}}
+                        </div>
                     </div>
-                </div>
 
-                {{-- Carousel --}}
-                <div class="w-full max-w-[500px] lg:max-w-[2000px] mx-auto">
-                    <div class="owl-carousel" id="carouselContainer"></div>
+                    {{-- Carousel --}}
+                    <div class="w-full max-w-[500px] lg:max-w-[2000px] mx-auto">
+                        <div class="owl-carousel" id="carouselContainer"></div>
+                    </div>
                 </div>
 
             </div>
@@ -181,7 +187,7 @@
 
 
                     {{-- DataTable --}}
-                    <div id="dashboardDataTable" class="dashboard-datatable pt-2 h-[100px] rounded-2xl">
+                    <div id="dashboardDataTable" class="dashboard-datatable h-[100px] rounded-2xl">
                         <x-datatable />
                     </div>
 
@@ -193,4 +199,6 @@
     </div>
 @endsection
 
-<script type="module" src="/app/module/dashboard.js"></script>
+@push('scripts')
+    <script type="module" src="/app/module/dashboard.js"></script>
+@endpush

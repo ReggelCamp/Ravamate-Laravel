@@ -25,7 +25,7 @@
 
        
     {{-- Status summary --}}
-    <aside class="absolute left-3 bottom-3 z-10 w-fit px-10 pt-5 overflow-hidden rounded-lg bg-[#071438]/90 text-white shadow-xl">
+    <aside class="absolute left-3 bottom-3 z-10 w-fit px-5 pt-5 overflow-hidden rounded-lg bg-[#071438]/90 text-white shadow-xl">
         <div class="bg-[#020b2c] px-4 py-3 text-center text-[13px] font-bold">MAP STATUS</div>
         <dl class="space-y-2 px-4 py-4 text-[12px]">
             <div class="flex justify-between gap-3"><dt class="font-semibold">Range Date</dt><dd id="mapRangeDate">—</dd></div>

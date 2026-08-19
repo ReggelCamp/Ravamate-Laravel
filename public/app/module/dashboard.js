@@ -1,32 +1,39 @@
-import ComponentHelper from "../helper/ComponentHelper.js"
+import ComponentHelper from "../helper/ComponentHelper.js";
 
 const OperationItems = [
     {
-        title : "All",
-        data : "all_type"
+        title: "All",
+        data: "all_type",
     },
     {
-        title : "Van Sales",
-        data : "van_sales"
+        title: "Van Sales",
+        data: "van_sales",
     },
     {
-        title : "Booking",
-        data : "booking"
+        title: "Booking",
+        data: "booking",
     },
 ];
 
-// data table
-$(document).ready(function () {
-    $("#dashboardDataTable").DataTable({
-        searching: false,
-        ordering: false,
-        lengthChange: false,
-        scrollY: "100px",
-        scrollCollapse: true,
+// The dashboard table is rendered by x-datatable as <table id="salesmanTable">
+// and initialized by salesman.js via TableLoader (loaded globally in layout/app.blade.php).
+// We attach the row-click handler to #salesmanTable, not the wrapper #dashboardDataTable div.
 
-        searchInput: "#DcrSearch"
+$(document)
+    .off("click.dashboardRow", "#salesmanTable tbody tr")
+    .on("click.dashboardRow", "#salesmanTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#salesmanTable")) return;
+
+        const dashboardTable = $("#salesmanTable").DataTable();
+        const rowData = dashboardTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        showRowDetails(rowData);
     });
-});
 
 // Date BTN
 $(document).ready(function () {
@@ -40,7 +47,7 @@ $(document).ready(function () {
         `);
     }
 
-    updateClock();               // run immediately so there's no 1s blank delay
+    updateClock(); // run immediately so there's no 1s blank delay
     setInterval(updateClock, 1000); // then run every 1000ms (1 second)
 });
 
@@ -66,5 +73,38 @@ $("#ExpandBtn").click(function () {
 
 ComponentHelper.dropdown().LoadDropdownItems({
     id: "#OperationTypeItems",
-    items: OperationItems
+    items: OperationItems,
 });
+
+function showRowDetails(rowData) {
+
+    console.log("Received row:", rowData);
+
+    $("#dashboardSidePanel").html(`
+        <div class="w-full h-full flex flex-col items-center justify-center p-5">
+
+            <button
+                id="backToDashboard"
+                class="px-4 py-2 rounded-full bg-gray-200 mb-5">
+                ← Back
+            </button>
+
+            <h2 class="text-xl font-bold">
+                ${rowData.salesman_name}
+            </h2>
+
+            <p class="mt-2">
+                O.R: ${rowData.or_no}
+            </p>
+
+            <p>
+                Customer: ${rowData.customer}
+            </p>
+
+            <p>
+                Amount: ₱${rowData.amount}
+            </p>
+
+        </div>
+    `);
+}

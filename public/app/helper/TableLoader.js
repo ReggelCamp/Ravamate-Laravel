@@ -46,7 +46,7 @@ export default class TableLoader {
 
         TableLoader.bindSearch(searchSelector, table);
 
-        TableLoader.getTableId(id,table);
+        TableLoader.getTableId(id, table, options.onRowClick);
 
         return table;
     }
@@ -59,14 +59,18 @@ export default class TableLoader {
             });
     }
 
-    static getTableId(TableId, table) {
+    static getTableId(TableId, table, onRowClick) {
         $(document)
             .off("click.tableRow", `${TableId} tbody tr`)
             .on("click.tableRow", `${TableId} tbody tr`, function () {
                 const row_data = table.row(this).data();
                 if (!row_data) return;
 
-                console.log(row_data); // <-- replace with actual logic
+                if (typeof onRowClick === "function") {
+                    onRowClick(row_data, this);
+                } else {
+                    console.log(row_data);
+                }
             });
     }
 

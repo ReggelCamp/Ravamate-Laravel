@@ -45,7 +45,7 @@
 
 
             <!-- CARDS WRAPPER -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-15 py-6 SfaContent">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-15 py-6 SfaContent mb-10">
 
             </div>
 
