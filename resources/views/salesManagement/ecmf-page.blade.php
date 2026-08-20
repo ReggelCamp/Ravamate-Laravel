@@ -14,9 +14,9 @@
             white-space: nowrap;
         }
 
-          #datepicker {
-           color: black;
-       }
+        #datepicker {
+            color: black;
+        }
     </style>
 
     <div class="flex w-full h-full pb-20 pt-5 px-3 ">
@@ -38,7 +38,8 @@
                                     </div>
                                     <div
                                         class="flex rounded-xl sheenFilterBtn  px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center border justify-end">
-                                        {{-- <i class="items-center justify-center w-5 h-5 flex font-medium" data-lucide="calendar-days"></i> --}}
+                                        {{-- <i class="items-center justify-center w-5 h-5 flex font-medium"
+                                            data-lucide="calendar-days"></i> --}}
                                         <x-datepicker opens="right" class="sheenFilterBtn text-[12px] font-medium" />
                                     </div>
                                     <div>
@@ -96,6 +97,230 @@
                 </div>
             </div>
         </div>
+    </dialog>
+
+    <dialog id="EcmfModal" class="modal">
+        <div class="modal-box max-w-2xl p-0 overflow-hidden">
+
+            <!-- Header -->
+            <div class="relative px-6 pt-5 pb-4 border-b">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-square absolute right-4 top-4 border-2 border-black">✕</button>
+                </form>
+
+                <div class="flex items-center gap-3">
+                    <h3 class="text-xl font-bold text-gray-900">CMF Details</h3>
+                    <span id="ecmfModal_StatusBadge"
+                        class="badge bg-green-100 text-green-700 font-bold border-none px-3 py-3">
+                        APPROVED
+                    </span>
+                </div>
+
+                <p class="text-[13px] text-gray-700 mt-1">
+                    <span class="font-semibold">ID:</span>
+                    <span id="ecmfModal_Id" class="font-bold">CD0004920260803153654FPM</span>
+                    <span class="mx-1">|</span>
+                    <span class="font-semibold">Requested on:</span>
+                    <span id="ecmfModal_RequestedOn" class="font-bold">2026-08-03 15:36:54.947</span>
+                </p>
+            </div>
+
+            <!-- Scrollable body -->
+            <div class="max-h-[70vh] overflow-y-auto px-6 py-5">
+
+                <!-- General Information -->
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-circle-user text-blue-600 text-lg"></i>
+                    <h4 class="font-bold text-gray-900 tracking-wide text-[15px]">GENERAL INFORMATION</h4>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                    <label class="form-control col-span-2 flex flex-col">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SOLD TO NAME</span>
+                        <input type="text" id="ecmfModal_SoldToName" value="FJ STORE"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER CODE</span>
+                        <input type="text" id="ecmfModal_CustomerCode" value="---" readonly
+                            class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SALES PERSON</span>
+                        <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" readonly
+                            class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MAJOR TRADE CHANNEL</span>
+                        <select id="ecmfModal_MajorTradeChannel"
+                            class="select select-bordered text-[15px] font-medium text-gray-400">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">TRADE CHANNEL</span>
+                        <select id="ecmfModal_TradeChannel"
+                            class="select select-bordered text-[15px] font-medium text-gray-400">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER GROUP</span>
+                        <select id="ecmfModal_CustomerGroup"
+                            class="select select-bordered text-[15px] font-medium text-gray-400">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="divider my-0"></div>
+
+                <!-- Contact Details -->
+                <div class="flex items-center gap-2 mt-5 mb-4">
+                    <i class="fa-solid fa-address-card text-blue-600 text-lg"></i>
+                    <h4 class="font-bold text-gray-900 tracking-wide text-[15px]">CONTACT DETAILS</h4>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                    <label class="form-control col-span-2 flex flex-col">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CONTACT PERSON</span>
+                        <input type="text" id="ecmfModal_ContactPerson" value="JEENA C. FRIAS"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MOBILE NUMBER</span>
+                        <input type="text" id="ecmfModal_MobileNumber" value="09462750792"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">EMAIL ADDRESS</span>
+                        <input type="text" id="ecmfModal_EmailAddress" value=""
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+                </div>
+
+                <div class="divider my-0"></div>
+
+                <!-- Location & Address -->
+                <div class="flex items-center gap-2 mt-5 mb-4">
+                    <i class="fa-solid fa-location-dot text-blue-600 text-lg"></i>
+                    <h4 class="font-bold text-gray-900 tracking-wide text-[15px]">LOCATION &amp; ADDRESS</h4>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                    <label class="form-control col-span-2">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">
+                            CUSTOMER ADDRESS (ENTERED BY SALESMAN &ndash; REFERENCE)
+                        </span>
+                        <input type="text" id="ecmfModal_CustomerAddressRef" readonly
+                            class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">PROVINCE</span>
+                        <select id="ecmfModal_Province" class="select select-bordered text-[15px] font-semibold">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MUNICIPALITY</span>
+                        <select id="ecmfModal_Municipality"
+                            class="select select-bordered text-[15px] font-medium text-gray-400">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">BARANGAY</span>
+                        <select id="ecmfModal_Barangay"
+                            class="select select-bordered text-[15px] font-medium text-gray-400">
+                            <option>Choose here</option>
+                        </select>
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">POSTAL CODE</span>
+                        <input type="text" id="ecmfModal_PostalCode"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control col-span-2 flex flex-col">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER ADDRESS</span>
+                        <input type="text" id="ecmfModal_OtherAddress"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER INFO (SHIP TO)</span>
+                        <input type="text" id="ecmfModal_OtherInfoShip"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER INFO (SOLD TO)</span>
+                        <input type="text" id="ecmfModal_OtherInfoSold"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+                </div>
+
+                <div class="divider my-0"></div>
+
+                <!-- Business Details -->
+                <div class="flex items-center gap-2 mt-5 mb-4">
+                    <i class="fa-solid fa-address-card text-blue-600 text-lg"></i>
+                    <h4 class="font-bold text-gray-900 tracking-wide text-[15px]">BUSINESS DETAILS</h4>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">GEOAREA</span>
+                        <input type="text" id="ecmfModal_GeoArea" class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CHAIN</span>
+                        <input type="text" id="ecmfModal_Chain" class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">COVERAGE</span>
+                        <input type="text" id="ecmfModal_CoverageDay"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">FREQUENCY</span>
+                        <input type="number" id="ecmfModal_Frequency"
+                            class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                    <label class="form-control">
+                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">TIN</span>
+                        <input type="number" id="ecmfModal_Tin" class="input input-bordered text-[15px] font-semibold" />
+                    </label>
+
+                </div>
+
+                <div class="pt-5">
+                    <button class="bg-blue-500 w-fit px-3 py-2 rounded-lg">
+                        print
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
     </dialog>
 
 @endsection

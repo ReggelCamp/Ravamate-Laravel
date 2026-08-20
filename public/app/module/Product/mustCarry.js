@@ -30,24 +30,24 @@ import "../../helper/exportDataTable.js";
 const MustCarryColumns = [
     {
         title: "Customer Type",
-        data: "customer_type"
+        data: "customer_type",
     },
     {
         title: "Item Number",
-        data: "item_number"
+        data: "item_number",
     },
     {
         title: "Description",
-        data: "description"
+        data: "description",
     },
     {
         title: "IsActive",
-        data: "is_active"
+        data: "is_active",
     },
     {
         title: "Date Created",
-        data: "date_created"
-    }
+        data: "date_created",
+    },
 ];
 
 const sampleData = [
@@ -55,37 +55,37 @@ const sampleData = [
         customer_type: "Supermarket",
         item_number: "MC-1001",
         description: "Coca-Cola 1.5L",
-        is_active: 'Yes',
-        date_created: "2026-08-07"
+        is_active: "Yes",
+        date_created: "2026-08-07",
     },
     {
         customer_type: "Convenience Store",
         item_number: "MC-1002",
         description: "Lay's Classic 150g",
-        is_active: 'Yes',
-        date_created: "2026-08-06"
+        is_active: "Yes",
+        date_created: "2026-08-06",
     },
     {
         customer_type: "Drugstore",
         item_number: "MC-1003",
         description: "Colgate Toothpaste 150g",
-        is_active: 'No',
-        date_created: "2026-08-05"
+        is_active: "No",
+        date_created: "2026-08-05",
     },
     {
         customer_type: "Wholesale",
         item_number: "MC-1004",
         description: "Nescafé Classic 200g",
-        is_active: 'Yes',
-        date_created: "2026-08-04"
+        is_active: "Yes",
+        date_created: "2026-08-04",
     },
     {
         customer_type: "Hypermarket",
         item_number: "MC-1005",
         description: "Fresh Milk 1L",
-        is_active: 'Yes',
-        date_created: "2026-08-03"
-    }
+        is_active: "Yes",
+        date_created: "2026-08-03",
+    },
 ];
 
 TableLoader.tableData(
@@ -93,8 +93,8 @@ TableLoader.tableData(
     sampleData,
     MustCarryColumns,
     {
-        scrollY: "500px"
-    }
+        scrollY: "500px",
+    },
 );
 
 $(document).ready(function () {
@@ -120,11 +120,14 @@ $(document)
 function DisplayMustCarryInfo(rowData) {
     if (!rowData) return;
 
-    $('#mustCarryModalBody [data-field="customer_type"]').text(rowData.customer_type ?? "—");
+    $('#mustCarryModalBody [data-field="customer_type"]').text(
+        rowData.customer_type ?? "—",
+    );
 
-    const itemLabel = rowData.item_number && rowData.item_description
-        ? `${rowData.item_number} - ${rowData.item_description}`
-        : (rowData.must_carry_item ?? "—");
+    const itemLabel =
+        rowData.item_number && rowData.item_description
+            ? `${rowData.item_number} - ${rowData.item_description}`
+            : (rowData.must_carry_item ?? "—");
 
     $('#mustCarryModalBody [data-field="must_carry_item"]').text(itemLabel);
 

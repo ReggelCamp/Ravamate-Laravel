@@ -631,3 +631,77 @@ ComponentHelper.select().loadByApi({
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.EcmfTableRow", "#EcmfTable tbody tr")
+    .on("click.EcmfTableRow", "#EcmfTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#EcmfTable")) return;
+
+        const EcmfTable = $("#EcmfTable").DataTable();
+        const rowData = EcmfTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayEcmfInfo(rowData);
+    });
+
+function DisplayEcmfInfo(rowData) {
+    // Header
+    $("#ecmfModal_Id").text(rowData.customer_code ?? "---");
+    $("#ecmfModal_RequestedOn").text(rowData.request_date ?? "---");
+    setEcmfStatusBadge(rowData.status);
+
+    // General Information
+    $("#ecmfModal_SoldToName").val(rowData.sold_to_name ?? "");
+    $("#ecmfModal_CustomerCode").val(rowData.customer_code ?? "---");
+    $("#ecmfModal_SalesPerson").val(rowData.salesperson ?? "");
+    $("#ecmfModal_GeoArea").val(rowData.geo_area ?? "");
+    $("#ecmfModal_Chain").val(rowData.chain ?? "");
+    $("#ecmfModal_CustomerClass").val(rowData.customer_class ?? "");
+    $("#ecmfModal_Frequency").val(rowData.frequency ?? "");
+    $("#ecmfModal_CoverageDay").val(rowData.coverage_day ?? "");
+    $("#ecmfModal_ServiceType").val(rowData.service_type ?? "");
+
+    // Contact Details
+    $("#ecmfModal_ContactPerson").val(rowData.contact_person ?? "");
+    $("#ecmfModal_ContactNumber").val(rowData.contact_number ?? "");
+    $("#ecmfModal_Email").val(rowData.email ?? "");
+
+    // Location & Address
+    $("#ecmfModal_Municipality").val(rowData.municipality ?? "");
+    $("#ecmfModal_Barangay").val(rowData.barangay ?? "");
+    $("#ecmfModal_PostalCode").val(rowData.postal_code ?? "");
+    $("#ecmfModal_Tin").val(rowData.tin ?? "");
+    $("#ecmfModal_Longitude").val(rowData.longitude ?? "");
+    $("#ecmfModal_Latitude").val(rowData.latitude ?? "");
+    $("#ecmfModal_OtherInfoSold").val(rowData.other_info_sold ?? "");
+    $("#ecmfModal_OtherInfoShip").val(rowData.other_info_ship ?? "");
+
+    $("#EcmfModal")[0].showModal();
+}
+
+function setEcmfStatusBadge(status) {
+    const $badge = $("#ecmfModal_StatusBadge");
+    $badge.text((status ?? "").toUpperCase());
+
+    // reset classes first
+    $badge.removeClass("bg-green-100 text-green-700 bg-yellow-100 text-yellow-700 bg-red-100 text-red-700");
+
+    switch ((status ?? "").toLowerCase()) {
+        case "approved":
+            $badge.addClass("bg-green-100 text-green-700");
+            break;
+        case "pending":
+            $badge.addClass("bg-yellow-100 text-yellow-700");
+            break;
+        case "rejected":
+        case "denied":
+            $badge.addClass("bg-red-100 text-red-700");
+            break;
+        default:
+            $badge.addClass("bg-gray-100 text-gray-700");
+    }
+}

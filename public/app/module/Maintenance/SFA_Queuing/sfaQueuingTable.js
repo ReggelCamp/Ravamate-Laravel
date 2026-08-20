@@ -991,3 +991,19 @@ $(".container_trigger").first().click();
 $(document).ready(function () {
     DatePicker.init();
 });
+
+// $(document)
+//     .off("click.SOPendingLogsTableRow", "#SOPendingLogsTable tbody tr")
+//     .on("click.SOPendingLogsTableRow", "#SOPendingLogsTable tbody tr", function () {
+//         // salesman.js loads the data asynchronously; ensure DataTable is ready
+//         if (!$.fn.DataTable.isDataTable("#SOPendingLogsTable")) return;
+
+//         const SOPendingLogsTable = $("#SOPendingLogsTable").DataTable();
+//         const rowData = SOPendingLogsTable.row(this).data();
+
+//         if (!rowData) return;
+
+//         console.log("Clicked row:", rowData);
+
+//         DisplaySOInfo(rowData);
+//     });
