@@ -621,3 +621,24 @@ ComponentHelper.dropdown().LoadDropdownItems({
     id: "#salesReports",
     items: salesReportsItems
 });
+
+$(document)
+    .off("click.SaleReportRow", "#salesReportTable tbody tr")
+    .on("click.SalesReportRow", "#salesReportTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#salesReportTable")) return;
+
+        const SalesReportTable = $("#salesReportTable").DataTable();
+        const rowData = SalesReportTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayReport(rowData);
+    });
+
+function DisplayReport(rowData) {
+    // Open modal
+    $("#reportModal")[0].showModal();
+}

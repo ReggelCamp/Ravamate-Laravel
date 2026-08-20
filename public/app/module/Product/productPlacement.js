@@ -115,3 +115,62 @@ TableLoader.tableData(
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.productPlacementTableRow", "#productPlacementTable tbody tr")
+    .on("click.productPlacementTableRow", "#productPlacementTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#productPlacementTable")) return;
+
+        const productPlacementTable = $("#productPlacementTable").DataTable();
+        const rowData = productPlacementTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayPlacementInfo(rowData);
+    });
+
+    function DisplayPlacementInfo(rowData) {
+    if (!rowData) return;
+
+    $("#placementType").val(rowData.type ?? "");
+    $("#placementCustomerClass").val(rowData.customer_class ?? "");
+    $("#placementValue").val(rowData.placement ?? "");
+
+    // Store the current record for update/delete actions
+    $("#PlacementModal").data("record", rowData);
+
+    // Select Product — now driven by item_description
+    if ($("#placementProduct")[0]?.tomselect) {
+        $("#placementProduct")[0].tomselect.setValue(rowData.item_description);
+    } else {
+        $("#placementProduct").val(rowData.item_description ?? "");
+    }
+
+    document.getElementById("PlacementModal").showModal();
+}
+
+$(document).on("click", "#deletePlacementBtn", function () {
+    const record = $("#PlacementModal").data("record");
+    if (!record) return;
+    if (!confirm(`Delete placement for ${record.item_description}?`)) return;
+
+    // Api.delete({ url: `/placements/${record.item_number}`, ... })
+    console.log("Deleting placement:", record);
+});
+
+$(document).on("click", "#updatePlacementBtn", function () {
+    const record = $("#PlacementModal").data("record");
+    const payload = {
+        item_number: record?.item_number,
+        type: $("#placementType").val(),
+        customer_class: $("#placementCustomerClass").val(),
+        item_description: $("#placementProduct").val(),
+        placement: $("#placementValue").val(),
+    };
+
+    // Api.put({ url: `/placements/${record.item_number}`, data: payload, ... })
+    console.log("Updating placement:", payload);
+});

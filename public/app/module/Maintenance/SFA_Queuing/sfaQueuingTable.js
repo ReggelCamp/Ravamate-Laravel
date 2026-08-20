@@ -847,6 +847,7 @@ const autoLogsSampleData = [
 // Sample Data
 
 //sotofdis
+
 TableLoader.tableData(
     "#SOPendingLogs",
     soToFdisSampleData,

@@ -518,9 +518,41 @@ TableLoader.tableData(
         scrollY: "500px"
     }
 
-
 );
 
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.customerMaintenanceRow", "#customerMaintenance tbody tr")
+    .on("click.customerMaintenanceRow", "#customerMaintenance tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#customerMaintenance")) return;
+
+        const customerMaintenance = $("#customerMaintenance").DataTable();
+        const rowData = customerMaintenance.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayCustomerInfo(rowData);
+    });
+
+function DisplayCustomerInfo(rowData) {
+    const fields = [
+        "salesman_name", "customer_name", "contact", "landline",
+        "contact_person", "address", "customer_type", "mcp_day",
+        "freq_cat", "mcp_schedule", "price_code"
+    ];
+
+    fields.forEach((field) => {
+        const value = rowData[field];
+        $(`#customerModalBody [data-field="${field}"]`).text(
+            value !== undefined && value !== null && value !== "" ? value : "—"
+        );
+    });
+
+    $("#customerModal")[0].showModal();
+}

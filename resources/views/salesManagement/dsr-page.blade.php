@@ -67,7 +67,7 @@
                                 <x-slot:dropdownName>
                                     <span
                                         id="DsrDropdown"
-                                        class="flex items-center sheenFilterBtn h-[30px] px-5 whitespace-nowrap border rounded-2xl gap-2 text-[12px] font-medium">
+                                        class="flex items-center sheenFilterBtn h-[30px] px-5 whitespace-nowrap border rounded-2xl gap-2 text-[13px] font-medium">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Filter by Salesman
                                     </span>
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="flex gap-5">
-                        <button id="generateDsrReport" class="flex w-full px-5 h-[30px] generate_btn border sheenFilterBtn rounded-2xl">
+                        <button id="generateDsrReport" class="flex w-full px-5 h-[30px] text-[13px] generate_btn border sheenFilterBtn rounded-2xl">
                             Generate
                         </button>
                         <x-exportDataTable 
@@ -91,7 +91,7 @@
                             report="DSR"
                             :hideCsv="true"
                             :hideCopy="true"
-                            class="h-[28px] text-[12px] font-medium sheenFilterBtn"
+                            class="h-[30px] text-[13px] font-medium sheenFilterBtn"
                         />
                     </div>
 

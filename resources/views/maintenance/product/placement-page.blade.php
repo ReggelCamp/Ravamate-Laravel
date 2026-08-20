@@ -109,6 +109,77 @@
         </div>
     </dialog>
 
+<dialog id="PlacementModal" class="modal">
+    <div class="modal-box max-w-2xl p-0 rounded-xl overflow-hidden">
+
+        {{-- Header --}}
+        <div class="flex items-center justify-between px-6 py-5 border-b">
+            <h3 class="text-xl font-bold">Placement Details</h3>
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </form>
+        </div>
+
+        {{-- Form rows --}}
+        <div class="flex flex-col text-sm" id="placementModalBody">
+
+            <div class="flex items-center px-6 py-3 border-b gap-5">
+                <label for="placementType" class="font-bold w-40 shrink-0">Type</label>
+                <input type="text" id="placementType" name="type"
+                       class="input input-bordered w-full rounded-md" />
+            </div>
+
+            <div class="flex items-center px-6 py-3 border-b gap-5">
+                <label for="placementCustomerClass" class="font-bold w-40 shrink-0">Customer Class</label>
+                <input type="text" id="placementCustomerClass" name="customer_class"
+                       class="input input-bordered w-full rounded-md" />
+            </div>
+
+            <div class="flex items-center px-6 py-3 border-b gap-5">
+                <label for="placementProduct" class="font-bold w-40 shrink-0">Select Product</label>
+                <div class="relative w-full">
+                    <select id="placementProduct" name="product_id" class="w-full">
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex items-center px-6 py-3 border-b gap-5">
+                <label for="placementValue" class="font-bold w-40 shrink-0">Placement</label>
+                <input type="text" id="placementValue" name="placement"
+                       class="input input-bordered w-full rounded-md" />
+            </div>
+
+        </div>
+
+        {{-- Footer --}}
+        <div class="flex justify-between items-center px-6 py-4">
+            <button type="button" id="deletePlacementBtn"
+                    class="btn bg-red-600 hover:bg-red-700 text-white border-none rounded-md px-6">
+                Delete
+            </button>
+
+            <div class="flex gap-2">
+                <form method="dialog">
+                    <button class="btn bg-gray-500 hover:bg-gray-600 text-white border-none rounded-md px-6">
+                        Close
+                    </button>
+                </form>
+                <button type="button" id="updatePlacementBtn"
+                        class="btn bg-blue-600 hover:bg-blue-700 text-white border-none rounded-md px-6">
+                    Update
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
 @endsection
 
 <script type="module" src="/app/module/Product/productPlacement.js"></script>

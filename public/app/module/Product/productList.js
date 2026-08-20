@@ -104,3 +104,55 @@ TableLoader.tableData(
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.producListTableRow", "#producListTable tbody tr")
+    .on("click.producListTableRow", "#producListTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#producListTable")) return;
+
+        const producListTable = $("#producListTable").DataTable();
+        const rowData = producListTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayProductInfo(rowData);
+    });
+
+function DisplayProductInfo(rowData) {
+    if (!rowData) return;
+
+    // stock_code & description map directly
+    $('#ProductModal [data-field="stock_code"]').text(rowData.stock_code ?? "—");
+    $('#productModalBody [data-field="description"]').text(rowData.description ?? "—");
+
+    // image is a raw <img> HTML string in your data — pull the src out of it
+    const imageUrl = extractImageSrc(rowData.image);
+    $("#productModalImage").attr("src", imageUrl ?? "").css("display", imageUrl ? "" : "none");
+
+    // status is also raw HTML — pull the visible text out
+    const statusText = extractStatusText(rowData.status);
+    const isAvailable = statusText.toUpperCase() === "ACTIVE" || statusText.toUpperCase() === "AVAILABLE";
+
+    $('#productModalBody [data-status-label]')
+        .text(statusText.toUpperCase() || "—")
+        .removeClass("text-green-500 text-red-500")
+        .addClass(isAvailable ? "text-green-500" : "text-red-500");
+
+    document.getElementById("ProductModal").showModal();
+}
+
+function extractImageSrc(imageHtml) {
+    if (!imageHtml) return null;
+    const match = imageHtml.match(/src=["']([^"']+)["']/);
+    return match ? match[1] : null;
+}
+
+function extractStatusText(statusHtml) {
+    if (!statusHtml) return "";
+    const temp = document.createElement("div");
+    temp.innerHTML = statusHtml;
+    return temp.textContent.trim();
+}

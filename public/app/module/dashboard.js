@@ -77,34 +77,34 @@ ComponentHelper.dropdown().LoadDropdownItems({
 });
 
 function showRowDetails(rowData) {
+    $("#Salesman_Container").removeClass("hidden");
+    $("#Carousel_Container").addClass("hidden");
 
-    console.log("Received row:", rowData);
-
-    $("#dashboardSidePanel").html(`
-        <div class="w-full h-full flex flex-col items-center justify-center p-5">
-
-            <button
-                id="backToDashboard"
-                class="px-4 py-2 rounded-full bg-gray-200 mb-5">
-                ← Back
-            </button>
-
-            <h2 class="text-xl font-bold">
-                ${rowData.salesman_name}
-            </h2>
-
-            <p class="mt-2">
-                O.R: ${rowData.or_no}
-            </p>
-
-            <p>
-                Customer: ${rowData.customer}
-            </p>
-
-            <p>
-                Amount: ₱${rowData.amount}
-            </p>
-
-        </div>
-    `);
 }
+
+function DisplayCarousel(){
+    $("#Carousel_Container").removeClass("hidden");
+    $("#Salesman_Container").addClass("hidden");
+}
+
+$(document).on("click","#Display_Carousel", function(){
+    DisplayCarousel();
+    console.log("clicked");
+});
+
+$(document).on("click", "#Current_Day_Btn", function () {
+
+    $("#Flip_Container").addClass("flip_div");
+
+    $("#Current_Day_Btn").addClass("hidden");
+    $("#Mtd_Overview_Btn").removeClass("hidden");
+});
+
+
+$(document).on("click", "#Mtd_Overview_Btn", function () {
+
+    $("#Flip_Container").removeClass("flip_div");
+
+    $("#Mtd_Overview_Btn").addClass("hidden");
+    $("#Current_Day_Btn").removeClass("hidden");
+});

@@ -130,7 +130,7 @@
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar tableId="#DcrDataTable" class="w-full h-[28px] font-medium customSearch" id="DcrSearch" />
+                            <x-searchbar tableId="#DcrDataTable" class="w-full h-[30px] font-medium customSearch" id="DcrSearch" />
                         </div>
                     </div>
                 </div>

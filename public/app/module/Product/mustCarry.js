@@ -100,3 +100,44 @@ TableLoader.tableData(
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.mustCarryTableRow", "#mustCarryTable tbody tr")
+    .on("click.mustCarryTableRow", "#mustCarryTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#mustCarryTable")) return;
+
+        const mustCarryTable = $("#mustCarryTable").DataTable();
+        const rowData = mustCarryTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayMustCarryInfo(rowData);
+    });
+
+function DisplayMustCarryInfo(rowData) {
+    if (!rowData) return;
+
+    $('#mustCarryModalBody [data-field="customer_type"]').text(rowData.customer_type ?? "—");
+
+    const itemLabel = rowData.item_number && rowData.item_description
+        ? `${rowData.item_number} - ${rowData.item_description}`
+        : (rowData.must_carry_item ?? "—");
+
+    $('#mustCarryModalBody [data-field="must_carry_item"]').text(itemLabel);
+
+    $("#MustCarryModal").data("record", rowData);
+
+    document.getElementById("MustCarryModal").showModal();
+}
+
+$(document).on("click", "#deleteMustCarryBtn", function () {
+    const record = $("#MustCarryModal").data("record");
+    if (!record) return;
+    if (!confirm(`Delete must carry item for ${record.customer_type}?`)) return;
+
+    // Api.delete({ url: `/mustCarry/${record.id}`, ... })
+    console.log("Deleting must carry item:", record);
+});
