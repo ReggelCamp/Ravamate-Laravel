@@ -266,3 +266,16 @@ Route::get('/dynamic-route-list', function () {
 
 // Digital Map
 Route::get('/getGoogleMapsData', [Digital_mapController::class, 'getGoogleMapsData']);
+
+//Other Sales Report//
+//Daily Summary Sales Report
+Route::get('/dailysalessum', function () {
+    return view('salesManagement.OtherSalesReports.DailySalesSummary');
+})->name('dailysalessum');
+Route::get('/rangemon', function () {
+    return view('salesManagement.OtherSalesReports.rangeMonitoring');
+})->name('rangemon');
+Route::get('/geocallrate', function () {
+    return view('salesManagement.OtherSalesReports.geocallRate');
+})->name('geocallrate');
+

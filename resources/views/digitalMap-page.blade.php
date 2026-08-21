@@ -61,7 +61,7 @@
     </div>
 
     {{-- Map controls --}}
-    <aside class="absolute right-6 top-1/2 z-10 hidden w-fit px-10 pt-5  -translate-y-1/2 rounded-2xl bg-white/70 p-5 text-[14px] text-slate-600 shadow-2xl lg:block">
+    <aside class="absolute right-6 top-1/2 z-10 hidden w-fit p-5  -translate-y-1/2 rounded-2xl bg-white/70 text-[14px] text-slate-600 shadow-2xl lg:block">
         <h2 class="border-b pb-2 text-center text-2xl font-bold text-[#06143b]">Map Controls</h2>
         <div class="mt-5 space-y-3">
             <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm" disabled><span class="text-slate-400">Uncovered Accounts</span></label>

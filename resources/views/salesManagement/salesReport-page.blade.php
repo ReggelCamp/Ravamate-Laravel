@@ -407,6 +407,25 @@
         </form>
     </dialog>
 
+    <dialog id="sales_summary" class="modal">
+    <div class="modal-box p-0">
+        <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 p-5">✕</button>
+        </form>
+        <h3 class="text-lg font-bold border-b p-5">DAILY SALES SUMMARY(DSS)</h3>
+        <div class="w-full p-5 flex gap-20">
+            <span >Date:</span>
+            <x-datepicker label="Pick Date" singleDate="true"/>
+        </div>
+        <div class="flex w-full gap-5 p-5 border-t justify-end">
+            <a href="/dailysalessum" class="btn btn-primary">
+                View
+            </a>
+            <button class=" btn bg-gray-300 text-white">Close</button>
+        </div>
+    </div>
+    </dialog>
+
 @endsection
 
 <script type="module" src="/app/module/Sale_Management/salesReport.js"></script>

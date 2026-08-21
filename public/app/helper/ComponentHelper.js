@@ -85,24 +85,44 @@ export default class ComponentHelper {
             },
             clear: () => {},
             loading: () => {},
-
+            
             LoadDropdownItems(config) {
                 console.log("fea", config);
+
                 let html = "";
 
                 $.each(config.items, function (index, item) {
-                    html += `
-                        <li>
-                            <a href="#"
-                                class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
-                                data-value="${item.data}">
-                                ${item.title}
-                            </a>
-                        </li>
-                    `;
-                });
-                
-                $(config.id).html(html);
+
+                    if (item.modal) {
+
+                        html += `
+                            <li>
+                                <a href="#"
+                                    class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
+                                    data-value="${item.data}"
+                                    data-modal="${item.modal}">
+                                    ${item.title}
+                                </a>
+                            </li>
+                        `;
+
+                    } else {
+
+                        html += `
+                            <li>
+                                <a href="${item.url}"
+                                    class="dropdown-item h-[30px] flex items-center whitespace-nowrap"
+                                    data-value="${item.data}">
+                                    ${item.title}
+                                </a>
+                            </li>
+                        `;
+
+                    }
+
+    });
+
+    $(config.id).html(html);
             },
         };
     }

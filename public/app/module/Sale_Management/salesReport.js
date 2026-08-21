@@ -569,6 +569,7 @@ const salesReportsItems = [
     {
         title: "Sales Summary",
         data: "sales_summary",
+        modal: "#sales_summary",
     },
     {
         title: "Range Summary",
@@ -577,10 +578,12 @@ const salesReportsItems = [
     {
         title: "Range Monitoring",
         data: "range_monitoring",
+        url: "/rangemon"
     },
     {
         title: "Geocall Rate",
         data: "geocall_rate",
+        url: "/geocallrate"
     },
     {
         title: "Strike Rate",
@@ -620,6 +623,15 @@ $(document).ready(function () {
 ComponentHelper.dropdown().LoadDropdownItems({
     id: "#salesReports",
     items: salesReportsItems
+});
+
+// Handle clicks on dropdown items that have a data-modal attribute
+$(document).on("click", "#salesReports li a[data-modal]", function (e) {
+    e.preventDefault();
+    const modalSelector = $(this).data("modal");
+    if (modalSelector) {
+        $(modalSelector)[0].showModal();
+    }
 });
 
 $(document)
