@@ -992,18 +992,95 @@ $(document).ready(function () {
     DatePicker.init();
 });
 
-// $(document)
-//     .off("click.SOPendingLogsTableRow", "#SOPendingLogsTable tbody tr")
-//     .on("click.SOPendingLogsTableRow", "#SOPendingLogsTable tbody tr", function () {
-//         // salesman.js loads the data asynchronously; ensure DataTable is ready
-//         if (!$.fn.DataTable.isDataTable("#SOPendingLogsTable")) return;
+// Maps each table's real ID (must match TableLoader.tableData's first arg) to a "type"
+// so one populate function can branch on it.
+const queueTables = [
+    { id: "SOPendingLogs",  type: "so" },
+    { id: "SOFailedLogs",   type: "so" },
+    { id: "SOSuccessLogs",  type: "so" },
 
-//         const SOPendingLogsTable = $("#SOPendingLogsTable").DataTable();
-//         const rowData = SOPendingLogsTable.row(this).data();
+    { id: "ReturnPendingLogs", type: "return" },
+    { id: "ReturnFailedLogs",  type: "return" },
+    { id: "ReturnSuccessLogs", type: "return" },
 
-//         if (!rowData) return;
+    { id: "PaymentPendingLogs", type: "payment" },
+    { id: "PaymentFailedLogs",  type: "payment" },
+    { id: "PaymentSuccessLogs", type: "payment" },
 
-//         console.log("Clicked row:", rowData);
+    { id: "AutoStockPendingLogs", type: "autostock" },
+    { id: "AutoStockFailedLogs",  type: "autostock" },
+    { id: "AutoStockSuccessLogs", type: "autostock" },
+];
 
-//         DisplaySOInfo(rowData);
-//     });
+queueTables.forEach(({ id, type }) => {
+    $(document)
+        .off(`click.${id}Row`, `#${id} tbody tr`)
+        .on(`click.${id}Row`, `#${id} tbody tr`, function () {
+            if (!$.fn.DataTable.isDataTable(`#${id}`)) return;
+
+            const rowData = $(`#${id}`).DataTable().row(this).data();
+            if (!rowData) return;
+
+            DisplayQueueInfo(type, rowData);
+            console.log("dadaa",id);
+        });
+});
+
+function DisplayQueueInfo(type, rowData) {
+    // Fields common-ish across types
+    $('#qmodal_status').text(rowData.api_status);
+
+    switch (type) {
+        case "so":
+            $('#qmodal_title').text('Sales Order to FDIS');
+            $('#qmodal_salesman').text(rowData.salesman_name);
+            $('#qmodal_ref').text(rowData.transactionId);
+            renderQueueTable('itemCodeBody', [rowData], r => `
+                <tr>
+                    <td class="text-center">${r.item_no}</td>
+                    <td class="text-center">${r.um}</td>
+                    <td class="text-center">${r.quantity}</td>
+                </tr>`);
+            break;
+
+        case "return":
+            $('#qmodal_title').text('Return to FDIS');
+            $('#qmodal_salesman').text(rowData.salesman_name);
+            $('#qmodal_ref').text(rowData.transactionId);
+            renderQueueTable('itemCodeBody', [rowData], r => `
+                <tr>
+                    <td class="text-center">${r.item_no}</td>
+                    <td class="text-center">${r.reason_code}</td>
+                    <td class="text-center">${r.quantity}</td>
+                </tr>`);
+            break;
+
+        case "payment":
+            $('#qmodal_title').text('Payment to FDIS');
+            $('#qmodal_ref').text(rowData.transactionId);
+            renderQueueTable('itemCodeBody', [rowData], r => `
+                <tr>
+                    <td class="text-center">${r.mode}</td>
+                    <td class="text-right">${r.transaction_amt}</td>
+                    <td class="text-center">${r.bank}</td>
+                </tr>`);
+            break;
+
+        case "autostock":
+            $('#qmodal_title').text('Auto Stock Transfer to FDIS');
+            $('#qmodal_ref').text(rowData.transactionId);
+            renderQueueTable('itemCodeBody', [rowData], r => `
+                <tr>
+                    <td class="text-center">${r.source}</td>
+                    <td class="text-center">${r.destination}</td>
+                    <td class="text-center">${r.quantity}</td>
+                </tr>`);
+            break;
+    }
+
+    document.getElementById('sfaQueueDetailModal').showModal();
+}
+
+function renderQueueTable(bodyId, rows, rowTemplate) {
+    $('#' + bodyId).html(rows.map(rowTemplate).join(''));
+}

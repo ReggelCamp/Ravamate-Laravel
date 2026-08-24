@@ -55,6 +55,24 @@
         #Flip_Container.flip_div #Mtd_Overview_Face {
             visibility: visible;
         }
+
+        #sfaQueuingModalTable_wrapper .dt-scroll-head {
+            background-color: transparent;
+        }
+
+        #sfaQueuingModalTable_wrapper .dt-scroll-head table thead th{
+            color: black !important;
+        }
+
+        #sfaQueuingModalTable_wrapper .dataTable-info{
+            font-size: 10px;
+        }
+
+        #sfaQueuingModalTable_wrapper .dt-scroll-body{
+            max-height: 500px;
+        }
+
+        
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10 overflow-auto">
@@ -173,45 +191,63 @@
                             </button>
                         </div>
 
-                        <div class="flex justify-between items-center">
-                            <div class="flex gap-1">
-                                <button
-                                    class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[10px] px-3">
-                                    &lt; Prev Store
-                                </button>
-                                <button
-                                    class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[10px] px-3">
-                                    Next Store &gt;
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-10 text-gray-600">
+                        <div class="flex items-center w-full gap-8 text-gray-600 text-[9px] whitespace-nowrap">
                             <span>
                                 <i class="fa-regular fa-clock mr-1"></i>
                                 {{ $store->time ?? '13:00:18' }}
                             </span>
-                            <span class="text-green-600">
+                            <span class="text-green-600 text-[9px]">
                                 <i class="fa-solid fa-bolt mr-1"></i>
                                 {{ $store->battery ?? '70' }}% battery usage
                             </span>
+                            
+                            <div class="flex justify-between items-center">
+                                <div class="flex gap-1 ">
+                                    <button
+                                        class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        &lt; Prev Store
+                                    </button>
+                                    <button
+                                        class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        Next Store &gt;
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     {{-- Sales row --}}
-                    <div class="bg-white rounded-2xl px-4 py-3 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center text-white">
-                                <i class="fa-solid fa-peso-sign text-sm"></i>
+
+                    <div class="w-full max-w-4xl mx-auto">
+                        <div tabindex="0"
+                            class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
+
+                            <!-- Collapse Title -->
+                            <div class="collapse-title flex items-center gap-4 p-4 min-h-[50px]">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                                    <i class="fa-solid fa-peso-sign text-sm"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-base">
+                                        ₱ {{ number_format($sales->amount ?? 252.50, 2) }}
+                                        <span class="font-normal text-sm text-gray-500">
+                                            ({{ $sales->sku_count ?? 1 }} SKU)
+                                        </span>
+                                    </span>
+                                    <span class="text-gray-400 text-xs">Sales</span>
+                                </div>
                             </div>
-                            <div class="flex flex-col leading-4">
-                                <span class="font-bold text-sm">₱ {{ number_format($sales->amount ?? 252.50, 2) }}
-                                    ({{ $sales->sku_count ?? 1 }} SKU)</span>
-                                <span class="text-gray-400 text-[11px]">Sales</span>
+
+                            <!-- Collapse Content -->
+                            <div class="collapse-content px-4">
+                                <div class="border-t border-gray-200 pt-3 h-fit">
+                                    <x-datatable id="sfaQueuingModalTable" class=""/>
+                                </div>
                             </div>
                         </div>
-                        <i class="fa-solid fa-chevron-down text-gray-400"></i>
                     </div>
+
 
                     <div class="flex w-full whitespace-nowrap ">
                         <button id="Current_Day_Btn"

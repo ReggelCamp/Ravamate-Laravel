@@ -105,3 +105,7 @@ ComponentHelper.select().loadByApi({
     selectID: "select_items",
     noDataText: "No salesman Found"
 });
+
+$(document).ready(function () {
+    DatePicker.init();
+});

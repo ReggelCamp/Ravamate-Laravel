@@ -1,4 +1,5 @@
 import ComponentHelper from "../helper/ComponentHelper.js";
+import TableLoader  from "../helper/TableLoader.js";
 
 const OperationItems = [
     {
@@ -15,9 +16,97 @@ const OperationItems = [
     },
 ];
 
-// The dashboard table is rendered by x-datatable as <table id="salesmanTable">
-// and initialized by salesman.js via TableLoader (loaded globally in layout/app.blade.php).
-// We attach the row-click handler to #salesmanTable, not the wrapper #dashboardDataTable div.
+const ProductColumns = [
+    {
+        title: "StockCode",
+        data: "stock_code",
+    },
+    {
+        title: "Description",
+        data: "description",
+    },
+    {
+        title: "Quantity",
+        data: "quantity",
+    },
+    {
+        title: "Amount",
+        data: "amount",
+    },
+]
+
+// Sample data based on the table
+const SampleData = [
+    {
+        stock_code: "FG05241",
+        description: "BT Cheese 160g",
+        quantity: "2/0/0",
+        amount: "₱1,564.92"
+    },
+    {
+        stock_code: "FG05242",
+        description: "BT Cheese 430g",
+        quantity: "2/0/0",
+        amount: "₱2,233.98"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    },
+    {
+        stock_code: "FG03798",
+        description: "SMCCT 100G",
+        quantity: "5/0/0",
+        amount: "₱6,804.00"
+    }
+]
+
+// Total amount
+const TotalAmount = "₱79,209.90"
 
 $(document)
     .off("click.dashboardRow", "#salesmanTable tbody tr")
@@ -79,7 +168,6 @@ ComponentHelper.dropdown().LoadDropdownItems({
 function showRowDetails(rowData) {
     $("#Salesman_Container").removeClass("hidden");
     $("#Carousel_Container").addClass("hidden");
-
 }
 
 function DisplayCarousel(){
@@ -108,3 +196,12 @@ $(document).on("click", "#Mtd_Overview_Btn", function () {
     $("#Mtd_Overview_Btn").addClass("hidden");
     $("#Current_Day_Btn").removeClass("hidden");
 });
+
+TableLoader.tableData(
+    "#sfaQueuingModalTable",
+    SampleData,
+    ProductColumns,
+    {
+        scrollY : "500px"
+    }
+);

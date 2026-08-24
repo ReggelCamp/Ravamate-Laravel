@@ -272,10 +272,42 @@ Route::get('/getGoogleMapsData', [Digital_mapController::class, 'getGoogleMapsDa
 Route::get('/dailysalessum', function () {
     return view('salesManagement.OtherSalesReports.DailySalesSummary');
 })->name('dailysalessum');
+
 Route::get('/rangemon', function () {
     return view('salesManagement.OtherSalesReports.rangeMonitoring');
 })->name('rangemon');
+
 Route::get('/geocallrate', function () {
     return view('salesManagement.OtherSalesReports.geocallRate');
 })->name('geocallrate');
+
+Route::get('/strikerate', function () {
+    return view('salesManagement.OtherSalesReports.strikeRate');
+})->name('strikerate');
+
+Route::get('/skureport', function () {
+    return view('salesManagement.OtherSalesReports.skuReport');
+})->name('skureport');
+
+Route::get('/unproductivereport', function () {
+    return view('salesManagement.OtherSalesReports.unproductiveReport');
+})->name('unproductivereport');
+
+Route::get('/sosyotransaction', function () {
+    return view('salesManagement.OtherSalesReports.sosyoReport');
+})->name('sosyotransaction');
+
+Route::get('/voucherhistory', function () {
+    return view('salesManagement.OtherSalesReports.voucherHistory');
+})->name('voucherhistory');
+
+//Sosyo Transactions
+Route::get('/sosyoactivation', function () {
+    return view('salesManagement.OtherSalesReports.SosyoTransaction.sosyoActivation');
+})->name('sosyoactivation');
+Route::get('/sosyocalendar', function () {
+    return view('salesManagement.OtherSalesReports.SosyoTransaction.sosyoCalendar');
+})->name('sosyocalendar');
+
+
 

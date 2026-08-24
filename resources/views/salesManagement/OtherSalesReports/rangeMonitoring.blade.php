@@ -1,7 +1,7 @@
 @extends('layout.app')
-@section('headerTitle', 'Range Monitoring')
+@section('headerTitle', 'RANGE MONITORING')
 @section('content')
-@section('title', 'Range Monitoring')
+@section('title', 'RANGE MONITORING')
 
     <style>
         .dataTable-info{
@@ -110,19 +110,19 @@
                                         Select Salesman
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border " id="dcrItems">
+                                <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border " id="rangeMonitoringItems">
                                     {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
                                 </ul>
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable tableId="#DcrDataTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
+                            <x-exportDataTable tableId="#rangeMonitoringDataTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar tableId="#DcrDataTable" class="w-full h-[30px] font-medium customSearch" id="DcrSearch" />
+                            <x-searchbar tableId="#rangeMonitoringDataTable" class="w-full h-[30px] font-medium customSearch" id="rangeMonitoringSearch" />
                         </div>
                     </div>
                 </div>

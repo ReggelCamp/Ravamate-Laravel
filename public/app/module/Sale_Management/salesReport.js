@@ -588,22 +588,27 @@ const salesReportsItems = [
     {
         title: "Strike Rate",
         data: "strike_rate",
+        url: "/strikerate"
     },
     {
         title: "Salesrep SKU Details",
         data: "salesrep_sku_details",
+        url: "/skureport"
     },
     {
         title: "Unproductive",
         data: "unproductive",
+        url: "/unproductivereport"
     },
     {
         title: "Sosyo Transaction",
         data: "sosyo_transaction",
+        url: "/sosyotransaction"
     },
     {
         title: "Voucher History",
         data: "voucher_history",
+        url: "/voucherhistory"
     },
 ];
 

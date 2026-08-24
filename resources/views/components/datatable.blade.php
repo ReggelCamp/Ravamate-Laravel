@@ -4,12 +4,12 @@
 =========================== */
 
 .dt-scroll-head {
-    background-color: var(--primary) !important;
+    background-color: var(--primary) ;
     
 }
 
 .dt-scroll-head table thead th {
-    color: var(--header-color) !important;
+    color: var(--header-color) ;
     font-size: 10px !important;
     font-weight: 600;
     text-align: left !important;

@@ -1,7 +1,7 @@
 @extends('layout.app')
-@section('headerTitle', 'GEO CALL RATE REPORT')
+@section('headerTitle', 'FASTSOSYO CALENDAR')
 @section('content')
-@section('title', 'GEO CALL RATE REPORT')
+@section('title', 'FASTSOSYO CALENDAR')
 
     <style>
         .dataTable-info{
@@ -96,38 +96,85 @@
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
-                <x-salesReportHeader title="Geocall Rate" />
-                <div class="sheenFilterBtn border rounded-xl">
-                    <span class="flex  items-center justify-center px-5 gap-[5px]">
-                        <x-datepicker label="Pick a Date" singleDate="true" id="geocallDatePicker" drops="down" opens="left" class="whitespace-nowrap h-[30px] text-[13px]" />
-                        {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
-                        <i class="fa-solid fa-caret-down text-xs"></i>
-                    </span>
+                <x-salesReportHeader title="FastSosyo Calendar" />
+                <div class="sheenFilterBtn border rounded-xl text-[14px] whitespace-nowrap px-5 h-[30px] items-center justify-center flex">
+                    <button class="" onclick="cutoff.showModal()">SOSYO CUTOFF TIME:</button>
                 </div>
             </div>
             <div class="w-full items-center h-full flex-1 bg-grey-500 flex flex-col px-5">
                 <div class="flex flex-col-reverse gap-3 md:flex-row items-center w-full min-h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable tableId="#geocallRateTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
+                            <button class="w-fit h-[30px] flex items-center justify-center p-2 rounded-full border">
+                                <i class="mdi mdi-refresh">
+                                </i>
+                            </button>
+                        </div>
+                        <div class="border w-fit px-5 rounded-2xl">
+                            <button class="text" onclick="addNonSelling.showModal()">
+                                <i class="mdi mdi-plus"></i>
+                                Add Non-Selling Days
+                            </button>
+                        </div>
+                        <div>
+                            <x-exportDataTable hideCopy="true" tableId="#sosyoCalendarTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar tableId="#geocallRateTable" class="w-full h-[30px] font-medium customSearch" id="DcrSearch" />
+                            <x-searchbar tableId="#sosyoCalendarTable" class="w-full h-[30px] font-medium customSearch" id="activationSearch" />
                         </div>
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-2">
                     <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5">
-                        <x-datatable id="geocallRateTable" />
+                        <x-datatable id="sosyoCalendarTable" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+<dialog id="addNonSelling" class="modal">
+  <div class="modal-box p-0">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-lg font-bold border-b p-5">Add Sosyo Non-Selling Days</h3>
+    <div class="flex flex-col w-full">
+        <div class=" w-full flex p-5 gap-20 border-b">
+            <span>Non Selling Days: </span>
+            <x-datepicker singleDate="true"/>
+        </div>
+        <div class="flex w-full justify-end p-5 gap-5">
+            <button class="btn btn-primary">Add</button>
+            <button class="btn ">Close</button>
+        </div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="cutoff" class="modal">
+  <div class="modal-box p-0">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-lg font-bold border-b p-5">Adjust Sosyo Cut-off Time</h3>
+    <div class="flex flex-col w-full">
+        <div class=" w-full flex p-5 gap-20 border-b">
+            <span>Time: </span>
+            <input type="time" class="input" />
+        </div>
+        <div class="flex w-full justify-end p-5 gap-5">
+            <button class="btn btn-primary">Add</button>
+            <button class="btn ">Close</button>
+        </div>
+    </div>
+  </div>
+</dialog>
+
 @endsection
 
-<script type="module" src="/app/module/Sale_Management/OtherSalesReports/geocallRate.js"></script>
+<script type="module" src="/app/module/Sale_Management/OtherSalesReports/SosyoTransaction/sosyoCalendar.js"></script>

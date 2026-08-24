@@ -325,7 +325,7 @@
                             aria-label="Pending Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 pb-20">
-                                <x-datatable id="SOPendingLogs" class="bg-[#a991a5] text-white" />
+                                <x-datatable id="SOPendingLogs" onclick="SOpending.showModal()" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
@@ -536,6 +536,8 @@
             </div>
         </div>
     </div>
+
+    <x-sfaQueuingModal id="sfaQueueDetailModal" />
 
 @endsection
 

@@ -105,7 +105,7 @@
             <!-- Header -->
             <div class="relative px-6 pt-5 pb-4 border-b">
                 <form method="dialog">
-                    <button class="btn btn-sm btn-square absolute right-4 top-4 border-2 border-black">✕</button>
+                    <button class="btn btn-sm btn-square absolute right-4 top-4 ">✕</button>
                 </form>
 
                 <div class="flex items-center gap-3">
@@ -151,14 +151,6 @@
                         <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SALES PERSON</span>
                         <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" readonly
                             class="input input-bordered text-[15px] font-semibold bg-gray-100" />
-                    </label>
-
-                    <label class="form-control">
-                        <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MAJOR TRADE CHANNEL</span>
-                        <select id="ecmfModal_MajorTradeChannel"
-                            class="select select-bordered text-[15px] font-medium text-gray-400">
-                            <option>Choose here</option>
-                        </select>
                     </label>
 
                     <label class="form-control">

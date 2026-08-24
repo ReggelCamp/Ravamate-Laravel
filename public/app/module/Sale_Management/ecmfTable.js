@@ -613,6 +613,78 @@ const EcmfSampleData = [
     },
 ];
 
+const EcmfTradeChannel = [
+    {
+        title: "CONVENIENCE STORE",
+        data: "convenience_store"
+    },
+    {
+        title: "DEALER 1",
+        data: "dealer_1"
+    },
+    {
+        title: "DEALER 2",
+        data: "dealer_2"
+    },
+    {
+        title: "DEALER 3",
+        data: "dealer_3"
+    },
+    {
+        title: "GROCERY",
+        data: "grocery"
+    },
+    {
+        title: "SARI-SARI STORE",
+        data: "sara_sar-_store"
+    },
+    {
+        title: "SUPERMARKET A",
+        data: "supermarket_a"
+    },
+    {
+        title: "SUPERMARKET B",
+        data: "supermarket_b"
+    },
+    {
+        title: "SUPERMARKET C",
+        data: "supermarket_c"
+    },
+    {
+        title: "CORPORATE ACCOUNT",
+        data: "corporate_account"
+    },
+    {
+        title: "KA-REPUBLIKA SELLER",
+        data: "republika_seller"
+    },
+    {
+        title: "OTHERS",
+        data: "other"
+    },
+    {
+        title: "DRUGSTORE",
+        data: "drugstore"
+    },
+    {
+        title: "NO PHYSICAL STORE",
+        data: "no_physical_store"
+    },
+    {
+        title: "E-COMMERCE",
+        data: "e_commerce"
+    },
+    {
+        title: "RESELLER",
+        data: "reseller"
+    },
+    {
+        title: "FOOD SERVICE",
+        data: "food_service"
+    },
+    
+]
+
 TableLoader.tableData(
     "#EcmfTable",
     EcmfSampleData,
@@ -627,6 +699,11 @@ ComponentHelper.select().loadByApi({
     selectID: "select_items",
     noDataText: "No salesman Found"
 });
+
+ComponentHelper.select().LoadSelectItems({
+    id: "#ecmfModal_TradeChannel",
+    items: EcmfTradeChannel
+})
 
 $(document).ready(function () {
     DatePicker.init();

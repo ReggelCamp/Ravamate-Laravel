@@ -5,7 +5,7 @@ export default class ComponentHelper {
     static dropdown() {
         return {
             load: (data) => {
-                console.log("daaw", data);
+                console.log("dropdown load", data);
                 let html = "";
 
                 html += `
@@ -85,16 +85,14 @@ export default class ComponentHelper {
             },
             clear: () => {},
             loading: () => {},
-            
+
             LoadDropdownItems(config) {
                 console.log("fea", config);
 
                 let html = "";
 
                 $.each(config.items, function (index, item) {
-
                     if (item.modal) {
-
                         html += `
                             <li>
                                 <a href="#"
@@ -105,9 +103,7 @@ export default class ComponentHelper {
                                 </a>
                             </li>
                         `;
-
                     } else {
-
                         html += `
                             <li>
                                 <a href="${item.url}"
@@ -117,12 +113,10 @@ export default class ComponentHelper {
                                 </a>
                             </li>
                         `;
-
                     }
+                });
 
-    });
-
-    $(config.id).html(html);
+                $(config.id).html(html);
             },
         };
     }
@@ -130,8 +124,8 @@ export default class ComponentHelper {
     // for Select
     static select() {
         return {
-
             load: (data) => {
+                console.log("select load");
                 let html = "";
 
                 html += `
@@ -142,7 +136,7 @@ export default class ComponentHelper {
                         </span>
                     </div>
                 `;
-                
+
                 $.each(data.data, function (index, item) {
                     html += `
                     <option class="salesman-item"  data-salesman="${item.salesman_name}">
@@ -162,49 +156,49 @@ export default class ComponentHelper {
 
                     onSuccess: (data) => {
                         this.select().load({
-                            selectID : config.selectID,
+                            selectID: config.selectID,
                             data,
                         });
-                    }
+                    },
                 });
             },
-            
-            search: (data) => {
 
+            search: (data) => {},
+
+            LoadSelectItems(config) {
+                console.log("fea", config);
+
+                let html = "";
+
+                html += `
+                    <div class="flex flex-col pb-2 pt-5 px-2">
+                        <input id="dropdown_search" class="DropdownSearchBar border p-2 w-[250px] h-[30px] rounded-lg" type="search" required placeholder="Search" />
+                        <span id="NoResult" class="hidden">
+                           ${config.noDataText ?? "No Match Result"}
+                        </span>
+                    </div>
+                    `;
+
+                $.each(config.items, function (index, item) {
+                   if (item.modal) {
+                        html += `
+                            <option data-value="${item.data}" 
+                                    onclick="openModal('${item.modal}')">
+                                ${item.title}
+                            </option>
+                        `;
+                    } else {
+                        html += `
+                            <option data-value="${item.data}" 
+                                    onclick="window.location.href='${item.url}'">
+                                ${item.title}
+                            </option>
+                        `;
+                    }
+                });
+
+                $(config.id).html(html);
             },
-
-        }
+        };
     }
-
-    // static LoadDropdownItems(){
-
-    // }
 }
-
-// $(document).on("input", ".DropdownSearchBar", function(){
-//     const keyword = this.value.toLowerCase().trim();
-//     let found = false;
-
-//     // Get the dropdown (<ul>) that contains this search bar
-//     const $dropdown = $(this).closest("ul");
-
-//     // Loop through every <li> in that dropdown
-//     $dropdown.find("li").each(function () {
-
-//         const text = $(this).text().toLowerCase();
-
-//         const match = text.includes(keyword);
-//          $("#NoResult").addClass("hidden");
-//         $(this).prop("hidden", !match);
-
-//         if (match) {
-//             found = true;
-//         }
-//         else if (!found){
-//              $("#NoResult").removeClass("hidden");
-//         }
-//         console.log();
-//     });
-
-//     console.log(found);
-// });

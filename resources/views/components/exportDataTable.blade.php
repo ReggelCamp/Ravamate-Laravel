@@ -13,7 +13,9 @@
     'tableId' => null,
     'report' => null,
     'hideCsv' => false,
+    'hidePrint' => false,
     'hideCopy' => false,
+    'hideExcel' => false,
 
 ])
 
@@ -91,17 +93,19 @@
 >
 
     {{-- Print --}}
-    <li class="shine-bgExportBtn">
-        <a
-            href="#"
-            class="printBtn"
-            data-table="{{ $tableId }}"
-            data-report="{{ $report }}"
-        >
-            <i class="fa-solid fa-print"></i>
-            Print
-        </a>
-    </li>
+    @if(!$hidePrint)
+        <li class="shine-bgExportBtn">
+            <a
+                href="#"
+                class="printBtn"
+                data-table="{{ $tableId }}"
+                data-report="{{ $report }}"
+            >
+                <i class="fa-solid fa-print"></i>
+                Print
+            </a>
+        </li>
+    @endif
 
     {{-- CSV --}}
     @if(!$hideCsv)
@@ -118,16 +122,18 @@
     @endif
 
     {{-- Excel --}}
-    <li class="shine-bgExportBtn">
-        <a
-            href="#"
-            class="excelBtn"
-            data-table="{{ $tableId }}"
-        >
-            <i class="fa-solid fa-file-excel"></i>
-            Excel
-        </a>
-    </li>
+    @if(!$hideCopy)
+        <li class="shine-bgExportBtn">
+            <a
+                href="#"
+                class="excelBtn"
+                data-table="{{ $tableId }}"
+            >
+                <i class="fa-solid fa-file-excel"></i>
+                Excel
+            </a>
+        </li>
+    @endif
 
     {{-- Copy --}}
     @if(!$hideCopy)
