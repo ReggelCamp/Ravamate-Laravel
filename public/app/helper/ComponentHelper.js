@@ -222,48 +222,65 @@ export default class ComponentHelper {
             search: (data) => {},
 
             LoadSelectItems(config) {
-    console.log("fea", config);
+                console.log("fea", config);
 
-    let html = "";
+                let html = "";
 
-    $.each(config.items, function (index, item) {
+                $.each(config.items, function (index, item) {
 
-        if (item.modal) {
-            html += `
-                <option
-                    value="${item.data}"
-                    data-value="${item.data}"
-                    data-modal="${item.modal}"
-                >
-                    ${item.title}
-                </option>
-            `;
-        } 
-        else if (item.url) {
-            html += `
-                <option
-                    value="${item.data}"
-                    data-value="${item.data}"
-                    data-url="${item.url}"
-                >
-                    ${item.title}
-                </option>
-            `;
-        } 
-        else {
-            html += `
-                <option
-                    value="${item.data}"
-                    data-value="${item.data}"
-                >
-                    ${item.title}
-                </option>
-            `;
-        }
-    });
+                    if (item.modal) {
+                        html += `
+                            <option
+                                value="${item.data}"
+                                data-value="${item.data}"
+                                data-modal="${item.modal}"
+                            >
+                                ${item.title}
+                            </option>
+                        `;
+                    } 
+                    else if (item.url) {
+                        html += `
+                            <option
+                                value="${item.data}"
+                                data-value="${item.data}"
+                                data-url="${item.url}"
+                            >
+                                ${item.title}
+                            </option>
+                        `;
+                    } 
+                    else {
+                        html += `
+                            <option
+                                value="${item.data}"
+                                data-value="${item.data}"
+                            >
+                                ${item.title}
+                            </option>
+                        `;
+                    }
+                });
 
-    $("#" + config.id).html(html);
-},
+                $("#" + config.id).html(html);
+            },
+
+            LoadCheckBoxByApi: (config) => {
+                console.log("fea", config);
+                Api.get({
+                    url: config.url,
+                    data: config.data,
+
+                    onSuccess: (data) => {
+                        this.dropdown().LoadCheckbox({
+                            ...config,
+                            json: data,
+                        });
+                        if (config.onSuccess) config.onSuccess(data);
+                    },
+                    onError: config.onError,
+                });
+            },
         };
     }
 }

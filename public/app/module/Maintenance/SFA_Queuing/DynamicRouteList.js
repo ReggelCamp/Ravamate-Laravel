@@ -1,6 +1,7 @@
 import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
+import ComponentHelper from "../../../helper/ComponentHelper.js"
 
 const DynamicTransactionColumns = [
     {
@@ -406,3 +407,11 @@ TableLoader.tableData(
 $(document).ready(function () {
     DatePicker.init();
 });
+
+// ComponentHelper.Select().LoadCheckBoxByApi({
+//     url: "/salesmen",                   // optional
+//     dropdownId: "stockRequest_salesman",       // passed through to LoadCheckbox()
+//     displayField: "salesman_name",
+//     dataField: "salesman_id",                    // passed through to LoadCheckbox()
+//     noDataText: "No items found",       // passed through to LoadCheckbox()
+// });

@@ -23,7 +23,7 @@
                         <i class="mdi mdi-refresh"></i>
                         Refresh
                     </button>
-                    <button class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                    <button onclick="StockReqModal.showModal()" class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-file-document-refresh"></i>
                         Confirm Stock Request
                     </button>
@@ -132,6 +132,38 @@
             </form>
         </div>
     </div>
+
+<dialog id="StockReqModal" class="modal">
+    <div class="modal-box p-0 max-w-lg">
+        <div class="flex items-center justify-between p-5 border-b">
+            <h3 class="text-2xl font-bold">Confirm Stock Request</h3>
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-outline">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex items-center justify-between px-5 py-4 border-b">
+                <label for="stockRequest_salesman" class="font-bold text-xs tracking-wide uppercase">Salesman</label>
+                <select id="stockRequest_salesman" class="border rounded-lg px-3 py-2 text-sm text-gray-500 w-64">
+                    <option value="">Select Salesman</option>
+                </select>
+            </div>
+
+            <div class="flex items-center justify-between px-5 py-4">
+                <label class="font-bold text-xs tracking-wide uppercase">Date</label>
+                <x-datepicker/>
+            </div>
+        </div>
+
+        <div class="flex w-full justify-end p-5 gap-3 border-t">
+            <button type="button" onclick="stockRequestModal.close()" class="btn btn-outline">Cancel</button>
+            <button type="button" id="stockRequest_executeBtn" class="btn bg-red-900 hover:bg-red-800 text-white border-none">Execute</button>
+        </div>
+    </div>
+</dialog>
 
 @endsection
 
