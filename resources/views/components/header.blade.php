@@ -180,7 +180,7 @@
                     <details>
                         <summary class="shine-bgNav w-full rounded-xl px-4 py-3 text-sm font-medium dropdownIcon">
                             <div class="items-center gap-3 ">
-                                <i class="fa-solid headerFont fa-file-lines"></i>
+                                <i class="mdi mdi-file-multiple"></i>
                                 <span>Reports</span>
                             </div>
                             <div class="flex w-full arrowIcon justify-end">

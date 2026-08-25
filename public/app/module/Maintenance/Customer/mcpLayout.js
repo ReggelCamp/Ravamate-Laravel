@@ -1,6 +1,8 @@
 import TableLoader from "../../../helper/TableLoader.js";
 import "../../../helper/exportDataTable.js";
 import DatePicker from "../../../helper/datePicker.js";
+import ComponentHelper from "../../../helper/ComponentHelper.js";
+
 
 const MCPColumns = [
     {
@@ -286,6 +288,48 @@ const MCPSampleData = [
     },
 ];
 
+const FrequencyItems = [
+    {
+        title: "F2",
+        data: "f2"   
+    },
+    {
+        title: "F4",
+        data: "f4"   
+    }
+]
+
+const DaysOfVisit = [
+    {
+        title: "MONDAY",
+        data: "monday"
+    },
+    {
+        title: "TUESDAY",
+        data: "tuesday"
+    },
+    {
+        title: "WEDNESDAY",
+        data: "wednesday"
+    },
+    {
+        title: "THURSDAY",
+        data: "thursday"
+    },
+    {
+        title: "FRIDAY",
+        data: "friday"
+    },
+    {
+        title: "SATURDAY",
+        data: "saturday"
+    },
+    {
+        title: "SUNDAY",
+        data: "sunday"
+    },
+]
+
 TableLoader.tableData(
     "#mcpTable",
     MCPSampleData,
@@ -297,4 +341,61 @@ TableLoader.tableData(
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.dropdown().loadByApi({
+    url: "/salesmen",
+    dropdownId: "mcpItems",
+    noDataText: "No SalesMan Found",
+    displayField: "salesman_name",
+    dataField: "salesman_id",
+});
+
+ComponentHelper.dropdown().load({
+    json: FrequencyItems,
+    dropdownId: "freqDropdown",
+    displayField: "title",   // whatever key on each FrequencyItems object holds the label
+    dataField: "data",        // whatever key holds the value to use as data-id
+    noDataText: "No Frequency Found"
+});
+
+ComponentHelper.dropdown().load({
+    json: DaysOfVisit,
+    dropdownId: "dayOfWeek",
+    displayField: "title",   // whatever key on each FrequencyItems object holds the label
+    dataField: "data",        // whatever key holds the value to use as data-id
+    noDataText: "No Days Found"
+});
+
+ComponentHelper.dropdown().LoadCheckbox({
+    json: DaysOfVisit,
+    dropdownId: "weekVisitedDropdown",
+    displayField: "title",   // whatever key on each FrequencyItems object holds the label
+    dataField: "data",        // whatever key holds the value to use as data-id
+    noDataText: "No Days Found"
+});
+
+$(document)
+    .off("click.mcpLayoutRow", "#mcpTable tbody tr")
+    .on("click.mcpLayoutRow", "#mcpTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#mcpTable")) return;
+
+        const mcpLayoutTable = $("#mcpTable").DataTable();
+        const rowData = mcpLayoutTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayMcpLayout(rowData);
+    });
+
+function DisplayMcpLayout(rowData) {
+    // Open modal
+    $("#mcpLayoutModal")[0].showModal();
+}
+
+$('#update_timeOfVisit').on('click', function () {
+    this.showPicker();
 });

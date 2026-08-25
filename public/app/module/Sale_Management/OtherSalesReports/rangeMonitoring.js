@@ -3,92 +3,129 @@ import ComponentHelper from "../../../helper/ComponentHelper.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
 
-const SalesSummaryColumns = [
+const StockRequestColumns = [
     {
-        title: "#",
-        data: "number"
+        title: "mdCode",
+        data: "mdCode"
     },
     {
-        title: "SALESMAN",
-        data: "salesman"
+        title: "Salesperson",
+        data: "salesperson"
     },
     {
-        title: "TARGET",
-        data: "target"
+        title: "Customer",
+        data: "customer"
     },
     {
-        title: "PROD.",
-        data: "prod"
+        title: "custName",
+        data: "custName"
     },
     {
-        title: "UNPROD.",
-        data: "unprod"
+        title: "Range_Target",
+        data: "rangeTarget",
+        className: "dt-body-center"
     },
     {
-        title: "MISS",
-        data: "miss"
+        title: "AltStockCodeDesc",
+        data: "altStockCodeDesc"
     },
     {
-        title: "FIRST",
-        data: "first"
+        title: "DropSize",
+        data: "dropSize",
+        className: "dt-body-center"
     },
     {
-        title: "LAST",
-        data: "last"
+        title: "PurchaseQty",
+        data: "purchaseQty",
+        className: "dt-body-center"
     },
     {
-        title: "# HOURS",
-        data: "hours"
+        title: "isHit",
+        data: "isHit",
+        className: "dt-body-center",
+        render: function (data, type, row) {
+            if (type === 'display') {
+                return data
+                    ? '<i class="fa-solid fa-circle-check text-green-500"></i>'
+                    : '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
+            }
+            return data;
+        }
     },
     {
-        title: "AMOUNT",
-        data: "amount"
+        title: "BalanceQty(pc)",
+        data: "balanceQty",
+        className: "dt-body-center"
     }
 ];
 
-const sampleData = [
+const sampleStockRequestData = [
     {
-        number: 1,
-        salesman: "FPM_2_JAYSON ANDAYA",
-        target: 8,
-        prod: 9,
-        unprod: 0,
-        miss: "-",
-        first: "8:11AM",
-        last: "3:35PM",
-        hours: "7h 24min",
-        amount: "₱ 405,787.40"
+        mdCode: "MD10234",
+        salesperson: "Nicolas Ramboyong",
+        customer: "179_FPM",
+        custName: "Marife Ablay",
+        rangeTarget: 25,
+        altStockCodeDesc: "CDO Idol CD 250g",
+        dropSize: 5,
+        purchaseQty: 5,
+        isHit: true,
+        balanceQty: 120
     },
     {
-        number: 2,
-        salesman: "FPM_4_NINO LAURENTE",
-        target: 15,
-        prod: 9,
-        unprod: 0,
-        miss: "(18)",
-        first: "8:51AM",
-        last: "1:32PM",
-        hours: "4h 41min",
-        amount: "₱ 128,356.47"
+        mdCode: "MD10235",
+        salesperson: "Nicolas Ramboyong",
+        customer: "42_FPM",
+        custName: "Argel Joseph E. Garcia",
+        rangeTarget: 10,
+        altStockCodeDesc: "Bingo HD Mini Flow 250g",
+        dropSize: 1,
+        purchaseQty: 1,
+        isHit: true,
+        balanceQty: 348
     },
     {
-        number: 3,
-        salesman: "FPM_7_GERARD MUNDALA",
-        target: 22,
-        prod: 12,
-        unprod: 0,
-        miss: "(34)",
-        first: "9:22AM",
-        last: "4:56PM",
-        hours: "7h 34min",
-        amount: "₱ 111,256.47"
+        mdCode: "MD10236",
+        salesperson: "Alejandro Cruz",
+        customer: "03_FPM",
+        custName: "Reggel Santos",
+        rangeTarget: 15,
+        altStockCodeDesc: "CDO Skinless Longga 250g",
+        dropSize: 0,
+        purchaseQty: 0,
+        isHit: false,
+        balanceQty: 200
+    },
+    {
+        mdCode: "MD10237",
+        salesperson: "Alejandro Cruz",
+        customer: "17_FPM",
+        custName: "Maria Dela Cruz",
+        rangeTarget: 30,
+        altStockCodeDesc: "FG-IDOL GO BALLS 50S 0.707 KG x8",
+        dropSize: 2,
+        purchaseQty: 2,
+        isHit: true,
+        balanceQty: 76
+    },
+    {
+        mdCode: "MD10238",
+        salesperson: "Nicolas Ramboyong",
+        customer: "88_FPM",
+        custName: "Junel Bautista",
+        rangeTarget: 20,
+        altStockCodeDesc: "CDO Sweet Ham 250g",
+        dropSize: 1,
+        purchaseQty: 0,
+        isHit: false,
+        balanceQty: 412
     }
 ];
 
 TableLoader.tableData(
     "#rangeMonitoringTable",
-    sampleData,
-    SalesSummaryColumns,
+    sampleStockRequestData,
+    StockRequestColumns,
     {
         scrollY: "500px"
     }
@@ -102,4 +139,12 @@ ComponentHelper.select().loadByApi({
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.dropdown().loadByApi({
+    url: "/salesmen",
+    dropdownId: "rangeMonitoringItems",
+    noDataText: "No SalesMan Found",
+    displayField: "salesman_name",
+    dataField: "salesman_id",
 });

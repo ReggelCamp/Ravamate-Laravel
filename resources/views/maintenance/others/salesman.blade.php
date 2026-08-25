@@ -123,228 +123,254 @@
         </div>
     </dialog>
 
-<dialog id="SalesmanInfo_Modal" class="modal salesman-info-modal">
-    <div class="modal-box p-0 w-full max-w-full bg-white overflow-y-auto"
-         style="margin-top: 3rem; max-height: calc(100vh - 3rem);">
+    <dialog id="SalesmanInfo_Modal" class="modal">
+        <div class="modal-box w-full max-w-none h-[calc(100vh-140px)] mt-[140px] rounded-none p-0 pb-10">
 
-            <!-- Header -->
-            <div class="relative bg-gradient-to-br from-[#3a0a12] via-[#6d0f1f] to-[#8f1a2b] px-7 pt-5 pb-4 text-white">
-                <form method="dialog">
-                    <button
-                        class="btn btn-sm btn-circle absolute right-4 top-4 bg-white text-[#e6231e] border-2 border-[#e6231e] hover:bg-white">✕</button>
-                </form>
-            </div>
+            <form method="dialog"
+                class="flex font-bold bg-gradient-to-br from-[#3a0a12] via-[#6d0f1f] to-[#8f1a2b] text-white h-[50px]">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
 
-            <!-- Action bar -->
-            <div class="flex items-center justify-between gap-3 px-7 pt-5 pb-1 flex-wrap">
-                <div class="flex gap-3">
-                    <button type="button" id="salesmanInfo_HoldAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
-                        <i class="fa-solid fa-user-lock"></i> Hold Account
-                    </button>
-                    <button type="button" id="salesmanInfo_ResetAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
-                        <i class="fa-solid fa-rotate"></i> Reset Account
-                    </button>
+            <div class="flex flex-col w-full ">
+                <div class="flex w-full p-5 text-center ">
+                    <div class="flex w-full gap-5 ">
+                        <button type="button" id="salesmanInfo_HoldAccount"
+                            class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
+                            <i class="fa-solid fa-user-lock"></i> Hold Account
+                        </button>
+
+                        <button type="button" id="salesmanInfo_ResetAccount"
+                            class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
+                            <i class="fa-solid fa-rotate"></i> Reset Account
+                        </button>
+                    </div>
+                    <div class="flex w-full justify-end">
+                        <button type="button" id="salesmanInfo_SaveChanges"
+                            class="btn rounded-full border border-red-200 text-[#e6231e] text-[13px] font-bold h-[38px]">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                        </button>
+                    </div>
                 </div>
-                <button type="button" id="salesmanInfo_SaveChanges"
-                    class="btn rounded-full border border-red-200 text-[#e6231e] text-[13px] font-bold h-[38px]">
-                    <i class="fa-solid fa-floppy-disk"></i> Save Changes
-                </button>
-            </div>
 
-            <!-- Body -->
-            <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr_1fr] gap-5 px-7 py-5 pb-10">
+                <div class="flex w-full justify-center gap-2">
 
-                <!-- ID Card -->
-                <div class="rounded-2xl border overflow-auto shadow-sm">
-                    <div class="relative bg-gradient-to-br from-[#3a0a12] to-[#8f1a2b] px-5 pt-5 pb-11 text-white">
-                        <div class="avatar placeholder mb-3">
-                            <div class="bg-white text-neutral-content rounded-full w-16 ring ring-[#e6231e] ring-offset-0">
-                                <i class="fa-solid fa-user text-2xl text-gray-400"></i>
+                    <!-- ID Card -->
+                    <div class="rounded-2xl overflow-auto shadow-sm w-[400px]">
+                        <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
+                            <div class="bg-gradient-to-br from-red-800 to-red-900 relative pb-5">
+                                <div class="flex flex-col items-center w-full">
+                                    <div class="absolute inset-0 overflow-hidden opacity-20">
+                                        <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
+                                        <div class="w-16 h-16 rounded-full bg-white absolute top-10 right-0"></div>
+                                    </div>
+                                    <h3 class="text-white font-bold text-lg relative">Sales Report</h3>
+
+                                    <div class="flex items-center gap-3 mt-4 relative">
+                                        <div
+                                            class="w-16 h-16 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden shrink-0">
+                                            <i class="fa-solid fa-user text-gray-400 text-2xl"></i>
+                                        </div>
+                                        <div class="text-white leading-tight">
+                                            <span class="text-[10px] opacity-80 block">Salesman</span>
+                                            <span class="font-bold">{{ $report->salesman_name ?? 'ALEJANDRO CRUZ' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center w-[150px]">
+                                        <span class="text-[10px] text-gray-500 block">Md Code</span>
+                                        <span class="font-bold text-sm ">
+                                            CD00020
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Contact No.</span>
+                                    <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
+                                        class="input input-bordered input-sm rounded-full w-full text-[13px] font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Md Password</span>
+                                    <div class="join w-full">
+                                        <input type="password" id="salesmanInfo_MdPassword" value="password123"
+                                            class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-semibold" />
+                                        <button type="button" onclick="toggleSalesmanPassword(this)"
+                                            class="btn btn-sm btn-ghost join-item -ml-10 z-10">
+                                            <i class="fa-solid fa-eye-slash text-xs"></i>
+                                        </button>
+                                    </div>
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Call Time</span>
+                                    <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Cashier No.</span>
+                                    <input type="text" id="salesmanInfo_CashierNo" value="09"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor Name</span>
+                                    <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor No.</span>
+                                    <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Geolocking</span>
+                                    <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Price Code</span>
+                                    <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
+
+                                <label class="form-control">
+                                    <span class="label-text text-xs font-semibold text-gray-500 mb-1">Loading
+                                        Capacity</span>
+                                    <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                </label>
                             </div>
                         </div>
-                        <p class="text-xs text-white/70 mb-0.5">Salesman</p>
-                        <p id="salesmanInfo_Name" class="text-[15px] font-bold leading-tight">FPM_2_JAYSON ANDAYA</p>
-
-                        <div class="absolute -bottom-4 right-4 bg-white text-right rounded-xl px-3 py-2 shadow-lg">
-                            <span class="block text-[10px] text-gray-400">Md Code</span>
-                            <span id="salesmanInfo_MdCode" class="block text-sm font-extrabold text-gray-800">CD00020</span>
-                        </div>
                     </div>
 
-                    <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Contact No.</span>
-                            <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
+                    {{-- Setting --}}
+                    <div class="rounded-2xl border w-[400px] shadow-sm p-5">
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 w-full">Default ORD Type</span>
+                            <select id="salesmanInfo_DefaultOrdType"
+                                class="select select-bordered select-sm rounded-full w-full text-[13px] font-bold ">
+                                <option>BOOKING</option>
+                                <option>VAN SELLING</option>
+                                <option>PRE BOOKING</option>
+                                <option>LOGISTICS</option>
+                                <option>HYBRID</option>
+                            </select>
+                        </div>
 
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Md Password</span>
-                            <div class="join w-full">
-                                <input type="password" id="salesmanInfo_MdPassword" value="password123"
-                                    class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-semibold" />
-                                <button type="button" onclick="toggleSalesmanPassword(this)"
-                                    class="btn btn-sm btn-ghost join-item -ml-10 z-10">
-                                    <i class="fa-solid fa-eye-slash text-xs"></i>
-                                </button>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 w-full">Warehouse Code</span>
+                            <select id="salesmanInfo_WarehouseCode"
+                                class="select select-bordered select-sm rounded-full text-[13px] w-full font-bold">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 w-full">Bad Order Warehouse</span>
+                            <span id="salesmanInfo_BadOrderWarehouse"
+                                class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
+                                BO
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 w-full">Good Stock Return Warehouse</span>
+                            <span id="salesmanInfo_GoodStockReturnWarehouse"
+                                class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
+                                HO
+                            </span>
+                        </div>
+
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">OSA Checking</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_OsaChecking_state"
+                                    class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
+                                <input type="checkbox" id="salesmanInfo_OsaChecking" data-off-text="NO" data-on-text="YES"
+                                    class="toggle toggle-error salesman-toggle" />
                             </div>
-                        </label>
+                        </div>
 
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Call Time</span>
-                            <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">EOD</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_Eod_state"
+                                    class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_Eod" data-off-text="DISABLED" data-on-text="ENABLED"
+                                    class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
 
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Cashier No.</span>
-                            <input type="text" id="salesmanInfo_CashierNo" value="09"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Is Hybrid</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_IsHybrid_state"
+                                    class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_IsHybrid" data-off-text="DISABLED"
+                                    data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
 
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor Name</span>
-                            <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
+                        <div class="flex items-center justify-between py-2.5 border-b">
+                            <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Restrict New Customer</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_RestrictNewCustomer_state"
+                                    class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_RestrictNewCustomer" data-off-text="DISABLED"
+                                    data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
 
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor No.</span>
-                            <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
-
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Geolocking</span>
-                            <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
-                        
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Price Code</span>
-                            <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
-                        
-                        <label class="form-control">
-                            <span class="label-text text-xs font-semibold text-gray-500 mb-1">Loading Capacity</span>
-                            <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                class="input input-bordered input-sm rounded-full text-[13px] font-semibold" />
-                        </label>
+                        <div class="flex items-center justify-between py-2.5">
+                            <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Disable OTP</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_DisableOtp_state"
+                                    class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
+                                <input type="checkbox" id="salesmanInfo_DisableOtp" data-off-text="NO" data-on-text="YES"
+                                    class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Color code panel -->
+                    <div class="rounded-2xl border shadow-sm overflow-hidden w-[631px]">
+                        <div
+                            class="bg-gradient-to-br from-[#3a0a12] to-[#8f1a2b] text-white text-center py-7 text-lg font-extrabold tracking-wide">
+                            SALESMAN COLOR CODE
+                        </div>
+                        <div class="p-6 text-center">
+                            <p class="text-[13px] font-bold text-gray-700 mb-4">Click here to change color</p>
+
+                            <input type="color" id="salesmanInfo_ColorPicker" value="#ff0000" class="hidden"
+                                onchange="document.getElementById('salesmanInfo_Swatch').style.background = this.value" />
+
+                            <div id="salesmanInfo_Swatch"
+                                class="w-full max-w-[220px] aspect-square mx-auto rounded border cursor-pointer"
+                                style="background:#ff0000"
+                                onclick="document.getElementById('salesmanInfo_ColorPicker').click()">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col w-full items-center">
+                            <span class="text-red-500 font-bold">
+                                NOTE
+                            </span>
+                            <p class="flex items-center justify-center w-full text-center">
+                                Hold accounts continue to incur charges. If you want to stop charges,
+                                 Please email us to permanently disabled the account.
+                            </p>
+                        </div>
+                    </div>
+                
                 </div>
-
-                <!-- Settings panel -->
-                <div class="rounded-2xl border shadow-sm p-5">
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500">Default ORD Type</span>
-                        <select id="salesmanInfo_DefaultOrdType"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold min-w-[140px]">
-                            <option>BOOKING</option>
-                            <option>VAN SELLING</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500">Warehouse Code</span>
-                        <select id="salesmanInfo_WarehouseCode"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold min-w-[140px]">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500">Bad Order Warehouse</span>
-                        <select id="salesmanInfo_BadOrderWarehouse"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold min-w-[140px]">
-                            <option>BO</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500">Good Stock Return Warehouse</span>
-                        <select id="salesmanInfo_GoodStockReturnWarehouse"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold min-w-[140px]">
-                            <option>HO</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">OSA Checking</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_OsaChecking_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
-                            <input type="checkbox" id="salesmanInfo_OsaChecking" data-off-text="NO" data-on-text="YES"
-                                class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">EOD</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_Eod_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_Eod" data-off-text="DISABLED" data-on-text="ENABLED"
-                                class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Is Hybrid</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_IsHybrid_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_IsHybrid" data-off-text="DISABLED"
-                                data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Restrict New Customer</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_RestrictNewCustomer_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_RestrictNewCustomer" data-off-text="DISABLED"
-                                data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2.5">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Disable OTP</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_DisableOtp_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
-                            <input type="checkbox" id="salesmanInfo_DisableOtp" data-off-text="NO" data-on-text="YES"
-                                class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Color code panel -->
-                <div class="rounded-2xl border shadow-sm overflow-hidden">
-                    <div
-                        class="bg-gradient-to-br from-[#3a0a12] to-[#8f1a2b] text-white text-center py-7 text-lg font-extrabold tracking-wide">
-                        SALESMAN COLOR CODE
-                    </div>
-                    <div class="p-6 text-center">
-                        <p class="text-[13px] font-bold text-gray-700 mb-4">Click here to change color</p>
-
-                        <input type="color" id="salesmanInfo_ColorPicker" value="#ff0000" class="hidden"
-                            onchange="document.getElementById('salesmanInfo_Swatch').style.background = this.value" />
-
-                        <div id="salesmanInfo_Swatch"
-                            class="w-full max-w-[220px] aspect-square mx-auto rounded border cursor-pointer"
-                            style="background:#ff0000"
-                            onclick="document.getElementById('salesmanInfo_ColorPicker').click()">
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </div>
-
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
     </dialog>
 
 @endsection

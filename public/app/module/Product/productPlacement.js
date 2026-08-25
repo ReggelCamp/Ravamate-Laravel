@@ -32,6 +32,7 @@
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
+import ComponentHelper from "../../helper/ComponentHelper.js";
 
 const PlacementProductColumns = [
     {
@@ -103,6 +104,52 @@ const sampleData = [
     }
 ];
 
+const CustClassOptions = [
+    { data: "CONVENIENCE", title: "CONVENIENCE STORE" },
+    { data: "GROCERY", title: "GROCERY" },
+    { data: "OTHERS", title: "OTHERS" },
+    { data: "SUPERMARKET", title: "SUPERMARKET" },
+    { data: "MARKET", title: "MARKET STALL  DRY" },
+    { data: "DRUGSTORE", title: "DRUGSTORE" },
+    { data: "SARISARI", title: "SARISARI STORE" },
+    { data: "FOODSERVICE", title: "FOODSERVICE" },
+    { data: "MARKET", title: "MARKET STALL  WET" },
+];
+
+const ProductOptions = [
+    { data: "ITM-1001", title: "Coca-Cola 1.5L" },
+    { data: "ITM-1002", title: "Pepsi 1.5L" },
+    { data: "ITM-1003", title: "Nescafe 3-in-1 Original" },
+    { data: "ITM-1004", title: "Lucky Me Pancit Canton" },
+    { data: "ITM-1005", title: "Milo Chocolate Drink 300g" },
+    { data: "ITM-1006", title: "Colgate Toothpaste 150g" },
+    { data: "ITM-1007", title: "Palmolive Shampoo 350ml" },
+    { data: "ITM-1008", title: "Century Tuna Flakes 155g" },
+    { data: "ITM-1009", title: "Piattos Cheese 85g" },
+    { data: "ITM-1010", title: "Bear Brand Powdered Milk 300g" },
+];
+
+const PlacementType = [
+    {
+        data: "core" , title: "CORE"
+    },
+    {
+        data: "non_core" , title: "NON-CORE"
+    },
+];
+
+const Placement = [
+    {
+        data: "core" , title: "Core"
+    },
+    {
+        data: "opportunity" , title: "Opportunity"
+    },
+    {
+        data: "dev_core" , title: "Dev Core"
+    },
+];
+
 TableLoader.tableData(
     "#productPlacementTable", // Replace with your actual table ID
     sampleData,
@@ -111,6 +158,26 @@ TableLoader.tableData(
         scrollY: "500px"
     }
 );
+
+ComponentHelper.select().LoadSelectItems({
+    id: "custClass",
+    items: CustClassOptions
+});
+
+ComponentHelper.select().LoadSelectItems({
+    id: "placementProduct",
+    items: ProductOptions
+});
+
+ComponentHelper.select().LoadSelectItems({
+    id: "placementType",
+    items: PlacementType
+});
+
+ComponentHelper.select().LoadSelectItems({
+    id: "placement",
+    items: Placement
+});
 
 $(document).ready(function () {
     DatePicker.init();

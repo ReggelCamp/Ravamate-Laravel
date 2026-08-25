@@ -93,3 +93,23 @@ TableLoader.tableData(
 $(document).ready(function () {
     DatePicker.init();
 });
+
+$(document)
+    .off("click.CustomerTieringRow", "#CustomerTieringDataTable tbody tr")
+    .on("click.CustomerTieringRow", "#CustomerTieringDataTable tbody tr", function () {
+        // salesman.js loads the data asynchronously; ensure DataTable is ready
+        if (!$.fn.DataTable.isDataTable("#CustomerTieringDataTable")) return;
+
+        const CustomerTieringTable = $("#CustomerTieringDataTable").DataTable();
+        const rowData = CustomerTieringTable.row(this).data();
+
+        if (!rowData) return;
+
+        console.log("Clicked row:", rowData);
+
+        DisplayCustomerTiering(rowData);
+    });
+
+    function DisplayCustomerTiering(){
+        $("#customerTieringModal")[0].showModal();
+    }

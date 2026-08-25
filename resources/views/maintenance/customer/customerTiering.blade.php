@@ -31,6 +31,45 @@
         </div>
     </div>
 
+
+
+<dialog id="customerTieringModal" class="modal">
+    <div class="modal-box p-0 max-w-lg">
+        <div class="flex items-center justify-between p-5 border-b border-gray-300">
+            <h3 class="text-lg font-bold">Customer Tier Details</h3>
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost">✕</button>
+            </form>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex flex-col w-full px-5 pt-3">
+                <div class="flex items-center border-b py-3 border-gray-300">
+                    <span class="w-32 font-semibold text-sm">Type</span>
+                    <span class="font-bold text-sm">{{ $tier->type ?? 'BKY' }}</span>
+                </div>
+                <div class="flex items-center border-b py-3 border-gray-300">
+                    <span class="w-32 font-semibold text-sm">Description</span>
+                    <span class="font-bold text-sm">{{ $tier->description ?? 'BAKERY' }}</span>
+                </div>
+                <div class="flex items-center py-3 border-gray-300">
+                    <span class="w-32 font-semibold text-sm">Tiering</span>
+                    <input
+                        type="text"
+                        class="border rounded px-3 py-1.5 text-sm text-gray-500 w-48"
+                        value="{{ $tier->tiering ?? 'OTHERS' }}"
+                    />
+                </div>
+            </div>
+
+            <div class="flex w-full justify-end p-5 gap-3 border-t border-gray-300">
+                <button type="button" class="btn bg-gray-500 hover:bg-gray-600 text-white border-none">Close</button>
+                <button type="button" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</dialog>
+
 @endsection
 
 <script type="module" src="/app/module/Maintenance/Customer/CustomerTiering.js"></script>

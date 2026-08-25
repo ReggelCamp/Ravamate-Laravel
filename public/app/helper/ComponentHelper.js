@@ -118,6 +118,62 @@ export default class ComponentHelper {
 
                 $(config.id).html(html);
             },
+
+            LoadCheckbox: (data) => {
+                console.log("dropdown load", data);
+                let html = "";
+
+                html += `
+                    <li class="border-b px-4 py-3">
+                        <input
+                            type="search"
+                            id="dropdown_search"
+                            placeholder="Search..."
+                            class="w-full text-sm text-gray-500 outline-none"
+                        />
+                    </li>
+                    <li id="NoResult" class="hidden px-4 py-3 text-sm text-gray-400">
+                        ${data.noDataText ?? "No Match Result"}
+                    </li>
+                    `;
+
+                $.each(data.json ?? [], function (index, item) {
+                    html += `
+                        <li class="border-b ">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    class="dropdown_checkbox w-4 h-[15px]"
+                                    value="${item[data.dataField]}"
+                                    data-label="${item[data.displayField]}"
+                                />
+                                <span class="text-sm font-bold uppercase">${item[data.displayField]}</span>
+                            </label>
+                        </li>
+                    `;
+                });
+
+                $("#" + data.dropdownId).html(html);
+
+                this.dropdown().search(data);
+            },
+
+            LoadCheckBoxByApi: (config) => {
+                console.log("fea", config);
+                Api.get({
+                    url: config.url,
+                    data: config.data,
+
+                    onSuccess: (data) => {
+                        this.dropdown().LoadCheckbox({
+                            ...config,
+                            json: data,
+                        });
+                        if (config.onSuccess) config.onSuccess(data);
+                    },
+                    onError: config.onError,
+                });
+            },
         };
     }
 
@@ -166,39 +222,48 @@ export default class ComponentHelper {
             search: (data) => {},
 
             LoadSelectItems(config) {
-                console.log("fea", config);
+    console.log("fea", config);
 
-                let html = "";
+    let html = "";
 
-                html += `
-                    <div class="flex flex-col pb-2 pt-5 px-2">
-                        <input id="dropdown_search" class="DropdownSearchBar border p-2 w-[250px] h-[30px] rounded-lg" type="search" required placeholder="Search" />
-                        <span id="NoResult" class="hidden">
-                           ${config.noDataText ?? "No Match Result"}
-                        </span>
-                    </div>
-                    `;
+    $.each(config.items, function (index, item) {
 
-                $.each(config.items, function (index, item) {
-                   if (item.modal) {
-                        html += `
-                            <option data-value="${item.data}" 
-                                    onclick="openModal('${item.modal}')">
-                                ${item.title}
-                            </option>
-                        `;
-                    } else {
-                        html += `
-                            <option data-value="${item.data}" 
-                                    onclick="window.location.href='${item.url}'">
-                                ${item.title}
-                            </option>
-                        `;
-                    }
-                });
+        if (item.modal) {
+            html += `
+                <option
+                    value="${item.data}"
+                    data-value="${item.data}"
+                    data-modal="${item.modal}"
+                >
+                    ${item.title}
+                </option>
+            `;
+        } 
+        else if (item.url) {
+            html += `
+                <option
+                    value="${item.data}"
+                    data-value="${item.data}"
+                    data-url="${item.url}"
+                >
+                    ${item.title}
+                </option>
+            `;
+        } 
+        else {
+            html += `
+                <option
+                    value="${item.data}"
+                    data-value="${item.data}"
+                >
+                    ${item.title}
+                </option>
+            `;
+        }
+    });
 
-                $(config.id).html(html);
-            },
+    $("#" + config.id).html(html);
+},
         };
     }
 }

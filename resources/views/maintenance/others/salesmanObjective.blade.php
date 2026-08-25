@@ -7,19 +7,27 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Sales Target" />
-                <div class="sheenFilterBtn border rounded-xl">
-                    <span class="flex  items-center justify-center px-5 gap-[5px]">
-                        <x-datepicker id="objective_rDatepicker" drops="down" class="whitespace-nowrap h-[30px] text-[13px]" />
-                        {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
-                        <i class="fa-solid fa-caret-down text-xs"></i>
-                    </span>
+                <div class="h-[25px]">
+                    <x-dropdown direction="dropdown-end dropdown-bottom">
+                        <x-slot:dropdownName class="w-[100px] ">
+                            <span
+                                class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
+                                <i class="mdi mdi-filter-variant"></i>
+                                Select Salesman
+                            </span>
+                        </x-slot:dropdownName>
+                        <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border "
+                            id="SalesmanCheckbox">
+                            {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
+                        </ul>
+                    </x-dropdown>
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
                 <div class="flex items-center w-full h-[60px] py-3">
                     <div class="flex gap-5 w-full">
                         <div>
-                            <x-exportDataTable class="sheenFilterBtn" tableId="#SalesTargetDataTable"/>
+                            <x-exportDataTable class="sheenFilterBtn" tableId="#SalesTargetDataTable" />
                         </div>
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
@@ -28,7 +36,7 @@
                     </div>
                 </div>
                 <div class="w-full pb-5 overflow-auto whitespace-nowrap" id="DataTable">
-                    <x-datatable id="SalesTargetDataTable"/>
+                    <x-datatable id="SalesTargetDataTable" />
                 </div>
             </div>
         </div>

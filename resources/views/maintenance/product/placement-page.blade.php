@@ -127,28 +127,34 @@
 
             <div class="flex items-center px-6 py-3 border-b gap-5">
                 <label for="placementType" class="font-bold w-40 shrink-0">Type</label>
-                <input type="text" id="placementType" name="type"
-                       class="input input-bordered w-full rounded-md" />
+                <div class="relative w-full ">
+                    <select id="placementType" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                    </select>
+                </div>
             </div>
 
             <div class="flex items-center px-6 py-3 border-b gap-5">
                 <label for="placementCustomerClass" class="font-bold w-40 shrink-0">Customer Class</label>
-                <input type="text" id="placementCustomerClass" name="customer_class"
-                       class="input input-bordered w-full rounded-md" />
+                <div class="relative w-full ">
+                    <select id="custClass" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                    </select>
+                </div>
             </div>
 
             <div class="flex items-center px-6 py-3 border-b gap-5">
                 <label for="placementProduct" class="font-bold w-40 shrink-0">Select Product</label>
-                <div class="relative w-full">
-                    <select id="placementProduct" name="product_id" class="w-full">
+                <div class="relative w-full ">
+                    <select id="placementProduct" name="product_id" class="w-full border h-[40px] rounded-md px-5">
                     </select>
                 </div>
             </div>
 
             <div class="flex items-center px-6 py-3 border-b gap-5">
                 <label for="placementValue" class="font-bold w-40 shrink-0">Placement</label>
-                <input type="text" id="placementValue" name="placement"
-                       class="input input-bordered w-full rounded-md" />
+                <div class="relative w-full ">
+                    <select id="placement" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                    </select>
+                </div>
             </div>
 
         </div>
@@ -182,4 +188,4 @@
 
 @endsection
 
-<script type="module" src="/app/module/Product/productPlacement.js"></script>
+<script type="module" src="/app/module/product/productPlacement.js"></script>

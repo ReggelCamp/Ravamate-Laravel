@@ -28,7 +28,7 @@
                                         <i class="fa-solid fa-caret-down"></i>
                                     </span>
                                 </x-slot:dropdownName>
-                                <ul class="dropdown_item border bg-white" id="innValuationItems">
+                                <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border " id="innValuationItems">
 
                                 </ul>
                             </x-dropdown>
@@ -44,8 +44,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-x-auto" id="DataTable">
-                    <x-datatable id="innValuationTable" />
+                <div class="w-full flex flex-col gap-2">
+                    <div id="inValReportname"
+                        class="relative  min-w-[200px] max-w-[500px] h-[74px] rounded-tl-2xl rounded-br-2xl overflow-hidden flex items-center justify-center">
+
+                        <img src="https://cdo.sfa-plus.com/SFA/v2/img/tableTitleBG.png"
+                            class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+
+                        <span id="salesmanName" class="relative z-10 text-white font-semibold text-[20px]">
+                        </span>
+
+                    </div>
+                    <div class="w-full pb-5 overflow-x-auto" id="DataTable">
+                        <x-datatable id="innValuationTable" />
+                    </div>
                 </div>
             </div>
         </div>

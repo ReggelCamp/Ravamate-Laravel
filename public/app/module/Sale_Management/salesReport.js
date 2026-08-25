@@ -640,7 +640,7 @@ $(document).on("click", "#salesReports li a[data-modal]", function (e) {
 });
 
 $(document)
-    .off("click.SaleReportRow", "#salesReportTable tbody tr")
+    .off("click.SalesReportRow", "#salesReportTable tbody tr")
     .on("click.SalesReportRow", "#salesReportTable tbody tr", function () {
         // salesman.js loads the data asynchronously; ensure DataTable is ready
         if (!$.fn.DataTable.isDataTable("#salesReportTable")) return;

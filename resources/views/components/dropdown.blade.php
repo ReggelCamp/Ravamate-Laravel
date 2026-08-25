@@ -1,15 +1,17 @@
 @props([
     'buttonClass' => '',
     'menuClass' => '',
+    'direction' => '',
 ])
 
-<div class="dropdown">
+<div class="dropdown {{ $direction }} ">
+
     <div
         tabindex="0"
         role="button"
-        class="h-[30px] flex justify-between items-center  {{ $buttonClass }}"
+        class="h-[30px] flex justify-between items-center {{ $buttonClass }}"
     >
-        <span class=" dropdownName flex-1">
+        <span class="dropdownName flex-1">
             {{ $dropdownName }}
         </span>
 
@@ -20,8 +22,9 @@
 
     <ul
         tabindex="0"
-        class="dropdown-content menu rounded-box z-50 min-w-full whitespace-nowrap p-2 font-medium text-[16px] {{ $menuClass }}"
+        class="dropdown-content menu rounded-box z-[999] min-w-full whitespace-nowrap p-2 font-medium text-[16px] {{ $menuClass }}"
     >
         {{ $slot }}
     </ul>
+
 </div>

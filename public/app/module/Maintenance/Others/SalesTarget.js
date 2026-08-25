@@ -40,6 +40,7 @@
 import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
+import ComponentHelper from "../../../helper/ComponentHelper.js"
 
 const SalesTargetColumns = [
     {
@@ -131,4 +132,13 @@ TableLoader.tableData(
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.dropdown().LoadCheckBoxByApi({
+url: "/salesmen",
+dropdownId: "SalesmanCheckbox",
+noDataText: "No SalesMan Found",
+displayField: "salesman_name",
+dataField: "salesman_id",
+
 });
