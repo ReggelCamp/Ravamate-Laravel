@@ -3,6 +3,12 @@
 @section('content')
 @section('title', 'MUST CARRY MAINTENANCE')
 
+    <style>
+        .dropdown {
+            width: 100%;
+        }
+    </style>
+
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
@@ -33,7 +39,7 @@
     </div>
 
       <dialog id="MustCarry" class="modal">
-        <div class="modal-box p-0 w-11/12 max-w-2xl">
+        <div class="modal-box p-0 overflow-visible">
             <form method="dialog">
                 <button class=" btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
@@ -45,7 +51,7 @@
             <div class="flex w-full flex-col p-5">
                 
                 <div class="flex justify-between items-center ">
-                    <span> Customer Class </span>
+                    <span class="flex whitespace-nowrap "> Customer Class </span>
                     <select class="select w-[350px]">
                         <option disabled selected>Choose Class</option>
                         <option value="CONVENIENCE" store="">CONVENIENCE STORE</option>
@@ -61,25 +67,24 @@
                 <div class="divider my-0"></div>
 
 
-                <div class="flex justify-between items-center">
-                    <span> Select Product </span>
-                    <select class="select w-[350px]">
-                        <option disabled selected>Select Product</option>
-                        <option>CORE</option>
-                        <option>NON-CORE</option>
-                    </select>
-                </div>
-                <div class="divider my-0"></div>
+                <div class="flex justify-between w-full items-center gap-5">
+                    <span class="flex whitespace-nowrap "> Select Product </span>
+                    <div class="w-[350px]">
+                        <x-dropdown class="w-[350px]"
+                            buttonClass="border  px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
+                            <x-slot:dropdownName class="w-full flex items-center justify-between">
+                                <span class="w-full" id="update_weekVisited_label">Select</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                            </x-slot:dropdownName>
 
-                <div class="flex justify-between items-center ">
-                    <span> Placement </span>
-                    <select class="select w-[350px]">
-                        <option disabled selected>Choose Here</option>
-                        <option>CORE</option>
-                        <option>Oppurtunity</option>
-                        <option>Dev Core</option>
-                    </select>
+                            <ul id="addMustCarry"
+                                class="border w-fit px-1 max-h-[300px] overflow-auto rounded-lg z-[9999] bg-white shadow-lg p-0">
+
+                            </ul>
+                        </x-dropdown>
+                    </div>
                 </div>
+
                 <div class="divider my-0"></div>
 
                 <div class="justify-end flex w-full gap-3">

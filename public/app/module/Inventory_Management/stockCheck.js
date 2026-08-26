@@ -44,6 +44,7 @@
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
+import ComponentHelper from "../../helper/ComponentHelper.js";
 
 const StockCheckColumns = [
     {
@@ -344,4 +345,17 @@ TableLoader.tableData(
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.select().loadByApi({
+    url: "/salesmen",
+    selectID: "salesmanStockCheck"
+});
+
+ComponentHelper.dropdown().LoadCheckBoxByApi({
+    url: "/salesmen",
+    dropdownId: "customerStockCheck",
+    noDataText: "No SalesMan Found",
+    displayField: "salesman_name",
+    dataField: "salesman_id",
 });

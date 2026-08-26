@@ -2,7 +2,7 @@
 @section('headerTitle', 'Dynamic Route List')
 @section('content')
 @section('title', 'DYNAMIC ROUTE LIST')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .FilterBtn{
             background-color: var(--primary);
@@ -19,7 +19,7 @@
             <div class=" report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Dynamic Route List" />
                <div class="flex gap-2 w-full justify-end">
-                    <button class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                    <button onclick="Refresh.showModal()" class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-refresh"></i>
                         Refresh
                     </button>
@@ -27,10 +27,12 @@
                         <i class="mdi mdi-file-document-refresh"></i>
                         Confirm Stock Request
                     </button>
-                    <button class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                    <a href ="{{ route('dynamicMap') }}" 
+                        id="useMapBtn"
+                        class="btn border p-1 rounded-xl sheenFilterBtn !text-white text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-map-legend"></i>
                         Use Map
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="w-full carouselBg p-5">
@@ -67,7 +69,7 @@
                             <div class="flex w-full justify-start md:justify-end items-center">
                                 <div class="flex w-full flex-col-reverse md:flex-row justify-between pb-5 gap-3 items-start lg:items-center h-full">
                                     <div class="flex rounded-2xl whitespace-nowrap gap-2 items-center font-medium justify-end">
-                                      <button onclick="group_transaction.showModal()" class="btn h-[30px] sheenFilterBtn rounded-2xl text-[12px]">Group Transaction</button>
+                                      <button id="groupTransaction" class="btn h-[30px] sheenFilterBtn rounded-2xl text-[12px]">Group Transaction</button>
                                       <button class="btn rounded-2xl text-[12px] h-[30px] sheenFilterBtn" onclick="filter.showModal()">Filter</button>
                                     </div>
                                     <div class="flex w-full justify-start md:justify-end items-center">
@@ -110,24 +112,24 @@
     <h3 class="text-lg font-bold p-5">Filter Data</h3>
     <div class="w-full border-t-1 text-gray-400"></div>
         <div class="flex flex-col gap-2 p-5">
-            <div class="flex w-full box-shadow bg-base-200 rounded-xl p-2 gap-2 items-center">
-                <p>Operation Type</p>
-                <select class="border p-2 rounded-xl w-full max-w-xs">
+            <div class="flex w-full box-shadow bg-base-200 rounded-xl p-2 items-center">
+                <p class="flex-1 w-fit px-5 whitespace-nowrap">Operation Type</p>
+                <select class="border p-2 rounded-xl flex w-full justify-start">
                     <option disabled selected>Choose Operation Type</option>
                     <option>BTDT</option>
                     <option>BOOKING</option>
                 </select>
             </div>
-            <div class="flex justify-between w-full bg-base-200 rounded-xl p-2 gap-2 items-center justify-start">
-                <p class="w-[150px]">Date</p>
-                <x-datepicker id="TransactionDatePicker" class="whitespace-normal text-black " label="Click Here To Filter Date"/>
+            <div class="flex w-full box-shadow bg-base-200 rounded-xl gap-[80px] p-2 items-center">
+                <p class="flex w-fit px-5">Date</p>
+                <x-datepicker id="TransactionDatePicker" class="flex w-full whitespace-nowrap justify-start text-black " label="Click Here To Filter Date"/>
             </div>
         </div>
         <div class="w-full justify-end items-end w-full pb-5 px-5">
             <form method="dialog ">
                 <div class="flex gap-2 w-full justify-end">
                     <button class="btn">Close</button>
-                    <button class="btn FilterBtn">Proceed</button>
+                    <button class="btn">Proceed</button>
                 </div>
             </form>
         </div>
@@ -145,16 +147,18 @@
         </div>
 
         <div class="flex flex-col">
-            <div class="flex items-center justify-between px-5 py-4 border-b">
-                <label for="stockRequest_salesman" class="font-bold text-xs tracking-wide uppercase">Salesman</label>
-                <select id="stockRequest_salesman" class="border rounded-lg px-3 py-2 text-sm text-gray-500 w-64">
+            <div class="flex items-center w-full justify-between px-5 py-4 border-b">
+                <label for="stockRequest_salesman" class="font-bold text-xs w-full uppercase">Salesman</label>
+                <select id="stockRequest_salesman" class="border justify-start rounded-lg px-3 py-2 text-sm text-gray-500 w-full">
                     <option value="">Select Salesman</option>
                 </select>
             </div>
 
-            <div class="flex items-center justify-between px-5 py-4">
-                <label class="font-bold text-xs tracking-wide uppercase">Date</label>
-                <x-datepicker/>
+            <div class="flex items-center w-full justify-between px-5 py-4">
+                <label class="font-bold text-xs w-full uppercase ">Date</label>
+                <div class="flex w-full justify-start border rounded-lg px-3">
+                    <x-datepicker/>
+                </div>
             </div>
         </div>
 
@@ -163,6 +167,27 @@
             <button type="button" id="stockRequest_executeBtn" class="btn bg-red-900 hover:bg-red-800 text-white border-none">Execute</button>
         </div>
     </div>
+</dialog>
+
+<dialog id="Refresh" class="modal">
+  <div class="modal-box p-0">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-lg font-semibold p-5 border-b">Select Booking Date to Refresh</h3>
+    <div class="flex w-full flex-col">
+        <div class="flex w-full p-5 whitespace-nowrap">
+            <span class="flex w-full">Booking Date:</span>
+            <div  class="flex w-full justify-start">
+                <x-datepicker label="Pick a date Here" />
+            </div>
+        </div>
+        <div class="flex w-full gap-5 p-5 justify-end border-t">
+            <button class="btn">Close</button>
+            <button class="btn">Execute</button>
+        </div>
+    </div>
+  </div>
 </dialog>
 
 @endsection

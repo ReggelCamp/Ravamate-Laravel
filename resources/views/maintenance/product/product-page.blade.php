@@ -50,12 +50,13 @@
 
         {{-- Image preview + upload --}}
         <div class="flex flex-col items-center py-8 border-b">
-            <div class="w-48 h-48 flex items-center justify-center mb-4">
+            <div class="w-48 h-48 flex items-center justify-center mb-4 flex-col">
                 <img id="productModalImage"
                      src=""
                      alt="Product image"
                      class="max-w-full max-h-full object-contain"
                      onerror="this.style.display='none'" />
+                <input type="button" style="font-size: 12px; margin-top: 10px;" class="btn btn-sm" value="Browse Image" id="but_upload">
             </div>
         </div>
 

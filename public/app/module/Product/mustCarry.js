@@ -26,6 +26,8 @@
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
+import ComponentHelper from "../../helper/ComponentHelper.js";
+
 
 const MustCarryColumns = [
     {
@@ -88,6 +90,19 @@ const sampleData = [
     },
 ];
 
+const ProductOptions = [
+    { data: "ITM-1001", title: "Coca-Cola 1.5L" },
+    { data: "ITM-1002", title: "Pepsi 1.5L" },
+    { data: "ITM-1003", title: "Nescafe 3-in-1 Original" },
+    { data: "ITM-1004", title: "Lucky Me Pancit Canton" },
+    { data: "ITM-1005", title: "Milo Chocolate Drink 300g" },
+    { data: "ITM-1006", title: "Colgate Toothpaste 150g" },
+    { data: "ITM-1007", title: "Palmolive Shampoo 350ml" },
+    { data: "ITM-1008", title: "Century Tuna Flakes 155g" },
+    { data: "ITM-1009", title: "Piattos Cheese 85g" },
+    { data: "ITM-1010", title: "Bear Brand Powdered Milk 300g" },
+];
+
 TableLoader.tableData(
     "#mustCarryTable", // Replace with your actual table ID
     sampleData,
@@ -99,6 +114,13 @@ TableLoader.tableData(
 
 $(document).ready(function () {
     DatePicker.init();
+});
+
+ComponentHelper.dropdown().load({
+    json: ProductOptions,
+    dropdownId: "addMustCarry",
+    displayField: "title",
+    dataField:"data"
 });
 
 $(document)

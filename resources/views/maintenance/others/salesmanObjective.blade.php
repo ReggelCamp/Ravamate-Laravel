@@ -9,17 +9,31 @@
                 <x-report-header-title title="Sales Target" />
                 <div class="h-[25px]">
                     <x-dropdown direction="dropdown-end dropdown-bottom">
-                        <x-slot:dropdownName class="w-[100px] ">
+                        <x-slot:dropdownName class="w-[100px]">
                             <span
                                 class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
                                 <i class="mdi mdi-filter-variant"></i>
                                 Select Salesman
                             </span>
                         </x-slot:dropdownName>
-                        <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border "
-                            id="SalesmanCheckbox">
-                            {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
-                        </ul>
+
+                        <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">
+                            <ul class="max-h-[220px] overflow-auto p-2" id="SalesmanCheckbox">
+                                {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
+                                {{-- checkboxes injected via JS --}}
+                            </ul>
+
+                            <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
+                                <button type="button" id="SalesmanCheckbox_Cancel"
+                                    class="btn btn-ghost btn-xs rounded-full text-[12px]">
+                                    Cancel
+                                </button>
+                                <button type="button" id="SalesmanCheckbox_Confirm"
+                                    class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
                     </x-dropdown>
                 </div>
             </div>

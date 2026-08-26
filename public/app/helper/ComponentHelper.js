@@ -58,28 +58,27 @@ export default class ComponentHelper {
                     "input",
                     "#" + data.dropdownId + " #dropdown_search",
                     function () {
-                        let found = false;
-                        let keyword = $(this).val();
-
+                        const keyword = $(this).val().toLowerCase();
                         const $dropdown = $(this).closest("ul");
+                        let found = false;
 
-                        // Loop through every <li> in that dropdown
-                        $dropdown.find("li").each(function () {
-                            const text = $(this).text().toLowerCase();
+                        $dropdown
+                            .find("li")
+                            .not("#NoResult") // skip the "no result" row
+                            .not(function () {
+                                // skip the search-bar's own <li>
+                                return (
+                                    $(this).find("#dropdown_search").length > 0
+                                );
+                            })
+                            .each(function () {
+                                const text = $(this).text().toLowerCase();
+                                const match = text.includes(keyword);
+                                $(this).prop("hidden", !match);
+                                if (match) found = true;
+                            });
 
-                            const match = text.includes(keyword);
-                            $("#NoResult").addClass("hidden");
-                            $(this).prop("hidden", !match);
-
-                            if (match) {
-                                found = true;
-                            } else if (!found) {
-                                $("#NoResult").removeClass("hidden");
-                            }
-                            console.log();
-                        });
-
-                        console.log(found);
+                        $("#NoResult").toggleClass("hidden", found);
                     },
                 );
             },
@@ -124,7 +123,7 @@ export default class ComponentHelper {
                 let html = "";
 
                 html += `
-                    <li class="border-b px-4 py-3">
+                    <li class="border-b">
                         <input
                             type="search"
                             id="dropdown_search"
@@ -139,7 +138,7 @@ export default class ComponentHelper {
 
                 $.each(data.json ?? [], function (index, item) {
                     html += `
-                        <li class="border-b ">
+                        <li class=" ">
                             <label class="flex items-center gap-3 cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -147,7 +146,7 @@ export default class ComponentHelper {
                                     value="${item[data.dataField]}"
                                     data-label="${item[data.displayField]}"
                                 />
-                                <span class="text-sm font-bold uppercase">${item[data.displayField]}</span>
+                                <span class="text-sm font-semibold uppercase">${item[data.displayField]}</span>
                             </label>
                         </li>
                     `;
@@ -195,7 +194,7 @@ export default class ComponentHelper {
 
                 $.each(data.data, function (index, item) {
                     html += `
-                    <option class="salesman-item"  data-salesman="${item.salesman_name}">
+                    <option class="salesman-item" data-salesman="${item.salesman_name}">
                             ${item.salesman_name}
                     </option>
                 `;
@@ -227,7 +226,6 @@ export default class ComponentHelper {
                 let html = "";
 
                 $.each(config.items, function (index, item) {
-
                     if (item.modal) {
                         html += `
                             <option
@@ -238,8 +236,7 @@ export default class ComponentHelper {
                                 ${item.title}
                             </option>
                         `;
-                    } 
-                    else if (item.url) {
+                    } else if (item.url) {
                         html += `
                             <option
                                 value="${item.data}"
@@ -249,8 +246,7 @@ export default class ComponentHelper {
                                 ${item.title}
                             </option>
                         `;
-                    } 
-                    else {
+                    } else {
                         html += `
                             <option
                                 value="${item.data}"
@@ -265,6 +261,28 @@ export default class ComponentHelper {
                 $("#" + config.id).html(html);
             },
 
+            LoadCheckBox: (config) => {
+                let html = "";
+
+                $.each(config.json ?? [], function (index, item) {
+                    html += `
+                        <li>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    class="salesman-item"
+                                    value="${item.id}"
+                                    data-salesman="${item.salesman_name}"
+                                />
+                                <span>${item.salesman_name}</span>
+                            </label>
+                        </li>
+                    `;
+                });
+
+                $("#" + config.selectID).html(html);
+            },
+
             LoadCheckBoxByApi: (config) => {
                 console.log("fea", config);
                 Api.get({
@@ -272,7 +290,7 @@ export default class ComponentHelper {
                     data: config.data,
 
                     onSuccess: (data) => {
-                        this.dropdown().LoadCheckbox({
+                        this.select().LoadCheckBox({
                             ...config,
                             json: data,
                         });

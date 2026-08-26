@@ -164,9 +164,20 @@ ComponentHelper.select().LoadSelectItems({
     items: CustClassOptions
 });
 
-ComponentHelper.select().LoadSelectItems({
-    id: "placementProduct",
-    items: ProductOptions
+ComponentHelper.dropdown().load({
+    json: ProductOptions,
+    dropdownId: "productPlacement",
+    noDataText: "No SalesMan Found",
+    displayField: "title",
+    dataField: "data",
+});
+
+ComponentHelper.dropdown().load({
+    json: ProductOptions,
+    dropdownId: "addProductPlacement",
+    noDataText: "No SalesMan Found",
+    displayField: "title",
+    dataField: "data",
 });
 
 ComponentHelper.select().LoadSelectItems({

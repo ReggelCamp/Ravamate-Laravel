@@ -1084,3 +1084,10 @@ function DisplayQueueInfo(type, rowData) {
 function renderQueueTable(bodyId, rows, rowTemplate) {
     $('#' + bodyId).html(rows.map(rowTemplate).join(''));
 }
+
+$(document).on("click", "#sfaRefresh", function(){
+    Swal.fire({
+        text: "This could take time, please wait while we process your request.",
+        icon: "question"
+    });
+});

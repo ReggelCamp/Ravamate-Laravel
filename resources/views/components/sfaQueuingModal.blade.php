@@ -147,11 +147,13 @@
                             ,,
                         </span>
                     </div>
-                    <div class="flex w-full px-5 justify-between">
-                        <div class="flex flex-col items-center border rounded-2xl px-5 justify-between">
+                    <div class="flex w-full  justify-between">
+                        <div class="flex flex-col items-center border rounded-2xl px-10 justify-between">
                             <span>Delivery Date</span>
                             <div class="flex justify-between items-center gap-5">
-                                <span class="mdi mdi-calendar-month-outline salesDetailsIcon text-[20px] bg-amber-400"></span>
+                                <span class=" salesDetailsIcon text-[20px] rounded-2xl p-0.5 bg-amber-400 text-white">
+                                    <i class="mdi mdi-calendar-month-outline"></i>
+                                </span>
                                 <div class="flex flex-col items-center">
                                     <span class="text-[7.5px]">Date</span>
                                     <span class="text-[12px]">07/01/2026</span>
@@ -159,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between items-center gap-5">
-                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] bg-amber-400"></span>
+                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] text-white rounded-2xl p-0.5 bg-amber-400"></span>
                                 <div class="flex flex-col items-center">
                                     <span class="text-[7.5px]">Time</span>
                                     <span class="text-[12px]">10:06:22.347</span>
@@ -167,7 +169,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center px-5 justify-between">
+                        <div class="flex flex-col items-center  justify-between">
                             <div class="battery-card">
                                 <div class="battery-title">
                                     Battery Status

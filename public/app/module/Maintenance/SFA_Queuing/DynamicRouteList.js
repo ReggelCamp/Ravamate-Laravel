@@ -408,6 +408,20 @@ $(document).ready(function () {
     DatePicker.init();
 });
 
+ComponentHelper.select().loadByApi({
+    url: "/salesmen",
+    selectID: "stockRequest_salesman",
+    displayField: "salesman_name",
+    dataField: "salesman_id"
+});
+
+$(document).on("click", "#groupTransaction", function(){
+    Swal.fire({
+        text: "No Data Selected.",
+        icon: "warning"
+    });
+});
+
 // ComponentHelper.Select().LoadCheckBoxByApi({
 //     url: "/salesmen",                   // optional
 //     dropdownId: "stockRequest_salesman",       // passed through to LoadCheckbox()

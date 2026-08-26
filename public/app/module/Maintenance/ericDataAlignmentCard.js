@@ -1,3 +1,5 @@
+import ComponentHelper from "../../helper/ComponentHelper.js";
+
 const cdoSyncCards = [
     {
         label: "Sync CDO Customer",
@@ -18,6 +20,7 @@ const cdoSyncCards = [
         route: "placementmaintenance",
         img: "https://cdo.sfa-plus.com/SFA/v2/img/CDOAlignment_Inventory.svg",
         id: "sync-CDOpalcement",
+        modal: "serviceType",
         desc: "This will allign CDO Inventory.",
     },
     {
@@ -32,13 +35,14 @@ const cdoSyncCards = [
         route: "salesmanobjective",
         img: "https://cdo.sfa-plus.com/SFA/v2/img/CDOAlignment_PastTransactions.svg",
         id: "sync-CDOoblective",
+        modal: "serviceType",
         desc: "This will allign CDO past transactions.",
     },
     {
         label: "Sync CDO Past Products",
         route: "mustcarry",
         img: "https://cdo.sfa-plus.com/SFA/v2/img/CDOAlignment_Products.svg",
-        id: "sync-CDOmustcarry",
+        id: "sync-CDOmustcarry",   
         desc: "This will allign product details & price list.",
     },
     {
@@ -67,9 +71,10 @@ const sfaSyncCards = [
     },
 ];
 
-    console.log(sfaSyncCards.label);
+console.log(sfaSyncCards.label);
 
-  cdoSyncCards.forEach(card => {
+cdoSyncCards.forEach((card) => {
+    console.log("id", card.id);
     $(".cardContent").append(`
         <div id="${card.id}" class="flex cdoSyncCards flex-col gap-0 w-full max-w-[300px] mx-auto h-[240px]">
 
@@ -90,26 +95,25 @@ const sfaSyncCards = [
                 </div>
                 <span class="hidden descContainer">${card.desc}</span>
 
-                <div class="flex w-full items-end justify-end">
-                    <a class="flex execute-sync-btn"
-                       data-url="${card.route}"
-                       data-label="${card.label}">
-
-                        <button onclick="cdo_sync.showModal()" class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
-                            Execute
-                        </button>
-
-                    </a>
+                <div class = "flex w-full justify-end">
+                    <button
+                        type="button"
+                        class="shine-sync execute-sync-btn w-[80px] flex items-center justify-center py-2 rounded-xl text-xs"
+                        data-url="${card.route}"
+                        data-label="${card.label}"
+                        data-modal="${card.modal ?? ""}"
+                    >
+                        Execute
+                    </button>
                 </div>
-
             </div>
 
         </div>
     `);
 });
 
-sfaSyncCards.forEach(card => {
-    $('.SfaContent').append(`
+sfaSyncCards.forEach((card) => {
+    $(".SfaContent").append(`
         <div id="${card.id}" class="sfaSyncCards flex flex-col gap-0 w-full max-w-[300px] mx-auto h-[240px]">
 
             <h2 class="card-title rounded-t-4xl py-2 w-full flex justify-center headerColor maintinanceCard">
@@ -131,49 +135,98 @@ sfaSyncCards.forEach(card => {
                     </span>
             </div>
 
-                <!-- Bottom Right Button -->
-                <div class="absolute bottom-4 right-4">
-                    <a class="execute-sync-btn"
+                <div class = "flex w-full justify-end">
+                    <!-- Bottom Right Button -->
+                    <button
+                        type="button"
+                        class="shine-sync execute-sync-btn w-[80px] flex items-center justify-center py-2 rounded-xl text-xs"
                         data-url="${card.route}"
-                        data-label="${card.label}">
-                        <button class="shine-sync w-[80px] flex items-center justify-center py-2 rounded-xl text-xs">
-                            Execute
-                        </button>
-                    </a>
+                        data-label="${card.label}"
+                        data-modal="${card.modal ?? ""}"
+                    >
+                        Execute
+                    </button>
                 </div>
-
             </div>
 
         </div>
     `);
 });
 
-$('.SfaContent')
-.on('mouseenter', '.sfaSyncCards', function () {
-    $(this).find('.descContainer').removeClass('hidden');
+$(".SfaContent")
+    .on("mouseenter", ".sfaSyncCards", function () {
+        $(this).find(".descContainer").removeClass("hidden");
 
-    $(this).find('.cardContentWrapper').css({
-        transform: 'translateY(-25px)'
+        $(this).find(".cardContentWrapper").css({
+            transform: "translateY(-25px)",
+        });
+
+        $(this).find(".sfaIcon").css({
+            fontSize: "30px",
+        });
+    })
+    .on("mouseleave", ".sfaSyncCards", function () {
+        $(this).find(".descContainer").addClass("hidden");
+
+        $(this).find(".cardContentWrapper").css({
+            transform: "translateY(0)",
+        });
+
+        $(this).find(".sfaIcon").css({
+            fontSize: "80px",
+        });
     });
 
-    $(this).find('.sfaIcon').css({
-        fontSize: '30px'
-    });
-})
-.on('mouseleave', '.sfaSyncCards', function () {
-    $(this).find('.descContainer').addClass('hidden');
-
-    $(this).find('.cardContentWrapper').css({
-        transform: 'translateY(0)'
+$(".cardContent")
+    .on("mouseenter", ".cdoSyncCards", function () {
+        $(this).find(".descContainer").removeClass("hidden");
+    })
+    .on("mouseleave", ".cdoSyncCards", function () {
+        $(this).find(".descContainer").addClass("hidden");
     });
 
-    $(this).find('.sfaIcon').css({
-        fontSize: '80px'
-    });
+$(document).on("click", ".execute-sync-btn", function () {
+    const route = $(this).data("url");
+    const label = $(this).data("label");
+    const modalType = $(this).data("modal");
+
+    // save context for later
+    $("#cdo_sync").data({ route, label, modal: modalType });
+
+    $("#cdo_sync")[0].showModal();
 });
 
-$('.cardContent').on('mouseenter', '.cdoSyncCards', function () {
-    $(this).find('.descContainer').removeClass('hidden');
-}).on('mouseleave', '.cdoSyncCards', function () {
-    $(this).find('.descContainer').addClass('hidden');
+$(document).on("click", ".Service_type", function () {
+    $("#cdo_sync")[0].close();
+
+    // read back what was stored when cdo_sync opened
+    const { route, label, modal: modalType } = $("#cdo_sync").data();
+
+    console.log("Route:", route);
+    console.log("Label:", label);
+    console.log("Modal:", modalType);
+
+    if (modalType === "serviceType") {
+        $("#productSyncModal")[0].showModal();
+        return;
+    }
+    if (!modalType) {
+        Swal.fire({
+            text: "This could take time, please wait while we process your request.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Okay",
+            cancelButtonText: "Cancel"
+        });
+        return;
+    }
+
+    console.log("Execute normal sync:", route);
+});
+
+ComponentHelper.select().loadByApi({
+    url: "/salesmen",
+    selectID: "salesmanSelect",
+    displayField: "salesman_name",
+    dataField: "salesman_id",
 });

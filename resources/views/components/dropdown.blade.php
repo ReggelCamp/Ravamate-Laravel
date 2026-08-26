@@ -11,7 +11,7 @@
         role="button"
         class="h-[30px] flex justify-between items-center {{ $buttonClass }}"
     >
-        <span class="dropdownName flex-1">
+        <span class="dropdownName">
             {{ $dropdownName }}
         </span>
 

@@ -264,6 +264,11 @@ Route::get('/dynamic-route-list', function () {
     return view('maintenance.sfaQueuing.dynamic-route-list');
 })->name('dynamic-route-list');
 
+//dynamicMap
+Route::get('/dynamicMap', function () {
+    return view('maintenance.sfaQueuing.dynamicMap');
+})->name('dynamicMap');
+
 // Digital Map
 Route::get('/getGoogleMapsData', [Digital_mapController::class, 'getGoogleMapsData']);
 

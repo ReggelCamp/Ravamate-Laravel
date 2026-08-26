@@ -79,7 +79,7 @@
 
         <div class="w-full h-full flex flex-col lg:flex-row">
             {{-- Left Side --}}
-            <div id="dashboardSidePanel" class="lg:w-[400px] ">
+            <div id="dashboardSidePanel" class="order-2 lg:order-1 lg:w-[400px]">
 
                 {{-- Salesman Info --}}
                 <div id="Salesman_Container"
@@ -634,11 +634,8 @@
             </div>
 
             {{-- Main div --}}
-            <div class="flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
-
-                {{-- Map --}}
-                <div class="w-full flex flex-col HideMap h-full lg:flex-1 lg:h-auto ">
-
+<div class="order-1 lg:order-2 flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
+    <div class="w-full flex flex-col h-[350px] lg:flex-1 lg:h-auto">
                     {{-- Map Header --}}
                     <div
                         class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">

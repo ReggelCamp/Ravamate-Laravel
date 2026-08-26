@@ -168,6 +168,7 @@
                     </a>
 
                     <button
+                        id="sfaRefresh"
                         class="bg-transparent text-sm rounded-xl h-[30px] items-center inline-flex gap-2 sfaShine_Btn px-4 py-2">
                         <i class="fas fa-refresh"></i>
                         Refresh

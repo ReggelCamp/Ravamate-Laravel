@@ -685,6 +685,13 @@ const EcmfTradeChannel = [
     
 ]
 
+const GroupItems = [
+    {
+        title: "No Group",
+        data: "nogroup"
+    }
+]
+
 TableLoader.tableData(
     "#EcmfTable",
     EcmfSampleData,
@@ -701,8 +708,14 @@ ComponentHelper.select().loadByApi({
 });
 
 ComponentHelper.select().LoadSelectItems({
-    id: "#ecmfModal_TradeChannel",
+    id: "ecmfModal_TradeChannel",
     items: EcmfTradeChannel
+})
+
+ComponentHelper.select().LoadSelectItems({
+    id: "ecmfModal_CustomerGroup",
+    items: GroupItems
+
 })
 
 $(document).ready(function () {
@@ -782,3 +795,78 @@ function setEcmfStatusBadge(status) {
             $badge.addClass("bg-gray-100 text-gray-700");
     }
 }
+
+// --- Address Cascade: Province -> Municipality -> Barangay ---
+
+function loadProvinces() {
+    fetch('https://psgc.gitlab.io/api/provinces/')
+        .then(res => res.json())
+        .then(provinces => {
+            const $province = $('#ecmfModal_Province');
+            $province.empty().append('<option value="" disabled selected>Choose here</option>');
+
+            provinces
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(p => {
+                    $province.append(`<option value="${p.code}">${p.name}</option>`);
+                });
+        })
+        .catch(err => console.error('Failed to load provinces:', err));
+}
+
+function loadMunicipalities(provinceCode) {
+    const $municipality = $('#ecmfModal_Municipality');
+    $municipality.empty().append('<option value="" disabled selected>Choose here</option>');
+    $('#ecmfModal_Barangay').empty().append('<option value="" disabled selected>Choose here</option>');
+
+    if (!provinceCode) return;
+
+    fetch(`https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities/`)
+        .then(res => res.json())
+        .then(list => {
+            list
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(m => {
+                    $municipality.append(`<option value="${m.code}">${m.name}</option>`);
+                });
+        })
+        .catch(err => console.error('Failed to load municipalities:', err));
+}
+
+function loadBarangays(municipalityCode) {
+    const $barangay = $('#ecmfModal_Barangay');
+    $barangay.empty().append('<option value="" disabled selected>Choose here</option>');
+
+    if (!municipalityCode) return;
+
+    fetch(`https://psgc.gitlab.io/api/cities-municipalities/${municipalityCode}/barangays/`)
+        .then(res => res.json())
+        .then(list => {
+            list
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(b => {
+                    $barangay.append(`<option value="${b.code}">${b.name}</option>`);
+                });
+        })
+        .catch(err => console.error('Failed to load barangays:', err));
+}
+
+$(document)
+    .off('change.ecmfProvince', '#ecmfModal_Province')
+    .on('change.ecmfProvince', '#ecmfModal_Province', function () {
+        loadMunicipalities($(this).val());
+    });
+
+$(document)
+    .off('change.ecmfMunicipality', '#ecmfModal_Municipality')
+    .on('change.ecmfMunicipality', '#ecmfModal_Municipality', function () {
+        loadBarangays($(this).val());
+    });
+
+$(document)
+    .off('input.ecmfPostalCode', '#ecmfModal_PostalCode')
+    .on('input.ecmfPostalCode', '#ecmfModal_PostalCode', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 4);
+    });
+
+loadProvinces();

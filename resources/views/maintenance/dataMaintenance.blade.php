@@ -2,7 +2,7 @@
 @section('headerTitle', 'DATA ALIGNMENT')
 @section('content')
 @section('title', 'DATA ALIGNMENT')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
@@ -12,6 +12,10 @@
             left: 50%;
             transform: translateX(-50%);
             margin: 0;
+        }
+
+        .dropdown, .dropdownName {
+            width: 100% !important;
         }
     </style>
 
@@ -64,28 +68,90 @@
             </div>
         </div>
     </dialog>
-    
-   <dialog id="cdo_sync" class="modal">
+
+    <dialog id="cdo_sync" class="modal">
         <div class="modal-box p-0">
             <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
-            <h3 class="text-lg font-bold text-[20px] p-5">Service Type</h3>
+            <h3 class="text-lg font-bold text-[20px] p-5">Select Service Type</h3>
             <span class="w-full border-t border-gray-300 flex"></span>
             <div class="flex p-10 px-15 justify-between">
-                <div class=" border w-[160px] h-[147px] items-center rounded-[20px] justify-center flex flex-col">
-                    <i class="fas fa-cube text-[48px] "></i>
+                <div
+                    class="Service_type border w-[160px] h-[147px] sheenFilterBtn items-center rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-cube text-[48px]"></i>
                     <span class="flex font-medium">Frozen Products</span>
                 </div>
-                <div class=" border w-[160px] h-[147px] items-center rounded-[20px] justify-center flex flex-col">
-                    <i class="fas fa-cubes text-[48px] "></i>
+                <div
+                    class="Service_type border w-[160px] h-[147px] items-center sheenFilterBtn rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-cubes text-[48px]"></i>
                     <span class="flex font-medium">Grocery Products</span>
                 </div>
             </div>
         </div>
     </dialog>
 
+    <dialog id="productSyncModal" class="modal">
+        <div class="modal-box p-0 rounded-2xl overflow-visible">
+
+            <!-- HEADER -->
+            <div class="flex items-center justify-between p-5 border-b">
+                <h1 class="text-xl font-semibold">Salesman</h1>
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost">✕</button>
+                </form>
+            </div>
+
+            <!-- BODY -->
+            <div class="flex flex-col w-full">
+
+                <!-- CONTENT -->
+                <div class="w-full p-5">
+
+                    <div class="relative w-full">
+                        <x-dropdown class="w-full">
+
+                            <x-slot:dropdownName class="w-full">
+                                <span
+                                    class="flex items-center justify-between w-full h-[40px] px-5 border rounded-xl sheenFilterBtn font-medium text-[12px]">
+                                    <span class="flex items-center gap-2">
+                                        <span>Select Salesman</span>
+                                    </span>
+
+                                    <i class="mdi mdi-chevron-down text-base"></i>
+                                </span>
+                            </x-slot:dropdownName>
+
+                            <ul id="salesmanSelect"
+                                class="dropdown_item w-[300px] max-h-[300px] overflow-y-auto p-2 bg-white border rounded-xl z-[999999]">
+                            </ul>
+
+                        </x-dropdown>
+                    </div>
+
+                </div>
+
+                <!-- FOOTER -->
+                <div class="flex items-center justify-end gap-3 w-full border-t p-5">
+
+                    <form method="dialog">
+                        <button type="submit" class="btn btn-neutral rounded-lg">
+                            Close
+                        </button>
+                    </form>
+
+                    <button type="button" id="executeInventoryBtn" class="btn rounded-lg text-white"
+                        style="background-color:#7a1420;">
+                        Execute Inventory
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </dialog>
+
 @endsection
 
 <script type="module" src="/app/module/Maintenance/ericDataAlignmentCard.js"></script>
-

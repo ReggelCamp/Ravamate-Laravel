@@ -367,9 +367,25 @@ ComponentHelper.dropdown().load({
     noDataText: "No Days Found"
 });
 
+ComponentHelper.dropdown().load({
+    json: DaysOfVisit,
+    dropdownId: "dayOfWeekTable",
+    displayField: "title",   // whatever key on each FrequencyItems object holds the label
+    dataField: "data",        // whatever key holds the value to use as data-id
+    noDataText: "No Days Found"
+});
+
 ComponentHelper.dropdown().LoadCheckbox({
     json: DaysOfVisit,
     dropdownId: "weekVisitedDropdown",
+    displayField: "title",   // whatever key on each FrequencyItems object holds the label
+    dataField: "data",        // whatever key holds the value to use as data-id
+    noDataText: "No Days Found"
+});
+
+ComponentHelper.dropdown().LoadCheckbox({
+    json: DaysOfVisit,
+    dropdownId: "weekVisitedTable",
     displayField: "title",   // whatever key on each FrequencyItems object holds the label
     dataField: "data",        // whatever key holds the value to use as data-id
     noDataText: "No Days Found"
