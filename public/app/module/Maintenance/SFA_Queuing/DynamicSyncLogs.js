@@ -74,6 +74,9 @@ TableLoader.tableData(
     "#AdminSyncLogsDataTable",
     DynamicSyncLogsSampleData,
     DynamicSyncLogsColumns,
+    {
+        scrollY:"500px"
+    }
 );
 
 $(document).ready(function () {

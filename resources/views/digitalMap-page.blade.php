@@ -9,7 +9,7 @@
 
         {{-- MAP --}}
         <div class="w-full flex-1 h-screen">
-            <x-DigitalMap />
+            <x-DigitalMap speedDialPosition="bottom-[75px] right-[10px]" />
         </div>
 
         {{-- <div class="w-full flex flex-col min-h-screen p-5">
@@ -61,22 +61,22 @@
     </div>
 
     {{-- Map controls --}}
-    <aside class="absolute right-6 top-1/2 z-10 hidden w-fit p-5  -translate-y-1/2 rounded-2xl bg-white/70 text-[14px] text-slate-600 shadow-2xl lg:block">
-        <h2 class="border-b pb-2 text-center text-2xl font-bold text-[#06143b]">Map Controls</h2>
-        <div class="mt-5 space-y-3">
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm" disabled><span class="text-slate-400">Uncovered Accounts</span></label>
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm" checked><span>Covered Accounts</span></label>
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm"><span>Cluster</span></label>
+    <div class="absolute left-3 top-20 z-10 hidden w-fit p-5 rounded-xl bg-white/70 text-[14px] text-slate-600 shadow-2xl lg:block">
+        <h2 class="border-b pb-2 text-center text-lg font-bold text-[#06143b]">Map Controls</h2>
+        <div class="mt-5 space-y-3 text-[12px]">
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs" disabled><span class="text-slate-400">Uncovered Accounts</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs" checked><span>Covered Accounts</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs"><span>Cluster</span></label>
             <label id="heatmap_radiobtn" class="flex items-center gap-3">
-                <input id="heatmapToggle" type="checkbox" class="toggle toggle-sm" checked>
+                <input id="heatmapToggle" type="checkbox" class="toggle toggle-xs" checked>
                 <span>Heatmap</span>
             </label>
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm"><span>Set Marker Colors<br>by MSM</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs"><span>Set Marker Colors<br>by MSM</span></label>
             <p class="pl-10 text-[11px] text-slate-400">• Color Legend</p>
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm"><span>Set Marker by Channel</span></label>
-            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-sm" disabled><span class="text-slate-400">Display Geo Fence</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs"><span>Set Marker by Channel</span></label>
+            <label class="flex items-center gap-3"><input type="checkbox" class="toggle toggle-xs" disabled><span class="text-slate-400">Display Geo Fence</span></label>
         </div>
-    </aside>
+    </div>
 
     {{-- <div class="absolute left-1/2 top-8 z-10 -translate-x-1/2 rounded-full bg-[#020b35] p-4 text-white shadow-lg">
         <i class="fa-solid fa-angles-down text-xl"></i>

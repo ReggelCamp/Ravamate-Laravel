@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DcrController;
 use App\Http\Controllers\Digital_mapController;
 use App\Http\Controllers\DsrController;
 use App\Http\Controllers\DsrrController;
 use App\Http\Controllers\SalesmanModelController;
+use App\Http\Controllers\Helpers\DisplaySalesmanController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -314,5 +316,7 @@ Route::get('/sosyocalendar', function () {
     return view('salesManagement.OtherSalesReports.SosyoTransaction.sosyoCalendar');
 })->name('sosyocalendar');
 
+// API
+Route::post('/DisplaySalesman',[DisplaySalesmanController::class,'getSalesman']);
 
-
+Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);

@@ -634,8 +634,8 @@
             </div>
 
             {{-- Main div --}}
-<div class="order-1 lg:order-2 flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
-    <div class="w-full flex flex-col h-[350px] lg:flex-1 lg:h-auto">
+            <div class="order-1 lg:order-2 flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
+                <div class="w-full flex flex-col h-[350px] lg:flex-1 lg:h-auto">
                     {{-- Map Header --}}
                     <div
                         class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">
@@ -650,12 +650,12 @@
                     </div>
 
                     {{-- Map Body --}}
-                    <div class="w-full h-full bg-white relative">
+                    <div class="w-full h-[450px] bg-white relative">
                         <x-DigitalMap />
 
                         <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">
                             <div
-                                class="flex w-[450px] gap-5 ps-2 justify-center items-center rounded-full h-[35px] bg-gray-200 pointer-events-auto">
+                                class="flex w-fit px-5 gap-5 justify-center items-center rounded-full h-[35px] bg-gray-200/70 pointer-events-auto">
                                 {{-- avatar --}}
                                 <div class="flex h-full items-center gap-2">
                                     <div class="avatar">
@@ -681,10 +681,10 @@
                 </div>
 
                 {{-- Table --}}
-                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[400px] sm:h-[350px] lg:h-[300px] pb-20">
+                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[200px] sm:h-[200px] lg:h-[250px] pb-20">
 
                     {{-- Toolbar --}}
-                    <div class="w-full h-fit py-5 sm:h-[60px] flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
+                    <div class="w-full h-fit py-2 flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
 
                         <div
                             class="flex justify-start flex-col h-full flex-1 lg:items-center sm:flex-row gap-2 w-full md:w-auto ">
@@ -766,17 +766,25 @@
                     </div>
 
                     {{-- DataTable --}}
-                    <div id="dashboardDataTable" class="dashboard-datatable h-[100px] rounded-2xl">
+                    {{-- <div id="dashboardDataTable" class="dashboard-datatable h-[100px] rounded-2xl">
                         <x-datatable />
-                    </div>
+                    </div> --}}
 
+                    <div class="dashboard-datatable h-[100px] rounded-2xl">
+                        <x-datatable id="dashboardDataTable"/>
+                    </div>
                 </div>
 
             </div>
 
         </div>
+        
     </div>
 
+    {{-- for the info window component --}}
+    <div id="salesmanInfoWindow" class="hidden">
+        <x-infoWindow />
+    </div>
 
 
 @endsection

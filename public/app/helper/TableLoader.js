@@ -1,9 +1,7 @@
 import Api from "./Api.js";
 
 export default class TableLoader {
-
     static tableData(id, json, columns, options = {}) {
-
         const table = $(id).DataTable({
             data: json,
 
@@ -12,37 +10,38 @@ export default class TableLoader {
             responsive: true,
 
             scrollX: true,
-            scrollY: options.scrollY ?? '100px',
+            scrollY: options.scrollY ?? "100px",
             scrollCollapse: true,
 
             dom: '<"top">rt<"dataTable-info"ip><"clear">',
 
             buttons: [
                 {
-                    extend: 'copy',
-                    className: 'dt-hidden-copy'
+                    extend: "copy",
+                    className: "dt-hidden-copy",
                 },
                 {
-                    extend: 'csv',
-                    className: 'dt-hidden-csv'
+                    extend: "csv",
+                    className: "dt-hidden-csv",
                 },
                 {
-                    extend: 'excel',
-                    text: 'Export Excel',
-                    className: 'dt-hidden-excel'
+                    extend: "excel",
+                    text: "Export Excel",
+                    className: "dt-hidden-excel",
                 },
                 {
-                    extend: 'print',
-                    className: 'dt-hidden-print'
-                }
+                    extend: "print",
+                    className: "dt-hidden-print",
+                },
             ],
 
             columns,
 
-            ...options
+            ...options,
         });
 
-        const searchSelector = options.searchInput || `[data-table-search="${id}"]`;
+        const searchSelector =
+            options.searchInput || `[data-table-search="${id}"]`;
 
         TableLoader.bindSearch(searchSelector, table);
 
@@ -52,10 +51,14 @@ export default class TableLoader {
     }
 
     static bindSearch(selector, table) {
-        $(selector)
-            .off("input.tableSearch")
-            .on("input.tableSearch", function () {
-                table.search(this.value).draw();
+        $(document)
+            .off("input.tableSearch", selector)
+            .on("input.tableSearch", selector, function () {
+                const value = $(this).val();
+
+                console.log("Searching:", value);
+
+                table.search(value).draw();
             });
     }
 
@@ -75,7 +78,6 @@ export default class TableLoader {
     }
 
     static loadTable(config) {
-
         console.log("loadTable called");
 
         Api.get({
@@ -83,7 +85,6 @@ export default class TableLoader {
             data: config.filters,
 
             onSuccess: (data) => {
-
                 const table = TableLoader.tableData(
                     config.tableId,
                     data,
@@ -91,8 +92,8 @@ export default class TableLoader {
                     {
                         pageLength: config.pageLength,
                         scrollY: config.scrollY,
-                        searchInput: config.searchInput
-                    }
+                        searchInput: config.searchInput,
+                    },
                 );
 
                 // Store the DataTable instance if you need it
@@ -104,5 +105,4 @@ export default class TableLoader {
             },
         });
     }
-     
 }
