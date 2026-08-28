@@ -23,4 +23,11 @@ class DashboardController extends Controller
 
         return response()->json($salesmen);
     }
+
+    public function getLatest(){
+        $latestTransaction = DashboardModel::latest()
+        ->first();
+
+        return response()->json($latestTransaction);
+    }
 }

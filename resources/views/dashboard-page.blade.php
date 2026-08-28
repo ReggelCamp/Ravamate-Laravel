@@ -72,6 +72,13 @@
             max-height: 500px;
         }
 
+        #infoWindowTableContent_info {
+            font-size: 12px;
+        }
+
+        #infoWindowTableContent_wrapper .dt-scroll-head table thead th {
+            font-size: 9px !important;
+        }
         
     </style>
 
@@ -778,14 +785,12 @@
             </div>
 
         </div>
+
+        <div id="itemDetailsTable" class="hidden">
+            <x-datatable id="infoWindowTable"/>
+        </div>
         
     </div>
-
-    {{-- for the info window component --}}
-    <div id="salesmanInfoWindow" class="hidden">
-        <x-infoWindow />
-    </div>
-
 
 @endsection
 

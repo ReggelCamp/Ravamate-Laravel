@@ -320,3 +320,5 @@ Route::get('/sosyocalendar', function () {
 Route::post('/DisplaySalesman',[DisplaySalesmanController::class,'getSalesman']);
 
 Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
+
+Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
