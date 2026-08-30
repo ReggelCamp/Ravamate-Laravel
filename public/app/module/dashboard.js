@@ -7,6 +7,11 @@ let array = [];
 let map;
 let currentSalesman = null;
 let latest = [];
+let markersById = {};
+let currentMarker = null;
+    let bouncingMarker = null;
+    let latestInfoWindow = null;
+    let latestMarker = null;
 
 const SalesmanColumns = [
     {
@@ -168,10 +173,15 @@ $(document)
 
         if (!rowData) return;
 
-        console.log("Clicked row:", rowData);
-
-        displayInfoWindow();
+        console.log("Clicked row:", rowData);;
         showRowDetails(rowData);
+
+        const entry = markersById[rowData.id];
+        if (entry) {
+            openInfoWindowFor(entry.salesman, entry.marker);
+        } else {
+            console.log("No marker found for this row.");
+        }
     });
 
 // Date BTN
@@ -302,10 +312,8 @@ function displayInfoWindow() {
         console.log("DataTable component inserted");
     });
 
-    let bouncingMarker = null;
-    let latestInfoWindow = null;
-    let latestMarker = null;
-    let currentMarker = null;
+
+
 
     // When the marker info window (shown for a clicked salesman) is closed,
     // re-open the "Latest Transaction" popup again.
@@ -328,6 +336,8 @@ function displayInfoWindow() {
             title: salesman.salesman_name,
             // animation: isLatest ? google.maps.Animation.BOUNCE : null,
         });
+
+        markersById[salesman.id] = { marker, salesman }
 
         if (isLatest) {
             latestMarker = marker;
@@ -401,6 +411,7 @@ function displayInfoWindow() {
             // Track which marker's info window we just opened so we can
             // re-open the latest popup once it is closed.
             currentMarker = marker;
+            openInfoWindowFor(salesman, marker);
 
             // Close the "Latest Transaction" popup before opening this marker.
             if  (latestInfoWindow) {
@@ -582,6 +593,23 @@ function InfoWindowContent(salesman) {
                     </div>
                 </div>
     `;
+}
+
+function openInfoWindowFor(salesman, marker) {
+    currentMarker = marker;
+    if (latestInfoWindow) latestInfoWindow.close();
+
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    bouncingMarker = marker;
+    setTimeout(() => {
+        marker.setAnimation(null);
+        if (bouncingMarker === marker) bouncingMarker = null;
+    }, 2400);
+
+    map.panTo(marker.getPosition());
+    map.setZoom(17);
+    infoWindow.setContent(InfoWindowContent(salesman));
+    infoWindow.open(map, marker);
 }
 
 // Create the InfoWindow once (reuse it for all markers)
