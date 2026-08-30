@@ -226,13 +226,11 @@
                     {{-- Sales row --}}
 
                     <div class="w-full max-w-4xl mx-auto">
-                        <div tabindex="0"
-                            class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
-
-                            <!-- Collapse Title -->
-                            <div class="collapse-title flex items-center gap-4 p-4 min-h-[50px]">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                        <div class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                            <input type="checkbox" class="peer" id="salesCollapse" /> 
+                            <div class="collapse-title flex items-center gap-4 p-4 min-h-[50px] peer-checked:bg-gray-50 cursor-pointer"
+                                onclick="document.getElementById('salesCollapse').click()">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
                                     <i class="fa-solid fa-peso-sign text-sm"></i>
                                 </div>
                                 <div class="flex flex-col">
@@ -245,8 +243,6 @@
                                     <span class="text-gray-400 text-xs">Sales</span>
                                 </div>
                             </div>
-
-                            <!-- Collapse Content -->
                             <div class="collapse-content px-4">
                                 <div class="border-t border-gray-200 pt-3 h-fit">
                                     <x-datatable id="sfaQueuingModalTable" class=""/>

@@ -1,14 +1,7 @@
-       /* for infoWindow in dashboard map */
-       .gm-ui-hover-effect { display: none !important; }
-       /* .gm-style .gm-style-iw-c {
-        padding-right: 0;
-        padding-top: 0 !important;
-       }
-
-        .latest-transaction-popup {
-    padding: 0 !important;
-    margin: 0 !important;
-} */
+    /* for infoWindow in dashboard map */
+    .gm-ui-hover-effect {
+        display: none !important; 
+    }
 
     .gm-style .gm-style-iw-c,
     .gm-style .gm-style-iw-d,

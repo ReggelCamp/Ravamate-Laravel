@@ -170,6 +170,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
+        displayInfoWindow();
         showRowDetails(rowData);
     });
 
@@ -332,7 +333,7 @@ function displayInfoWindow() {
             latestMarker = marker;
             latestInfoWindow = new google.maps.InfoWindow({
                 content: `
-                    <div class="latest-transaction-popup">
+                    <div id= "latestInfo_Container" class="latest-transaction-popup">
                         <div class="bg-red-500 text-white px-4 py-3 relative">
                             <!-- <button type="button" id="LatestCloseBtn"
                                     class="absolute top-2 right-2 btn btn-circle w-[5px] h-[5px] bg-black/30 border-0 text-white z-10">
@@ -357,18 +358,44 @@ function displayInfoWindow() {
                         </div>
                     </div>
                 `,
-                disableAutoPan: true,
+                disableAutoPan: false,
             });
 
-            latestInfoWindow.open(map, marker); // opens immediately, no click required
+            //latestInfoWindow.open(map, marker); // opens immediately, no click required
             google.maps.event.addListener(latestInfoWindow, "domready", () => {
                 $("#LatestCloseBtn").on("click", () =>
                     latestInfoWindow.close(),
                 );
+
+                $("#latestInfo_Container").on("click", () => {
+                    latestInfoWindow.close();
+                    currentMarker = marker;
+                    infoWindow.setContent(InfoWindowContent(salesman));
+                    infoWindow.open(map, marker);
+                    console.log("clicked info Window");
+                });
+            });
+
+            google.maps.event.addListener(latestInfoWindow, "domready", () => {
+                $("#LatestCloseBtn").off("click").on("click", () => latestInfoWindow.close());
+
+                $("#latestInfo_Container").off("click").on("click", () => {
+                    latestInfoWindow.close();
+                    currentMarker = marker;
+                    setTimeout(() => {
+                        infoWindow.setContent(InfoWindowContent(salesman));
+                        map.panTo(marker.getPosition());
+                        map.setZoom(17);
+                        infoWindow.open(map, marker);
+                    }, 0);
+                    console.log("clicked info Window");
+                });
             });
 
             latestInfoWindow.open(map, marker);
         }
+
+
 
         marker.addListener("click", () => {
             // Track which marker's info window we just opened so we can
@@ -376,7 +403,17 @@ function displayInfoWindow() {
             currentMarker = marker;
 
             // Close the "Latest Transaction" popup before opening this marker.
-            if (latestInfoWindow) latestInfoWindow.close();
+            if  (latestInfoWindow) {
+                latestInfoWindow.close();
+                console.log("wqwwqq");
+            }
+            
+            $(document).on("click", "#latestInfo_Container", () => {
+                if  (latestInfoWindow) {
+                    latestInfoWindow.close();
+                    console.log("clicked info Window adada");
+                }
+            });
 
             marker.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -393,8 +430,45 @@ function displayInfoWindow() {
             $("#LatestCloseBtn").add(infoWindow.close());
             map.panTo(marker.getPosition());
             map.setZoom(17);
-            infoWindow.setContent(`
-                <div class="w-fit max-w-[360px] max-h-[500px] flex flex-col rounded-lg bg-base-100">
+            infoWindow.setContent(InfoWindowContent(salesman));
+            infoWindow.open(map, marker);
+        });
+    });
+}
+
+function DisplayitemTable() {
+    $("#itemDetailsTable").removeClass("hidden");
+}
+
+$(document).on("click", "#storeImg", function () {
+    $("#CloseBtn").toggleClass("hidden");
+    $("#addsressContainer").toggleClass("hidden");
+    $("#storeImg").toggleClass("brightness-50");
+});
+
+// for radio button
+$(document).on("click", ".tabs [type='radio'].tab", function () {
+    const $tabs = $(this).closest(".tabs");
+    if ($tabs.length === 0) return;
+    $tabs.children(".tab-content").hide();
+    $(this).next(".tab-content").show();
+});
+
+function getlatestTransaction() {
+    Api.get({
+        url: "/getLatestTransaction",
+
+        onSuccess: (data) => {
+            latest = data;
+            console.log("latest:", latest);
+            displayInfoWindow();
+        },
+    });
+}
+
+function InfoWindowContent(salesman) {
+    return `
+         <div class="w-fit max-w-[360px] max-h-[500px] flex flex-col rounded-lg bg-base-100">
 
                     <!-- Header image with overlays -->
                     <div class="relative w-full h-[160px]">
@@ -507,41 +581,7 @@ function displayInfoWindow() {
                         </div>
                     </div>
                 </div>
-            `);
-
-            infoWindow.open(map, marker);
-        });
-    });
-}
-
-function DisplayitemTable() {
-    $("#itemDetailsTable").removeClass("hidden");
-}
-
-$(document).on("click", "#storeImg", function () {
-    $("#CloseBtn").toggleClass("hidden");
-    $("#addsressContainer").toggleClass("hidden");
-    $("#storeImg").toggleClass("brightness-50");
-});
-
-// for radio button
-$(document).on("click", ".tabs [type='radio'].tab", function () {
-    const $tabs = $(this).closest(".tabs");
-    if ($tabs.length === 0) return;
-    $tabs.children(".tab-content").hide();
-    $(this).next(".tab-content").show();
-});
-
-function getlatestTransaction() {
-    Api.get({
-        url: "/getLatestTransaction",
-
-        onSuccess: (data) => {
-            latest = data;
-            console.log("latest:", latest);
-            displayInfoWindow();
-        },
-    });
+    `;
 }
 
 // Create the InfoWindow once (reuse it for all markers)
