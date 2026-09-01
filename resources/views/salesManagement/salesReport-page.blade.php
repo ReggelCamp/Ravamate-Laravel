@@ -59,13 +59,13 @@
                             <x-dropdown>
                                 <x-slot:dropdownName class="h-[30px]">
                                     <span
-                                        class="inline-flex sheenFilterBtn h-[30px] items-center border px-3 gap-2 text-[12px] justify-center rounded-2xl whitespace-nowrap">
+                                        class="inline-flex sheenFilterBtn h-[30px] items-center border px-3 gap-2 text-[12px]  rounded-2xl whitespace-nowrap">
                                         Other Reports
                                         <i class="fa-solid fa-caret-down"></i>
                                     </span>
                                 </x-slot:dropdownName>
 
-                                <ul id="salesReports" class="bg-white w-[200px] max-h-[200px] overflow-y-auto">
+                                <ul id="salesReports" class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                 </ul>
                             </x-dropdown>
                         </div>

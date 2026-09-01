@@ -4,6 +4,10 @@
     padding-top: 8px;
 }
 
+ .daterangepicker td.active{
+    background-color: var(--primary) !important;
+}
+
 .daterangepicker .drp-date-input-wrap {
     display: flex;
     align-items: center;
@@ -105,8 +109,8 @@
                 data-drops="{{ $drops }}"
                 id="{{ $id }}"
                 {{ $attributes->merge([
-                    'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition gap-2'
-                ]) }}>
+        'class' => 'date-picker js-daterangepicker headerFont flex items-center justify-center transition gap-2'
+    ]) }}>
                 <i class="items-center justify-center h-5 w-5 flex"  data-lucide="calendar-days"></i>
                 {{ $label }}
             </button>

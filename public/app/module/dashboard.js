@@ -1,6 +1,7 @@
 import ComponentHelper from "../helper/ComponentHelper.js";
 import TableLoader from "../helper/TableLoader.js";
 import Api from "../helper/Api.js";
+import DatePicker from "../helper/datePicker.js";
 
 let rows = [];
 let array = [];
@@ -9,9 +10,11 @@ let currentSalesman = null;
 let latest = [];
 let markersById = {};
 let currentMarker = null;
-    let bouncingMarker = null;
-    let latestInfoWindow = null;
-    let latestMarker = null;
+let bouncingMarker = null;
+let latestInfoWindow = null;
+let latestMarker = null;
+let infoWindow = null;
+let ExpandTable = false;
 
 const SalesmanColumns = [
     {
@@ -159,6 +162,37 @@ const SampleData = [
     },
 ];
 
+const MinutesDropdown = [
+    {
+        title: "Off",
+        data: "off"
+    },
+    {
+        title: "1 Minute",
+        data: "1 min"
+    },
+    {
+        title: "5 Minutes",
+        data: "5 mins"
+    },
+    {
+        title: "10 Minutes",
+        data: "10 mins"
+    },
+    {
+        title: "15 Minutes",
+        data: "15 mins"
+    },
+    {
+        title: "30 Minutes",
+        data: "30 mins"
+    },
+    {
+        title: "60 Minutes",
+        data: "60 mins"
+    }
+];
+
 // Total amount
 const TotalAmount = "₱79,209.90";
 
@@ -202,27 +236,44 @@ $(document).ready(function () {
 
 // Expand collapse
 $("#ExpandBtn").click(function () {
-    const isExpanding = $(".HideMap").is(":visible");
-    $("#ExpandBtn").text;
+    ExpandTable = !ExpandTable;
+
+    console.log("ExpandTable:", ExpandTable);
+
     $(".HideMap").toggle();
-    $(".tableSec").toggleClass("expanded");
-    $("#DataTable").toggleClass("expanded");
+    $(".tableSec").toggleClass("expanded", ExpandTable);
+    $("#DataTable").toggleClass("expanded", ExpandTable);
 
     $("#ExpandBtn").text(
-        $("#DataTable").hasClass("expanded") ? "Collapse" : "Expand",
+        ExpandTable ? "Collapse" : "Expand"
     );
 
-    let table = $("#dashboardDataTable").DataTable();
-    if (isExpanding) {
-        table.page.len(10).draw(false);
-    } else {
-        table.page.len(5).draw(false);
-    }
+    const table = $("#dashboardDataTable").DataTable();
+
+    $(".dt-scroll-body").css(
+        "max-height",
+        ExpandTable ? "600px" : "100px"
+    );
+
+    table.page.len(
+        ExpandTable ? 15 : 5
+    ).draw(false);
 });
 
 ComponentHelper.dropdown().LoadDropdownItems({
     id: "#OperationTypeItems",
     items: OperationItems,
+});
+
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#MinDropdown",
+    items: MinutesDropdown,
+});
+
+$("#MinDropdown").on("click", ".dropdown-item", function () {
+    let data = $(this).data("value");
+
+    $("#selectedMinute").text(data);
 });
 
 function showRowDetails(rowData) {
@@ -255,20 +306,42 @@ $(document).on("click", "#Mtd_Overview_Btn", function () {
 });
 
 TableLoader.tableData("#sfaQueuingModalTable", SampleData, ProductColumns, {
+    pageLength: 10,
     scrollY: "500px",
 });
+
+// function getScrollY() {
+//     const w = window.innerWidth;
+//     if (w >= 1920) return "300px";
+//     if (w >= 1024) return "300px";
+//     if (w >= 640) return "250px";
+//     return "100px";
+// }
+
+// TableLoader.loadTable({
+//     url: "getDashboardTable",
+//     tableId: "#dashboardDataTable",
+//     columns: SalesmanColumns,
+//     scrollY: getScrollY(),
+//     pageLength: 10,
+//     searchInput: "#customSearch",
+//     onSuccess: (data) => {
+//         array = data;
+//         getlatestTransaction();
+//     },
+// });
 
 TableLoader.loadTable({
     url: "getDashboardTable",
     tableId: "#dashboardDataTable",
     columns: SalesmanColumns,
-    scrollY: "100px",
+    scrollY: "200px",
     pageLength: 10,
-
+    searchInput:"#customSearch",
     onSuccess: (data) => {
         console.log("Dashboard data:", data);
         console.log("Dashboard count:", data.length);
-
+        console.log("load table",ExpandTable);
         // IMPORTANT
         array = data;
 
@@ -277,16 +350,36 @@ TableLoader.loadTable({
 });
 
 function displayInfoWindow() {
+
     if (!array || array.length === 0) {
         console.log("No salesman data.");
         return;
     }
     map = window.dashboardMap;
-    const infoWindow = new google.maps.InfoWindow();
+
+     // Close both InfoWindows when clicking on the map
+    google.maps.event.clearListeners(map, "click");
+
+    map.addListener("click", () => {
+        if (latestInfoWindow) {
+            latestInfoWindow.close();
+        }
+
+        if (infoWindow) {
+            infoWindow.close();
+        }
+
+        currentMarker = null;
+    });
+
+    infoWindow = new google.maps.InfoWindow();
 
     google.maps.event.addListener(infoWindow, "domready", () => {
         $("#CloseBtn").on("click", () => infoWindow.close());
         $("#LatestCloseBtn").on("click", () => infoWindow.close());
+
+        latestInfoWindow.close();
+        
         // Get the Blade DataTable component
         const tableComponent = $("#itemDetailsTable").children().clone();
 
@@ -306,6 +399,7 @@ function displayInfoWindow() {
                 lengthChange: false,
                 pageLength: 5,
                 scrollY: "200px",
+                scrollX: false,
             },
         );
 
@@ -314,13 +408,12 @@ function displayInfoWindow() {
 
 
 
-
     // When the marker info window (shown for a clicked salesman) is closed,
     // re-open the "Latest Transaction" popup again.
     google.maps.event.addListener(infoWindow, "close", () => {
-        if (currentMarker && latestInfoWindow && latestMarker) {
-            latestInfoWindow.open(map, latestMarker);
-        }
+        if ( latestInfoWindow) {
+        latestInfoWindow.open(map, latestMarker);
+    }
     });
 
     array.forEach((salesman) => {
@@ -343,12 +436,9 @@ function displayInfoWindow() {
             latestMarker = marker;
             latestInfoWindow = new google.maps.InfoWindow({
                 content: `
-                    <div id= "latestInfo_Container" class="latest-transaction-popup">
-                        <div class="bg-red-500 text-white px-4 py-3 relative">
-                            <!-- <button type="button" id="LatestCloseBtn"
-                                    class="absolute top-2 right-2 btn btn-circle w-[5px] h-[5px] bg-black/30 border-0 text-white z-10">
-                                    ✕
-                                </button> -->
+                    <div id= "latestInfo_Container" class="latest-transaction-popup w-[193px] rounded-3xl overflow-hidden">
+                        <div class="bg-red-500 text-white px-4 py-3 relative w-full">
+                           
                             <div class="font-bold flex items-center gap-1">
                                 <i class="fa-solid fa-location-dot"></i>
                                 Latest Transaction
@@ -357,14 +447,15 @@ function displayInfoWindow() {
                                 added ${salesman.time_ago ?? "recently"}
                             </div>
                         </div>
-                        <div class="px-4 py-3">
+                        <div class="px-4 py-3 pt-1">
                             <div class="font-bold text-base">
                                 ${salesman.store_name ?? "Unknown Store"}
                             </div>
+                            <div class="text-xs text-gray-500 italic">${salesman.store_address ?? ",,"}</div>
                             <div class="text-xs text-gray-500 mt-2">Salesman Assigned:</div>
                             <div class="text-xs font-semibold">${salesman.salesman_name ?? "-"}</div>
                             <div class="text-xs text-gray-500 mt-2">Transaction Sales:</div>
-                            <div class="text-xs font-semibold">${salesman.transaction_sales ?? "-"}</div>
+                            <div class="text-xs font-semibold">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
                         </div>
                     </div>
                 `,
@@ -386,64 +477,21 @@ function displayInfoWindow() {
                 });
             });
 
-            google.maps.event.addListener(latestInfoWindow, "domready", () => {
-                $("#LatestCloseBtn").off("click").on("click", () => latestInfoWindow.close());
-
-                $("#latestInfo_Container").off("click").on("click", () => {
-                    latestInfoWindow.close();
-                    currentMarker = marker;
-                    setTimeout(() => {
-                        infoWindow.setContent(InfoWindowContent(salesman));
-                        map.panTo(marker.getPosition());
-                        map.setZoom(17);
-                        infoWindow.open(map, marker);
-                    }, 0);
-                    console.log("clicked info Window");
-                });
+            $("#LatestCloseBtn").on("click", (e) => {      // ← added here
+                e.stopPropagation();
+                latestInfoWindow.close();
+                console.log("Latest transaction popup closed");
             });
 
             latestInfoWindow.open(map, marker);
         }
 
-
-
         marker.addListener("click", () => {
-            // Track which marker's info window we just opened so we can
-            // re-open the latest popup once it is closed.
-            currentMarker = marker;
+
+            console.log("Marker clicked:", salesman.salesman_name);
+
             openInfoWindowFor(salesman, marker);
-
-            // Close the "Latest Transaction" popup before opening this marker.
-            if  (latestInfoWindow) {
-                latestInfoWindow.close();
-                console.log("wqwwqq");
-            }
-            
-            $(document).on("click", "#latestInfo_Container", () => {
-                if  (latestInfoWindow) {
-                    latestInfoWindow.close();
-                    console.log("clicked info Window adada");
-                }
-            });
-
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-
-            bouncingMarker = marker;
-
-            setTimeout(() => {
-                marker.setAnimation(null);
-
-                if (bouncingMarker === marker) {
-                    bouncingMarker = null;
-                }
-            }, 2400);
-
-            $("#LatestCloseBtn").add(infoWindow.close());
-            map.panTo(marker.getPosition());
-            map.setZoom(17);
-            infoWindow.setContent(InfoWindowContent(salesman));
-            infoWindow.open(map, marker);
-        });
+        });;
     });
 }
 
@@ -461,8 +509,13 @@ $(document).on("click", "#storeImg", function () {
 $(document).on("click", ".tabs [type='radio'].tab", function () {
     const $tabs = $(this).closest(".tabs");
     if ($tabs.length === 0) return;
+
     $tabs.children(".tab-content").hide();
     $(this).next(".tab-content").show();
+
+    if ($.fn.DataTable.isDataTable("#infoWindowTableContent")) {
+        $("#infoWindowTableContent").DataTable().columns.adjust().draw(false);
+    }
 });
 
 function getlatestTransaction() {
@@ -479,7 +532,7 @@ function getlatestTransaction() {
 
 function InfoWindowContent(salesman) {
     return `
-         <div class="w-fit max-w-[360px] max-h-[500px] flex flex-col rounded-lg bg-base-100">
+        <div class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100">
 
                     <!-- Header image with overlays -->
                     <div class="relative w-full h-[160px]">
@@ -488,11 +541,7 @@ function InfoWindowContent(salesman) {
                             src="${salesman.customer_image ?? "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"}"
                             alt="Store"
                             class="w-full h-full object-cover brightness-50" />
-                            
-                        <button type="button" id="CloseBtn"
-                            class="absolute top-2 right-2 btn btn-circle btn-xs bg-black/50 border-0 text-white z-10">
-                            ✕
-                        </button>
+        
                         <!-- top-left badge -->
                         <span id="" class="absolute top-2 left-2 badge badge-error text-white font-semibold text-xs">
                             ${salesman.transaction_code ?? "32_GP"}
@@ -512,25 +561,28 @@ function InfoWindowContent(salesman) {
                         </button>
 
                         <!-- store name overlay -->
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 text-white">
+                        <div class="absolute bottom-0 left-0 right-0 p-2 text-white">
                             <div id="addsressContainer" class="flex items-center gap-1">
                                 <span class="badge badge-info badge-sm">${salesman.pin_number ?? "-"}</span>
                                 <div class = "flex flex-col w-fit">
-                                    <span class="font-bold text-sm leading-tight">${salesman.store_name ?? "Manding Store"}</span>
-                                    <span class="font-medium text-sm leading-tight">${salesman.store_address ?? "Cubacub"}</span>
+                                    <span class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.store_name ?? "Manding Store"}</span>
+                                    <span class="font-medium text-[13] leading-tight">${salesman.store_address ?? "Cubacub"}</span>
                                 </div>
+
+                                 <!-- prev/next store buttons -->
+                                <div class="flex justify-end w-full gap-1 p-2 pb-0">
+                                    <button type="button" class="btn btn-xs text-[8px] rounded-full bg-white  btn-outline btn-error">❮ Prev Store</button>
+                                    <button type="button" class="btn btn-xs text-[8px] rounded-full bg-white btn-outline btn-error">Next Store ❯</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- prev/next store buttons -->
-                    <div class="flex justify-end gap-1 p-2 pb-0">
-                        <button type="button" class="btn btn-xs btn-outline btn-error">❮ Prev Store</button>
-                        <button type="button" class="btn btn-xs btn-outline btn-error">Next Store ❯</button>
-                    </div>
-
+                   
+                   
                     <!-- Tabs -->
-                    <div class="tabs tabs-border px-2 pb-2">
+                    <div class="tabs tabs-border px-5 pb-2">
                         <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
                         <div class="tab-content flex flex-col gap-1 bg-base-100 pt-3 text-xs" style="display:block">
                             <div>
@@ -575,7 +627,7 @@ function InfoWindowContent(salesman) {
 
                         <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Item Details" data-tab-content="tabContent2" />
                         <div
-                            class="tab-content flex flex-col border-base-300 bg-base-100 text-xs"
+                            class="tab-content w-full  flex flex-col border-base-300 bg-base-100 text-xs""
                             data-tab="tabContent2"
                             style="display:none"
                         >
@@ -583,7 +635,7 @@ function InfoWindowContent(salesman) {
                                 <span>Transaction Items</span>
                                 <span>₱ 7,147.93 (14 SKU)</span>
                             </div>
-                            <div id="infoWindowTableContainer"></div>
+                            <div id="infoWindowTableContainer" class="w-full text-[9px] overflow-hidden"></div>
                         </div>
 
                         <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Supporting Docs" data-tab-content="tabContent3" />
@@ -596,21 +648,64 @@ function InfoWindowContent(salesman) {
 }
 
 function openInfoWindowFor(salesman, marker) {
-    currentMarker = marker;
-    if (latestInfoWindow) latestInfoWindow.close();
 
+    console.log("Opening InfoWindow for:", salesman.salesman_name);
+
+    currentMarker = marker;
+
+    // if (currentMarker && latestInfoWindow) {
+    //     latestInfoWindow.close();
+    // }
+
+    // Close latest transaction popup
+    if (latestInfoWindow) {
+        latestInfoWindow.close();
+    }
+
+    // Bounce marker
     marker.setAnimation(google.maps.Animation.BOUNCE);
+
     bouncingMarker = marker;
+
     setTimeout(() => {
         marker.setAnimation(null);
-        if (bouncingMarker === marker) bouncingMarker = null;
+
+        if (bouncingMarker === marker) {
+            bouncingMarker = null;
+        }
     }, 2400);
 
+    // Center map
     map.panTo(marker.getPosition());
     map.setZoom(17);
-    infoWindow.setContent(InfoWindowContent(salesman));
+
+    // Set content
+    infoWindow.setContent(
+        InfoWindowContent(salesman)
+    );
+
+    // Open InfoWindow
     infoWindow.open(map, marker);
 }
+
+$(document).ready(function () {
+    DatePicker.init();
+});
+
+function updateLiveDateTime() {
+    const now = moment();
+    const formatted = now.format('ddd').toUpperCase() + ' | ' +
+                       now.format('YYYY-MM-DD') + ' | ' +
+                       now.format('hh:mm:ss A');
+    $('#liveDateTimeText').text(formatted);
+}
+
+updateLiveDateTime();
+setInterval(updateLiveDateTime, 1000);
+
+$("#liveDateFilter").on("click",function(){
+   $("#dashboardDatePicker").data("daterangepicker").show();
+});
 
 // Create the InfoWindow once (reuse it for all markers)
 // const infoWindow = new google.maps.InfoWindow();

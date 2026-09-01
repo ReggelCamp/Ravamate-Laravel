@@ -574,6 +574,7 @@ const salesReportsItems = [
     {
         title: "Range Summary",
         data: "range_summary",
+        url: "/rangesum"
     },
     {
         title: "Range Monitoring",

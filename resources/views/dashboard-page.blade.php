@@ -3,6 +3,28 @@
 @section('showLogo', false)
 
     <style>
+        #dashboardDataTable_wrapper .dt-scroll-body {
+            height: 100px !important;
+        }
+
+        @media (min-width: 640px) {
+            #dashboardDataTable_wrapper .dt-scroll-body {
+                height: 250px !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #dashboardDataTable_wrapper .dt-scroll-body {
+                height: 400px !important;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            #dashboardDataTable_wrapper .dt-scroll-body {
+                height: 700px !important;
+            }
+        }
+
         .dashboard-datatable .dt-scroll-head,
         .dashboard-datatable .dt-scroll-headInner,
         .dashboard-datatable .dt-scroll-head table {
@@ -60,15 +82,15 @@
             background-color: transparent;
         }
 
-        #sfaQueuingModalTable_wrapper .dt-scroll-head table thead th{
+        #sfaQueuingModalTable_wrapper .dt-scroll-head table thead th {
             color: black !important;
         }
 
-        #sfaQueuingModalTable_wrapper .dataTable-info{
+        #sfaQueuingModalTable_wrapper .dataTable-info {
             font-size: 10px;
         }
 
-        #sfaQueuingModalTable_wrapper .dt-scroll-body{
+        #sfaQueuingModalTable_wrapper .dt-scroll-body {
             max-height: 500px;
         }
 
@@ -76,10 +98,25 @@
             font-size: 12px;
         }
 
+        #infoWindowTableContent_wrapper .dataTable-info {
+            padding-top: 0 !important;
+        }
+
         #infoWindowTableContent_wrapper .dt-scroll-head table thead th {
             font-size: 9px !important;
         }
-        
+
+        #infoWindowTableContent_wrapper .dt-scroll-head {
+            width: 100% !important;
+        }
+
+
+
+        /* .daterangepicker td.disabled {
+        visibility: visible !important;
+        opacity: 0.4;
+        pointer-events: none;
+    } */
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10 overflow-auto">
@@ -207,15 +244,15 @@
                                 <i class="fa-solid fa-bolt mr-1"></i>
                                 {{ $store->battery ?? '70' }}% battery usage
                             </span>
-                            
+
                             <div class="flex justify-between items-center">
                                 <div class="flex gap-1 ">
                                     <button
-                                        class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        class="btn btn-xs bg-red-600 text-[8px] hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
                                         &lt; Prev Store
                                     </button>
                                     <button
-                                        class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        class="btn btn-xs bg-red-600 text-[8px] hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
                                         Next Store &gt;
                                     </button>
                                 </div>
@@ -226,11 +263,13 @@
                     {{-- Sales row --}}
 
                     <div class="w-full max-w-4xl mx-auto">
-                        <div class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                            <input type="checkbox" class="peer" id="salesCollapse" /> 
+                        <div
+                            class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                            <input type="checkbox" class="peer" id="salesCollapse" />
                             <div class="collapse-title flex items-center gap-4 p-4 min-h-[50px] peer-checked:bg-gray-50 cursor-pointer"
                                 onclick="document.getElementById('salesCollapse').click()">
-                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
                                     <i class="fa-solid fa-peso-sign text-sm"></i>
                                 </div>
                                 <div class="flex flex-col">
@@ -244,8 +283,8 @@
                                 </div>
                             </div>
                             <div class="collapse-content px-4">
-                                <div class="border-t border-gray-200 pt-3 h-fit">
-                                    <x-datatable id="sfaQueuingModalTable" class=""/>
+                                <div class="border-t border-gray-200 pt-3 h-fit ">
+                                    <x-datatable id="sfaQueuingModalTable" class="" />
                                 </div>
                             </div>
                         </div>
@@ -638,22 +677,29 @@
 
             {{-- Main div --}}
             <div class="order-1 lg:order-2 flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
-                <div class="w-full flex flex-col h-[350px] lg:flex-1 lg:h-auto">
+                <div class="w-full flex flex-col md:h-[350px] lg:flex-1 lg:h-auto">
                     {{-- Map Header --}}
                     <div
-                        class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between  items-center ">
+                        class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between items-center ">
                         <div class="w-full  items-center ">
                             <x-report-header-title class="font-[16px]" title="Dashboard" />
                         </div>
-                        <div
+                        {{-- <div
                             class="flex w-[150px] sm:w-full h-[50px] whitespace-nowrap gap-1 pr-5 items-center font-medium justify-end font_color">
                             <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
                             <x-datepicker displayOnly="true" />
+                        </div> --}}
+                        <div id="liveDateFilter"
+                            class="relative flex items-center gap-2 px-3 h-[30px] rounded-md text-white text-[13px] font-medium whitespace-nowrap cursor-pointer">
+                            <i class="w-4 h-4 flex items-center justify-center" data-lucide="calendar-days"></i>
+                            <span id="liveDateTimeText"></span>
+
+                            <x-datepicker singleDate="true" id="dashboardDatePicker"
+                                class="absolute inset-5 opacity-0 pointer-events-none" />
                         </div>
                     </div>
-
                     {{-- Map Body --}}
-                    <div class="w-full h-[450px] bg-white relative">
+                    <div class="w-full flex-1 min-h-[500px] bg-white relative HideMap">
                         <x-DigitalMap />
 
                         <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">
@@ -684,7 +730,7 @@
                 </div>
 
                 {{-- Table --}}
-                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[200px] sm:h-[200px] lg:h-[250px] pb-20">
+                <div class="w-full bodyFont flex flex-col tableSec pr-2 h-[200px] lg:h-[350px] pb-20">
 
                     {{-- Toolbar --}}
                     <div class="w-full h-fit py-2 flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
@@ -703,16 +749,16 @@
                                     </x-slot:dropdownName>
 
                                     <ul id="OperationTypeItems"
-                                        class="dropdown_item border w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                        class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                     </ul>
                                 </x-dropdown>
                             </div>
 
                             <div class="  flex w-full sm:w-auto">
-                                <x-button
-                                    class="h-[30px] w-fit px-5 rounded-2xl shine-bgBtn items-center justify-center flex">
+                                <x-button id="ExpandBtn"
+                                    class="h-[30px] text-[11.2px] font-semibold w-fit px-5 rounded-2xl shine-bgBtn items-center justify-center flex">
                                     <x-slot:buttonName>
-                                        <span class="bodyFont font-semibold text-[11.2px]">
+                                        <span class="bodyFont  ">
                                             Expand
                                         </span>
                                     </x-slot:buttonName>
@@ -722,26 +768,21 @@
                             <div class="flex w-full gap-2">
 
                                 <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
-                                    <x-dropdown class="w-fit px-5"
+                                    <x-dropdown direction="dropdown-top" class="w-fit px-5"
                                         buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
                                         <x-slot:dropdownName>
                                             <span
                                                 class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
-                                                <i class="fa-solid fa-angle-down text-[8px]"></i>
                                                 <i class="fa-regular fa-clock"></i>
-                                                <span>Icon</span>
+                                                <span id="selectedMinute">OFF</span>
+                                                <i class="fa-solid fa-angle-down text-[8px]"></i>
                                             </span>
                                         </x-slot:dropdownName>
 
-                                        <div class="bg-white text-[13px] w-[150px] whitespace-nowrap">
-                                            <li><a>Off</a></li>
-                                            <li><a>1 Minute</a></li>
-                                            <li><a>5 Minutes</a></li>
-                                            <li><a>10 Minutes</a></li>
-                                            <li><a>15 Minutes</a></li>
-                                            <li><a>30 Minutes</a></li>
-                                            <li><a>60 Minutes</a></li>
-                                        </div>
+                                        <ul id="MinDropdown"
+                                            class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+
+                                        </ul>
                                     </x-dropdown>
                                 </div>
 
@@ -773,8 +814,8 @@
                         <x-datatable />
                     </div> --}}
 
-                    <div class="dashboard-datatable h-[100px] rounded-2xl">
-                        <x-datatable id="dashboardDataTable"/>
+                    <div class="dashboard-datatable h-[500px] rounded-2xl">
+                        <x-datatable id="dashboardDataTable" class="overflow-auto" />
                     </div>
                 </div>
 
@@ -782,10 +823,10 @@
 
         </div>
 
-        <div id="itemDetailsTable" class="hidden">
-            <x-datatable id="infoWindowTable"/>
+        <div id="itemDetailsTable" class="hidden ">
+            <x-datatable id="infoWindowTable" class="" />
         </div>
-        
+
     </div>
 
 @endsection

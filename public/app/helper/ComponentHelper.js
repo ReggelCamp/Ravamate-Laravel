@@ -102,7 +102,7 @@ export default class ComponentHelper {
                                 </a>
                             </li>
                         `;
-                    } else {
+                    } else if (item.url) {
                         html += `
                             <li>
                                 <a href="${item.url}"
@@ -110,6 +110,15 @@ export default class ComponentHelper {
                                     data-value="${item.data}">
                                     ${item.title}
                                 </a>
+                            </li>
+                        `;
+                    }
+                    else {
+                        html += `
+                            <li
+                                class="dropdown-item h-[30px] flex justify-center whitespace-nowrap"
+                                data-value="${item.data}">
+                                ${item.title}
                             </li>
                         `;
                     }

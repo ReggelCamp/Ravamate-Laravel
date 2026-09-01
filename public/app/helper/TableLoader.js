@@ -9,7 +9,7 @@ export default class TableLoader {
             lengthChange: false,
             responsive: true,
 
-            scrollX: true,
+            scrollX: options.scrollX ?? true,
             scrollY: options.scrollY ?? "100px",
             scrollCollapse: true,
 

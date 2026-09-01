@@ -280,6 +280,10 @@ Route::get('/dailysalessum', function () {
     return view('salesManagement.OtherSalesReports.DailySalesSummary');
 })->name('dailysalessum');
 
+Route::get('/rangesum', function () {
+    return view('salesManagement.OtherSalesReports.RangeSummary');
+})->name('rangesum');
+
 Route::get('/rangemon', function () {
     return view('salesManagement.OtherSalesReports.rangeMonitoring');
 })->name('rangemon');

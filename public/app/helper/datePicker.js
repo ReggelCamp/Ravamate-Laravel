@@ -13,15 +13,15 @@ export default class DatePicker {
                 {
                     parentEl: $modal.length ? $modal : "body",
 
-                    // TRUE  = single date
-                    // FALSE = date range
-                    singleDatePicker: singleDate,
 
+                    singleDatePicker: singleDate,
+                                
                     showWeekNumbers: false,
                     alwaysShowCalendars: true,
                     autoUpdateInput: false,
                     opens,
                     drops,
+                    maxDate: moment(),   
 
                     locale: {
                         format: "MMM DD, YYYY",
