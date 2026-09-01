@@ -193,6 +193,50 @@ const MinutesDropdown = [
     }
 ];
 
+const OperationColumns = [
+    {
+        title: "Operation Type",
+        data: "operation_type",
+        className: "text-nowrap",
+    },
+    {
+        title: "Target MCP",
+        data: "target_mcp",
+        className: "text-center dt-type-numeric",
+    },
+    {
+        title: "Productive",
+        data: "productive",
+        className: "text-center dt-type-numeric",
+    },
+    {
+        title: "Unproductive",
+        data: "unproductive",
+        className: "text-center dt-type-numeric",
+    },
+    {
+        title: "Strike Rate",
+        data: "strike_rate",
+        className: "text-center dt-type-numeric",
+    },
+    {
+        title: "Sales",
+        data: "sales",
+        className: "text-nowrap",
+    },
+];
+
+const sampleOperationData = [
+    {
+        operation_type: "Booking",
+        target_mcp: 45,
+        productive: 32,
+        unproductive: 13,
+        strike_rate: "71.1%",
+        sales: "₱125,400.00",
+    },
+];
+
 // Total amount
 const TotalAmount = "₱79,209.90";
 
@@ -309,27 +353,6 @@ TableLoader.tableData("#sfaQueuingModalTable", SampleData, ProductColumns, {
     pageLength: 10,
     scrollY: "500px",
 });
-
-// function getScrollY() {
-//     const w = window.innerWidth;
-//     if (w >= 1920) return "300px";
-//     if (w >= 1024) return "300px";
-//     if (w >= 640) return "250px";
-//     return "100px";
-// }
-
-// TableLoader.loadTable({
-//     url: "getDashboardTable",
-//     tableId: "#dashboardDataTable",
-//     columns: SalesmanColumns,
-//     scrollY: getScrollY(),
-//     pageLength: 10,
-//     searchInput: "#customSearch",
-//     onSuccess: (data) => {
-//         array = data;
-//         getlatestTransaction();
-//     },
-// });
 
 TableLoader.loadTable({
     url: "getDashboardTable",
@@ -706,6 +729,35 @@ setInterval(updateLiveDateTime, 1000);
 $("#liveDateFilter").on("click",function(){
    $("#dashboardDatePicker").data("daterangepicker").show();
 });
+
+$(document).on("click", "#fitToScreen", function () {
+    if (!document.fullscreenElement) {
+        mapContainer.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+});
+
+document.addEventListener("fullscreenchange", function () {
+    $("#fitScreenInfo").toggleClass(
+        "hidden",
+        !document.fullscreenElement
+    );
+});
+
+TableLoader.tableData(
+    "#fitScreenTable",
+    sampleOperationData,
+    OperationColumns,
+    {
+        scrollY: "400px",
+        pageLength: 10,
+    },
+);
+
+// $(document).on("click", "#fitScreenTable ", function () {
+//     $
+// });
 
 // Create the InfoWindow once (reuse it for all markers)
 // const infoWindow = new google.maps.InfoWindow();

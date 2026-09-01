@@ -3,6 +3,17 @@
 @section('showLogo', false)
 
     <style>
+        #fitScreenInfo .dataTable-info {
+            padding-top: 0 !important;
+            font-size: 13px !important;
+        }
+
+        #mapContainer:fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+        }
+
         #dashboardDataTable_wrapper .dt-scroll-body {
             height: 100px !important;
         }
@@ -127,7 +138,7 @@
 
                 {{-- Salesman Info --}}
                 <div id="Salesman_Container"
-                    class="hidden overflow-auto w-full h-full flex flex-col p-3 gap-3 bg-transparent rounded-2xl">
+                    class="hidden overflow-auto w-full h-full flex flex-col p-3 gap-2 bg-transparent rounded-2xl">
 
                     <div class="flex gap-10 w-full">
                         <div>
@@ -203,7 +214,7 @@
                     </div>
 
                     {{-- Store card --}}
-                    <div class="bg-white rounded-2xl p-3 flex flex-col gap-2 text-[11px]">
+                    <div class="bg-white rounded-2xl p-2 flex flex-col gap-1 text-[11px]">
                         <div class="flex items-center gap-2">
                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                                 <i class="fa-solid fa-store text-gray-500 text-xs"></i>
@@ -216,7 +227,7 @@
                         </div>
 
                         <div class="flex justify-between items-center">
-                            <div class="flex flex-col gap-1 text-gray-600">
+                            <div class="flex gap-2 text-gray-600">
                                 <span>
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
                                     {{ $store->visit_date ?? 'Aug 19, 2026' }}
@@ -264,12 +275,12 @@
 
                     <div class="w-full max-w-4xl mx-auto">
                         <div
-                            class="collapse collapse-arrow bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
+                            class="collapse collapse-arrow bg-white border rounded-full border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
                             <input type="checkbox" class="peer" id="salesCollapse" />
-                            <div class="collapse-title flex items-center gap-4 p-4 min-h-[50px] peer-checked:bg-gray-50 cursor-pointer"
+                            <div class="collapse-title flex rounded-full items-center gap-2 p-2 min-h-[30px] peer-checked:bg-gray-50 cursor-pointer"
                                 onclick="document.getElementById('salesCollapse').click()">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
                                     <i class="fa-solid fa-peso-sign text-sm"></i>
                                 </div>
                                 <div class="flex flex-col">
@@ -291,17 +302,18 @@
                     </div>
 
 
-                    <div class="flex w-full whitespace-nowrap ">
+                    <div class="flex w-full whitespace-nowrap  ">
                         <button id="Current_Day_Btn"
-                            class="flex rounded-s-2xl items-center justify-center w-full h-[30px] text-[11px] bg-red-500">
+                            class="flex rounded-s-2xl gap-2 text-center items-center justify-center w-full h-[30px] font-medium text-white text-[11px] bg-red-500">
+                            <i class="mdi mdi-flip-horizontal"></i>
                             Current Day Overview
                         </button>
 
                         <button id="Mtd_Overview_Btn"
-                            class="hidden flex rounded-s-2xl items-center justify-center w-full h-[30px] text-[11px] bg-red-500">
+                            class="hidden flex rounded-s-2xl text-center items-center justify-center w-full h-[30px] font-medium text-white text-[11px] bg-red-500">
                             MTD Overview
                         </button>
-                        <span class="flex rounded-e-2xl items-center justify-center bg-white w-full h-[30px] text-[10px]">
+                        <span class="flex rounded-e-2xl items-center text-center justify-center bg-white w-full h-[30px] font-medium text-[11px]">
                             REMAINING SELLING DAYS 9
                         </span>
                     </div>
@@ -313,8 +325,8 @@
 
                             {{-- Sales for the Day --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     {{-- left side --}}
                                     <div
                                         class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
@@ -322,7 +334,7 @@
                                         <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
                                         <span class="text-xs font-bold">{{ $stats->week_no ?? 4 }}</span>
                                     </div>
-                                    <div class="flex flex-col leading-4 w-full">
+                                    <div class="flex flex-col leading-5 w-full">
                                         <span class="text-gray-500">Sales for the Day</span>
                                         <span class="font-bold text-sm">{{ $stats->sales_pct ?? 0 }}%</span>
                                         <span class="text-gray-400 text-[10px]">Target
@@ -346,8 +358,8 @@
 
                             {{-- Average Range --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
                                     </div>
@@ -378,8 +390,8 @@
 
                             {{-- Productivity --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div
                                         class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
                                         <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
@@ -408,8 +420,8 @@
 
                             {{-- Geo Call Rate --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
                                     </div>
@@ -443,8 +455,8 @@
 
                             {{-- MTD Achievement --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div
                                         class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
@@ -474,8 +486,8 @@
 
                             {{-- Buying Accounts --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-store text-blue-500 text-lg"></i>
                                     </div>
@@ -500,8 +512,8 @@
 
                             {{-- MCP Productivity --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div
                                         class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
                                         <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
@@ -536,8 +548,8 @@
 
                             {{-- Geo Call Rate --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
                                     </div>
@@ -573,8 +585,8 @@
 
                             {{-- Average Range --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                         <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
                                     </div>
@@ -600,8 +612,8 @@
 
                             {{-- eB2B KPIs --}}
                             <div
-                                class="bg-white rounded-2xl p-3 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full  flex">
+                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
+                                <div class="w-full gap-3 flex">
                                     <div
                                         class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
                                         <i class="fa-solid fa-shop text-gray-500 text-sm"></i>
@@ -684,11 +696,7 @@
                         <div class="w-full  items-center ">
                             <x-report-header-title class="font-[16px]" title="Dashboard" />
                         </div>
-                        {{-- <div
-                            class="flex w-[150px] sm:w-full h-[50px] whitespace-nowrap gap-1 pr-5 items-center font-medium justify-end font_color">
-                            <i class="items-center justify-center w-5 h-5 flex" data-lucide="calendar-days"></i>
-                            <x-datepicker displayOnly="true" />
-                        </div> --}}
+
                         <div id="liveDateFilter"
                             class="relative flex items-center gap-2 px-3 h-[30px] rounded-md text-white text-[13px] font-medium whitespace-nowrap cursor-pointer">
                             <i class="w-4 h-4 flex items-center justify-center" data-lucide="calendar-days"></i>
@@ -699,7 +707,113 @@
                         </div>
                     </div>
                     {{-- Map Body --}}
-                    <div class="w-full flex-1 min-h-[500px] bg-white relative HideMap">
+                    <div id="mapContainer" class="w-full flex-1 min-h-[500px] bg-white relative HideMap">
+                        
+                        <button id="fitToScreen" class="absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-300/70 items-center text-center text-gray-600 rounded-full text-[13px] w-fit h-fit px-2">
+                            Fit to Screen
+                        </button>
+
+                        {{-- fit to screen section --}}
+                        <div id="fitScreenInfo" class="hidden flex flex-col h-fit w-[550px] absolute top-2 left-2 z-10 rounded-3xl overflow-hidden gap-5">
+                            <div class=" pb-2 bg-white rounded-b-3xl">
+                                <div class="flex w-full bg-red-500 p-2">
+
+                                    <div class="flex w-full gap-2">
+                                        <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
+                                            <x-dropdown direction="dropdown-top" class="w-fit px-5"
+                                                buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
+                                                <x-slot:dropdownName>
+                                                    <span
+                                                        class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
+                                                        <i class="fa-regular fa-clock"></i>
+                                                        <span id="selectedMinute">OFF</span>
+                                                        <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                                    </span>
+                                                </x-slot:dropdownName>
+
+                                                <ul id="MinDropdown"
+                                                    class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+
+                                                </ul>
+                                            </x-dropdown>
+                                        </div>
+
+                                        <div class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                            <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
+                                        </div>
+                                    </div>
+                                    <div class="w-full h-[30px] sm:w-auto">
+                                        <x-searchbar id="customSearch" placeholder="Search Salesman"
+                                            class="h-[30px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
+                                    </div>
+                                </div>
+                                <div id="fitScreenTableContainer" class="flex w-full">
+                                    <x-datatable id="fitScreenTable" class="overflow-auto" />
+                                </div>
+                            </div>
+
+                            <div class="bg-white/70 flex justify-between rounded-3xl">
+                                {{-- MTD SALES --}}
+                                <div class="flex w-[267px] bg-white rounded-3xl">
+                                    <div class="flex flex-col w-[142px] px-2">
+                                        <span class="font-bold">MTD Sales</span>
+                                        <div class="flex items-center gap-1">
+                                            <span class="font-bold text-sm">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                            <span class="rounded-full bg-amber-200 w-10 h-10"></span>
+                                        </div>
+                                        <span class="text-[10px]">Target</span>
+                                        <span>0.00</span>
+
+                                        <span class="text-[10px]">Previous Month MTD Sales</span>
+                                        <span>
+                                            50,000.00
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-col w-[142px] px-2">
+                                        <span class="text-[11px] font-bold">NUMBER OF SALESMAN THIS MONTH</span>
+                                        <div class="flex gap-5">
+                                            <img class="w-10 h-10" src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg"/>
+                                            <div class="flex flex-col">
+                                                <span class="text-[10px]">Total</span>
+                                                <span>11</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px]">Previous Month Salesman</span>
+                                        <span>50,000.00</span>
+                                    </div>
+                                </div>
+                                {{-- DAILY SALES --}}
+                                <div class="flex w-[267px] bg-white rounded-3xl">
+                                    <div class="flex flex-col w-[142px] px-2">
+                                        <span class="font-bold">DAILY Sales</span>
+                                        <div class="flex items-center gap-1">
+                                            <span class="font-bold text-sm">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                            <span class="rounded-full bg-amber-200 w-10 h-10"></span>
+                                        </div>
+                                        <span class="text-[10px]">Target</span>
+                                        <span>0.00</span>
+
+                                        <span class="text-[10px]">Previous Day Sales</span>
+                                        <span>
+                                            50,000.00
+                                        </span>
+                                    </div>
+                                    <div class="flex flex-col w-[142px] px-2">
+                                        <span class="text-[11px] font-bold">NUMBER OF SALESMAN TODAY</span>
+                                        <div class="flex gap-5">
+                                            <img class="w-10 h-10" src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg"/>
+                                            <div class="flex flex-col">
+                                                <span class="text-[10px]">Total</span>
+                                                <span>11</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px]">Previous Day Salesman</span>
+                                        <span>50,000.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <x-DigitalMap />
 
                         <div class="absolute inset-0 w-full h-full flex justify-center p-2 items-end pointer-events-none">

@@ -90,54 +90,54 @@
             <div class="flex justify-between gap-1">
                 <div class="flex flex-col w-full inset-shadow-lg p-2 rounded-2xl gap-3 pb-10">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] text-white items-center w-full">
-                        <span>Salesman Details</span>
+                        <span class="font-bold text-[16px]">Salesman Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
                             <span class="flex w-[80px] h-[80px] rounded-full border"></span>
                             <div class="flex flex-col ">
-                                <span>Salesman Name</span>
-                                <span>JASON DIANALA</span>
+                                <span class="text-[11px]">Salesman</span>
+                                <span class="text-[16px] font-medium">JASON DIANALA</span>
                             </div>
                         </div>
                         <div class="flex flex-col justify-end items-end w-full">
-                            <span class="pr-20">Status</span>
-                            <span class="bg-white rounded-tl-2xl px-10 text-black">Pending</span>
+                            <span class="pr-20 text-[11px]">Status</span>
+                            <span class="bg-white rounded-tl-2xl px-10 text-[13px] text-black">Pending</span>
                         </div>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between py-3 shadow-lg">
+                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3 shadow-lg">
                         <span class="">Document No.</span>
-                        <span>GP_7202607011006227</span>
+                        <span class="font-medium">GP_7202607011006227</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between py-3">
+                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
                         <span class="">MD Code</span>
-                        <span>CD00033 (B)</span>
+                        <span class="font-medium">CD00033 (B)</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between py-3">
+                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
                         <span class="">Warehouse Code</span>
-                        <span>1</span>
+                        <span class="font-medium">1</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between py-3">
+                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
                         <span class="">Bad Order Warehouse</span>
-                        <span>BO</span>
+                        <span class="font-medium">BO</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between py-3">
+                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
                         <span class="">Good Stock Return WH</span>
-                        <span>HO</span>
+                        <span class="font-medium">HO</span>
                     </div>
                 </div>
 
                 <div class="flex flex-col w-full  px-2 pt-2 rounded-2xl gap-3">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] items-center w-full text-white">
-                        <span>Salesman Details</span>
+                        <span class="font-bold text-[16px]">Sales Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
                             <span class="flex w-[80px] h-[80px] rounded-full border"></span>
                             <div class="flex flex-col ">
-                                <span>Customer</span>
-                                <span>V1-TRIPLE J3511_GP</span>
+                                <span class="text-[11px]">Customer</span>
+                                <span class="text-[16px] font-medium">V1-TRIPLE J3511_GP</span>
                             </div>
                         </div>
                         <div class="flex flex-col justify-end items-end w-full">
-                            <span class="pr-20">Status</span>
-                            <span class="bg-white rounded-tl-2xl px-10 text-black">Pending</span>
+                            <span class="pr-20 text-[11px]">Reference No.</span>
+                            <span class="bg-white rounded-tl-2xl px-10 text-[13px] text-black">989-2606079</span>
                         </div>
                     </div>
                     <div class="flex w-full rounded-2xl border flex-col px-5 justify-between py-[3px]">
@@ -148,10 +148,10 @@
                         </span>
                     </div>
                     <div class="flex w-full  justify-between">
-                        <div class="flex flex-col items-center border rounded-2xl px-10 justify-between">
-                            <span>Delivery Date</span>
-                            <div class="flex justify-between items-center gap-5">
-                                <span class=" salesDetailsIcon text-[20px] rounded-2xl p-0.5 bg-amber-400 text-white">
+                        <div class="flex flex-col  border rounded-2xl w-[201px] items-center justify-start ">
+                            <span class="text-[12px]">Delivery Date</span>
+                            <div class="flex  items-center gap-5">
+                                <span class=" salesDetailsIcon text-[20px] rounded-2xl p-0.5 bg-red-800 text-white">
                                     <i class="mdi mdi-calendar-month-outline"></i>
                                 </span>
                                 <div class="flex flex-col items-center">
@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-between items-center gap-5">
-                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] text-white rounded-2xl p-0.5 bg-amber-400"></span>
+                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] text-white rounded-2xl p-0.5 bg-red-800"></span>
                                 <div class="flex flex-col items-center">
                                     <span class="text-[7.5px]">Time</span>
                                     <span class="text-[12px]">10:06:22.347</span>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="flex flex-col items-center  justify-between">
                             <div class="battery-card">
-                                <div class="battery-title">
+                                <div class="battery-title text-[12px]">
                                     Battery Status
                                 </div>
 
