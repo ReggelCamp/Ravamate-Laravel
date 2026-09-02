@@ -84,7 +84,7 @@
 
                             <i class="fa-solid fa-magnifying-glass shrink-0"></i>
 
-                            <x-searchbar class="w-full sm:w-[250px]" id="customSearch" />
+                            <x-searchbar class="w-full sm:w-[250px]" tabindex="#salesReportTable" />
 
                         </div>
                     </div>

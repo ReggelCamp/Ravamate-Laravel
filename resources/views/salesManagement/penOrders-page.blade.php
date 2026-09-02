@@ -72,7 +72,7 @@
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px] h-[30px]">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                        <x-searchbar class="w-[250px] " tableId="#pendingOrdersTable" />
                     </div>
                 </div>
                 <div id="DcrReportname"

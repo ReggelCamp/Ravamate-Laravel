@@ -24,7 +24,7 @@
                     </div>
                     <div class=" border h-[30px] items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px]" id="customSearch" />
+                        <x-searchbar class="w-[250px]" tableId="#missedCallTable" />
                     </div>
                 </div>
               <div class="w-full pb-5 overflow-x-auto rounded-2xl max-h-[calc(100vh_-_250px)] " id="DataTable">

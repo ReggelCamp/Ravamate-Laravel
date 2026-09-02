@@ -315,7 +315,13 @@
                             <div class="text-white h-[30px] flex items-center">
                                 <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                     <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                    <x-searchbar
+                                        class="w-full font-medium"
+                                        data-tables="
+                                            #SOPendingLogs,
+                                            #SOFailedLogs,
+                                            #SOSuccessLogs,"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -377,7 +383,11 @@
                             <div class="text-white h-[30px] flex items-center">
                                 <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                     <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                    <x-searchbar class="w-full font-medium " data-tables="
+                                            #PaymentPendingLogs,
+                                            #PaymentFailedLogs,
+                                            #PaymentSuccessLogs," 
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -438,7 +448,11 @@
                             <div class="text-white h-[30px] flex items-center">
                                 <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                     <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                    <x-searchbar class="w-full font-medium " data-tables="
+                                            #ReturnPendingLogs,
+                                            #ReturnFailedLogs,
+                                            #ReturnSuccessLogs,"
+                                     />
                                 </div>
                             </div>
                         </div>
@@ -500,7 +514,11 @@
                             <div class="text-white h-[30px] flex items-center">
                                 <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                     <i class="fa-solid fa-magnifying-glass text-[13px]"></i>
-                                    <x-searchbar class="w-full font-medium " id="customSearch" />
+                                    <x-searchbar class="w-full font-medium " data-tables="
+                                            #AutoStockPendingLogs,
+                                            #AutoStockFailedLogs,
+                                            #AutoStockSuccessLogs"
+                                     />
                                 </div>
                             </div>
                         </div>

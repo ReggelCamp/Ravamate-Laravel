@@ -84,7 +84,7 @@
                                         <div
                                             class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                                            <x-searchbar class="w-full" id="customSearch" />
+                                            <x-searchbar class="w-full" tableId="DynamicTransactionList_Table" />
                                         </div>
                                     </div>
                                 </div>

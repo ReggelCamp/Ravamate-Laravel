@@ -3,6 +3,7 @@ import TableLoader from "../helper/TableLoader.js";
 import Api from "../helper/Api.js";
 import DatePicker from "../helper/datePicker.js";
 
+
 let rows = [];
 let array = [];
 let map;
@@ -792,16 +793,18 @@ $(document).on("click", "#fitScreenTable", function () {
 });
 
 $("#displayTable").on("click", function () {
-    console.log("Display Table clicked");
 
     $("#fitScreenSalesmanToolbar").addClass("hidden");
     $("#fitScreenHeader").removeClass("hidden");
 
-    // Destroy the existing Salesman DataTable
     if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
         $("#fitScreenTable").DataTable().destroy();
     }
 
+    // Remove old DataTable content
+    $("#fitScreenTable").empty();
+
+    // Rebuild original table
     TableLoader.tableData(
         "#fitScreenTable",
         sampleOperationData,
@@ -810,9 +813,11 @@ $("#displayTable").on("click", function () {
             scrollY: "400px",
             pageLength: 10,
             autoWidth: false,
-        },
+            scrollX: true
+        }
     );
 });
+
 
 document.addEventListener("fullscreenchange", function () {
     const isFull = !!document.fullscreenElement;

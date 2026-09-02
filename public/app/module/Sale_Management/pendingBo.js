@@ -590,7 +590,9 @@ TableLoader.tableData(
     sampleData,
     RejectedBoColumns,
     {
-        scrollY: "500px"
+        pageLength: 25,
+        scrollY: "45vh",
+        
     }
 );
 
@@ -599,7 +601,8 @@ TableLoader.tableData(
     sampleData,
     ApprovedBoColumns,
     {
-        scrollY: "500px"
+        pageLength: 25,
+        scrollY: "45vh"
     }
 );
 

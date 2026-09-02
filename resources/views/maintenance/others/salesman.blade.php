@@ -31,7 +31,7 @@
                     </div>
                     <div class=" border items-center justify-center flex px-2 rounded-2xl sm:max-w-[500px]  ">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <x-searchbar class="w-[250px] " id="customSearch" />
+                        <x-searchbar class="w-[250px] " tableId="#salesmanMaintenanceTable" />
                     </div>
                 </div>
                 <div class="w-full pb-5 overflow-auto whitespace-nowrap max-h-[calc(100vh_-_250px)]" id="DataTable">
@@ -188,14 +188,14 @@
                         </div>
 
                         <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Contact No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Contact No.</span>
                                 <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
                                     class="input input-bordered input-sm rounded-full w-full text-[13px] font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Md Password</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Md Password</span>
                                 <div class="join w-full">
                                     <input type="password" id="salesmanInfo_MdPassword" value="password123"
                                         class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-semibold" />
@@ -204,50 +204,50 @@
                                         <i class="fa-solid fa-eye-slash text-xs"></i>
                                     </button>
                                 </div>
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Call Time</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Call Time</span>
                                 <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Cashier No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Cashier No.</span>
                                 <input type="text" id="salesmanInfo_CashierNo" value="09"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor Name</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Supervisor Name</span>
                                 <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Supervisor No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Supervisor No.</span>
                                 <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Geolocking</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Geolocking</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                           </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Price Code</span>
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Price Code</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
 
-                            <label class="form-control">
-                                <span class="label-text text-xs font-semibold text-gray-500 mb-1">Loading
+                            <div class="flex w-full border rounded-full items-center p-2">
+                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Loading
                                     Capacity</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
-                            </label>
+                            </div>
                         </div>
                     </div>
                 </div>

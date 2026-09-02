@@ -116,13 +116,13 @@
                             </x-dropdown>
                         </div>
                         <div>
-                            <x-exportDataTable tableId="#rangeMonitoringDataTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
+                            <x-exportDataTable tableId="#rangeMonitoringTable" class=" w-fit px-5 sheenFilterBtn font-medium text-[12px]" />
                         </div>
                     </div>
                     <div class="flex w-full justify-start md:justify-end items-center">
                         <div class="flex items-center border px-2 rounded-2xl w-[280px] sm:w-[550px] md:w-[300px]">
                             <i class="fa-solid fa-magnifying-glass mr-2"></i>
-                            <x-searchbar tableId="#rangeMonitoringDataTable" class="w-full h-[30px] font-medium customSearch" id="rangeMonitoringSearch" />
+                            <x-searchbar tableId="#rangeMonitoringTable" class="w-full h-[30px] font-medium customSearch" id="rangeMonitoringSearch" />
                         </div>
                     </div>
                 </div>

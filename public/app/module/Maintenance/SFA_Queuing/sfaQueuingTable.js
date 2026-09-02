@@ -1095,3 +1095,27 @@ $(document).on("click", "#sfaRefresh", function () {
         icon: "question",
     });
 });
+
+
+$(document).on("input", '[data-tables]', function () {
+
+    const searchValue = $(this).val();
+    const tableIds = $(this).data("tables").split(",");
+
+    tableIds.forEach((tableId) => {
+
+        if ($.fn.DataTable.isDataTable(tableId)) {
+
+            const table = $(tableId);
+
+            // Check whether this table is inside the active tab
+            if (table.closest(".tab-content").is(":visible")) {
+                table.DataTable()
+                    .search(searchValue)
+                    .draw();
+            }
+
+        }
+
+    });
+});
