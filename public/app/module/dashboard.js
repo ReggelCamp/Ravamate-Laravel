@@ -462,23 +462,29 @@ function displayInfoWindow() {
                     <div id= "latestInfo_Container" class="latest-transaction-popup w-[193px] rounded-3xl overflow-hidden">
                         <div class="bg-red-500 text-white px-4 py-3 relative w-full">
                            
-                            <div class="font-bold flex items-center gap-1">
-                                <i class="fa-solid fa-location-dot"></i>
-                                Latest Transaction
-                            </div>
-                            <div class="text-xs opacity-90">
-                                added ${salesman.time_ago ?? "recently"}
+                            <div class="flex gap-1">
+                                <span class="items-center justify-center flex">
+                                    <i class="fa-solid fa-location-dot" style="font-size: 20px;"></i>
+                                </span>
+                                <div class="flex flex-col items-center">   
+                                    <span class="font-bold w-full text-[16px]">
+                                        Latest Transaction
+                                    </span>
+                                    <span class="w-full text-xs opacity-90">
+                                        added ${salesman.time_ago ?? "recently"}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="px-4 py-3 pt-1">
-                            <div class="font-bold text-base">
-                                ${salesman.store_name ?? "Unknown Store"}
+                            <div class="font-medium text-[16px] text-base">
+                                ${salesman.store_name ?? "Manding Store"}
                             </div>
-                            <div class="text-xs text-gray-500 italic">${salesman.store_address ?? ",,"}</div>
-                            <div class="text-xs text-gray-500 mt-2">Salesman Assigned:</div>
-                            <div class="text-xs font-semibold">${salesman.salesman_name ?? "-"}</div>
-                            <div class="text-xs text-gray-500 mt-2">Transaction Sales:</div>
-                            <div class="text-xs font-semibold">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
+                            <div class="text-xs text-gray-500 italic">${salesman.store_address ?? "Cubacub"}</div>
+                            <div class="text-[9px] text-[#b8babc] mt-2">Salesman Assigned:</div>
+                            <div class="text-[11px] font-medium">${salesman.salesman_name ?? "Manding"}</div>
+                            <div class="text-[9px] text-[#b8babc]  mt-2">Transaction Sales:</div>
+                            <div class="text-[11px] font-medium">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
                         </div>
                     </div>
                 `,
@@ -589,21 +595,19 @@ function InfoWindowContent(salesman) {
                                 <span class="badge badge-info badge-sm">${salesman.pin_number ?? "-"}</span>
                                 <div class = "flex flex-col w-fit">
                                     <span class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.store_name ?? "Manding Store"}</span>
-                                    <span class="font-medium text-[13] leading-tight">${salesman.store_address ?? "Cubacub"}</span>
+                                    <span class="font-medium text-[9] leading-tight">${salesman.store_address ?? "Cubacub"}</span>
                                 </div>
 
                                  <!-- prev/next store buttons -->
                                 <div class="flex justify-end w-full gap-1 p-2 pb-0">
-                                    <button type="button" class="btn btn-xs text-[8px] rounded-full bg-white  btn-outline btn-error">❮ Prev Store</button>
-                                    <button type="button" class="btn btn-xs text-[8px] rounded-full bg-white btn-outline btn-error">Next Store ❯</button>
+                                    <button type="button" class="btn btn-xs w-fit p-1.5 text-red-500 text-[8px] rounded-full bg-white border-none">❮ Prev Store</button>
+                                    <button type="button" class="btn btn-xs w-fit p-1.5 text-red-500 text-[8px] rounded-full bg-white border-none">Next Store ❯</button>
                                 </div>
 
                             </div>
                         </div>
                     </div>
 
-                   
-                   
                     <!-- Tabs -->
                     <div class="tabs tabs-border px-5 pb-2">
                         <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
@@ -755,9 +759,73 @@ TableLoader.tableData(
     },
 );
 
-// $(document).on("click", "#fitScreenTable ", function () {
-//     $
-// });
+$(document).on("click", "#fitScreenTable", function () {
+
+    $("#fitScreenSalesmanToolbar").removeClass("hidden");
+    $("#fitScreenHeader").addClass("hidden");
+
+    if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
+        $("#fitScreenTable").DataTable().destroy();
+    }
+
+    TableLoader.loadTable({
+        url: "getDashboardTable",
+        tableId: "#fitScreenTable",
+        columns: SalesmanColumns,
+        scrollY: "200px",
+        scrollX: true,
+        pageLength: 10,
+        searchInput: "#customSearch",
+
+        onSuccess: (data) => {
+            console.log("Dashboard data:", data);
+            console.log("Dashboard count:", data.length);
+
+            // Force DataTables to recalculate widths
+            const table = $("#fitScreenTable").DataTable();
+
+            setTimeout(() => {
+                table.columns.adjust().draw(false);
+            }, 300);
+        },
+    });
+});
+
+$("#displayTable").on("click", function () {
+    console.log("Display Table clicked");
+
+    $("#fitScreenSalesmanToolbar").addClass("hidden");
+    $("#fitScreenHeader").removeClass("hidden");
+
+    // Destroy the existing Salesman DataTable
+    if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
+        $("#fitScreenTable").DataTable().destroy();
+    }
+
+    TableLoader.tableData(
+        "#fitScreenTable",
+        sampleOperationData,
+        OperationColumns,
+        {
+            scrollY: "400px",
+            pageLength: 10,
+            autoWidth: false,
+        },
+    );
+});
+
+document.addEventListener("fullscreenchange", function () {
+    const isFull = !!document.fullscreenElement;
+    $("#fitScreenInfo").toggleClass("hidden", !isFull);
+
+    if (isFull && $.fn.DataTable.isDataTable("#fitScreenTable")) {
+        // wait one frame so the container has its real width first
+        requestAnimationFrame(() => {
+            $("#fitScreenTable").DataTable().columns.adjust().draw(false);
+            $("#fitScreenTable_wrapper .dt-scroll-body").scrollLeft(0); // reset horizontal scroll
+        });
+    }
+});
 
 // Create the InfoWindow once (reuse it for all markers)
 // const infoWindow = new google.maps.InfoWindow();

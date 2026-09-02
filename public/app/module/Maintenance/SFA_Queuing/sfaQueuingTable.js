@@ -109,7 +109,7 @@ const SoToFdisColumns = [
 ];
 
 const PaymentLogsColumns = [
-     {
+    {
         title: "Transaction ID",
         data: "transactionId",
     },
@@ -160,7 +160,7 @@ const PaymentLogsColumns = [
 ];
 
 const AutoLogsColumns = [
-     {
+    {
         title: "Transaction ID",
         data: "transactionId",
     },
@@ -213,10 +213,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -227,10 +227,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -241,10 +241,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -255,10 +255,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -269,10 +269,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -283,10 +283,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -297,10 +297,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -311,10 +311,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -325,10 +325,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -339,10 +339,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -353,10 +353,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -367,10 +367,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -381,10 +381,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100001",
@@ -395,10 +395,10 @@ const soToFdisSampleData = [
         site: "CEBU",
         um: "CASE",
         quantity: 10,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transaction Posted",
         last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM"
+        date_added: "2026-08-07 09:50 AM",
     },
     {
         transactionId: "SO-100002",
@@ -409,11 +409,11 @@ const soToFdisSampleData = [
         site: "MANDAUE",
         um: "PCS",
         quantity: 24,
-        api_status: 'Pending',
+        api_status: "Pending",
         api_response: "Waiting for Sync",
         last_updated: "2026-08-07 10:20 AM",
-        date_added: "2026-08-07 10:00 AM"
-    }
+        date_added: "2026-08-07 10:00 AM",
+    },
 ];
 
 const returnLogsSampleData = [
@@ -427,10 +427,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -442,10 +442,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -457,10 +457,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -472,10 +472,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -487,10 +487,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -502,10 +502,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -517,10 +517,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -532,10 +532,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -547,10 +547,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -562,10 +562,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -577,10 +577,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -592,10 +592,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -607,10 +607,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -622,10 +622,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
     {
         transactionId: "RT-200001",
@@ -637,10 +637,10 @@ const returnLogsSampleData = [
         um: "CASE",
         quantity: 2,
         reason_code: "DAMAGED",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Return Accepted",
         last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM"
+        date_added: "2026-08-07 10:45 AM",
     },
     {
         transactionId: "RT-200002",
@@ -652,10 +652,10 @@ const returnLogsSampleData = [
         um: "PCS",
         quantity: 1,
         reason_code: "EXPIRED",
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Invoice Not Found",
         last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM"
+        date_added: "2026-08-07 10:55 AM",
     },
 ];
 
@@ -669,10 +669,10 @@ const paymentLogsSampleData = [
         bank: "-",
         check_no: "-",
         check_date: "-",
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Payment Posted",
         last_updated: "2026-08-07 01:30 PM",
-        date_added: "2026-08-07 01:00 PM"
+        date_added: "2026-08-07 01:00 PM",
     },
     {
         transactionId: "PAY-300002",
@@ -683,11 +683,11 @@ const paymentLogsSampleData = [
         bank: "BDO",
         check_no: "CHK123456",
         check_date: "2026-08-07",
-        api_status: 'Pending',
+        api_status: "Pending",
         api_response: "Awaiting Confirmation",
         last_updated: "2026-08-07 01:45 PM",
-        date_added: "2026-08-07 01:15 PM"
-    }
+        date_added: "2026-08-07 01:15 PM",
+    },
 ];
 
 const autoLogsSampleData = [
@@ -698,10 +698,10 @@ const autoLogsSampleData = [
         item_no: "FG00233",
         um: "CASE",
         quantity: 15,
-        api_status: 'Success',
+        api_status: "Success",
         api_response: "Transfer Completed",
         last_updated: "2026-08-07 02:00 PM",
-        date_added: "2026-08-07 01:30 PM"
+        date_added: "2026-08-07 01:30 PM",
     },
     {
         transactionId: "AT-400002",
@@ -710,14 +710,12 @@ const autoLogsSampleData = [
         item_no: "FG00452",
         um: "PCS",
         quantity: 30,
-        api_status: 'Failed',
+        api_status: "Failed",
         api_response: "Insufficient Stock",
         last_updated: "2026-08-07 02:15 PM",
-        date_added: "2026-08-07 01:45 PM"
-    }
+        date_added: "2026-08-07 01:45 PM",
+    },
 ];
-
-
 
 // SOLogsColumns
 // TableLoader.loadTable({
@@ -843,37 +841,24 @@ const autoLogsSampleData = [
 //     },
 // });
 
-
 // Sample Data
 
 //sotofdis
 
-TableLoader.tableData(
-    "#SOPendingLogs",
-    soToFdisSampleData,
-    SoToFdisColumns,
-    {
-        scrollY : "500px"
-    }
-);
+TableLoader.tableData("#SOPendingLogs", soToFdisSampleData, SoToFdisColumns, {
+    scrollY: "40vh",
+    pageLength: 25,
+});
 
-TableLoader.tableData(
-    "#SOFailedLogs",
-    soToFdisSampleData,
-    SoToFdisColumns,
-    {
-        scrollY : "500px"
-    }
-);
+TableLoader.tableData("#SOFailedLogs", soToFdisSampleData, SoToFdisColumns, {
+    scrollY: "40vh",
+    pageLength: 25,
+});
 
-TableLoader.tableData(
-    "#SOSuccessLogs",
-    soToFdisSampleData,
-    SoToFdisColumns,
-    {
-        scrollY : "500px"
-    }
-);
+TableLoader.tableData("#SOSuccessLogs", soToFdisSampleData, SoToFdisColumns, {
+    scrollY: "40vh",
+    pageLength: 25,
+});
 
 //return
 TableLoader.tableData(
@@ -881,24 +866,27 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#ReturnFailedLogs",
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#ReturnSuccessLogs",
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY : "500px"
-    }
+        crollY: "40vh",
+        pageLength: 25,
+    },
 );
 
 //payment
@@ -907,24 +895,27 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#PaymentFailedLogs",
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#PaymentSuccessLogs",
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 
 //autostock
@@ -933,24 +924,27 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#AutoStockFailedLogs",
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 TableLoader.tableData(
     "#AutoStockSuccessLogs",
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY : "500px"
-    }
+        scrollY: "40vh",
+        pageLength: 25,
+    },
 );
 
 // Hide button initially
@@ -958,32 +952,26 @@ $(".reprocess_btn").addClass("hidden");
 
 // When any tab is clicked
 $(".tab").on("click", function () {
-
     if ($(this).attr("id").includes("Failed")) {
         $(".reprocess_btn").removeClass("hidden");
     } else {
         $(".reprocess_btn").addClass("hidden");
     }
-
 });
 
-
-
 $(".container_trigger").on("click", function () {
-    
     // Remove active state from all cards
     $(".container_trigger").removeClass("active");
 
     // Add active state to the clicked card
     $(this).addClass("active");
-    
+
     $(".table_container").fadeOut(100);
 
     const container = $($(this).data("id"));
 
     $($(this).data().id).fadeIn(100);
     container.find(".tab").first().click();
-
 });
 
 $(".container_trigger").first().click();
@@ -995,20 +983,20 @@ $(document).ready(function () {
 // Maps each table's real ID (must match TableLoader.tableData's first arg) to a "type"
 // so one populate function can branch on it.
 const queueTables = [
-    { id: "SOPendingLogs",  type: "so" },
-    { id: "SOFailedLogs",   type: "so" },
-    { id: "SOSuccessLogs",  type: "so" },
+    { id: "SOPendingLogs", type: "so" },
+    { id: "SOFailedLogs", type: "so" },
+    { id: "SOSuccessLogs", type: "so" },
 
     { id: "ReturnPendingLogs", type: "return" },
-    { id: "ReturnFailedLogs",  type: "return" },
+    { id: "ReturnFailedLogs", type: "return" },
     { id: "ReturnSuccessLogs", type: "return" },
 
     { id: "PaymentPendingLogs", type: "payment" },
-    { id: "PaymentFailedLogs",  type: "payment" },
+    { id: "PaymentFailedLogs", type: "payment" },
     { id: "PaymentSuccessLogs", type: "payment" },
 
     { id: "AutoStockPendingLogs", type: "autostock" },
-    { id: "AutoStockFailedLogs",  type: "autostock" },
+    { id: "AutoStockFailedLogs", type: "autostock" },
     { id: "AutoStockSuccessLogs", type: "autostock" },
 ];
 
@@ -1022,72 +1010,88 @@ queueTables.forEach(({ id, type }) => {
             if (!rowData) return;
 
             DisplayQueueInfo(type, rowData);
-            console.log("dadaa",id);
+            console.log("dadaa", id);
         });
 });
 
 function DisplayQueueInfo(type, rowData) {
     // Fields common-ish across types
-    $('#qmodal_status').text(rowData.api_status);
+    $("#qmodal_status").text(rowData.api_status);
 
     switch (type) {
         case "so":
-            $('#qmodal_title').text('Sales Order to FDIS');
-            $('#qmodal_salesman').text(rowData.salesman_name);
-            $('#qmodal_ref').text(rowData.transactionId);
-            renderQueueTable('itemCodeBody', [rowData], r => `
+            $("#qmodal_title").text("Sales Order to FDIS");
+            $("#qmodal_salesman").text(rowData.salesman_name);
+            $("#qmodal_ref").text(rowData.transactionId);
+            renderQueueTable(
+                "itemCodeBody",
+                [rowData],
+                (r) => `
                 <tr>
                     <td class="text-center">${r.item_no}</td>
                     <td class="text-center">${r.um}</td>
                     <td class="text-center">${r.quantity}</td>
-                </tr>`);
+                </tr>`,
+            );
             break;
 
         case "return":
-            $('#qmodal_title').text('Return to FDIS');
-            $('#qmodal_salesman').text(rowData.salesman_name);
-            $('#qmodal_ref').text(rowData.transactionId);
-            renderQueueTable('itemCodeBody', [rowData], r => `
+            $("#qmodal_title").text("Return to FDIS");
+            $("#qmodal_salesman").text(rowData.salesman_name);
+            $("#qmodal_ref").text(rowData.transactionId);
+            renderQueueTable(
+                "itemCodeBody",
+                [rowData],
+                (r) => `
                 <tr>
                     <td class="text-center">${r.item_no}</td>
                     <td class="text-center">${r.reason_code}</td>
                     <td class="text-center">${r.quantity}</td>
-                </tr>`);
+                </tr>`,
+            );
             break;
 
         case "payment":
-            $('#qmodal_title').text('Payment to FDIS');
-            $('#qmodal_ref').text(rowData.transactionId);
-            renderQueueTable('itemCodeBody', [rowData], r => `
+            $("#qmodal_title").text("Payment to FDIS");
+            $("#qmodal_ref").text(rowData.transactionId);
+            renderQueueTable(
+                "itemCodeBody",
+                [rowData],
+                (r) => `
                 <tr>
                     <td class="text-center">${r.mode}</td>
                     <td class="text-right">${r.transaction_amt}</td>
                     <td class="text-center">${r.bank}</td>
-                </tr>`);
+                </tr>`,
+            );
             break;
 
         case "autostock":
-            $('#qmodal_title').text('Auto Stock Transfer to FDIS');
-            $('#qmodal_ref').text(rowData.transactionId);
-            renderQueueTable('itemCodeBody', [rowData], r => `
+            $("#qmodal_title").text("Auto Stock Transfer to FDIS");
+            $("#qmodal_ref").text(rowData.transactionId);
+            renderQueueTable(
+                "itemCodeBody",
+                [rowData],
+                (r) => `
                 <tr>
                     <td class="text-center">${r.source}</td>
                     <td class="text-center">${r.destination}</td>
                     <td class="text-center">${r.quantity}</td>
-                </tr>`);
+                </tr>`,
+            );
             break;
     }
 
-    document.getElementById('sfaQueueDetailModal').showModal();
+    document.getElementById("sfaQueueDetailModal").showModal();
 }
 
 function renderQueueTable(bodyId, rows, rowTemplate) {
-    $('#' + bodyId).html(rows.map(rowTemplate).join(''));
+    $("#" + bodyId).html(rows.map(rowTemplate).join(""));
 }
 
-$(document).on("click", "#sfaRefresh", function(){
+$(document).on("click", "#sfaRefresh", function () {
     Swal.fire({
         text: "This could take time, please wait while we process your request.",
-        icon: "question"
+        icon: "question",
     });
 });

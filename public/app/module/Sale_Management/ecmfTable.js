@@ -697,7 +697,9 @@ TableLoader.tableData(
     EcmfSampleData,
     EcmfColumns,
     {
-        scrollY: "500px"
+        pageLength: 25,
+        scrollY: "45vh",
+        scrollX: true,
     }
 );
 

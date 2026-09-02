@@ -85,7 +85,7 @@
                     </span>
 
                 </div>
-                <div class="w-full pb-5 overflow-auto pt-1" id="DataTable">
+                <div class="w-full pb-5 overflow-auto pt-1 max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable id="pendingOrdersTable" />
                 </div>
             </div>

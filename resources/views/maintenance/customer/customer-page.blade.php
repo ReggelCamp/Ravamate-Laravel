@@ -35,7 +35,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 whitespace-nowrap" id="DataTable">
+                <div class="w-full pb-5 whitespace-nowrap max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable class="whitespace-nowrap" id="customerMaintenance"/>
                 </div>
             </div>
@@ -46,7 +46,7 @@
     <div class="modal-box max-w-2xl p-0 rounded-xl">
 
         {{-- Header --}}
-        <div class="flex items-center justify-between px-6 py-5 border-b">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-gray-300">
             <h3 class="text-xl font-bold tracking-wide">CUSTOMER DETAILS</h3>
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost text-gray-400 hover:text-gray-600">
@@ -56,50 +56,50 @@
         </div>
 
         {{-- Detail rows --}}
-        <div class="flex flex-col text-sm" id="customerModalBody">
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">SALES PERSON:</span>
-                <span class="text-gray-500 font-semibold" data-field="salesman_name">—</span>
+        <div class="flex flex-col text-sm px-5" id="customerModalBody">
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">SALES PERSON:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="salesman_name">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">CUSTOMER NAME:</span>
-                <span class="text-gray-500 font-semibold" data-field="customer_name">—</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">CUSTOMER NAME:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="customer_name">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">MOBILE:</span>
-                <span class="text-gray-500 font-semibold" data-field="contact">—</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">MOBILE:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="contact">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">LANDLINE:</span>
-                <span class="text-gray-500 font-semibold" data-field="landline">N/A</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">LANDLINE:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="landline">N/A</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">CONTACT PERSON:</span>
-                <span class="text-gray-500 font-semibold" data-field="contact_person">N/A</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">CONTACT PERSON:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="contact_person">N/A</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">ADDRESS:</span>
-                <span class="text-gray-500 font-semibold" data-field="address"></span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">ADDRESS:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="address"></span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">CUST TYPE:</span>
-                <span class="text-gray-500 font-semibold" data-field="customer_type">—</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">CUST TYPE:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="customer_type">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">MCP DAY:</span>
-                <span class="text-gray-500 font-semibold" data-field="mcp_day">—</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">MCP DAY:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="mcp_day">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">FREQUENCY CATEGORY:</span>
-                <span class="text-gray-500 font-semibold" data-field="freq_cat">—</span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">FREQUENCY CATEGORY:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="freq_cat">—</span>
             </div>
-            <div class="flex justify-between px-6 py-3 border-b">
-                <span class="font-bold">MCP SCHEDULE:</span>
-                <span class="text-gray-500 font-semibold" data-field="mcp_schedule"></span>
+            <div class="flex  px-6 py-3 border-b border-gray-300">
+                <span class="font-bold w-full">MCP SCHEDULE:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="mcp_schedule"></span>
             </div>
-            <div class="flex justify-between px-6 py-3 bg-gray-100">
-                <span class="font-bold">PRICE CODE:</span>
-                <span class="text-gray-500 font-semibold" data-field="price_code">—</span>
+            <div class="flex  px-6 py-3 bg-gray-100">
+                <span class="font-bold w-full">PRICE CODE:</span>
+                <span class="text-gray-500 w-full justify-start font-semibold" data-field="price_code">—</span>
             </div>
         </div>
 

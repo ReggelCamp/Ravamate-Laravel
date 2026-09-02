@@ -60,7 +60,7 @@
                                 </div>
                             </div>
 
-                            <div class=" ">
+                            <div class="max-h-[calc(100vh_-_250px)] ">
                                 <x-datatable class="" id="DynamicRouteList_Table" />
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <div class=" ">
+                            <div class="max-h-[calc(100vh_-_250px)] ">
                                 <x-datatable class="" id="DynamicTransactionList_Table" />
                             </div>
                         </div>

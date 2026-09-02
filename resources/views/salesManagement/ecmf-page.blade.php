@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" whitespace-nowrap">
+                            <div class=" whitespace-nowrap max-h-[calc(100vh-250px)] ">
                                 <x-datatable class="font-medium rounded-t-2xl pt-5 text-[10px]" id="EcmfTable" />
                             </div>
                         </div>
@@ -103,7 +103,7 @@
         <div class="modal-box w-full max-w-2xl p-0 overflow-hidden">
 
             <!-- Header -->
-            <div class="relative px-6 pt-5 pb-4 border-b">
+            <div class="relative px-6 pt-5 pb-4 border-b border-gray-300">
                 <form method="dialog">
                     <button class="btn btn-sm btn-square absolute right-4 top-4 ">✕</button>
                 </form>
@@ -145,13 +145,13 @@
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER CODE</span>
-                            <input type="text" id="ecmfModal_CustomerCode" value="---" readonly
-                                class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                            <input type="text" id="ecmfModal_CustomerCode" value="---" disabled
+                                class="input input-bordered text-[15px] font-semibold bg-gray-100 pointer-events-none" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SALES PERSON</span>
-                            <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" readonly
+                            <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" disabled
                                 class="input input-bordered text-[15px] font-semibold bg-gray-100" />
                         </label>
                     </div>
@@ -320,7 +320,7 @@
                 <div class="flex w-full pt-5 justify-between">
                     <div class="flex gap-5">
                         <button class="btn bg-amber-500 rounded-lg">Update</button>
-                        <button class="bg-blue-500  btn rounded-lg">print</button>
+                        <button class="bg-blue-500  btn rounded-lg">Print</button>
                     </div>
                     <div class="flex gap-5">
                         <button class="btn bg-blue-500 rounded-lg">Approved</button>

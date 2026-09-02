@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="w-full flex-1 overflow-auto pb-5 whitespace-nowrap">
+                <div class="w-full flex-1 overflow-auto pb-5 whitespace-nowrap max-h-[calc(100vh_-_250px)]">
                     <x-datatable id="CustomerTieringDataTable" />
                 </div>
 

@@ -391,7 +391,8 @@ TableLoader.tableData(
     sampleData,
     DynamicTransactionColumns,
     {
-        scrollY:"500px"
+        scrollY: "40vh",
+        pageLength: 25,
     }
 );
 
@@ -400,7 +401,8 @@ TableLoader.tableData(
     transactionListSampleData,
     DynamicRouteColumns,
     {
-        scrollY:"500px"
+        scrollY: "40vh",
+        pageLength: 25,
     }
 );
 

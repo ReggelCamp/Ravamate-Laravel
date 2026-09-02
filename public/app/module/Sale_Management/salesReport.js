@@ -618,7 +618,8 @@ TableLoader.tableData(
     sampleData,
     StockRequestColumns,
     {
-        scrollY:'500px'
+        pageLength: 20,
+        scrollY:'55vh'
     }
 );
 

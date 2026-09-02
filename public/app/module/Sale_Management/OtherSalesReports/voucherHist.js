@@ -92,7 +92,8 @@ TableLoader.tableData(
     samplePromoUsageData,
     PromoUsageColumns,
     {
-        scrollY: "500px"
+        scrollY: "50vh",
+        pageLength: 25
     }
 );
 

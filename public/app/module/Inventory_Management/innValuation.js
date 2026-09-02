@@ -324,7 +324,8 @@ TableLoader.tableData(
     sampleData,
     InnValuationColumns,
     {
-        scrollY:'500px'
+        scrollY:'40vh',
+        pageLength: 25
     }
 );
 

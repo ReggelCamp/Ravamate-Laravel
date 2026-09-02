@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full whitespace-nowrap overflow-visible">
+                        <div class="w-full whitespace-nowrap overflow-visible max-h-[calc(100vh-250px)]">
                             <x-datatable id="PendingDataTable" />
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full whitespace-nowrap overflow-visible">
+                        <div class="w-full whitespace-nowrap overflow-visible max-h-[calc(100vh-250px)]">
                             <x-datatable id="RejectedDataTable" />
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full whitespace-nowrap overflow-visible">
+                        <div class="w-full whitespace-nowrap overflow-visible max-h-[calc(100vh-250px)]">
                             <x-datatable id="ApprovedDataTable" />
                         </div>
                     </div>

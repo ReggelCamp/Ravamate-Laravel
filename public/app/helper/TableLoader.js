@@ -7,11 +7,12 @@ export default class TableLoader {
 
             searching: true,
             lengthChange: false,
-            responsive: true,
+            responsive: false,
 
             scrollX: options.scrollX ?? true,
             scrollY: options.scrollY ?? "100px",
             scrollCollapse: true,
+            autoWidth: true,
 
             dom: '<"top">rt<"dataTable-info"ip><"clear">',
 
@@ -38,7 +39,28 @@ export default class TableLoader {
             columns,
 
             ...options,
+
+             drawCallback: function () {
+            const api = this.api();
+            const pageInfo = api.page.info();
+
+            const pagination = $(api.table().container())
+                .find(".dt-paging");
+
+            if (pageInfo.pages <= 1) {
+                pagination.hide();
+            } else {
+                pagination.show();
+            }
+
+            // Keep any drawCallback passed through options
+            if (typeof options.drawCallback === "function") {
+                options.drawCallback.call(this, api);
+            }
+        },
+
         });
+        setTimeout(() => $(id).DataTable().columns.adjust(), 250);
 
         const searchSelector =
             options.searchInput || `[data-table-search="${id}"]`;

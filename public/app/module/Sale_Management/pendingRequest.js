@@ -322,7 +322,8 @@ TableLoader.tableData(
     sampleData,
     SoColumns,
     {
-        scrollY : "500px"
+        pageLength: 25,
+        scrollY : "45vh"
     }
 );
 

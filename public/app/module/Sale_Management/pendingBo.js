@@ -579,8 +579,9 @@ TableLoader.tableData(
     "#PendingDataTable",
     sampleData,
     PendingBoColumns,
-    {
-        scrollY: "500px"
+    {   
+        pageLength: 25,
+        scrollY: "45vh"
     }
 );
 

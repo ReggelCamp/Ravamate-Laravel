@@ -87,8 +87,8 @@
             </form>
         </div>
         <div class="flex flex-col w-full h-full p-5 pt-3">
-            <div class="flex justify-between gap-1">
-                <div class="flex flex-col w-full inset-shadow-lg p-2 rounded-2xl gap-3 pb-10">
+            <div class="flex justify-between gap-1 pb-2">
+                <div class="flex flex-col w-full border inset-shadow-lg p-2 rounded-2xl gap-3 pb-10">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] text-white items-center w-full">
                         <span class="font-bold text-[16px]">Salesman Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
@@ -125,7 +125,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full  px-2 pt-2 rounded-2xl gap-3">
+                <div class="flex flex-col w-full border px-2 pt-2 rounded-2xl gap-3">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] items-center w-full text-white">
                         <span class="font-bold text-[16px]">Sales Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
@@ -148,10 +148,10 @@
                         </span>
                     </div>
                     <div class="flex w-full  justify-between">
-                        <div class="flex flex-col  border rounded-2xl w-[201px] items-center justify-start ">
-                            <span class="text-[12px]">Delivery Date</span>
-                            <div class="flex  items-center gap-5">
-                                <span class=" salesDetailsIcon text-[20px] rounded-2xl p-0.5 bg-red-800 text-white">
+                        <div class="flex flex-col border rounded-2xl w-[201px] justify-start ">
+                            <span class="text-[12px] justify-center flex">Delivery Date</span>
+                            <div class="flex items-center gap-5 px-5 pt-2">
+                                <span class=" salesDetailsIcon text-[20px] rounded-lg p-1 bg-red-800 text-white">
                                     <i class="mdi mdi-calendar-month-outline"></i>
                                 </span>
                                 <div class="flex flex-col items-center">
@@ -160,8 +160,8 @@
                                     <span class="text-[7.5px]">MM/DD/YYYY</span>
                                 </div>
                             </div>
-                            <div class="flex justify-between items-center gap-5">
-                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] text-white rounded-2xl p-0.5 bg-red-800"></span>
+                            <div class="flex  items-center gap-5 px-5 pb-2">
+                                <span class="mdi mdi-clock-time-five-outline salesDetailsIcon text-[20px] text-white rounded-lg p-1 bg-red-800"></span>
                                 <div class="flex flex-col items-center">
                                     <span class="text-[7.5px]">Time</span>
                                     <span class="text-[12px]">10:06:22.347</span>
@@ -169,8 +169,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center  justify-between">
-                            <div class="battery-card">
+                        <div class="flex flex-col items-center justify-between">
+                            <div class="battery-card pb-2">
                                 <div class="battery-title text-[12px]">
                                     Battery Status
                                 </div>

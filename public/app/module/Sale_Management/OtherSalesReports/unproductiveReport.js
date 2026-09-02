@@ -78,7 +78,8 @@ TableLoader.tableData(
     sampleTransactionData,
     TransactionColumns,
     {
-        scrollY: "500px"
+        scrollY: "50vh",
+        pageLength: 25
     }
 );
 

@@ -65,7 +65,7 @@
                                     </span>
                                 </x-slot:dropdownName>
 
-                                <ul id="salesReports" class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                <ul id="salesReports" class="dropdown_item border w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                 </ul>
                             </x-dropdown>
                         </div>
@@ -91,10 +91,8 @@
                 </div>
             </div>
 
-            <div class=" pb-5 p-5">
-
+            <div class=" pb-5 p-5 max-h-[calc(100vh-250px)] ">
                 <x-datatable id="salesReportTable" />
-
             </div>
         </div>
     </div>

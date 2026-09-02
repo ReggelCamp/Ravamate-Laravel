@@ -540,7 +540,8 @@ TableLoader.tableData(
     sampleData,
     SalesRetRgsColumns,
     {
-        scrollY: "500px"
+        scrollY: "50vh",
+        pageLength: 25
     }
 );
 

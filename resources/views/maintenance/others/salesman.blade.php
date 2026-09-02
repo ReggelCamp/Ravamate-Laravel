@@ -34,7 +34,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto whitespace-nowrap" id="DataTable">
+                <div class="w-full pb-5 overflow-auto whitespace-nowrap max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable id="salesmanMaintenanceTable" />
                 </div>
             </div>
@@ -155,7 +155,7 @@
             <div class="flex flex-col lg:flex-row w-full justify-center items-stretch gap-4 px-4">
 
                 <!-- ID Card -->
-                <div class="rounded-2xl overflow-auto shadow-sm w-full lg:w-[400px] lg:shrink-0">
+                <div class="rounded-2xl overflow-auto shadow-sm w-full lg:w-[400px] lg:shrink-0 border">
                     <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
                         <div class="bg-gradient-to-br from-red-800 to-red-900 relative pb-5">
                             <div class="flex flex-col items-center w-full">
@@ -253,9 +253,9 @@
                 </div>
 
                 {{-- Setting --}}
-                <div class="rounded-2xl border w-full lg:w-[400px] lg:shrink-0 shadow-sm p-5 h-fit">
-                    <div class="flex items-center justify-between py-2.5 border-b">
-                        <span class="text-[13px] font-semibold text-gray-500 w-full">Default ORD Type</span>
+                <div class="rounded-2xl border w-full lg:w-[400px] lg:shrink-0 shadow-sm p-5 h-fit gap-2 flex flex-col">
+                    <div class="flex items-center justify-between py-2 border rounded-full px-2">
+                        <span class="text-[11px] font-semibold text-gray-500 w-full">Default ORD Type</span>
                         <select id="salesmanInfo_DefaultOrdType"
                             class="select select-bordered select-sm rounded-full w-full text-[13px] font-bold ">
                             <option>BOOKING</option>
@@ -266,21 +266,21 @@
                         </select>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 border rounded-full px-2">
                         <span class="text-[13px] font-semibold text-gray-500 w-full">Warehouse Code</span>
                         <select id="salesmanInfo_WarehouseCode"
                             class="select select-bordered select-sm rounded-full text-[13px] w-full font-bold">
                             <option value="">Select</option>
                         </select>
                     </div>
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 border rounded-full px-2">
                         <span class="text-[13px] font-semibold text-gray-500 w-full">Bad Order Warehouse</span>
                         <span id="salesmanInfo_BadOrderWarehouse"
                             class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
                             BO
                         </span>
                     </div>
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 w-full">Good Stock Return Warehouse</span>
                         <span id="salesmanInfo_GoodStockReturnWarehouse"
                             class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
@@ -288,7 +288,7 @@
                         </span>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">OSA Checking</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_OsaChecking_state"
@@ -298,7 +298,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">EOD</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_Eod_state"
@@ -308,7 +308,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Is Hybrid</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_IsHybrid_state"
@@ -318,7 +318,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5 border-b">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Restrict New Customer</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_RestrictNewCustomer_state"
@@ -328,7 +328,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between py-2.5">
+                    <div class="flex items-center justify-between py-2 rounded-full border px-2">
                         <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Disable OTP</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_DisableOtp_state"

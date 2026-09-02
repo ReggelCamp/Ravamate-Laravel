@@ -127,7 +127,7 @@ TableLoader.tableData(
     sampleStockRequestData,
     StockRequestColumns,
     {
-        scrollY: "500px"
+        scrollY: "full"
     }
 );
 

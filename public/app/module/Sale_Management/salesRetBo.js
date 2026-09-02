@@ -541,7 +541,8 @@ TableLoader.tableData(
     sampleData,
     SalesReturnColumns,
     {
-        scrollY:'500px'
+        scrollY:'50vh',
+        pageLength: 25
     }
 );
 

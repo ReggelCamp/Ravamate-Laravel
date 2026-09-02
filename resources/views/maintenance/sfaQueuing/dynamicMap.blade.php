@@ -91,7 +91,7 @@
                     <x-searchbar id="dynamicMapSearch" data-table-search="#dynamicMapDt" class="border flex-1" />
                 </div>
 
-                <div class="flex-1 overflow-y-auto">
+                <div class="flex-1 overflow-y-auto max-h-[calc(100vh_-_250px)]">
                     <x-datatable id="dynamicMapDt" />
                 </div>
             </div>

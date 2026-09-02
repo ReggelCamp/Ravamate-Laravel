@@ -90,7 +90,7 @@
                         Today's Week No: 32 (Even week)
                     </span>
                 </div>
-                <div class="w-full pb-5 overflow-auto whitespace-nowrap" id="DataTable">
+                <div class="w-full pb-5 overflow-auto whitespace-nowrap max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable id="mcpTable" />
                 </div>
             </div>
@@ -100,8 +100,8 @@
 
     <dialog id="mcpFilterModal" class="modal">
         <div class="modal-box p-0 overflow-visible">
-            <div class="flex items-center justify-between p-5 border-b">
-                <h3 class="text-xl font-bold">Filter Table Row Results</h3>
+            <div class="flex items-center justify-between p-5 border-b border-gray-300">
+                <h3 class="text-xl font-semibold">Filter Table Row Results</h3>
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost">
                         <i class="fa-solid fa-xmark text-lg"></i>
@@ -111,7 +111,7 @@
 
             <div class="flex flex-col gap-5 p-5">
                 <div class="flex items-center justify-between gap-5">
-                    <label for="filter_daysOfVisit" class="font-bold text-sm whitespace-nowrap w-[150px]">Days of
+                    <label for="filter_daysOfVisit" class="font-semibold text-sm whitespace-nowrap w-[150px]">Days of
                         Visist:</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
@@ -124,23 +124,23 @@
                                 <ul id="dayOfWeek" class="w-[300px] max-h-[300px] overflow-auto bg-white shadow-lg p-0">
                                 </ul>
 
-                                <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                   <button type="button" id="SalesmanCheckbox_Cancel" onclick="this.blur()"
-    class="btn btn-ghost btn-xs rounded-full text-[12px]">
-    Cancel
-</button>
+                                {{-- <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
+                                    <button type="button" id="SalesmanCheckbox_Cancel" onclick="this.blur()"
+                                        class="btn btn-ghost btn-xs rounded-full text-[12px]">
+                                        Cancel
+                                    </button>
                                     <button type="button" id="SalesmanCheckbox_Confirm"
                                         class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
                                         Confirm
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </x-dropdown>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between gap-5">
-                    <label for="filter_weekVisited" class="font-bold text-sm whitespace-nowrap w-[150px]">Week
+                    <label for="filter_weekVisited" class="font-semibold text-sm whitespace-nowrap w-[150px]">Week
                         Visited:</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
@@ -155,23 +155,23 @@
                                     class="w-[300px] max-h-[300px] overflow-auto bg-white shadow-lg p-0">
                                 </ul>
 
-                                <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                   <button type="button" id="SalesmanCheckbox_Cancel" onclick="this.blur()"
-    class="btn btn-ghost btn-xs rounded-full text-[12px]">
-    Cancel
-</button>
+                                {{-- <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
+                                    <button type="button" id="SalesmanCheckbox_Cancel" onclick="this.blur()"
+                                        class="btn btn-ghost btn-xs rounded-full text-[12px]">
+                                        Cancel
+                                    </button>
                                     <button type="button" id="SalesmanCheckbox_Confirm"
                                         class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
                                         Confirm
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </x-dropdown>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between gap-5">
-                    <label for="filter_mcpStatus" class="font-bold text-sm whitespace-nowrap w-[150px]">MCP Status:</label>
+                    <label for="filter_mcpStatus" class="font-semibold text-sm whitespace-nowrap w-[150px]">MCP Status:</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
@@ -190,7 +190,7 @@
                 </div>
 
                 <div class="flex items-center justify-between gap-5">
-                    <label for="filter_activeFlag" class="font-bold text-sm whitespace-nowrap w-[150px]">Active
+                    <label for="filter_activeFlag" class="font-semibold text-sm whitespace-nowrap w-[150px]">Active
                         Flag:</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
@@ -220,9 +220,9 @@
     </dialog>
 
     <dialog id="mcpLayoutModal" class="modal">
-        <div class="modal-box p-0 max-w-2xl overflow-y-auto">
-            <div class="flex items-center justify-between p-5 border-b">
-                <h3 class="text-2xl font-bold">MCP Layout</h3>
+        <div class="modal-box p-0 max-w-2xl overflow-y-auto mt-10 max-h-[90vh]">
+            <div class="flex items-center justify-between p-5 border-b border-gray-300">
+                <h3 class="text-2xl font-semibold">MCP Layout</h3>
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost">
                         <i class="fa-solid fa-xmark text-lg"></i>
@@ -231,57 +231,57 @@
             </div>
 
             <div class="flex flex-col px-5">
-                <div class="flex items-center border-b py-3">
-                    <span class="font-bold flex-1 text-sm w-full">Salesman</span>
+                <div class="flex items-center border-b border-gray-300 py-3">
+                    <span class="font-semibold flex-1 text-sm w-full">Salesman</span>
                     <span class="text-sm w-full flex-2">{{ $mcp->salesman_code ?? 'GP_2' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">CustCode</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">CustCode</span>
                     <span class="text-sm flex-2">{{ $mcp->cust_code ?? '16_GP' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Customer</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Customer</span>
                     <span class="text-sm flex-2">{{ $mcp->cust_name ?? 'SEVEN BROTHERS' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Address</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Address</span>
                     <span class="text-sm flex-2">{{ $mcp->address ?? 'null' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Last Updated</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Last Updated</span>
                     <span class="text-sm flex-2">{{ $mcp->last_updated ?? '2026-07-13 14:07:28.260' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Status</span>
-                    <span class="text-sm flex-2 font-bold text-red-600">{{ $mcp->status ?? 'No Schedule' }}</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Status</span>
+                    <span class="text-sm flex-2 font-semibold text-red-600">{{ $mcp->status ?? 'No Schedule' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Frequency</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Frequency</span>
                     <span class="text-sm flex-2 text-gray-400">{{ $mcp->frequency ?? '---' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Days of Visit</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Days of Visit</span>
                     <span class="text-sm flex-2 text-gray-400">{{ $mcp->days_of_visit ?? '---' }}</span>
                 </div>
-                <div class="flex items-center justify-between border-b py-3">
-                    <span class="font-bold text-sm flex-1">Week Visited</span>
+                <div class="flex items-center justify-between border-b border-gray-300 py-3">
+                    <span class="font-semibold text-sm flex-1">Week Visited</span>
                     <span class="text-sm flex-2 text-gray-400">{{ $mcp->week_visited ?? '---' }}</span>
                 </div>
-                <div class="flex items-center justify-between py-3 border-b">
-                    <span class="font-bold text-sm flex-1">Time of Visit</span>
+                <div class="flex items-center justify-between py-3 border-b border-gray-300">
+                    <span class="font-semibold text-sm flex-1">Time of Visit</span>
                     <span class="text-sm flex-2 text-gray-400">{{ $mcp->time_of_visit ?? '---' }}</span>
                 </div>
             </div>
 
             <div class="px-5 pt-5 ">
-                <h3 class="text-lg border-t font-bold">Update MCP Layout</h3>
+                <h3 class="text-lg border-t border-gray-300 font-semibold">Update MCP Layout</h3>
                 <span class="text-xs text-gray-400">Note: Today's Week No: {{ $weekNo ?? 35 }} ({{ $weekParity ?? 'Odd' }}
                     week)</span>
             </div>
 
             <div class="flex flex-col gap-4 p-5">
                 <div class="flex items-center justify-between">
-                    <label for="update_frequency_label" class="font-bold text-sm w-fit">Frequency</label>
+                    <label for="update_frequency_label" class="font-semibold text-sm w-fit">Frequency</label>
 
                     <div class="w-full max-w-sm">
                         <x-dropdown class="w-full z-[9999]"
@@ -296,8 +296,8 @@
                                     class="w-[300px] max-h-[300px] px-3 z-[9999] w-full overflow-auto bg-white shadow-lg p-0">
                                 </ul>
 
-                                <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                    <button type="button" id="freq_Cancel"  onclick="this.blur()"
+                                {{-- <div class="flex items-center justify-end gap-2 border-t border-gray-300 px-3 py-2">
+                                    <button type="button" id="freq_Cancel" onclick="this.blur()"
                                         class="btn btn-ghost btn-xs rounded-full text-[12px]">
                                         Cancel
                                     </button>
@@ -305,14 +305,14 @@
                                         class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
                                         Confirm
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </x-dropdown>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <label for="update_daysOfVisit_label" class="font-bold text-sm w-32">Days of Visit</label>
+                    <label for="update_daysOfVisit_label" class="font-semibold text-sm w-32">Days of Visit</label>
 
                     <div class="w-full max-w-sm">
                         <x-dropdown direction="dropdown-top" class="w-full z-[9999]"
@@ -327,8 +327,8 @@
                                     class="w-[300px] max-h-[300px] px-3 w-full z-[9999] overflow-auto bg-white shadow-lg p-0">
                                 </ul>
 
-                                <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                    <button type="button" id="daysOfVisit_Cancel"  onclick="this.blur()"
+                                {{-- <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
+                                    <button type="button" id="daysOfVisit_Cancel" onclick="this.blur()"
                                         class="btn btn-ghost btn-xs rounded-full text-[12px]">
                                         Cancel
                                     </button>
@@ -336,14 +336,14 @@
                                         class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
                                         Confirm
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </x-dropdown>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <label for="update_weekVisited_label" class="font-bold text-sm w-32">Week Visited</label>
+                    <label for="update_weekVisited_label" class="font-semibold text-sm w-32">Week Visited</label>
 
                     <div class="w-full max-w-sm">
                         <x-dropdown direction="dropdown-top" class="w-full z-[50]"
@@ -358,8 +358,8 @@
                                     class="w-[300px] max-h-[300px] overflow-auto bg-white shadow-lg p-0">
                                 </ul>
 
-                                <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                    <button type="button" id="weekVisited_Cancel"  onclick="this.blur()"
+                                {{-- <div class="flex items-center justify-end gap-2 border-t px-3 py-2">
+                                    <button type="button" id="weekVisited_Cancel" onclick="this.blur()"
                                         class="btn btn-ghost btn-xs rounded-full text-[12px]">
                                         Cancel
                                     </button>
@@ -367,14 +367,14 @@
                                         class="btn btn-xs rounded-full text-[12px] bg-[#e6231e] text-white border-none">
                                         Confirm
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </x-dropdown>
                     </div>
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <label for="update_timeOfVisit" class="font-bold text-sm w-32">
+                    <label for="update_timeOfVisit" class="font-semibold text-sm w-32">
                         Time of Visit
                     </label>
 
@@ -383,7 +383,7 @@
                 </div>
             </div>
 
-            <div class="flex w-full justify-end p-5 gap-3 border-t">
+            <div class="flex w-full justify-end p-5 gap-3 border-t border-gray-300">
                 <button type="button" class="btn bg-red-900 hover:bg-red-800 text-white border-none">Update</button>
                 <form method="dialog">
                     <button type="submit" class="btn btn-outline">Close</button>

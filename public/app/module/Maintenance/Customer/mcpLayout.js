@@ -335,7 +335,8 @@ TableLoader.tableData(
     MCPSampleData,
     MCPColumns,
     {
-        scrollY: "500px"
+        scrollY: "50vh",
+        pageLength:25
     }
 );
 

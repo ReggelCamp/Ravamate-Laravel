@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-2">
-                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5">
+                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5 max-h-[calc(100vh_-_250px)]">
                         <x-datatable id="geocallRateTable" />
                     </div>
                 </div>

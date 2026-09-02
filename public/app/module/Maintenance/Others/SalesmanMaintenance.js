@@ -145,7 +145,8 @@ TableLoader.tableData(
     sampleData,
     SalesmanMaintenanceTable,
     {
-        scrollY: "500"
+        scrollY: "50vh",
+        pageLength:25
     }
 );
 $(document).ready(function () {

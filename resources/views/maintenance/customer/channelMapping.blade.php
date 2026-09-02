@@ -19,7 +19,7 @@
                 </div>
                 <x-searchbar id="customSearch" />
             </div>
-            <div class="overflow-auto pt-5">
+            <div class="overflow-auto pt-5 max-h-[calc(100vh_-_250px)]">
                 <x-datatable class="whitespace-nowrap" />
             </div>
         </div>

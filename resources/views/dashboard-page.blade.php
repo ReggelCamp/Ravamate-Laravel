@@ -14,6 +14,10 @@
             min-height: 100vh !important;
         }
 
+        #fitScreenTable_info.dt-info{
+            padding-left: 10px !important;
+        }
+
         #dashboardDataTable_wrapper .dt-scroll-body {
             height: 100px !important;
         }
@@ -36,10 +40,16 @@
             }
         }
 
-        .dashboard-datatable .dt-scroll-head,
-        .dashboard-datatable .dt-scroll-headInner,
-        .dashboard-datatable .dt-scroll-head table {
+        .dashboard-datatable .dt-scroll-head {
             overflow: hidden;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .dashboard-datatable .dt-scroll-headInner {
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .dashboard-datatable .dt-scroll-head table {
             border-radius: 1rem 1rem 0 0;
         }
 
@@ -121,13 +131,16 @@
             width: 100% !important;
         }
 
-
+        #fitScreenTable_wrapper .dt-scroll-body {
+            width: 100%;
+            overflow-x: auto;
+        }
 
         /* .daterangepicker td.disabled {
-        visibility: visible !important;
-        opacity: 0.4;
-        pointer-events: none;
-    } */
+            visibility: visible !important;
+            opacity: 0.4;
+            pointer-events: none;
+        } */
     </style>
 
     <div class="w-full h-full flex flex-col bg-transparent pb-10 overflow-auto">
@@ -143,20 +156,20 @@
                     <div class="flex gap-10 w-full">
                         <div>
                             <button id="Display_Carousel"
-                                class="w-fit whitespace-nowrap h-[17px] rounded-2xl px-3 border gap-1 flex items-center text-[10px] text-white border-white/60">
+                                class="w-fit whitespace-nowrap h-[17px] bg-white text-red-500 shine-bgBtn rounded-2xl px-3 border gap-1 flex items-center text-[10px] border-white/60">
                                 <i class="fa-solid fa-arrow-left"></i>
                                 Display Carousel
                             </button>
                         </div>
-                        <div class="flex w-full gap-5">
+                        <div class="flex justify-end w-full gap-3">
                             <button
-                                class="w-fit h-[17px] rounded-2xl px-5 border gap-2 flex items-center text-[10px] text-white border-white/60">
+                                class="w-fit h-[17px] rounded-2xl px-5 border bg-white text-red-500 shine-bgBtn gap-2 flex items-center text-[10px] border-white/60">
                                 <i class="mdi mdi-refresh"></i>
                                 Refresh
                             </button>
                             <div class="dropdown gap-2">
                                 <div tabindex="0" role="button"
-                                    class="w-fit whitespace-nowrap h-[17px] rounded-2xl px-5 border gap-2 flex items-center text-[10px] text-white border-white/60">
+                                    class="w-fit whitespace-nowrap h-[17px] bg-white text-red-500 shine-bgBtn rounded-2xl px-5 border gap-2 flex items-center text-[10px] border-white/60">
                                     Other Actions
                                 </div>
 
@@ -175,7 +188,7 @@
                             style="background-image: url('{{ $salesman->photo_url ?? '' }}')"></div>
 
                         <div class="flex w-full flex-col justify-center leading-4 text-white">
-                            <div class="flex justify-between items-start">
+                            <div class="flex justify-between items-center">
                                 <div>
                                     <span
                                         class="font-bold text-sm block">{{ $salesman->name ?? 'OB07_NICOLAS RAMBOYONG' }}</span>
@@ -246,7 +259,7 @@
                             </button>
                         </div>
 
-                        <div class="flex items-center w-full gap-8 text-gray-600 text-[9px] whitespace-nowrap">
+                        <div class="flex items-center justify-between w-full gap-8 text-gray-600 text-[9px] whitespace-nowrap">
                             <span>
                                 <i class="fa-regular fa-clock mr-1"></i>
                                 {{ $store->time ?? '13:00:18' }}
@@ -313,7 +326,8 @@
                             class="hidden flex rounded-s-2xl text-center items-center justify-center w-full h-[30px] font-medium text-white text-[11px] bg-red-500">
                             MTD Overview
                         </button>
-                        <span class="flex rounded-e-2xl items-center text-center justify-center bg-white w-full h-[30px] font-medium text-[11px]">
+                        <span
+                            class="flex rounded-e-2xl items-center text-center justify-center bg-white w-full h-[30px] font-medium text-[11px]">
                             REMAINING SELLING DAYS 9
                         </span>
                     </div>
@@ -343,12 +357,12 @@
                                 </div>
                                 {{-- right side --}}
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Sales</span>
                                         <span class="font-semibold ">₱{{ number_format($stats->sales ?? 165143.86, 2) }}
                                         </span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Balance</span>
                                         <span
                                             class="text-red-600 font-semibold">₱{{ number_format($stats->balance ?? 0, 2) }}</span>
@@ -369,16 +383,16 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Item (No. of SKU)</span>
                                         <span class="font-semibold">{{ $stats->item_count ?? 10 }}</span>
                                     </div>
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Value (₱)</span>
                                         <span
                                             class="font-semibold">₱{{ number_format($stats->value ?? 20642.98, 2) }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <div class="flex pl-2 whitespace-nowrap gap-1">
                                             <span>Time Spent</span>
                                             <span class="text-[8px]">(Minutes)</span>
@@ -406,11 +420,11 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Visited</span>
                                         <span class="font-semibold">{{ $stats->visited ?? 0 }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Balance</span>
                                         <span
                                             class="text-red-600 font-semibold">{{ $stats->productivity_balance ?? 6 }}</span>
@@ -433,15 +447,15 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Onsite</span>
                                         <span class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
                                     </div>
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Offsite</span>
                                         <span class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Unproductive</span>
                                         <span class="text-red-600 font-semibold">{{ $stats->unproductive ?? 6 }}</span>
                                     </div>
@@ -471,12 +485,12 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Sales</span>
                                         <span class="font-semibold">₱
                                             {{ number_format($mtd->sales ?? 95218225.80, 2) }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Balance</span>
                                         <span class="text-red-600 font-semibold">₱
                                             {{ number_format($mtd->balance ?? 0, 2) }}</span>
@@ -499,11 +513,11 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Active Buying</span>
                                         <span class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Unique Buying</span>
                                         <span class="font-semibold">{{ $mtd->unique_buying ?? 0 }}</span>
                                     </div>
@@ -535,11 +549,11 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Productive Call</span>
                                         <span class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Balance</span>
                                         <span class="text-red-600 font-semibold">{{ $mtd->mcp_balance ?? 208 }}</span>
                                     </div>
@@ -568,15 +582,15 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Onsite</span>
                                         <span class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
                                     </div>
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Offsite</span>
                                         <span class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Unproductive</span>
                                         <span class="text-red-600 font-semibold">{{ $mtd->unproductive ?? 11 }}</span>
                                     </div>
@@ -595,15 +609,15 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Item</span>
                                         <span class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
                                     </div>
-                                    <div class="flex justify-between border-b">
+                                    <div class="flex justify-between border-b pb-1">
                                         <span class="pl-2">Value</span>
                                         <span class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
                                     </div>
-                                    <div class="flex justify-between">
+                                    <div class="flex justify-between pt-1">
                                         <span class="pl-2">Time Spent</span>
                                         <span class="font-semibold">{{ $mtd->time_spent ?? 5.89 }}</span>
                                     </div>
@@ -691,8 +705,7 @@
             <div class="order-1 lg:order-2 flex flex-col w-full flex-1 lg:h-screen lg:overflow-y-auto pb-10">
                 <div class="w-full flex flex-col md:h-[350px] lg:flex-1 lg:h-auto">
                     {{-- Map Header --}}
-                    <div
-                        class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between items-center ">
+                    <div class="!bg-transparent w-full h-[50px] flex-shrink-0 flex font-medium justify-between items-center ">
                         <div class="w-full  items-center ">
                             <x-report-header-title class="font-[16px]" title="Dashboard" />
                         </div>
@@ -708,107 +721,198 @@
                     </div>
                     {{-- Map Body --}}
                     <div id="mapContainer" class="w-full flex-1 min-h-[500px] bg-white relative HideMap">
-                        
-                        <button id="fitToScreen" class="absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-300/70 items-center text-center text-gray-600 rounded-full text-[13px] w-fit h-fit px-2">
+
+                        <button id="fitToScreen"
+                            class="absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-300/70 items-center text-center text-gray-600 rounded-full text-[13px] w-fit h-fit px-2">
                             Fit to Screen
                         </button>
 
                         {{-- fit to screen section --}}
-                        <div id="fitScreenInfo" class="hidden flex flex-col h-fit w-[550px] absolute top-2 left-2 z-10 rounded-3xl overflow-hidden gap-5">
+                        <div id="fitScreenInfo"
+                            class="hidden flex flex-col h-fit w-[550px] absolute top-2 left-2 z-10 rounded-3xl overflow-hidden gap-5">
                             <div class=" pb-2 bg-white rounded-b-3xl">
-                                <div class="flex w-full bg-red-500 p-2">
+                                <div id="fitScreenToolBarContainer" class="flex w-full bg-red-500 p-2">
 
-                                    <div class="flex w-full gap-2">
-                                        <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
-                                            <x-dropdown direction="dropdown-top" class="w-fit px-5"
-                                                buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
-                                                <x-slot:dropdownName>
-                                                    <span
-                                                        class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
-                                                        <i class="fa-regular fa-clock"></i>
-                                                        <span id="selectedMinute">OFF</span>
-                                                        <i class="fa-solid fa-angle-down text-[8px]"></i>
-                                                    </span>
-                                                </x-slot:dropdownName>
+                                    <div id="fitScreenHeader" class="flex w-full">
+                                        <div class="flex w-full gap-2">
+                                            <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
+                                                <x-dropdown direction="dropdown-bottom" class="w-fit px-5"
+                                                    buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center h-[30px] shine-bgBtn">
+                                                    <x-slot:dropdownName>
+                                                        <span
+                                                            class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
+                                                            <i class="fa-regular fa-clock"></i>
+                                                            <span id="selectedMinute">OFF</span>
+                                                            <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                                        </span>
+                                                    </x-slot:dropdownName>
 
-                                                <ul id="MinDropdown"
-                                                    class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                                    <ul id="MinDropdown"
+                                                        class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
 
-                                                </ul>
-                                            </x-dropdown>
+                                                    </ul>
+                                                </x-dropdown>
+                                            </div>
+
+                                            <div
+                                                class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                                <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
+                                            </div>
                                         </div>
-
-                                        <div class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
-                                            <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
+                                        <div class="w-full h-[30px] sm:w-auto">
+                                            <x-searchbar id="customSearch" placeholder="Search Salesman"
+                                                class="h-[30px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
                                         </div>
                                     </div>
-                                    <div class="w-full h-[30px] sm:w-auto">
-                                        <x-searchbar id="customSearch" placeholder="Search Salesman"
-                                            class="h-[30px] w-[250px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
+
+                                    <div id="fitScreenSalesmanToolbar" class="hidden w-full justify-between">
+                                        <div class="w-full h-fit py-2 flex-shrink-0 flex sm:flex-row justify-between gap-5 ">
+                                            <div class="flex w-full gap-2 justify-between">
+                                                <div class=" flex justify-start flex-col max-h-[25px] flex-1 lg:items-center sm:flex-row gap-2 w-full md:w-auto ">
+
+                                                    <div id="displayTable" class="w-fit px-3 h-[25px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                                        <i class="mdi mdi-arrow-left text-[10px] "></i>
+                                                    </div>
+
+                                                    <div class="sm:text-[10px] h-[25px] whitespace-nowrap sm:w-fit">
+                                                        <x-dropdown  id="OperationTypeDropdown" class="w-full !h-[25px]"
+                                                            buttonClass="!h-[25px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
+                                                            <x-slot:dropdownName>
+                                                                <span class="text-[10px]  font-semibold gap-5 h-[25px]">
+                                                                    Operation Type
+                                                                    <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                                                </span>
+                                                            </x-slot:dropdownName>
+
+                                                            <ul id="OperationTypeItems"
+                                                                class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                                            </ul>
+                                                        </x-dropdown>
+                                                    </div>
+
+                                                        <div class="w-fit sm:text-[10px]  rounded-2xl whitespace-nowrap sm:w-fit">
+                                                            <x-dropdown direction="dropdown-bottom" class="w-fit px-5"
+                                                                buttonClass="rounded-2xl gap-5  w-fit px-5 items-center  flex justify-center !h-[25px] shine-bgBtn">
+                                                                <x-slot:dropdownName>
+                                                                    <span
+                                                                        class="flex items-center gap-2 text-[10px] justify-evenly w-full !h-[25px] font-semibold">
+                                                                        <i class="fa-regular fa-clock"></i>
+                                                                        <span id="selectedMinute">OFF</span>
+                                                                        <i class="fa-solid fa-angle-down text-[8px]"></i>
+                                                                    </span>
+                                                                </x-slot:dropdownName>
+
+                                                                <ul id="MinDropdown"
+                                                                    class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+
+                                                                </ul>
+                                                            </x-dropdown>
+                                                        </div>
+
+                                                        <div
+                                                            class="w-fit px-2 h-[25px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                                            <i class="fa-solid fa-arrow-rotate-right text-[10px] "></i>
+                                                        </div>
+                                                </div>
+
+                                                <div class="w-full h-[25px] sm:w-auto justify-end">
+                                                    <x-searchbar id="customSearch" placeholder="Search Salesman"
+                                                        class="!h-[25px] w-[200px] headerColor text-[13px] rounded-4xl bg-transparent border focus:outline-none border-white" />
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                                 <div id="fitScreenTableContainer" class="flex w-full">
                                     <x-datatable id="fitScreenTable" class="overflow-auto" />
                                 </div>
                             </div>
 
-                            <div class="bg-white/70 flex justify-between rounded-3xl">
+                            <div class="bg-white/70 flex justify-between gap-2 rounded-3xl h-[140px]">
                                 {{-- MTD SALES --}}
-                                <div class="flex w-[267px] bg-white rounded-3xl">
-                                    <div class="flex flex-col w-[142px] px-2">
-                                        <span class="font-bold">MTD Sales</span>
-                                        <div class="flex items-center gap-1">
-                                            <span class="font-bold text-sm">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
-                                            <span class="rounded-full bg-amber-200 w-10 h-10"></span>
-                                        </div>
-                                        <span class="text-[10px]">Target</span>
-                                        <span>0.00</span>
-
-                                        <span class="text-[10px]">Previous Month MTD Sales</span>
-                                        <span>
-                                            50,000.00
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-col w-[142px] px-2">
-                                        <span class="text-[11px] font-bold">NUMBER OF SALESMAN THIS MONTH</span>
-                                        <div class="flex gap-5">
-                                            <img class="w-10 h-10" src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg"/>
-                                            <div class="flex flex-col">
-                                                <span class="text-[10px]">Total</span>
-                                                <span>11</span>
+                                <div class="flex w-full bg-white rounded-3xl">
+                                    <div class="flex flex-col w-full px-2 gap-2">
+                                        
+                                        <div class="flex w-full pt-3 justify-between">
+                                            <div class="flex flex-col w-full">
+                                                <span class="font-semibold text-[12px]">MTD SALES</span>
+                                                <span class="font-semibold text-[12px]">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                            </div> 
+                                            <div class="flex w-full justify-end"> 
+                                                <span class="rounded-full bg-amber-200 w-10 h-10"></span>    
                                             </div>
                                         </div>
-                                        <span class="text-[10px]">Previous Month Salesman</span>
-                                        <span>50,000.00</span>
+                                        
+                                        <div class="flex flex-col w-full">
+                                            <span class="text-[8px]">Target</span>
+                                            <span class="text-[10px]">0.00</span>
+                                        </div>
+
+                                        <div class="flex flex-col w-full">
+                                            <span class="text-[8px]">Previous Month MTD Sales</span>
+                                            <span class="text-[10px]">
+                                                50,000.00
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col w-full px-2 pt-3 gap-2">
+                                        <span class="text-[11px] font-semibold leading-[1.2]">NUMBER OF SALESMAN THIS MONTH</span>
+                                        <div class="flex gap-5">
+                                            <img class="w-[30px] h-[30px]"
+                                                src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
+                                            <div class="flex flex-col">
+                                                <span class="text-[8px]">Total</span>
+                                                <span class="text-[10px]">11</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[8px]">Previous Month Salesman</span>
+                                            <span class="text-[10px]">50,000.00</span>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- DAILY SALES --}}
-                                <div class="flex w-[267px] bg-white rounded-3xl">
-                                    <div class="flex flex-col w-[142px] px-2">
-                                        <span class="font-bold">DAILY Sales</span>
-                                        <div class="flex items-center gap-1">
-                                            <span class="font-bold text-sm">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
-                                            <span class="rounded-full bg-amber-200 w-10 h-10"></span>
-                                        </div>
-                                        <span class="text-[10px]">Target</span>
-                                        <span>0.00</span>
-
-                                        <span class="text-[10px]">Previous Day Sales</span>
-                                        <span>
-                                            50,000.00
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-col w-[142px] px-2">
-                                        <span class="text-[11px] font-bold">NUMBER OF SALESMAN TODAY</span>
-                                        <div class="flex gap-5">
-                                            <img class="w-10 h-10" src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg"/>
-                                            <div class="flex flex-col">
-                                                <span class="text-[10px]">Total</span>
-                                                <span>11</span>
+                               <div class="flex w-full bg-white rounded-3xl">
+                                    <div class="flex flex-col w-full px-2 gap-2">
+                                        
+                                        <div class="flex w-full pt-3 justify-between">
+                                            <div class="flex flex-col w-full leading-4">
+                                                <span class="font-semibold text-[12px] whitespace-nowrap">DAILY SALES</span>
+                                                <span class="font-semibold text-[12px]">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                            </div> 
+                                            <div class="flex w-full justify-end"> 
+                                                <span class="rounded-full bg-amber-200 w-10 h-10"></span>    
                                             </div>
                                         </div>
-                                        <span class="text-[10px]">Previous Day Salesman</span>
-                                        <span>50,000.00</span>
+                                        
+                                        <div class="flex flex-col w-full">
+                                            <span class="text-[8px]">Target</span>
+                                            <span class="text-[10px]">0.00</span>
+                                        </div>
+
+                                        <div class="flex flex-col w-full">
+                                            <span class="text-[8px]">Previous Day Sales</span>
+                                            <span class="text-[10px]">
+                                                50,000.00
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col w-full px-2 pt-3 gap-2">
+                                        <span class="text-[11px] font-semibold leading-[1.2]">NUMBER OF SALESMAN TODAY</span>
+                                        <div class="flex gap-5">
+                                            <img class="w-[30px] h-[30px]"
+                                                src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
+                                            <div class="flex flex-col">
+                                                <span class="text-[8px]">Total</span>
+                                                <span class="text-[10px]">11</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-[8px]">Previous Day Salesman</span>
+                                            <span class="text-[10px]">50,000.00</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -940,6 +1044,8 @@
         <div id="itemDetailsTable" class="hidden ">
             <x-datatable id="infoWindowTable" class="" />
         </div>
+
+
 
     </div>
 

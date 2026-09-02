@@ -29,7 +29,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto" id="DataTable">
+                <div class="w-full pb-5 overflow-auto max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable id="stockCheckTable" />
                 </div>
             </div>

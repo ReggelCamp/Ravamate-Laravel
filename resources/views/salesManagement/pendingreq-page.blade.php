@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="min-w-[550px] ">
+                        <div class="min-w-[550px] max-h-[calc(100vh_-_250px)] ">
                             <x-datatable class=" rounded-t-2xl pt-5 " id="PendingRequestTable" />
                         </div>
                     </div>

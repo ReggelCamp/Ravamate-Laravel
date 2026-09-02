@@ -27,7 +27,7 @@
                         <x-searchbar class="w-[250px]" id="customSearch" />
                     </div>
                 </div>
-              <div class="w-full pb-5 overflow-x-auto rounded-2xl " id="DataTable">
+              <div class="w-full pb-5 overflow-x-auto rounded-2xl max-h-[calc(100vh_-_250px)] " id="DataTable">
                         <x-datatable class="font-medium text-[10px]" id="missedCallTable"/>
 
                 </div>

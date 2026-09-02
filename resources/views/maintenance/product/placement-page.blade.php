@@ -39,7 +39,7 @@
                         <x-searchbar class="w-[250px] " id="customSearch" />
                     </div>
                 </div>
-                <div class="w-full pb-5 overflow-auto" id="DataTable">
+                <div class="w-full pb-5 overflow-auto max-h-[calc(100vh_-_250px)]" id="DataTable">
                     <x-datatable id="productPlacementTable" />
                 </div>
             </div>
@@ -130,7 +130,7 @@
         <div class="modal-box max-w-2xl p-0 rounded-xl overflow-visible">
 
             {{-- Header --}}
-            <div class="flex items-center justify-between px-6 py-5 border-b">
+            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-300">
                 <h3 class="text-xl font-bold">Placement Details</h3>
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost text-gray-400 hover:text-gray-600">
@@ -140,9 +140,9 @@
             </div>
 
             {{-- Form rows --}}
-            <div class="flex flex-col text-sm" id="placementModalBody">
+            <div class="flex flex-col text-sm px-5" id="placementModalBody">
 
-                <div class="flex items-center px-6 py-3 border-b gap-5">
+                <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
                     <label for="placementType" class="font-bold w-40 shrink-0">Type</label>
                     <div class="relative w-full ">
                         <select id="placementType" name="product_id" class="w-full border h-[40px] rounded-md px-5">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center px-6 py-3 border-b gap-5">
+                <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
                     <label for="placementCustomerClass" class="font-bold w-40 shrink-0">Customer Class</label>
                     <div class="relative w-full ">
                         <select id="custClass" name="product_id" class="w-full border h-[40px] rounded-md px-5">
@@ -158,7 +158,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center px-6 py-3 border-b gap-5">
+                <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
                     <label for="placementProduct" class="font-bold w-40 shrink-0">Select Product</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
@@ -176,7 +176,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center px-6 py-3 border-b gap-5">
+                <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
                     <label for="placementValue" class="font-bold w-40 shrink-0">Placement</label>
                     <div class="relative w-full ">
                         <select id="placement" name="product_id" class="w-full border h-[40px] rounded-md px-5">

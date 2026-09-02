@@ -13,7 +13,7 @@
     font-size: 10px !important;
     font-weight: 600;
     text-align: left !important;
-    padding-left: 12px !important;
+    padding-inline: 9px !important;
 }
 
 .dt-scroll-head th {

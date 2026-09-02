@@ -145,7 +145,7 @@
                         </span>
 
                     </div>
-                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5">
+                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5 max-h-[calc(100vh-250px)]">
                         <x-datatable id="DcrDataTable" />
                     </div>
                 </div>

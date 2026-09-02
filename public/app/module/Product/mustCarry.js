@@ -108,7 +108,8 @@ TableLoader.tableData(
     sampleData,
     MustCarryColumns,
     {
-        scrollY: "500px",
+        scrollY: "50vh",
+        pageLength:25
     },
 );
 
