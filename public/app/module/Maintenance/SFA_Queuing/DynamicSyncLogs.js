@@ -75,8 +75,7 @@ TableLoader.tableData(
     DynamicSyncLogsSampleData,
     DynamicSyncLogsColumns,
     {
-        scrollY: "50vh",
-        pageLength: 25,
+
     }
 );
 

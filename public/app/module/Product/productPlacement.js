@@ -155,8 +155,7 @@ TableLoader.tableData(
     sampleData,
     PlacementProductColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

@@ -126,8 +126,7 @@ TableLoader.tableData(
     sampleData,
     SalesTargetColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

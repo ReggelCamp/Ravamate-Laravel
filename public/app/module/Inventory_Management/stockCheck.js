@@ -339,8 +339,7 @@ TableLoader.tableData(
     sampleData,
     StockCheckColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

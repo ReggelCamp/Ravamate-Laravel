@@ -21,17 +21,17 @@
                 <x-report-header-title title="Dynamic Route List" />
                 <div class="flex gap-2 w-full justify-end">
                     <button onclick="Refresh.showModal()"
-                        class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                        class="border p-1 rounded-xl shine-bgBtn datePicker_header text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-refresh"></i>
                         Refresh
                     </button>
                     <button onclick="StockReqModal.showModal()"
-                        class="border p-1 rounded-xl sheenFilterBtn text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                        class="border p-1 rounded-xl shine-bgBtn datePicker_header text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-file-document-refresh"></i>
                         Confirm Stock Request
                     </button>
                     <a href="{{ route('dynamicMap') }}" id="useMapBtn"
-                        class="btn border p-1 rounded-xl sheenFilterBtn !text-white text-[12px] gap-2 px-2 h-[30px] items-center flex">
+                        class="btn border p-1 rounded-xl shine-bgBtn datePicker_header !text-white text-[12px] gap-2 px-2 h-[30px] items-center flex">
                         <i class="mdi mdi-map-legend"></i>
                         Use Map
                     </a>

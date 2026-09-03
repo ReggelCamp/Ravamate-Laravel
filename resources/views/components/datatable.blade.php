@@ -10,7 +10,7 @@
 
 .dt-scroll-head table thead th {
     color: var(--header-color) ;
-    font-size: 10px !important;
+    font-size: 13px !important;
     font-weight: 600;
     text-align: left !important;
     padding-inline: 9px !important;
@@ -51,6 +51,8 @@
     text-align: left !important;
     vertical-align: middle;
     padding-left: 12px !important;
+    font-size: 13px !important;
+
 } 
 
 /* Empty table message */
@@ -153,6 +155,16 @@ div.dt-container .dt-paging .dt-paging-button {
     box-sizing: border-box !important;
 }
 
+.dt-scroll-body tbody tr:nth-child(even) {
+    /* background-color: color-mix(
+        in srgb,
+        var(--primary) 8%,
+        var(--background)
+    ) !important; */
+    /* background-color: rgb(228, 222, 222); */
+    background-color: #f2f2f2;
+}
+
 </style>
 
 {{-- <div class="w-full h-full text-sm bodyFont ">
@@ -168,7 +180,7 @@ div.dt-container .dt-paging .dt-paging-button {
 <div class="w-full h-full">
     <table
         {{ $attributes->merge([
-            'class' => 'w-full bodyFont tableBg text-medium text-[10px]'
+            'class' => 'w-full bodyFont tableBg text-medium  text-[10px]'
         ]) }}
         id="{{ $id }}">
     </table>

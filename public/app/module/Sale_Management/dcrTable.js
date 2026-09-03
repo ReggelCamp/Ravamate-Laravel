@@ -3,6 +3,7 @@ import ComponentHelper  from "../../helper/ComponentHelper.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
 
+
 const SearchedWord = "";
 
 const DcrColumns = [
@@ -49,8 +50,9 @@ TableLoader.loadTable({
     url: "getDCRtable",
     tableId: "#DcrDataTable",
     columns: DcrColumns,
-    pageLength: 25,
-    scrollY: "45vh",
+    // pageLength: (getPageLength()-1),
+
+    // scrollY: "40vh",
 
     onSuccess: (data) => {
         console.log(data.length);

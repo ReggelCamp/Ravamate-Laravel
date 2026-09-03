@@ -323,8 +323,7 @@ TableLoader.tableData(
     sampleData,
     PendingOrdersColumns,
     {
-        scrollY: "45vh",
-        pageLength: 25
+
     }
 );
 

@@ -3,6 +3,7 @@
         padding-left: 5px;
         padding-right: 5px;
     }
+
 </style>
 
 @props([
@@ -24,7 +25,7 @@
     <button
         id="{{ $id }}"
         {{ $attributes->merge([
-            'class' => 'btn-sm flex items-center justify-center gap-2 h-[30px] rounded-2xl text-[12px] border px-5'
+            'class' => 'btn-sm flex items-center  justify-center gap-2 h-[30px] rounded-2xl text-[12px]  px-5'
         ]) }}
     >
         {{ $label }}

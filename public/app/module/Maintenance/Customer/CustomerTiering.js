@@ -86,8 +86,7 @@ TableLoader.tableData(
     sampleData,
     CustomerTieringColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

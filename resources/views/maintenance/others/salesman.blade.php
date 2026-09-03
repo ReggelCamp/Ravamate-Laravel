@@ -3,11 +3,20 @@
 @section('content')
 @section('title', 'SALESMAN')
 
+    <style>
+        .border{
+            border-color:#ebe6e6;
+        }
+        .Salesman_Card{
+             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
     <div class="flex w-full h-full pb-20 pt-5 px-3">
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Salesman Maintenance" />
-                <div class="sheenFilterBtn border rounded-xl">
+                <div class="shine-bgBtn datePicker_header border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
                         <x-datepicker id="bank_Datepicker" drops="down" class="whitespace-nowrap h-[30px] text-[13px]" />
                         {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
@@ -132,21 +141,21 @@
         </form>
 
         <div class="flex flex-col w-full">
-            <div class="flex flex-col sm:flex-row w-full p-5 gap-3 text-center">
-                <div class="flex flex-1 flex-wrap gap-3 sm:gap-5 justify-center sm:justify-start">
+            <div class="flex flex-col sm:flex-row w-full p-5 gap-3 text-center ">
+                <div class="flex flex-1 flex-wrap gap-3 sm:gap-5 justify-center px-4 sm:justify-start">
                     <button type="button" id="salesmanInfo_HoldAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
+                        class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
                         <i class="fa-solid fa-user-lock"></i> Hold Account
                     </button>
 
                     <button type="button" id="salesmanInfo_ResetAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-bold h-[38px]">
+                        class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
                         <i class="fa-solid fa-rotate"></i> Reset Account
                     </button>
                 </div>
-                <div class="flex flex-1 justify-center sm:justify-end">
+                <div class="flex flex-1 justify-center  sm:justify-end px-4">
                     <button type="button" id="salesmanInfo_SaveChanges"
-                        class="btn rounded-full border border-red-200 text-[#e6231e] text-[13px] font-bold h-[38px] w-full sm:w-auto">
+                        class="btn rounded-full border text-[13px] text-black font-medium h-[38px] w-full sheenFilterBtn sm:w-auto">
                         <i class="fa-solid fa-floppy-disk"></i> Save Changes
                     </button>
                 </div>
@@ -155,16 +164,15 @@
             <div class="flex flex-col lg:flex-row w-full justify-center items-stretch gap-4 px-4">
 
                 <!-- ID Card -->
-                <div class="rounded-2xl overflow-auto shadow-sm w-full lg:w-[400px] lg:shrink-0 border">
-                    <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
+                <div class="rounded-2xl overflow-auto w-full lg:w-[400px] lg:shrink-0 Salesman_Card">
+                    <div class="flex-1 bg-white rounded-2xl overflow-hidden">
                         <div class="bg-gradient-to-br from-red-800 to-red-900 relative pb-5">
                             <div class="flex flex-col items-center w-full">
                                 <div class="absolute inset-0 overflow-hidden opacity-20">
                                     <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
                                     <div class="w-16 h-16 rounded-full bg-white absolute top-10 right-0"></div>
                                 </div>
-                                <h3 class="text-white font-bold text-lg relative">Sales Report</h3>
-
+                                
                                 <div class="flex items-center gap-3 mt-4 relative">
                                     <div
                                         class="w-16 h-16 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden shrink-0">
@@ -188,17 +196,17 @@
                         </div>
 
                         <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Contact No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Contact No.</span>
                                 <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
-                                    class="input input-bordered input-sm rounded-full w-full text-[13px] font-semibold" />
+                                    class="input input-bordered input-sm rounded-full w-full text-[13px] font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Md Password</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Md Password</span>
                                 <div class="join w-full">
                                     <input type="password" id="salesmanInfo_MdPassword" value="password123"
-                                        class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-semibold" />
+                                        class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-medium" />
                                     <button type="button" onclick="toggleSalesmanPassword(this)"
                                         class="btn btn-sm btn-ghost join-item -ml-10 z-10">
                                         <i class="fa-solid fa-eye-slash text-xs"></i>
@@ -206,58 +214,58 @@
                                 </div>
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Call Time</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Call Time</span>
                                 <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Cashier No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Cashier No.</span>
                                 <input type="text" id="salesmanInfo_CashierNo" value="09"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Supervisor Name</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor Name</span>
                                 <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Supervisor No.</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor No.</span>
                                 <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Geolocking</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Geolocking</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                            </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Price Code</span>
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Price Code</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
-                            <div class="flex w-full border rounded-full items-center p-2">
-                                <span class="label-text text-[11px] font-semibold whitespace-nowrap w-full text-gray-500 ">Loading
+                            <div class="flex w-full border rounded-full items-center p-2 inset-shadow-sm">
+                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Loading
                                     Capacity</span>
                                 <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-semibold" />
+                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Setting --}}
-                <div class="rounded-2xl border w-full lg:w-[400px] lg:shrink-0 shadow-sm p-5 h-fit gap-2 flex flex-col">
+                <div class="rounded-2xl border w-full lg:w-[400px] lg:shrink-0 shadow-sm p-5 h-fit gap-2 flex flex-col Salesman_Card">
                     <div class="flex items-center justify-between py-2 border rounded-full px-2">
-                        <span class="text-[11px] font-semibold text-gray-500 w-full">Default ORD Type</span>
+                        <span class="text-[11px] font-medium text-gray-500 w-full">Default ORD Type</span>
                         <select id="salesmanInfo_DefaultOrdType"
-                            class="select select-bordered select-sm rounded-full w-full text-[13px] font-bold ">
+                            class="select select-bordered select-sm rounded-full w-full text-[13px] font-medium ">
                             <option>BOOKING</option>
                             <option>VAN SELLING</option>
                             <option>PRE BOOKING</option>
@@ -267,82 +275,82 @@
                     </div>
 
                     <div class="flex items-center justify-between py-2 border rounded-full px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 w-full">Warehouse Code</span>
+                        <span class="text-[13px] font-medium text-gray-500 w-full">Warehouse Code</span>
                         <select id="salesmanInfo_WarehouseCode"
-                            class="select select-bordered select-sm rounded-full text-[13px] w-full font-bold">
+                            class="select select-bordered select-sm rounded-full text-[13px] w-full font-medium">
                             <option value="">Select</option>
                         </select>
                     </div>
                     <div class="flex items-center justify-between py-2 border rounded-full px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 w-full">Bad Order Warehouse</span>
-                        <span id="salesmanInfo_BadOrderWarehouse"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
+                        <span class="text-[13px] font-medium text-gray-500 w-full">Bad Order Warehouse</span>
+                        <span id="salesmanInfo_BadOrderWarehouse" disabled
+                            class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
                             BO
                         </span>
                     </div>
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 w-full">Good Stock Return Warehouse</span>
-                        <span id="salesmanInfo_GoodStockReturnWarehouse"
-                            class="select select-bordered select-sm rounded-full text-[13px] font-bold w-full ">
+                        <span class="text-[13px] font-medium text-gray-500 w-full">Good Stock Return Warehouse</span>
+                        <span id="salesmanInfo_GoodStockReturnWarehouse"disabled
+                            class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
                             HO
                         </span>
                     </div>
 
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">OSA Checking</span>
+                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">OSA Checking</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_OsaChecking_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
+                                class="text-[12px] font-medium text-[#e6231e]">NO</span>
                             <input type="checkbox" id="salesmanInfo_OsaChecking" data-off-text="NO" data-on-text="YES"
                                 class="toggle toggle-error salesman-toggle" />
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">EOD</span>
+                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">EOD</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_Eod_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
                             <input type="checkbox" id="salesmanInfo_Eod" data-off-text="DISABLED" data-on-text="ENABLED"
                                 class="toggle toggle-error salesman-toggle" />
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Is Hybrid</span>
+                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Is Hybrid</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_IsHybrid_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
                             <input type="checkbox" id="salesmanInfo_IsHybrid" data-off-text="DISABLED"
                                 data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Restrict New Customer</span>
+                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Restrict New Customer</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_RestrictNewCustomer_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">DISABLED</span>
+                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
                             <input type="checkbox" id="salesmanInfo_RestrictNewCustomer" data-off-text="DISABLED"
                                 data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between py-2 rounded-full border px-2">
-                        <span class="text-[13px] font-semibold text-gray-500 max-w-[55%]">Disable OTP</span>
+                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Disable OTP</span>
                         <div class="flex items-center gap-2">
                             <span id="salesmanInfo_DisableOtp_state"
-                                class="text-[12px] font-extrabold text-[#e6231e]">NO</span>
+                                class="text-[12px] font-medium text-[#e6231e]">NO</span>
                             <input type="checkbox" id="salesmanInfo_DisableOtp" data-off-text="NO" data-on-text="YES"
-                                class="toggle toggle-error salesman-toggle" />
+                                class="toggle toggle-error salesman-toggle " />
                         </div>
                     </div>
                 </div>
 
                 <!-- Color code panel -->
-                <div class="rounded-2xl border shadow-sm overflow-hidden w-full lg:w-[631px] lg:shrink-0 h-fit">
+                <div class="rounded-2xl border shadow-sm overflow-hidden w-full lg:w-[631px] lg:shrink-0 h-fit Salesman_Card">
                     <div
-                        class="bg-gradient-to-br from-[#3a0a12] to-[#8f1a2b] text-white text-center py-7 text-lg font-extrabold tracking-wide">
+                        class="bg-gradient-to-br from-[#3a0a12] to-[#8f1a2b] text-white text-center py-7 text-[20px] font-medium tracking-wide">
                         SALESMAN COLOR CODE
                     </div>
                     <div class="p-6 text-center">

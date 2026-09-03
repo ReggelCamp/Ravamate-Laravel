@@ -91,6 +91,12 @@
     background: transparent;
     border: none;
 }
+
+/* .custom-shadow {
+    box-shadow:4px 4px 8px rgba(0, 0, 0, 0.08),
+    inset 10px 10px 9px #d1d5db,
+    inset -10px -10px 9px #ffffff;
+} */
     </style>
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">
@@ -98,9 +104,9 @@
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="DCR" />
 
-                <div class="sheenFilterBtn border rounded-xl">
+                <div class="shine-bgBtn border rounded-xl datePicker_header">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
-                        <x-datepicker id="dcrDatepicker" drops="down" opens="left" class="whitespace-nowrap h-[30px] text-[13px]" />
+                        <x-datepicker id="dcrDatepicker" drops="down" opens="left" class="whitespace-nowrap  h-[30px] text-[13px]" />
                         {{-- <i class=" w-[35px] " data-lucide="calendar-days"></i> --}}
                         <i class="fa-solid fa-caret-down text-xs"></i>
                     </span>
@@ -111,9 +117,9 @@
                     <div class="flex gap-5 w-full">
                         <div class="h-[25px]">
                             <x-dropdown>
-                                <x-slot:dropdownName class="w-[100px] ">
+                                <x-slot:dropdownName class="w-[100px]">
                                     <span
-                                        class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
+                                        class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap rounded-2xl h-[30px] shadow-xl/30">
                                         <i class="mdi mdi-filter-variant"></i>
                                         Select Salesman
                                     </span>
@@ -145,8 +151,8 @@
                         </span>
 
                     </div>
-                    <div class="w-full whitespace-nowrap flex-1 overflow-auto pb-5 max-h-[calc(100vh-250px)]">
-                        <x-datatable id="DcrDataTable" />
+                    <div class="w-full whitespace-nowrap flex-1 pb-5 max-h-[calc(100vh-250px)]">
+                        <x-datatable id="DcrDataTable" class="overflow-hidden"/>
                     </div>
                 </div>
             </div>

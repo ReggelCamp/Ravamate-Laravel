@@ -184,8 +184,8 @@ TableLoader.tableData(
     SampleSalesSummaryData,
     SalesSummaryColumns,
     {
-        scrollY: "500px",
-        pageLength: 15,
+        // scrollY: "500px",
+        // pageLength: 15,
         autoWidth: false,
     }
 

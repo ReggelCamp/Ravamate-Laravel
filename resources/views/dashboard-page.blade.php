@@ -3,6 +3,41 @@
 @section('showLogo', false)
 
     <style>
+        .gm-ui-hover-effect {
+            display: none !important;
+        }
+
+        .Info-Window .gm-style-iw-d {
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow-x: hidden !important;
+        }
+
+        .Info-Window .gm-style-iw-ch {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .Info-Window .gm-ui-hover-effect {
+            display: none !important;
+        }
+
+
+        .latest-info-window .gm-style-iw-d {
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .latest-info-window .gm-style-iw-ch {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .latest-info-window .gm-ui-hover-effect {
+            display: none !important;
+        }
+
         #fitScreenInfo .dataTable-info {
             padding-top: 0 !important;
             font-size: 13px !important;

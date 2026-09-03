@@ -97,8 +97,7 @@ TableLoader.tableData(
     sampleData,
     ProductListColumns,
     {
-         scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

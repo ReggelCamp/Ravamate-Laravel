@@ -846,18 +846,15 @@ const autoLogsSampleData = [
 //sotofdis
 
 TableLoader.tableData("#SOPendingLogs", soToFdisSampleData, SoToFdisColumns, {
-    scrollY: "40vh",
-    pageLength: 25,
+
 });
 
 TableLoader.tableData("#SOFailedLogs", soToFdisSampleData, SoToFdisColumns, {
-    scrollY: "40vh",
-    pageLength: 25,
+
 });
 
 TableLoader.tableData("#SOSuccessLogs", soToFdisSampleData, SoToFdisColumns, {
-    scrollY: "40vh",
-    pageLength: 25,
+
 });
 
 //return
@@ -866,8 +863,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -875,8 +871,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -884,8 +879,7 @@ TableLoader.tableData(
     returnLogsSampleData,
     ReturnLogsColumns,
     {
-        crollY: "40vh",
-        pageLength: 25,
+
     },
 );
 
@@ -895,8 +889,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -904,8 +897,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -913,8 +905,7 @@ TableLoader.tableData(
     paymentLogsSampleData,
     PaymentLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 
@@ -924,8 +915,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -933,8 +923,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 TableLoader.tableData(
@@ -942,8 +931,7 @@ TableLoader.tableData(
     autoLogsSampleData,
     AutoLogsColumns,
     {
-        scrollY: "40vh",
-        pageLength: 25,
+
     },
 );
 

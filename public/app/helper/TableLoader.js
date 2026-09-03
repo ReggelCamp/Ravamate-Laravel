@@ -1,5 +1,33 @@
 import Api from "./Api.js";
 
+let windowHeight = 0;
+let tableHeight = 0;
+
+function getPageLength() {
+    tableHeight = window.innerHeight * 0.5;
+    const rowHeight = 40;
+
+    return Math.max(1, Math.floor(tableHeight / rowHeight));
+};
+
+function getResponsiveScrollY() {
+    windowHeight = window.innerHeight;
+    if(windowHeight < 650){
+        return "35vh";
+    }
+    else if (windowHeight <= 700) {
+        return "40vh";
+    }
+    else if (windowHeight < 1000){
+        return "45vh";
+    }
+
+    else
+        return "50vh";
+
+    
+}
+
 export default class TableLoader {
     static tableData(id, json, columns, options = {}) {
         const table = $(id).DataTable({
@@ -10,7 +38,9 @@ export default class TableLoader {
             responsive: false,
 
             scrollX: options.scrollX ?? true,
-            scrollY: options.scrollY ?? "100px",
+            //scrollY: options.scrollY ?? "100px",
+            scrollY: getResponsiveScrollY() ?? "100px",
+            pageLength:getPageLength(),
             scrollCollapse: true,
             autoWidth: true,
 
@@ -112,8 +142,10 @@ export default class TableLoader {
                     data,
                     config.columns,
                     {
-                        pageLength: config.pageLength,
-                        scrollY: config.scrollY,
+                        pageLength: getPageLength(),
+                        // pageLength: config.pageLength,
+                        scrollY: getResponsiveScrollY(),
+                        // scrollY: config.scrollY,
                         searchInput: config.searchInput,
                     },
                 );

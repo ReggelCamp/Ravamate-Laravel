@@ -195,8 +195,7 @@ TableLoader.tableData(
     CustomerTaggingSampleData,
     CustomerTaggingColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

@@ -334,13 +334,14 @@ const sampleData = [
     },
 ];
 
+
+
 TableLoader.tableData(
     "#offsiteTransTable",
     sampleData,
     offSiteTransColumns,
     {
-        scrollY: "50vh",
-        pageLength: 25
+
     }
 );
 

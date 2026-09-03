@@ -360,7 +360,7 @@ TableLoader.loadTable({
     tableId: "#dashboardDataTable",
     columns: SalesmanColumns,
     scrollY: "200px",
-    pageLength: 10,
+    pageLength: 25,
     searchInput:"#customSearch",
     onSuccess: (data) => {
         console.log("Dashboard data:", data);
@@ -399,6 +399,17 @@ function displayInfoWindow() {
     infoWindow = new google.maps.InfoWindow();
 
     google.maps.event.addListener(infoWindow, "domready", () => {
+
+        const InfoContainer = $("#Info_Tab");
+
+        if (InfoContainer) {
+            const infoWindowWrapper = InfoContainer.closest(".gm-style-iw-c");
+
+            if (infoWindowWrapper) {
+                infoWindowWrapper.addClass("Info-Window");
+            }
+        }
+
         $("#CloseBtn").on("click", () => infoWindow.close());
         $("#LatestCloseBtn").on("click", () => infoWindow.close());
 
@@ -451,6 +462,44 @@ function displayInfoWindow() {
             },
             map: window.dashboardMap,
             title: salesman.salesman_name,
+            icon: {
+            url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="50"
+                     height="60"
+                     viewBox="0 0 50 60">
+
+                    <!-- Your marker -->
+                    <path
+                        d="M25 58
+                           C25 58 5 36 5 23
+                           C5 10 14 2 25 2
+                           C36 2 45 10 45 23
+                           C45 36 25 58 25 58Z"
+                        fill="#ef4444"
+                        stroke="white"
+                        stroke-width="3"
+                    />
+
+                    <!-- Number -->
+                    <text
+                        x="25"
+                        y="29"
+                        text-anchor="middle"
+                        font-family="Arial"
+                        font-size="16"
+                        font-weight="bold"
+                        fill="white">
+                        ${salesman.id}
+                    </text>
+
+                </svg>
+            `),
+
+            scaledSize: new google.maps.Size(40, 48),
+            anchor: new google.maps.Point(20, 48),
+        },
+
             // animation: isLatest ? google.maps.Animation.BOUNCE : null,
         });
 
@@ -460,7 +509,7 @@ function displayInfoWindow() {
             latestMarker = marker;
             latestInfoWindow = new google.maps.InfoWindow({
                 content: `
-                    <div id= "latestInfo_Container" class="latest-transaction-popup w-[193px] rounded-3xl overflow-hidden">
+                    <div id= "latestInfo_Container" class="latest-transaction-popup min-w-[193px] rounded-3xl ">
                         <div class="bg-red-500 text-white px-4 py-3 relative w-full">
                            
                             <div class="flex gap-1">
@@ -477,13 +526,13 @@ function displayInfoWindow() {
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 py-3 pt-1">
+                        <div class="px-4 py-3 pt-1 ">
                             <div class="font-medium text-[16px] text-base">
                                 ${salesman.store_name ?? "Manding Store"}
                             </div>
                             <div class="text-xs text-gray-500 italic">${salesman.store_address ?? "Cubacub"}</div>
                             <div class="text-[9px] text-[#b8babc] mt-2">Salesman Assigned:</div>
-                            <div class="text-[11px] font-medium">${salesman.salesman_name ?? "Manding"}</div>
+                            <div class="text-[11px] font-medium whitespace-nowrap">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) </div>
                             <div class="text-[9px] text-[#b8babc]  mt-2">Transaction Sales:</div>
                             <div class="text-[11px] font-medium">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
                         </div>
@@ -493,16 +542,35 @@ function displayInfoWindow() {
             });
 
             //latestInfoWindow.open(map, marker); // opens immediately, no click required
-            google.maps.event.addListener(latestInfoWindow, "domready", () => {
-                $("#LatestCloseBtn").on("click", () =>
-                    latestInfoWindow.close(),
-                );
+           google.maps.event.addListener(latestInfoWindow, "domready", () => {
 
-                $("#latestInfo_Container").on("click", () => {
+                // Find the Google Maps InfoWindow wrapper
+                const latestContainer = $("#latestInfo_Container");
+
+                if (latestContainer) {
+                    const infoWindowWrapper = latestContainer.closest(".gm-style-iw-c");
+
+                    if (infoWindowWrapper) {
+                        infoWindowWrapper.addClass("latest-info-window");
+                    }
+                }
+
+                $("#LatestCloseBtn").off("click.latest").on("click.latest", (e) => {
+                    e.stopPropagation();
                     latestInfoWindow.close();
+                });
+
+                $("#latestInfo_Container").off("click.latest").on("click.latest", () => {
+                    latestInfoWindow.close();
+
                     currentMarker = marker;
-                    infoWindow.setContent(InfoWindowContent(salesman));
+
+                    infoWindow.setContent(
+                        InfoWindowContent(salesman)
+                    );
+
                     infoWindow.open(map, marker);
+
                     console.log("clicked info Window");
                 });
             });
@@ -562,7 +630,7 @@ function getlatestTransaction() {
 
 function InfoWindowContent(salesman) {
     return `
-        <div class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100">
+        <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
 
                     <!-- Header image with overlays -->
                     <div class="relative w-full h-[160px]">
@@ -593,10 +661,17 @@ function InfoWindowContent(salesman) {
                         <!-- store name overlay -->
                         <div class="absolute bottom-0 left-0 right-0 p-2 text-white">
                             <div id="addsressContainer" class="flex items-center gap-1">
-                                <span class="badge badge-info badge-sm">${salesman.pin_number ?? "-"}</span>
+                                <div class="relative flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-location-pin text-2xl"></i>
+                                    <span class="absolute top-[3.5px] left-1/2 -translate-x-1/2
+                                        flex items-center justify-center
+                                        text-black font-bold text-[11px] leading-none">
+                                        ${salesman.id}
+                                    </span>
+                                </div>
                                 <div class = "flex flex-col w-fit">
                                     <span class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.store_name ?? "Manding Store"}</span>
-                                    <span class="font-medium text-[9] leading-tight">${salesman.store_address ?? "Cubacub"}</span>
+                                    <span class="font-medium text-[9px] text-white leading-tight">${salesman.store_address ?? "Cubacub"}</span>
                                 </div>
 
                                  <!-- prev/next store buttons -->

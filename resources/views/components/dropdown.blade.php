@@ -1,15 +1,19 @@
+<style>
+
+</style>
+
 @props([
     'buttonClass' => '',
     'menuClass' => '',
     'direction' => '',
 ])
 
-<div class="dropdown {{ $direction }} ">
+<div class="dropdown  {{ $direction }} ">
 
     <div
         tabindex="0"
         role="button"
-        class="h-[30px] flex justify-between items-center {{ $buttonClass }}"
+        class="h-[30px] flex justify-between  items-center {{ $buttonClass }}"
     >
         <span class="dropdownName">
             {{ $dropdownName }}

@@ -524,8 +524,7 @@ TableLoader.tableData(
     sampleData,
     DeliveryMonitoringColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

@@ -515,8 +515,7 @@ TableLoader.tableData(
     CustomerMaintenanceSampleData,
     CustomerListColumns,
     {
-        scrollY: "50vh",
-        pageLength:25
+
     }
 
 );

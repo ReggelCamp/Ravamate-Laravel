@@ -536,8 +536,8 @@ TableLoader.tableData(
     sampleData,
     SaleSummaryColumns,
     {
-        scrollY: "50vh",
-        pageLength: 25
+        // scrollY: "50vh",
+        // pageLength: 25
     }
 );
 

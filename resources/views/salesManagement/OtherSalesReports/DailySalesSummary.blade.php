@@ -8,7 +8,7 @@
             <div class="report_title w-full h-[50px] justify-between items-center rounded-t-xl px-5 py-3 flex ">
                 <x-salesReportHeader title="Daily Summary Report" />
 
-                <div class="sheenFilterBtn border rounded-xl">
+                <div class="shine-bgBtn datePicker_header border rounded-xl">
                     <span class="flex  items-center justify-center px-5 gap-[5px]">
                         <x-datepicker id="dcrDatepicker" drops="down" opens="left"
                             class="whitespace-nowrap h-[30px] text-[13px]" />

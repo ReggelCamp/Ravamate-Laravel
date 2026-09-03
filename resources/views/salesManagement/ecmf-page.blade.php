@@ -14,9 +14,9 @@
             white-space: nowrap;
         }
 
-        #datepicker {
+        /* #datepicker {
             color: black;
-        }
+        } */
     </style>
 
     <div class="flex w-full h-full pb-20 pt-5 px-3 ">
@@ -37,14 +37,14 @@
                                             class="sheenFilterBtn font-medium border rounded-xl px-5 text-[12px] h-[30px]" />
                                     </div>
                                     <div
-                                        class="flex rounded-xl sheenFilterBtn  px-5 whitespace-nowrap gap-1 font-medium text-[12px] h-[30px] items-center border justify-end">
+                                        class="flex rounded-xl sheenFilterBtn  px-5 whitespace-nowrap h-[30px] items-center justify-end">
                                         {{-- <i class="items-center justify-center w-5 h-5 flex font-medium"
                                             data-lucide="calendar-days"></i> --}}
-                                        <x-datepicker opens="right" class="sheenFilterBtn text-[12px] font-medium" />
+                                        <x-datepicker opens="right" class=" text-[12px] font-medium" />
                                     </div>
                                     <div>
                                         <button onclick="ExportEcmfRecords.showModal()"
-                                            class="text-[12px] font-medium sheenFilterBtn h-[30px] border rounded-xl px-5">
+                                            class="text-[12px] custom-shadow font-medium sheenFilterBtn h-[30px] border rounded-xl px-5">
                                             Export Salesman CMF Records
                                         </button>
                                     </div>

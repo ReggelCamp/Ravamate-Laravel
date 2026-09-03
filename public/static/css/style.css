@@ -17,6 +17,11 @@
     }
 
     /* end */
+    /* .custom-shadow {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
+        inset 10px 10px 9px #d1d5db,
+        inset -10px -10px 9px #ffffff;
+    } */
 
     .daterangepicker td.disabled {
         visibility: visible !important;
@@ -485,28 +490,37 @@
 
         }
 
-        .sheenFilterBtn {
-            position: relative;
-            /* <-- this is what's missing on sheenFilterBtn */
-            overflow: hidden;
-            background-color: transparent;
-            background-clip: padding-box;
+.sheenFilterBtn {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    border: 1px solid transparent;          /* FIX #4: give it a real border */
+    border-radius: 9999px;                  /* FIX #2: pill shape matches ::after */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
+                inset 10px 10px 9px #d1d5db,
+                inset -10px -10px 9px #ffffff;
+    background-clip: padding-box;
+    cursor: pointer;
+    z-index: 1;
+}
 
-        }
+.sheenFilterBtn > * {
+    position: relative;
+    z-index: 2;
+}
 
-        .sheenFilterBtn:hover {
-            background: linear-gradient(to right,
-                    var(--secondary),
-                    var(--primary));
-            background-clip: padding-box;
-            border-color: white;
-            color: white !important;
-        }
+.sheenFilterBtn:hover {
+    background: linear-gradient(to right,
+            var(--secondary),
+            var(--primary));
+    box-shadow: none;                       /* FIX #3: remove inset shadows */
+    border-color: rgba(255, 255, 255, 0.3); /* subtle border instead of none */
+    color: white !important;
+}
 
         .sheenFilterBtn:hover * {
-            color: white !important;
-        }
-
+    color: white !important;
+}
         /* 
     .sheenFilterBtn .date-picker,
     .sheenFilterBtn > i {
@@ -524,6 +538,11 @@
                     var(--primary));
             color: white;
             /* optional — your default text color is var(--primary), which may be hard to read against this new bg */
+        }
+
+        .datePicker_header{
+            color: var(--header-color) !important;
+            background-color: transparent !important;
         }
 
         .shine-sync {
@@ -927,25 +946,22 @@
         pointer-events: none;
     }
 
-    .sheenFilterBtn::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -150%;
-        width: 50%;
-        height: 100%;
-        z-index: 1;
-
-        background: linear-gradient(120deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.25) 50%,
-                transparent 100%);
-
-        transform: skewX(-20deg);
-        pointer-events: none;
-        border-radius: 9999px;
-        /* Match your rounded-2xl or pill shape */
-    }
+.sheenFilterBtn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    z-index: 1;                             /* stays behind content (z-index: 2) */
+    background: linear-gradient(120deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.25) 50%,
+            transparent 100%);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    border-radius: 9999px;
+}
 
     .shine-bgExportBtn::after {
         content: "";
@@ -973,9 +989,9 @@
         animation: sheen 0.8s ease-in-out forwards;
     }
 
-    .sheenFilterBtn:hover::after {
-        animation: sheen 0.8s ease-in-out forwards;
-    }
+ .sheenFilterBtn:hover::after {
+    animation: sheen 0.8s ease-in-out forwards;
+}
 
     .shine-sync:hover::after {
         animation: sheen 0.8s ease-in-out forwards;

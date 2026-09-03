@@ -74,8 +74,7 @@ TableLoader.tableData(
     sampleData,
     BankColumns,
     {
-         scrollY: "50vh",
-        pageLength:25
+
     }
 );
 

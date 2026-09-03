@@ -188,13 +188,14 @@ const MissedCallSampleData = [
     },
 ];
 
+
+
 TableLoader.tableData(
     "#missedCallTable",
     MissedCallSampleData,
     MissedCallColumns,
     {
-        scrollY : "50vh",
-        pageLength: 25
+
     }
 );
 

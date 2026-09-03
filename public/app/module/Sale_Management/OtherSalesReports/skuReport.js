@@ -107,8 +107,8 @@ TableLoader.tableData(
     StockRequestSampleData,
     StockRequestColumns,
     {
-        scrollY: "50vh",
-        pageLength: 25
+        // scrollY: "50vh",
+        // pageLength: 25
     }
 );
 

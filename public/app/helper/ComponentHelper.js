@@ -21,7 +21,7 @@ export default class ComponentHelper {
                         <li>
                             <a href="#"
                             id= "dropdown_Item"
-                            class="dropdown-item sheenFilterBtn"
+                            class="dropdown-item "
                             data-value="${item[data.displayField]}"
                             data-id="${item[data.dataField]}">
                                 ${item[data.displayField]}

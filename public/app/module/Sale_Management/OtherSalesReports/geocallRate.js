@@ -96,8 +96,8 @@ TableLoader.tableData(
     geoCallRateSampleData,
     GeoCallRateColumns,
     {
-        scrollY: "50vh",
-        pageLength: 25
+        // scrollY: "50vh",
+        // pageLength: 25
     }
 );
 

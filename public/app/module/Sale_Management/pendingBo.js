@@ -580,8 +580,7 @@ TableLoader.tableData(
     sampleData,
     PendingBoColumns,
     {   
-        pageLength: 25,
-        scrollY: "45vh"
+ 
     }
 );
 
@@ -590,8 +589,7 @@ TableLoader.tableData(
     sampleData,
     RejectedBoColumns,
     {
-        pageLength: 25,
-        scrollY: "45vh",
+
         
     }
 );
@@ -601,8 +599,7 @@ TableLoader.tableData(
     sampleData,
     ApprovedBoColumns,
     {
-        pageLength: 25,
-        scrollY: "45vh"
+
     }
 );
 
