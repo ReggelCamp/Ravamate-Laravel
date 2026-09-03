@@ -687,43 +687,44 @@ function InfoWindowContent(salesman) {
                     <!-- Tabs -->
                     <div class="tabs tabs-border px-5 pb-2">
                         <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
-                        <div class="tab-content flex flex-col gap-1 bg-base-100 pt-3 text-xs" style="display:block">
-                            <div>
+                        <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 text-xs" style="display:block">
+                            <div class="">
                                 <span class="text-gray-400 block">Salesman Assigned:</span>
-                                <span class="font-semibold">${salesman.salesman_name ?? "-"} 🔋 ${salesman.battery ?? "-"}%</span>
+                                <!-- <span class="font-semibold">${salesman.salesman_name ?? ""} 🔋 ${salesman.battery ?? "-"}%</span> -->
+                                <span class="font-normal text-[11px]">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) 🔋 ${salesman.battery ?? "73"}%</span>
                             </div>
-                            <div>
+                            <div class="pt-3">
                                 <span class="text-gray-400 block">Transaction ID:</span>
-                                <span class="font-mono bg-gray-100 px-1 rounded">${salesman.transaction_id ?? "-"}</span>
+                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${salesman.transaction_id ?? "GP_2202609031611537"}</span>
                             </div>
-                            <div class="flex justify-between pt-1">
+                            <div class="flex justify-between pt-3">
                                 <div class="w-full">
                                     <span class="text-gray-400 block">Transaction Date:</span>
-                                    <span class="font-semibold">${salesman.transaction_date ?? "-"}</span>
+                                    <span class="font-normal text-[11px]">${salesman.transaction_date ?? "Sep 3, 2026, 4:11 PM"}</span>
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Sent Date:</span>
-                                    <span class="font-semibold">${salesman.sent_date ?? "-"}</span>
+                                    <span class="font-normal text-[11px]">${salesman.sent_date ?? "Sep 3, 2026, 4:11 PM"}</span>
                                 </div>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="flex justify-between pt-3">
                                  <div class="w-full">
                                     <span class="text-gray-400 block">Time Spent:</span>
-                                    <span class="font-semibold">${salesman.time_spent ?? "-"}</span>
+                                    <span class="font-normal text-[11px]">${salesman.time_spent ?? "N/A"}</span>
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Distance Travel:</span>
-                                    <span class="font-semibold">${salesman.distance_travel ?? "-"}</span>
+                                    <span class="font-normal text-[11px]">${salesman.distance_travel ?? "6.95 km in 5 hrs 11 mins"}</span>
                                 </div>
                             </div>
-                            <div class="flex justify-between">
+                            <div class="flex justify-between pt-3">
                                  <div class="w-full">
                                     <span class="text-gray-400 block">Remakrs:</span>
-                                    <span class="font-semibold">${salesman.remarks ?? "---"}</span>
+                                    <span class="font-normal text-[11px]">${salesman.remarks ?? "---"}</span>
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Transaction Sales:</span>
-                                    <span class="font-semibold">${salesman.transaction_sales ?? "₱ 3,823.74 (3 SKU) "}</span>
+                                    <span class="font-normal text-[11px]">${salesman.transaction_sales ?? "₱ 3,823.74 (3 SKU) "}</span>
                                 </div>
                             </div>
                         </div>
