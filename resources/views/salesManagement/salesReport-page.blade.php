@@ -15,6 +15,12 @@
             border: 1px solid;
         }
 
+        #StockReqModalTable_wrapper  .dataTable-info{
+            /* padding-top: 20px !important;
+            padding-bottom: 20px !important; */
+            padding:20px !important;
+        }
+
 
     </style>
 
@@ -106,7 +112,7 @@
                 mt-[205px]
                 rounded-none
                 p-0">
-            <div class="w-full bg-red-900
+            <div class="w-full report_title
                         flex items-center justify-between
                         px-5 py-3
                         sticky top-0 z-10">
@@ -134,7 +140,7 @@
 
                 {{-- Sales Report card --}}
                 <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
-                    <div class="bg-gradient-to-br from-red-800 to-red-900 relative pb-5">
+                    <div class="report_title relative pb-5">
                         <div class="flex flex-col items-center w-full">
                             <div class="absolute inset-0 overflow-hidden opacity-20">
                                 <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
@@ -157,7 +163,7 @@
                         <div class="flex justify-end">
                             <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center">
                                 <span class="text-[10px] text-gray-500 block">Status</span>
-                                <span class="font-bold text-sm flex items-center gap-1">
+                                <span class="font-medium text-[12px] flex items-center gap-1 text-black">
                                     {{ $report->status ?? 'VALID' }}
                                     <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
                                 </span>
@@ -167,35 +173,35 @@
 
                     <div class="p-4 flex flex-col gap-3 text-center">
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Document No.</span>
-                            <span class="font-bold text-sm">{{ $report->document_no ?? 'FPM_15SO260820-2608203' }}</span>
+                            <span class="text-[14px] text-gray-500 block">Document No.</span>
+                            <span class="font-bold text-[16px]">{{ $report->document_no ?? 'FPM_15SO260820-2608203' }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Time Travel (Min.)</span>
-                            <span class="font-bold text-sm">{{ $report->time_travel ?? 26 }}</span>
+                            <span class="text-[14px] text-gray-500 block">Time Travel (Min.)</span>
+                            <span class="font-bold text-[16px]">{{ $report->time_travel ?? 26 }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Geo Difference</span>
-                            <span class="font-bold text-sm">{{ $report->geo_difference ?? 15065 }}</span>
+                            <span class="text-[14px] text-gray-500 block">Geo Difference</span>
+                            <span class="font-bold text-[16px]">{{ $report->geo_difference ?? 15065 }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Longitude</span>
-                            <span class="font-bold text-sm">{{ $report->longitude ?? '—' }}</span>
+                            <span class="text-[14px] text-gray-500 block">Longitude</span>
+                            <span class="font-bold text-[16px]">{{ $report->longitude ?? '—' }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Latitude</span>
-                            <span class="font-bold text-sm">{{ $report->latitude ?? '—' }}</span>
+                            <span class="text-[14px] text-gray-500 block">Latitude</span>
+                            <span class="font-bold text-[16px]">{{ $report->latitude ?? '—' }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
-                            <span class="text-[11px] text-gray-500 block">Source</span>
-                            <span class="font-bold text-sm">{{ $report->source ?? '—' }}</span>
+                            <span class="text-[14px] text-gray-500 block">Source</span>
+                            <span class="font-bold text-[16px]">{{ $report->source ?? '—' }}</span>
                         </div>
                     </div>
                 </div>
 
                 {{-- Sales Details card --}}
                 <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
-                    <div class="bg-gradient-to-br from-red-800 to-red-900 relative pb-5">
+                    <div class="report_title relative pb-5">
                         <div class="items-center flex flex-col w-full">
                             <div class="absolute inset-0 overflow-hidden opacity-20">
                                 <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
@@ -218,7 +224,7 @@
                         <div class="flex justify-end ">
                             <div class="bg-white rounded-tl-xl px-4 py-1 -mb-5 text-center">
                                 <span class="text-[10px] text-gray-500 block">Reference No.</span>
-                                <span class="font-bold text-sm">{{ $report->reference_no ?? '3-2608203' }}</span>
+                                <span class="font-medium text-black text-[12px]">{{ $report->reference_no ?? '3-2608203' }}</span>
                             </div>
                         </div>
                     </div>
@@ -235,56 +241,70 @@
                             </div>
                         </div>
 
-                        <div class="flex gap-3 px-5">
-                            <div class="bg-red-900 text-white rounded-xl p-3 flex-1 flex gap-3 items-center shadow-[2px_2px_10px]">
-                                <div class="flex flex-col gap-2 shrink-0 text-center">
-                                    <i class="fa-solid fa-calendar-days"></i>
-                                    <i class="fa-solid fa-clock"></i>
-                                </div>
-                                <div class="flex flex-col gap-2 text-[11px]">
-                                    <div>
-                                        <span class="opacity-70 block">Delivery Date</span>
-                                        <span class="font-bold">{{ $report->delivery_date ?? '08/20/2026' }}</span>
+                        <div class="flex gap-3 px-5 w-full h-fit">
+                           
+                            <div class=" text-gray-600 rounded-4xl flex flex-col w-full gap-2 items-center shadow-[2px_2px_10px]">
+                                <span class=" block">Delivery Date</span>
+                                
+                                <div class="flex w-full gap-3 items-center justify-center ">
+                                    <div class="flex items-center justify-center border salemanInfoCard w-[50px] h-[50px] rounded-2xl">
+                                        <i class="mdi mdi-calendar-month-outline salesDetailsIcon text-4xl"></i>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="opacity-70 block text-[9px]">Date</span>
+                                        <span class="font-bold text-[12px]">{{ $report->delivery_date ?? '08/20/2026' }}</span>
                                         <span class="opacity-50 block text-[9px]">MM/DD/YYYY</span>
                                     </div>
-                                    <div>
-                                        <span class="opacity-70 block">Time</span>
-                                        <span class="font-bold">{{ $report->delivery_time ?? '10:36:09.843' }}</span>
+                                </div>
+                                <div class="flex w-full gap-3 items-center justify-center pb-2 ">
+                                    <div class="flex items-center justify-center border salemanInfoCard w-[50px] h-[50px] rounded-2xl">
+                                        <i class="mdi mdi-clock-time-five-outline salesDetailsIcon text-4xl"></i>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <span class="opacity-70 block text-[9px]">Time</span>
+                                        <span class="font-bold text-[12px]">{{ $report->delivery_time ?? '10:36:09.843' }}</span>
                                         <span class="opacity-50 block text-[9px]">H/M/S/MS</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div
-                                class="bg-red-900 text-white rounded-xl p-3 flex flex-col items-center justify-center gap-1 w-28 shrink-0 shadow-[2px_2px_10px]">
-                                <span class="text-[10px] opacity-80">Battery Status</span>
-                                <div class="radial-progress text-green-400 text-sm font-bold border-4 border-white/20"
-                                    style="--value:{{ $report->battery ?? 80 }}; --size: 3.5rem;" role="progressbar">
-                                    {{ $report->battery ?? 80 }}%
+                            <div class="flex w-full">
+                                <div
+                                    class="salemanInfoCard rounded-4xl p-3 flex flex-col items-center justify-center gap-1 w-full shrink-0 shadow-[2px_2px_10px]">
+                                    <span class="text-[15px] opacity-80 pb-3">Battery Status</span>
+                                    <div class="radial-progress text-green-400 text-sm font-bold border-4 border-white/20"
+                                        style="--value:{{ $report->battery ?? 80 }}; --size: 82px;" role="progressbar">
+                                        {{ $report->battery ?? 80 }}%
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
-                        <div class="px-5">
-                            <div class="bg-gray-50 rounded-xl py-2 px-4 flex items-center justify-between shadow-[2px_2px_10px]">
-                                <span class="text-[12px] text-gray-500 flex items-center gap-2">
-                                    <i class="fa-solid fa-border-all text-gray-500"></i>
+                        <div class="pl-5 py-0 px-4 rounded-3xl flex w-full h-fit">
+                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px]">
+                                <span class="text-3xl rounded-2xl salemanInfoCard border min-h-[50px] w-fit px-1 flex items-center">
+                                    <i class="mx-3 mdi mdi-arrange-send-to-back salesDetailsIcon"></i>
+                                </span>
+                                <span class="flex items-center justify-center text-[12px] w-full text-gray-500">
                                     Total Range
                                 </span>
-                                <span class="bg-red-900 text-white font-bold rounded-lg px-4 py-1">
+                                <span class="salemanInfoCard flex font-medium min-h-[50px] min-w-[100px] items-center justify-center  rounded-r-3xl">
                                     {{ $report->total_range ?? 8 }}
                                 </span>
                             </div>
                         </div>
 
-                        <div class="px-5">
-                            <div class="bg-gray-50 rounded-xl py-2 px-4 flex items-center justify-between shadow-[2px_2px_10px]">
-                                <span class="text-[12px] text-gray-500 flex items-center gap-2">
-                                    <i class="fa-solid fa-border-all text-gray-500"></i>
-                                    Time spent(Min)
+                         <div class="pl-5 py-0 px-4 rounded-3xl flex w-full h-fit">
+                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px]">
+                                <span class="text-3xl rounded-2xl salemanInfoCard border min-h-[50px] w-fit px-1 flex items-center">
+                                    <i class="mx-3 mdi mdi-timer-sand-complete salesDetailsIcon"></i>
                                 </span>
-                                <span class="bg-red-900 text-white font-bold rounded-lg px-4 py-1">
-                                    {{ $report->total_range ?? 8 }}
+                                <span class="flex items-center justify-center text-[12px] w-full text-gray-500">
+                                    Time Spent (Min.)
+                                </span>
+                                <span class="salemanInfoCard text-[12px] flex font-medium whitespace-nowrap min-w-[100px] min-h-[50px] items-center justify-center  rounded-r-3xl">
+                                    {{ $report->time_range ?? "7min 34sec" }}
                                 </span>
                             </div>
                         </div>
@@ -301,7 +321,7 @@
                         </div>
 
                         <div class="">
-                            <div class="bg-red-900 rounded-b-xl py-2 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
+                            <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
                             <div class="flex gap-2">
                                     <i class="mdi mdi-sigma"></i>
                                     <span>
@@ -309,7 +329,7 @@
                                     </span>
                             </div>
                             <div>
-                                    <span>
+                                    <span class="font-bold">
                                         ₱22,109.65
                                     </span>
                                 </div>
@@ -319,8 +339,8 @@
                 </div>
 
                 {{-- Item Code table --}}
-                <div class="flex-[1.4] bg-white rounded-2xl overflow-hidden shadow-sm h-fit shadow-[2px_2px_10px]">
-                    <div class="bg-gradient-to-br from-red-800 to-red-900 relative p-5 text-center">
+                <div class="flex-[1.4]  bg-white rounded-2xl overflow-hidden shadow-sm h-fit shadow-[2px_2px_10px]">
+                    <div class="report_title relative p-5 py-9 text-center">
                         <div class="absolute inset-0 overflow-hidden opacity-20">
                             <div class="w-24 h-24 rounded-full bg-white absolute -top-5 left-10"></div>
                             <div class="w-16 h-16 rounded-full bg-white absolute top-8 right-5"></div>
@@ -332,54 +352,10 @@
                         </div>
                     </div>
 
-                    <div class="overflow-x-auto">
-                        <table class="table text-[13px]">
-                            <thead>
-                                <tr class="text-gray-700 font-bold">
-                                    <th>STOCKCODE</th>
-                                    <th>DESCRIPTION</th>
-                                    <th class="text-right">QUANTITY</th>
-                                    <th class="text-right">AMOUNT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($items ?? [] as $item)
-                                    <tr>
-                                        <td class="font-semibold">{{ $item->stock_code }}</td>
-                                        <td>{{ $item->description }}</td>
-                                        <td class="text-right">{{ $item->quantity }}</td>
-                                        <td class="text-right">₱ {{ number_format($item->amount, 2) }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td class="font-semibold">FG04513</td>
-                                        <td>BT Negosyo Cheese Slices 240g</td>
-                                        <td class="text-right">1/0/0</td>
-                                        <td class="text-right">₱ 877.80</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="font-semibold">FG01435</td>
-                                        <td>Bingo HD Mini Flow 250g</td>
-                                        <td class="text-right">1/0/0</td>
-                                        <td class="text-right">₱ 768.24</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="font-semibold">FG01435</td>
-                                        <td>Bingo HD Mini Flow 250g</td>
-                                        <td class="text-right">1/0/0</td>
-                                        <td class="text-right">₱ 768.24</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="font-semibold">FG01435</td>
-                                        <td>Bingo HD Mini Flow 250g</td>
-                                        <td class="text-right">1/0/0</td>
-                                        <td class="text-right">₱ 768.24</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <div class="overflow-x-auto border w-full">
+                        <x-datatable id="StockReqModalTable"/>
                     </div>
-                    <div class="bg-red-900 rounded-b-xl py-2 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
+                    <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
                         <span > Payment Type: TERMS</span>
                     </div>
                 </div>

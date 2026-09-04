@@ -613,6 +613,121 @@ const salesReportsItems = [
     },
 ];
 
+const SalesReqColumns = [
+    {
+        title: "STOCKCODE",
+        data: "stockcode"
+    },
+    {
+        title: "DESCRIPTION",
+        data: "description"
+    },
+    {
+        title: "QUANTITY",
+        data: "quantity",
+        className: "text-right"
+    },
+    {
+        title: "AMOUNT",
+        data: "amount",
+        className: "text-right"
+    }
+];
+
+const StockReqData = [
+    {
+        stockcode: "SKU-001",
+        description: "Coca-Cola 1.5L",
+        quantity: 10,
+        amount: "₱750.00"
+    },
+    {
+        stockcode: "SKU-002",
+        description: "Sprite 1.5L",
+        quantity: 8,
+        amount: "₱600.00"
+    },
+    {
+        stockcode: "SKU-003",
+        description: "Royal Tru-Orange 1.5L",
+        quantity: 12,
+        amount: "₱900.00"
+    },
+    {
+        stockcode: "SKU-004",
+        description: "Wilkins Distilled Water 1L",
+        quantity: 15,
+        amount: "₱525.00"
+    },
+    {
+        stockcode: "SKU-005",
+        description: "C2 Green Tea Apple 500ml",
+        quantity: 20,
+        amount: "₱1,000.00"
+    },
+    {
+        stockcode: "SKU-001",
+        description: "Coca-Cola 1.5L",
+        quantity: 10,
+        amount: "₱750.00"
+    },
+    {
+        stockcode: "SKU-002",
+        description: "Sprite 1.5L",
+        quantity: 8,
+        amount: "₱600.00"
+    },
+    {
+        stockcode: "SKU-003",
+        description: "Royal Tru-Orange 1.5L",
+        quantity: 12,
+        amount: "₱900.00"
+    },
+    {
+        stockcode: "SKU-004",
+        description: "Wilkins Distilled Water 1L",
+        quantity: 15,
+        amount: "₱525.00"
+    },
+    {
+        stockcode: "SKU-005",
+        description: "C2 Green Tea Apple 500ml",
+        quantity: 20,
+        amount: "₱1,000.00"
+    },
+    {
+        stockcode: "SKU-001",
+        description: "Coca-Cola 1.5L",
+        quantity: 10,
+        amount: "₱750.00"
+    },
+    {
+        stockcode: "SKU-002",
+        description: "Sprite 1.5L",
+        quantity: 8,
+        amount: "₱600.00"
+    },
+    {
+        stockcode: "SKU-003",
+        description: "Royal Tru-Orange 1.5L",
+        quantity: 12,
+        amount: "₱900.00"
+    },
+    {
+        stockcode: "SKU-004",
+        description: "Wilkins Distilled Water 1L",
+        quantity: 15,
+        amount: "₱525.00"
+    },
+    {
+        stockcode: "SKU-005",
+        description: "C2 Green Tea Apple 500ml",
+        quantity: 20,
+        amount: "₱1,000.00"
+    },
+    
+];
+
 TableLoader.tableData(
     "#salesReportTable",
     sampleData,
@@ -620,6 +735,16 @@ TableLoader.tableData(
     {
         // pageLength: 20,
         // scrollY:'55vh'
+    }
+);
+
+TableLoader.tableData(
+    "#StockReqModalTable",
+    StockReqData,
+    SalesReqColumns,
+    {
+        pageLength: 20,
+        scrollY:'55vh'
     }
 );
 

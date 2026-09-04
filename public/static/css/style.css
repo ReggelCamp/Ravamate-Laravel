@@ -314,6 +314,10 @@
             outline: none;
         }
 
+        .primary_color{
+            color: var(--primary);
+        }
+
         /* END */
 
         .report_title {
@@ -339,6 +343,26 @@
         .maintinanceCard {
             background-color: var(--primary);
             color: var(--body-color);
+        }
+        
+        .salemanInfoCard {
+            background-color: var(--primary);
+            color: var(--header-color);
+        }
+
+        .PrevNextBtn {
+            background-color: var(--body-color);
+            color: var(--primary);
+        }
+
+        .Info_Window_Tab{
+            color: var(--primary);
+        }
+
+        .pesoBG{
+            background: linear-gradient(90deg, var(--primary), var(--primary), var(--accent), var(--secondary));
+            background-size: 200% auto;
+            
         }
 
         /* .mainBG {

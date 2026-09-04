@@ -68,7 +68,8 @@ $(document).ready(function () {
                     SalesDetailsData,
                     SalesDetailsColumns,
                     {
-                        scrollY: "300px"
+                        pageLength: 20,
+                        scrollY:'30vh'
                     }
                 );
 

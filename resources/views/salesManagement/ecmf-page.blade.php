@@ -139,20 +139,20 @@
                     <label class="form-control flex flex-col md:w-[302px] ">
                         <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SOLD TO NAME</span>
                         <input type="text" id="ecmfModal_SoldToName" value="FJ STORE"
-                            class="input input-bordered text-[15px] font-semibold" />
+                            class="input input-bordered text-[15px] font-semibold rounded-lg" />
                     </label>
 
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER CODE</span>
                             <input type="text" id="ecmfModal_CustomerCode" value="---" disabled
-                                class="input input-bordered text-[15px] font-semibold bg-gray-100 pointer-events-none" />
+                                class="input input-bordered text-[15px] font-semibold bg-gray-100 pointer-events-none rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SALES PERSON</span>
                             <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" disabled
-                                class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                                class="input input-bordered text-[15px] font-semibold bg-gray-100 rounded-lg" />
                         </label>
                     </div>
 
@@ -160,7 +160,7 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">TRADE CHANNEL</span>
                             <select id="ecmfModal_TradeChannel"
-                                class="select select-bordered text-[15px] font-medium text-gray-400">
+                                class="select select-bordered text-[15px] font-medium text-gray-400 rounded-lg">
                                 <option>Choose here</option>
                             </select>
                         </label>
@@ -168,7 +168,7 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER GROUP</span>
                             <select id="ecmfModal_CustomerGroup"
-                                class="select select-bordered text-[15px] font-medium text-gray-400">
+                                class="select select-bordered text-[15px] font-medium text-gray-400 rounded-lg">
                                 <option>Choose here</option>
                             </select>
                         </label>
@@ -187,20 +187,20 @@
                     <label class="form-control flex flex-col md:w-[302px] ">
                         <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CONTACT PERSON</span>
                         <input type="text" id="ecmfModal_ContactPerson" value="JEENA C. FRIAS"
-                            class="input input-bordered text-[15px] font-semibold" />
+                            class="input input-bordered text-[15px] font-semibold rounded-lg" />
                     </label>
 
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MOBILE NUMBER</span>
                             <input type="text" id="ecmfModal_MobileNumber" value="09462750792"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">EMAIL ADDRESS</span>
                             <input type="text" id="ecmfModal_EmailAddress" value=""
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
                     </div>
                 </div>
@@ -219,12 +219,12 @@
                             CUSTOMER ADDRESS (ENTERED BY SALESMAN &ndash; REFERENCE)
                         </span>
                         <input type="text" id="ecmfModal_CustomerAddressRef" readonly
-                            class="input input-bordered text-[15px] font-semibold bg-gray-100" />
+                            class="input input-bordered text-[15px] font-semibold bg-gray-100 rounded-lg" />
                     </label>
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">PROVINCE</span>
-                            <select id="ecmfModal_Province" class="select select-bordered text-[15px] font-semibold">
+                            <select id="ecmfModal_Province" class="select select-bordered text-[15px] font-semibold rounded-lg">
                                 <option>Choose here</option>
                             </select>
                         </label>
@@ -232,7 +232,7 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MUNICIPALITY</span>
                             <select id="ecmfModal_Municipality"
-                                class="select select-bordered text-[15px] font-medium ">
+                                class="select select-bordered text-[15px] font-medium  rounded-lg">
                                 <option>Choose here</option>
                             </select>
                         </label>
@@ -242,7 +242,7 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">BARANGAY</span>
                             <select id="ecmfModal_Barangay"
-                                class="select select-bordered text-[15px] font-medium ">
+                                class="select select-bordered text-[15px] font-medium  rounded-lg">
                                 <option>Choose here</option>
                             </select>
                         </label>
@@ -250,7 +250,7 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">POSTAL CODE</span>
                             <input type="text" id="ecmfModal_PostalCode"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
                     </div>
 
@@ -258,20 +258,20 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER ADDRESS</span>
                             <input type="text" id="ecmfModal_OtherAddress"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER INFO (SHIP TO)</span>
                             <input type="text" id="ecmfModal_OtherInfoShip"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
                     </div>
 
                     <label class="form-control flex flex-col md:w-[302px] ">
                         <span class="label-text text-[11px] font-bold text-gray-500 mb-1">OTHER INFO (SOLD TO)</span>
                         <input type="text" id="ecmfModal_OtherInfoSold"
-                            class="input input-bordered text-[15px] font-semibold" />
+                            class="input input-bordered text-[15px] font-semibold rounded-lg" />
                     </label>
                 </div>
 
@@ -287,12 +287,12 @@
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">GEOAREA</span>
-                            <input type="text" id="ecmfModal_GeoArea" class="input input-bordered text-[15px] font-semibold" />
+                            <input type="text" id="ecmfModal_GeoArea" class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CHAIN</span>
-                            <input type="text" id="ecmfModal_Chain" class="input input-bordered text-[15px] font-semibold" />
+                            <input type="text" id="ecmfModal_Chain" class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
                     </div>
 
@@ -300,19 +300,19 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">COVERAGE</span>
                             <input type="text" id="ecmfModal_CoverageDay"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">FREQUENCY</span>
                             <input type="number" id="ecmfModal_Frequency"
-                                class="input input-bordered text-[15px] font-semibold" />
+                                class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
                     </div>
 
                     <label class="form-control flex flex-col md:w-[302px] ">
                         <span class="label-text text-[11px] font-bold text-gray-500 mb-1">TIN</span>
-                        <input type="number" id="ecmfModal_Tin" class="input input-bordered text-[15px] font-semibold" />
+                        <input type="number" id="ecmfModal_Tin" class="input input-bordered text-[15px] font-semibold rounded-lg" />
                     </label>
 
                 </div>

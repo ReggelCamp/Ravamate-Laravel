@@ -13,7 +13,7 @@
         <div class="card w-full h-full flex flex-col">
             <div class="report_title w-full h-[50px] justify-center items-center rounded-t-xl px-5 py-3 flex ">
                 <x-report-header-title title="Stocktake" />
-                <div class="sheenFilterBtn border rounded-xl">
+                <div class=" shine-bgBtn !bg-transparent !text-white border rounded-xl">
                     <button class=" w-fit px-5" onclick="stockTakeFilter.showModal()">Filter</button>
                 </div>
             </div>

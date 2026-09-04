@@ -46,11 +46,11 @@ function initSpeedDial() {
         icon.classList.toggle('fa-xmark', opening);
     });
 
-    document.getElementById('mapControl_Fullscreen').addEventListener('click', () => {
-        const el = document.getElementById('digital_map_container');
-        if (!document.fullscreenElement) el.requestFullscreen();
-        else document.exitFullscreen();
-    });
+    // document.getElementById('mapControl_Fullscreen').addEventListener('click', () => {
+    //     const el = document.getElementById('digital_map_container');
+    //     if (!document.fullscreenElement) el.requestFullscreen();
+    //     else document.exitFullscreen();
+    // });
 
     document.getElementById('mapControl_ZoomIn').addEventListener('click', () => {
         map.setZoom(map.getZoom() + 1);

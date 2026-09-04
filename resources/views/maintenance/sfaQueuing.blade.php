@@ -145,6 +145,10 @@
         .dataTable-info {
             font-size: 15px !important;
         }
+
+        .table_container .dt-scroll-body tbody tr:nth-child(even) {
+            background-color: transparent !important;
+        }
     </style>
 
     <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
@@ -332,7 +336,7 @@
                             aria-label="Pending Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="SOPendingLogs" onclick="SOpending.showModal()" class="bg-[#a991a5] text-white" />
+                                <x-datatable :defaultClasses="false" id="SOPendingLogs" onclick="SOpending.showModal()" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
@@ -340,7 +344,7 @@
                             aria-label="Failed Logs ()" checked="checked" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="SOFailedLogs" class="bg-[#a991a5] text-white" />
+                                <x-datatable :defaultClasses="false" id="SOFailedLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
@@ -348,7 +352,7 @@
                             aria-label="Success Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
                             <div class="w-full flex-1 pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="SOSuccessLogs" class="bg-[#a991a5] text-white" />
+                                <x-datatable :defaultClasses="false" id="SOSuccessLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
                     </div>
@@ -398,7 +402,7 @@
                             aria-label="Pending Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="PaymentPendingLogs" class="bg-[#a991a5] text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="PaymentPendingLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
 
@@ -406,7 +410,7 @@
                             aria-label="Failed Logs ()" checked="checked" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="PaymentFailedLogs" class="bg-[#a991a5] text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="PaymentFailedLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
 
@@ -414,7 +418,7 @@
                             aria-label="Success Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="PaymentSuccessLogs" class="bg-[#a991a5] text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="PaymentSuccessLogs" class="bg-[#a991a5] text-white text-white" />
                             </div>
                         </div>
                     </div>
@@ -463,7 +467,7 @@
                             aria-label="Pending Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="ReturnPendingLogs" class="bg-[#a991a5] text-white text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="ReturnPendingLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
 
@@ -471,7 +475,7 @@
                             aria-label="Failed Logs ()" checked="checked" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="ReturnFailedLogs" class="bg-[#a991a5] text-white text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="ReturnFailedLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
 
@@ -479,7 +483,7 @@
                             aria-label="Success Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="ReturnSuccessLogs" class="bg-[#a991a5] text-white text-white text-white" />
+                                <x-datatable :defaultClasses="false" id="ReturnSuccessLogs" class="bg-[#a991a5] text-white text-white text-white" />
                             </div>
                         </div>
                     </div>
@@ -529,7 +533,7 @@
                             aria-label="Pending Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="AutoStockPendingLogs"
+                                <x-datatable :defaultClasses="false" id="AutoStockPendingLogs"
                                     class="bg-[#a991a5]  text-white text-white text-white" />
                             </div>
                         </div>
@@ -538,7 +542,7 @@
                             id="AutoStockFailedLogsTab" aria-label="Failed Logs ()" checked="checked" />
                         <div class="tab-content h-full bg-[#a991a5] text-white  border-base-300 ">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="AutoStockFailedLogs" class="bg-[#a991a5] text-white" />
+                                <x-datatable :defaultClasses="false" id="AutoStockFailedLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
 
@@ -546,7 +550,7 @@
                             aria-label="Success Logs ()" />
                         <div class="tab-content h-full bg-[#a991a5] text-white border-base-300">
                             <div class="w-full flex-1 overflow-auto pb-20 max-h-[calc(100vh_-_250px)]">
-                                <x-datatable id="AutoStockSuccessLogs" class="bg-[#a991a5] text-white" />
+                                <x-datatable :defaultClasses="false" id="AutoStockSuccessLogs" class="bg-[#a991a5] text-white" />
                             </div>
                         </div>
                     </div>

@@ -19,11 +19,11 @@
 
         <div id="mapSpeedDial_items" class="hidden flex-col items-center gap-3 mb-1">
 
-            <button type="button" id="mapControl_Fullscreen"
+            {{-- <button type="button" id="mapControl_Fullscreen"
                 title="Fullscreen"
                 class="btn btn-circle btn-sm bg-white shadow-md border hover:bg-gray-50">
                 <i class="fa-solid fa-expand text-gray-700"></i>
-            </button>
+            </button> --}}
 
             <button type="button" id="mapControl_ZoomIn"
                 title="Zoom in"

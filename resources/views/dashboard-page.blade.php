@@ -97,42 +97,51 @@
         }
 
         #Flip_Container {
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s ease;
-            width: 100%;
-            min-height: 600px;
-            /* tall enough to fit your taller face (MTD, 6 cards) */
-        }
+    position: relative;
+    width: 100%;
+    min-height: 600px;
 
-        .flip-face {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
+    perspective: 1200px;
+    perspective-origin: center;
+}
 
-        }
+#Flip_Inner {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
 
-        .flip-back {
-            transform: rotateY(180deg);
-            visibility: hidden;
-            /* back face hidden by default */
-        }
+    transform-style: preserve-3d;
 
-        #Flip_Container.flip_div {
-            transform: rotateY(180deg);
-        }
+    /* Smooth flip */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 
-        /* When flipped: hide front, show back */
-        #Flip_Container.flip_div #Current_Day_Face {
-            visibility: hidden;
-        }
+    will-change: transform;
+}
 
-        #Flip_Container.flip_div #Mtd_Overview_Face {
-            visibility: visible;
-        }
+/* Flip MTD → Overview */
+#Flip_Container.flip_div #Flip_Inner {
+    transform: rotateY(180deg);
+}
+
+/* Both faces */
+.flip-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    min-height: 600px;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    transform-style: preserve-3d;
+}
+
+/* Overview / back face */
+.flip-back {
+    transform: rotateY(180deg);
+}
 
         #sfaQueuingModalTable_wrapper .dt-scroll-head {
             background-color: transparent;
@@ -161,6 +170,13 @@
         #infoWindowTableContent_wrapper .dt-scroll-head table thead th {
             font-size: 9px !important;
         }
+ 
+        #infoWindowTableContent_wrapper .dt-scroll-body table tbody td {
+            font-size: 9px !important;
+            white-space: normal !important;
+            line-height: 1.5 !important;
+        
+        }
 
         #infoWindowTableContent_wrapper .dt-scroll-head {
             width: 100% !important;
@@ -182,7 +198,7 @@
 
         <div class="w-full h-full flex flex-col lg:flex-row">
             {{-- Left Side --}}
-            <div id="dashboardSidePanel" class="order-2 lg:order-1 lg:w-[400px]">
+            <div id="dashboardSidePanel" class="order-2 lg:order-1">
 
                 {{-- Salesman Info --}}
                 <div id="Salesman_Container"
@@ -202,13 +218,15 @@
                                 <i class="mdi mdi-refresh"></i>
                                 Refresh
                             </button>
-                            <div class="dropdown gap-2">
+                            <div class="dropdown gap-2 relative z-[100]">
                                 <div tabindex="0" role="button"
                                     class="w-fit whitespace-nowrap h-[17px] bg-white text-red-500 shine-bgBtn rounded-2xl px-5 border gap-2 flex items-center text-[10px] border-white/60">
                                     Other Actions
                                 </div>
 
-                                <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-50 w-52 p-2 shadow">
+                                <ul tabindex="0"
+                                    class="dropdown-content menu bg-base-100 rounded-box
+                                        z-[999999] w-52 p-2 shadow">
                                     <li><a>Refresh</a></li>
                                     <li><a>View Details</a></li>
                                     <li><a>Delete</a></li>
@@ -237,7 +255,7 @@
                                 </span>
                             </div>
 
-                            <div class="flex text-[11px] w-full gap-10 mt-1">
+                            <div class="flex text-[12px] w-full gap-10 mt-1">
                                 <span>
                                     <i class="fa-solid fa-mobile-screen-button mr-1"></i>
                                     {{ $salesman->contact ?? '09296225456' }}
@@ -248,7 +266,7 @@
                                 </span>
                             </div>
 
-                            <div class="flex text-[11px] w-full gap-10">
+                            <div class="flex text-[12px] w-full gap-10">
                                 <span>
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
                                     {{ $salesman->date ?? 'Aug 19, 2026' }}
@@ -262,7 +280,7 @@
                     </div>
 
                     {{-- Store card --}}
-                    <div class="bg-white rounded-2xl p-2 flex flex-col gap-1 text-[11px]">
+                    <div class="bg-white rounded-2xl w-full p-2 flex flex-col gap-1 text-[12px]">
                         <div class="flex items-center gap-2">
                             <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                                 <i class="fa-solid fa-store text-gray-500 text-xs"></i>
@@ -287,10 +305,10 @@
                             </div>
 
                             <button
-                                class="btn btn-xs bg-red-600 hover:bg-red-700 text-white rounded-full border-none gap-1 relative">
+                                class="btn btn-xs salemanInfoCard rounded-full border-none gap-1 relative">
                                 Locate Store
                                 <span
-                                    class="absolute -right-2 -top-2 bg-white text-red-600 rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-bold border border-red-600">1</span>
+                                    class="absolute -right-2 -top-2 salemanInfoCard rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-bold">1</span>
                             </button>
                         </div>
 
@@ -307,11 +325,11 @@
                             <div class="flex justify-between items-center">
                                 <div class="flex gap-1 ">
                                     <button
-                                        class="btn btn-xs bg-red-600 text-[8px] hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3">
                                         &lt; Prev Store
                                     </button>
                                     <button
-                                        class="btn btn-xs bg-red-600 text-[8px] hover:bg-red-700 text-white rounded-full border-none text-[9px] px-3">
+                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3">
                                         Next Store &gt;
                                     </button>
                                 </div>
@@ -323,12 +341,11 @@
 
                     <div class="w-full max-w-4xl mx-auto">
                         <div
-                            class="collapse collapse-arrow bg-white border rounded-full border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+                            class="collapse collapse-arrow bg-white border rounded-4xl border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
                             <input type="checkbox" class="peer" id="salesCollapse" />
-                            <div class="collapse-title flex rounded-full items-center gap-2 p-2 min-h-[30px] peer-checked:bg-gray-50 cursor-pointer"
-                                onclick="document.getElementById('salesCollapse').click()">
+                            <div class="collapse-title flex items-center gap-2 p-2 min-h-[30px] peer-checked:bg-gray-50 cursor-pointer">
                                 <div
-                                    class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white flex-shrink-0 shadow-md">
+                                    class="w-8 h-8 rounded-full pesoBG flex items-center justify-center text-white flex-shrink-0 shadow-md">
                                     <i class="fa-solid fa-peso-sign text-sm"></i>
                                 </div>
                                 <div class="flex flex-col">
@@ -352,363 +369,387 @@
 
                     <div class="flex w-full whitespace-nowrap  ">
                         <button id="Current_Day_Btn"
-                            class="flex rounded-s-2xl gap-2 text-center items-center justify-center w-full h-[30px] font-medium text-white text-[11px] bg-red-500">
+                            class="flex rounded-s-2xl gap-2 text-center items-center justify-center w-full h-[30px] font-medium text-[12px] salemanInfoCard ">
                             <i class="mdi mdi-flip-horizontal"></i>
                             Current Day Overview
                         </button>
 
                         <button id="Mtd_Overview_Btn"
-                            class="hidden flex rounded-s-2xl text-center items-center justify-center w-full h-[30px] font-medium text-white text-[11px] bg-red-500">
+                            class="hidden flex rounded-s-2xl text-center items-center justify-center w-full h-[30px] font-medium text-[12px] salemanInfoCard ">
                             MTD Overview
                         </button>
-                        <span
-                            class="flex rounded-e-2xl items-center text-center justify-center bg-white w-full h-[30px] font-medium text-[11px]">
-                            REMAINING SELLING DAYS 9
-                        </span>
+                        <div class="flex rounded-e-2xl items-center text-center justify-center w-full h-[30px] gap-2 bg-white">
+                            <span class=" font-semibold text-[12px] ">
+                                REMAINING SELLING DAYS 
+                            </span>
+                            <span class="text-[12px] primary_color font-semibold">
+                                9
+                            </span>
+                        </div>
                     </div>
 
-                    <div id="Flip_Container" class="relative w-full" style="perspective: 1000px;">
+                    <div id="Flip_Container" class="relative w-full" >
 
-                        {{-- Stat cards --}}
-                        <div id="Current_Day_Face" class="flip-face flex flex-col gap-2 w-full">
+                        <div id="Flip_Inner" class="relative w-full">
+                            
+                            {{-- Stat cards --}}
+                            <div id="Current_Day_Face" class="flip-face flex flex-col gap-2 w-full">
 
-                            {{-- Sales for the Day --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    {{-- left side --}}
-                                    <div
-                                        class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
-                                        <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
-                                        <span class="text-xs font-bold">{{ $stats->week_no ?? 4 }}</span>
-                                    </div>
-                                    <div class="flex flex-col leading-5 w-full">
-                                        <span class="text-gray-500">Sales for the Day</span>
-                                        <span class="font-bold text-sm">{{ $stats->sales_pct ?? 0 }}%</span>
-                                        <span class="text-gray-400 text-[10px]">Target
-                                            {{ $stats->sales_target ?? 0 }}</span>
-                                    </div>
-                                </div>
-                                {{-- right side --}}
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Sales</span>
-                                        <span class="font-semibold ">₱{{ number_format($stats->sales ?? 165143.86, 2) }}
-                                        </span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Balance</span>
-                                        <span
-                                            class="text-red-600 font-semibold">₱{{ number_format($stats->balance ?? 0, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Average Range --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Average Range</span>
-                                        <span class="font-bold text-sm">{{ $stats->avg_pct ?? 0 }}%</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Item (No. of SKU)</span>
-                                        <span class="font-semibold">{{ $stats->item_count ?? 10 }}</span>
-                                    </div>
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Value (₱)</span>
-                                        <span
-                                            class="font-semibold">₱{{ number_format($stats->value ?? 20642.98, 2) }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <div class="flex pl-2 whitespace-nowrap gap-1">
-                                            <span>Time Spent</span>
-                                            <span class="text-[8px]">(Minutes)</span>
+                                {{-- Sales for the Day --}}
+                                <div class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        {{-- left side --}}
+                                        <div
+                                            class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
+                                            <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
+                                            <span class="text-xs font-bold">{{ $stats->week_no ?? 4 }}</span>
                                         </div>
-                                        <span class="font-semibold">{{ $stats->time_spent ?? 2.47 }}</span>
+                                        <div class="flex flex-col leading-5 w-full">
+                                            <span class="text-gray-500">Sales for the Day</span>
+                                            <span class="font-bold text-sm">{{ $stats->sales_pct ?? 0 }}%</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target</span>
+                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            {{-- Productivity --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div
-                                        class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
-                                        <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
-                                        <i
-                                            class="fa-solid fa-circle-check text-blue-500 text-[10px] absolute top-0 right-0"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Productivity</span>
-                                        <span class="font-bold text-sm">{{ $stats->productivity_pct ?? 0 }}%</span>
-                                        <span class="text-gray-400 text-[10px]">Target MCP
-                                            {{ $stats->productivity_target ?? 6 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Visited</span>
-                                        <span class="font-semibold">{{ $stats->visited ?? 0 }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Balance</span>
-                                        <span
-                                            class="text-red-600 font-semibold">{{ $stats->productivity_balance ?? 6 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Geo Call Rate --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Geo Call Rate</span>
-                                        <span class="font-bold text-sm">{{ $stats->geo_pct ?? 0 }}%</span>
-                                        <span class="text-gray-400 text-[10px]">Target Calls
-                                            {{ $stats->geo_target ?? 6 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Onsite</span>
-                                        <span class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
-                                    </div>
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Offsite</span>
-                                        <span class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Unproductive</span>
-                                        <span class="text-red-600 font-semibold">{{ $stats->unproductive ?? 6 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {{-- MTD Overview stat cards --}}
-                        <div id="Mtd_Overview_Face" class="flip-face flip-back flex flex-col gap-2 w-full">
-
-                            {{-- MTD Achievement --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div
-                                        class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
-                                        <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
-                                        <span class="text-xs font-bold text-red-600">{{ $mtd->week_no ?? 4 }}</span>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">MTD Achievement</span>
-                                        <span class="font-bold text-sm">{{ $mtd->achievement_pct ?? 0 }}%</span>
-                                        <span class="text-gray-400 text-[10px]">Target
-                                            ₱{{ $mtd->achievement_target ?? 0 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Sales</span>
-                                        <span class="font-semibold">₱
-                                            {{ number_format($mtd->sales ?? 95218225.80, 2) }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Balance</span>
-                                        <span class="text-red-600 font-semibold">₱
-                                            {{ number_format($mtd->balance ?? 0, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Buying Accounts --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-store text-blue-500 text-lg"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Buying Accounts</span>
-                                        <span class="font-bold text-sm">{{ $mtd->buying_pct ?? 0 }}%</span>
-                                        <span class="text-gray-400 text-[10px]">Target Accounts
-                                            {{ $mtd->buying_target ?? 24 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Active Buying</span>
-                                        <span class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Unique Buying</span>
-                                        <span class="font-semibold">{{ $mtd->unique_buying ?? 0 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- MCP Productivity --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div
-                                        class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
-                                        <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
-                                        <i
-                                            class="fa-solid fa-circle-check text-blue-500 text-[10px] absolute top-0 right-0"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">MCP Productivity</span>
-                                        <span class="font-bold text-sm flex items-center gap-1">
-                                            {{ $mtd->mcp_pct ?? 0 }}%
-                                            @if(($mtd->mcp_trend ?? 'down') === 'down')
-                                                <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
-                                            @else
-                                                <i class="fa-solid fa-arrow-up text-green-500 text-[10px]"></i>
-                                            @endif
-                                        </span>
-                                        <span class="text-gray-400 text-[10px]">Total MCP
-                                            {{ $mtd->mcp_total ?? 208 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Productive Call</span>
-                                        <span class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Balance</span>
-                                        <span class="text-red-600 font-semibold">{{ $mtd->mcp_balance ?? 208 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Geo Call Rate --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Geo Call Rate</span>
-                                        <span class="font-bold text-sm flex items-center gap-1">
-                                            {{ $mtd->geo_pct ?? 0 }}%
-                                            @if(($mtd->geo_trend ?? 'down') === 'down')
-                                                <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
-                                            @else
-                                                <i class="fa-solid fa-arrow-up text-green-500 text-[10px]"></i>
-                                            @endif
-                                        </span>
-                                        <span class="text-gray-400 text-[10px]">Target Calls
-                                            {{ $mtd->geo_target ?? 208 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Onsite</span>
-                                        <span class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
-                                    </div>
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Offsite</span>
-                                        <span class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Unproductive</span>
-                                        <span class="text-red-600 font-semibold">{{ $mtd->unproductive ?? 11 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Average Range --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
-                                        <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
-                                    </div>
-                                    <div class="flex flex-col leading-4 w-full">
-                                        <span class="text-gray-500">Average Range</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Item</span>
-                                        <span class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
-                                    </div>
-                                    <div class="flex justify-between border-b pb-1">
-                                        <span class="pl-2">Value</span>
-                                        <span class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
-                                    </div>
-                                    <div class="flex justify-between pt-1">
-                                        <span class="pl-2">Time Spent</span>
-                                        <span class="font-semibold">{{ $mtd->time_spent ?? 5.89 }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- eB2B KPIs --}}
-                            <div
-                                class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[11px] w-full justify-between">
-                                <div class="w-full gap-3 flex">
-                                    <div
-                                        class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
-                                        <i class="fa-solid fa-shop text-gray-500 text-sm"></i>
-                                        <i class="fa-solid fa-right-left text-blue-500 text-[10px] mt-0.5"></i>
-                                    </div>
-
-                                    <div class="flex flex-col text-[10px] leading-4 shrink-0">
-                                        <span class="text-gray-500">eB2B KPIs</span>
-                                        <span class="font-bold whitespace-nowrap">Active MCP
-                                            {{ $mtd->eb2b_active_mcp ?? 208 }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-col leading-5 border-l ml-[30px] w-full h-fit text-gray-600">
-
-                                    <div class="flex gap-2 ">
-                                        <div class="flex flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                    {{-- right side --}}
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Sales</span>
+                                            <span class="font-semibold ">₱{{ number_format($stats->sales ?? 165143.86, 2) }}
+                                            </span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Balance</span>
                                             <span
-                                                class="font-bold text-gray-700">₱{{ number_format($mtd->eb2b_ravamate ?? 208, 2) }}</span>
-                                            <span class="text-[9px] whitespace-nowrap">CDO Sphere</span>
-                                        </div>
-                                        <div
-                                            class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
-                                            <span class="font-bold text-gray-700">---</span>
-                                            <span class="text-[9px]">eB2B Sales</span>
+                                                class="primary_color font-semibold">₱{{ number_format($stats->balance ?? 0, 2) }}</span>
                                         </div>
                                     </div>
-
-                                    <div class="flex gap-2 ">
-                                        <div class="flex flex-col items-center justify-center flex-1 pl-2 leading-3.5">
-                                            <span class="font-bold text-gray-700">---</span>
-                                            <span class="text-[9px]">Registered</span>
-                                        </div>
-                                        <div
-                                            class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
-                                            <span class="font-bold text-gray-700">---</span>
-                                            <span class="text-[9px]">Productive</span>
-                                        </div>
-                                        <div
-                                            class="flex border-l whitespace-nowrap pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
-                                            <span class="font-bold text-gray-700">---</span>
-                                            <span class="text-[9px]">Hybrid Freq</span>
-                                        </div>
-                                    </div>
-
                                 </div>
+
+                                {{-- Average Range --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Average Range</span>
+                                            {{-- <span class="font-bold text-sm">{{ $stats->avg_pct ?? 0 }}%</span> --}}
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Item (No. of SKU)</span>
+                                            <span class="font-semibold">{{ $stats->item_count ?? 10 }}</span>
+                                        </div>
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Value (₱)</span>
+                                            <span
+                                                class="font-semibold">₱{{ number_format($stats->value ?? 20642.98, 2) }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <div class="flex pl-2 whitespace-nowrap gap-1">
+                                                <span>Time Spent</span>
+                                                <span class="text-[8px]">(Minutes)</span>
+                                            </div>
+                                            <span class="font-semibold">{{ $stats->time_spent ?? 2.47 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Productivity --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div
+                                            class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
+                                            <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
+                                            <i
+                                                class="fa-solid fa-circle-check text-blue-500 text-[10px] absolute top-0 right-0"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Productivity</span>
+                                            <span class="font-bold text-sm">{{ $stats->productivity_pct ?? 0 }}%</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target MCP</span>
+                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Visited</span>
+                                            <span class="font-semibold">{{ $stats->visited ?? 0 }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Balance</span>
+                                            <span
+                                                class="primary_color font-semibold">{{ $stats->productivity_balance ?? 6 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Geo Call Rate --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Geo Call Rate</span>
+                                            <span class="font-bold text-sm">{{ $stats->geo_pct ?? 0 }}%</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target Calls</span>
+                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Onsite</span>
+                                            <span class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
+                                        </div>
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Offsite</span>
+                                            <span class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Unproductive</span>
+                                            <span class="primary_color font-semibold">{{ $stats->unproductive ?? 6 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- MTD Overview stat cards --}}
+                            <div id="Mtd_Overview_Face" class="flip-face flip-back flex flex-col gap-2 w-full">
+
+                                {{-- MTD Achievement --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div
+                                            class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
+                                            <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
+                                            <span class="text-xs font-bold primary_color">{{ $mtd->week_no ?? 4 }}</span>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">MTD Achievement</span>
+                                            <span class="font-bold text-sm">{{ $mtd->achievement_pct ?? 0 }}%</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target</span>
+                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                            </div>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Sales</span>
+                                            <span class="font-semibold">₱
+                                                {{ number_format($mtd->sales ?? 95218225.80, 2) }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Balance</span>
+                                            <span class="primary_color font-semibold">₱
+                                                {{ number_format($mtd->balance ?? 0, 2) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Buying Accounts --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-store text-blue-500 text-lg"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Buying Accounts</span>
+                                            <span class="font-bold text-sm">{{ $mtd->buying_pct ?? 0 }}%</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target Accounts</span>
+                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Active Buying</span>
+                                            <span class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Unique Buying</span>
+                                            <span class="font-semibold">{{ $mtd->unique_buying ?? 0 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- MCP Productivity --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div
+                                            class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
+                                            <i class="fa-solid fa-warehouse text-gray-600 text-lg"></i>
+                                            <i
+                                                class="fa-solid fa-circle-check text-blue-500 text-[10px] absolute top-0 right-0"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">MCP Productivity</span>
+                                            <span class="font-bold text-sm flex items-center gap-1">
+                                                {{ $mtd->mcp_pct ?? 0 }}%
+                                                @if(($mtd->mcp_trend ?? 'down') === 'down')
+                                                    <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
+                                                @else
+                                                    <i class="fa-solid fa-arrow-up text-green-500 text-[10px]"></i>
+                                                @endif
+                                            </span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Total MCP</span>
+                                                <span class="text-black "> {{ $mtd->achievement_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Productive Call</span>
+                                            <span class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Balance</span>
+                                            <span class="primary_color font-semibold">{{ $mtd->mcp_balance ?? 208 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Geo Call Rate --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-earth-americas text-gray-500 text-lg"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Geo Call Rate</span>
+                                            <span class="font-bold text-sm flex items-center gap-1">
+                                                {{ $mtd->geo_pct ?? 0 }}%
+                                                @if(($mtd->geo_trend ?? 'down') === 'down')
+                                                    <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
+                                                @else
+                                                    <i class="fa-solid fa-arrow-up text-green-500 text-[10px]"></i>
+                                                @endif
+                                            </span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Target Calls</span>
+                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Onsite</span>
+                                            <span class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
+                                        </div>
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Offsite</span>
+                                            <span class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Unproductive</span>
+                                            <span class="primary_color font-semibold">{{ $mtd->unproductive ?? 11 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Average Range --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
+                                            <i class="fa-solid fa-chart-line text-blue-500 text-lg"></i>
+                                        </div>
+                                        <div class="flex flex-col leading-4 w-full">
+                                            <span class="text-gray-500">Average Range</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Item</span>
+                                            <span class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
+                                        </div>
+                                        <div class="flex justify-between border-b pb-1">
+                                            <span class="pl-2">Value</span>
+                                            <span class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
+                                        </div>
+                                        <div class="flex justify-between pt-1">
+                                            <span class="pl-2">Time Spent</span>
+                                            <span class="font-semibold">{{ $mtd->time_spent ?? 5.89 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- eB2B KPIs --}}
+                                <div
+                                    class="bg-white rounded-2xl p-2 flex items-center gap-3 text-[12px] w-full justify-between">
+                                    <div class="w-full gap-3 flex">
+                                        <div
+                                            class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0 relative">
+                                            <i class="fa-solid fa-shop text-gray-500 text-sm"></i>
+                                            <i class="fa-solid fa-right-left text-blue-500 text-[10px] mt-0.5"></i>
+                                        </div>
+
+                                        <div class="flex flex-col text-[10px] leading-4 shrink-0">
+                                            <span class="text-gray-500">eB2B KPIs</span>
+                                            <div class="flex gap-1">
+                                                <span class="text-gray-400 text-[10px]">Active MCP</span>
+                                                <span class="text-black "> {{ $mtd->achievement_target ?? 0325 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col leading-5 border-l ml-[30px] w-full h-fit text-gray-600">
+
+                                        <div class="flex gap-2 ">
+                                            <div class="flex flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                <span
+                                                    class="font-bold text-gray-700">₱{{ number_format($mtd->eb2b_ravamate ?? 208, 2) }}</span>
+                                                <span class="text-[9px] whitespace-nowrap">CDO Sphere</span>
+                                            </div>
+                                            <div
+                                                class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                <span class="font-bold text-gray-700">---</span>
+                                                <span class="text-[9px]">eB2B Sales</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex gap-2 ">
+                                            <div class="flex flex-col items-center justify-center flex-1 pl-2 leading-3.5">
+                                                <span class="font-bold text-gray-700">---</span>
+                                                <span class="text-[9px]">Registered</span>
+                                            </div>
+                                            <div
+                                                class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                <span class="font-bold text-gray-700">---</span>
+                                                <span class="text-[9px]">Productive</span>
+                                            </div>
+                                            <div
+                                                class="flex border-l whitespace-nowrap pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                <span class="font-bold text-gray-700">---</span>
+                                                <span class="text-[9px]">Hybrid Freq</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>
@@ -763,8 +804,8 @@
                         </button>
 
                         {{-- fit to screen section --}}
-                        <div id="fitScreenInfo"
-                            class="hidden flex flex-col h-fit w-[550px] absolute top-2 left-2 z-10 rounded-3xl overflow-hidden gap-5">
+                        <div id="fitScreenInfo" class="hidden flex flex-col h-fit w-[550px] absolute top-2 left-2 z-10 rounded-3xl overflow-hidden gap-5">
+                            
                             <div class=" pb-2 bg-white rounded-b-3xl">
                                 <div id="fitScreenToolBarContainer" class="flex w-full bg-red-500 p-2">
 
@@ -893,7 +934,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col w-full px-2 pt-3 gap-2">
-                                        <span class="text-[11px] font-semibold leading-[1.2]">NUMBER OF SALESMAN THIS MONTH</span>
+                                        <span class="text-[12px] font-semibold leading-[1.2]">NUMBER OF SALESMAN THIS MONTH</span>
                                         <div class="flex gap-5">
                                             <img class="w-[30px] h-[30px]"
                                                 src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
@@ -935,7 +976,7 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col w-full px-2 pt-3 gap-2">
-                                        <span class="text-[11px] font-semibold leading-[1.2]">NUMBER OF SALESMAN TODAY</span>
+                                        <span class="text-[12px] font-semibold leading-[1.2]">NUMBER OF SALESMAN TODAY</span>
                                         <div class="flex gap-5">
                                             <img class="w-[30px] h-[30px]"
                                                 src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
@@ -951,6 +992,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
 
                         <x-DigitalMap />

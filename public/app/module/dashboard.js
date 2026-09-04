@@ -97,67 +97,67 @@ const ProductColumns = [
 const SampleData = [
     {
         stock_code: "FG05241",
-        description: "BT Cheese 160g",
+        description: "BT Negosyo HD King BT Negosyo HD King 16+1 1.1kg",
         quantity: "2/0/0",
         amount: "₱1,564.92",
     },
     {
         stock_code: "FG05242",
-        description: "BT Cheese 430g",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "2/0/0",
         amount: "₱2,233.98",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
     {
         stock_code: "FG03798",
-        description: "SMCCT 100G",
+        description: "BT Negosyo HD King 16+1 1.1kg",
         quantity: "5/0/0",
         amount: "₱6,804.00",
     },
@@ -510,7 +510,7 @@ function displayInfoWindow() {
             latestInfoWindow = new google.maps.InfoWindow({
                 content: `
                     <div id= "latestInfo_Container" class="latest-transaction-popup min-w-[193px] rounded-3xl ">
-                        <div class="bg-red-500 text-white px-4 py-3 relative w-full">
+                        <div class="salemanInfoCard px-4 py-3 relative w-full">
                            
                             <div class="flex gap-1">
                                 <span class="items-center justify-center flex">
@@ -641,12 +641,12 @@ function InfoWindowContent(salesman) {
                             class="w-full h-full object-cover brightness-50" />
         
                         <!-- top-left badge -->
-                        <span id="" class="absolute top-2 left-2 badge badge-error text-white font-semibold text-xs">
+                        <span id="" class="absolute top-2 left-2 salemanInfoCard p-2 rounded-2xl font-semibold text-xs">
                             ${salesman.transaction_code ?? "32_GP"}
                         </span>
 
                         <!-- top-right badge -->
-                        <span class="absolute top-2 right-2 badge badge-success badge-outline bg-white/80 text-xs">
+                        <span class="absolute top-2 right-2 badge text-green-600 badge-outline bg-green-200  text-xs">
                             ⏱ ${salesman.status ?? "Visited Customer"}
                         </span>
 
@@ -676,8 +676,8 @@ function InfoWindowContent(salesman) {
 
                                  <!-- prev/next store buttons -->
                                 <div class="flex justify-end w-full gap-1 p-2 pb-0">
-                                    <button type="button" class="btn btn-xs w-fit p-1.5 text-red-500 text-[8px] rounded-full bg-white border-none">❮ Prev Store</button>
-                                    <button type="button" class="btn btn-xs w-fit p-1.5 text-red-500 text-[8px] rounded-full bg-white border-none">Next Store ❯</button>
+                                    <button type="button" class="font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">❮ Prev Store</button>
+                                    <button type="button" class="font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">Next Store ❯</button>
                                 </div>
 
                             </div>
@@ -686,7 +686,7 @@ function InfoWindowContent(salesman) {
 
                     <!-- Tabs -->
                     <div class="tabs tabs-border px-5 pb-2">
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
+                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
                         <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 text-xs" style="display:block">
                             <div class="">
                                 <span class="text-gray-400 block">Salesman Assigned:</span>
@@ -729,22 +729,36 @@ function InfoWindowContent(salesman) {
                             </div>
                         </div>
 
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Item Details" data-tab-content="tabContent2" />
+                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Item Details" data-tab-content="tabContent2" />
                         <div
                             class="tab-content w-full  flex flex-col border-base-300 bg-base-100 text-xs""
                             data-tab="tabContent2"
                             style="display:none"
                         >
-                            <div class = "flex w-full justify-between bg-red-500 text-white items-center h-[25px]">
-                                <span>Transaction Items</span>
+                            <div class = "flex w-full justify-between salemanInfoCard items-center h-[25px] py-5 px-2 rounded-t-2xl">
+                                <div class="flex gap-1">
+                                    <img class="h-[25px] w-[25px]" src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
+                                    <span class="text-[13px]">Transaction Items</span>
+                                </div>
                                 <span>₱ 7,147.93 (14 SKU)</span>
                             </div>
                             <div id="infoWindowTableContainer" class="w-full text-[9px] overflow-hidden"></div>
                         </div>
 
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px]" aria-label="Supporting Docs" data-tab-content="tabContent3" />
+                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Supporting Docs" data-tab-content="tabContent3" />
                         <div class="tab-content border-base-300 bg-base-100 pt-3 text-xs" style="display:none">
-                            ${salesman.supporting_docs ?? "No supporting docs available."}
+                            <div class="flex w-full">
+                                <div class="flex w-full">
+                                    <div class="w-[125px] h-[125px] rounded-full border"></div>                                    
+                                </div>
+                                <div class="flex flex-col w-full justify-center items-center px-2 gap-2">
+                                    <span class="flex text-[11px] text-[##505664]">Reference Number:</span>
+                                    <span class="flex text-[11px] text-black">FPM_4202609041642023</span>
+                                    <span class="flex text-[11px] text-[##505664]">Remarks:</span>
+                                    <span class="flex text-[11px] text-[##505664]">---</span>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

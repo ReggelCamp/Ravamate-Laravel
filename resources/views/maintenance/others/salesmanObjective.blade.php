@@ -11,7 +11,7 @@
                     <x-dropdown direction="dropdown-end dropdown-bottom">
                         <x-slot:dropdownName class="w-[100px]">
                             <span
-                                class="flex font-medium text-[12px] gap-2 items-center sheenFilterBtn w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
+                                class="flex font-medium text-[12px] gap-2 items-center shine-bgBtn !bg-transparent !text-white w-fit px-5 whitespace-nowrap border rounded-2xl h-[30px]">
                                 <i class="mdi mdi-filter-variant"></i>
                                 Select Salesman
                             </span>

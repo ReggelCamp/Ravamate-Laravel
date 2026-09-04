@@ -175,12 +175,15 @@ div.dt-container .dt-paging .dt-paging-button {
 
 @props([
     'id' => 'salesmanTable',
+    'defaultClasses' => true,
 ])
 
 <div class="w-full h-full">
     <table
         {{ $attributes->merge([
-            'class' => 'w-full bodyFont tableBg text-medium  text-[10px]'
+            'class' => $defaultClasses
+                ? 'w-full bodyFont tableBg text-medium text-[10px]'
+                : ''
         ]) }}
         id="{{ $id }}">
     </table>

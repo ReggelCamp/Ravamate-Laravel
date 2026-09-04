@@ -142,11 +142,11 @@ export default class TableLoader {
                     data,
                     config.columns,
                     {
-                        pageLength: getPageLength(),
-                        // pageLength: config.pageLength,
-                        scrollY: getResponsiveScrollY(),
-                        // scrollY: config.scrollY,
+                        pageLength: config.pageLength ?? getPageLength(),
+                        scrollY: config.scrollY ?? getResponsiveScrollY(),
                         searchInput: config.searchInput,
+                        // pageLength: config.pageLength,
+                        // scrollY: config.scrollY,
                     },
                 );
 

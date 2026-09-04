@@ -80,15 +80,15 @@
 </style>
 
 <dialog id="{{ $id }}" class="modal">
-    <div class="modal-box w-[800px] max-w-5xl p-0 overflow-auto">
-        <div class="bg-red-700 w-full h-[50px]">
+    <div class="modal-box w-[800px] rounded-2xl mt-[60px] mb-[60px] max-w-5xl p-0 overflow-auto">
+        <div class="primaryBg w-full h-[50px]">
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
         </div>
         <div class="flex flex-col w-full h-full p-5 pt-3">
             <div class="flex justify-between gap-1 pb-2">
-                <div class="flex flex-col w-full border inset-shadow-lg p-2 rounded-2xl gap-3 pb-10">
+                <div class="flex flex-col w-full shadow-[2px_2px_10px] p-2 rounded-2xl gap-3 pb-10">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] text-white items-center w-full">
                         <span class="font-bold text-[16px]">Salesman Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
@@ -103,29 +103,30 @@
                             <span class="bg-white rounded-tl-2xl px-10 text-[13px] text-black">Pending</span>
                         </div>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3 shadow-lg">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 text-[12px] justify-between py-3 shadow-lg">
                         <span class="">Document No.</span>
                         <span class="font-medium">GP_7202607011006227</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 text-[12px] justify-between py-3">
                         <span class="">MD Code</span>
                         <span class="font-medium">CD00033 (B)</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 text-[12px] justify-between py-3">
                         <span class="">Warehouse Code</span>
                         <span class="font-medium">1</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 text-[12px] justify-between py-3">
                         <span class="">Bad Order Warehouse</span>
                         <span class="font-medium">BO</span>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 text-[12px] justify-between py-3">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 text-[12px] justify-between py-3">
                         <span class="">Good Stock Return WH</span>
                         <span class="font-medium">HO</span>
                     </div>
                 </div>
 
-                <div class="flex flex-col w-full border px-2 pt-2 rounded-2xl gap-3">
+                <div class="flex flex-col w-full shadow-[2px_2px_10px] px-0 pt-2 rounded-2xl gap-3">
+                    <div class="px-2 flex flex-col gap-3">
                     <div class="flex flex-col rounded-2xl bg-[#5d0616] items-center w-full text-white">
                         <span class="font-bold text-[16px]">Sales Details</span>
                         <div class="flex items-center justify-center gap-3 w-full">
@@ -140,7 +141,7 @@
                             <span class="bg-white rounded-tl-2xl px-10 text-[13px] text-black">989-2606079</span>
                         </div>
                     </div>
-                    <div class="flex w-full rounded-2xl border flex-col px-5 justify-between py-[3px]">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] flex-col px-5 justify-between py-[3px]">
                         <span class="text-[13px]">Address</span>
                         <span>
                             <i class="fa-solid fa-location-dot"></i>
@@ -148,7 +149,7 @@
                         </span>
                     </div>
                     <div class="flex w-full  justify-between">
-                        <div class="flex flex-col border rounded-2xl w-[201px] justify-start ">
+                        <div class="flex flex-col shadow-[2px_2px_10px] rounded-2xl w-[201px] justify-start ">
                             <span class="text-[12px] justify-center flex">Delivery Date</span>
                             <div class="flex items-center gap-5 px-5 pt-2">
                                 <span class=" salesDetailsIcon text-[20px] rounded-lg p-1 bg-red-800 text-white">
@@ -183,25 +184,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex w-full rounded-2xl border px-5 justify-between h-[85px]">
+                    <div class="flex w-full rounded-2xl shadow-[2px_2px_10px] px-5 justify-between h-[85px]">
                         <span class="w-full justify-center flex">Remarks</span>
                     </div>
-                    <div class="flex w-full rounded-b-2xl border px-5 justify-between py-1 bg-[#5d0616] text-white">
+                    </div>
+                    <div class="flex w-full rounded-b-2xl shadow-[2px_2px_10px] px-5 justify-between py-1 bg-[#5d0616] text-white">
                         <span class="">API STATUS:</span>
                         <span>Pending</span>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full flex flex-col rounded-2xl">
+            <div class="w-full h-fit pb-10 flex flex-col shadow-[2px_2px_10px] rounded-2xl">
                 <div class="flex flex-col bg-[#5d0616] w-full items-center rounded-t-2xl text-white pb-3">
                     <span>Items Code</span>
                     <span>Date</span>
                     <span>July 1, 2026</span>
                 </div>
-<div class="">
-    <x-datatable id="sfqQueuingModal" />
-</div>
+                <div class="">
+                    <x-datatable id="sfqQueuingModal" />
+                </div>
             </div>
         </div>
     </div>
