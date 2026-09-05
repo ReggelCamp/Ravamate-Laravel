@@ -4,6 +4,12 @@
 @section('title', 'SFA QUEUING')
 
     <style>
+        #processModal {
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
         #datepicker {
             color: var(--header-color);
             font-weight: 500;
@@ -149,6 +155,21 @@
         .table_container .dt-scroll-body tbody tr:nth-child(even) {
             background-color: transparent !important;
         }
+
+        #TransactionTable_wrapper .dt-scroll-body table tbody td{
+            font-size: 10px !important;
+        }
+        
+        #TransactionTable_wrapper .dt-scroll-head table thead th{
+            font-size: 10px !important;
+        }
+
+        .Fdis_btn{
+                box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
+                inset 10px 10px 9px #d1d5db,
+                inset -10px -10px 9px #ffffff;
+        }
+
     </style>
 
     <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
@@ -201,7 +222,7 @@
                             <img class="w-[60px] h-[60px] object-contain"
                                 src="https://cdo.sfa-plus.com/SFA/v2/img/SFAQueuing_SO.svg">
 
-                            <button class="rounded-xl shine-bgBtn w-fit px-4 py-1">
+                            <button class="rounded-xl shine-bgBtn w-fit px-4 py-1" onclick="processModal.showModal()">
                                 Process
                             </button>
                         </div>
@@ -561,6 +582,101 @@
     </div>
 
     <x-sfaQueuingModal id="sfaQueueDetailModal" />
+
+        <dialog id="processModal" class="modal">
+            <div class="modal-box p-0 w-[500px] max-w-[1000px]">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 class="text-lg font-medium text-[20px] p-5">SO Sync Method</h3>
+                <span class="w-full border-t border-gray-300 flex"></span>
+                <div class="flex p-10 px-15 gap-5 justify-between">
+                    <div
+                        id="SpecificTransaction"
+                        onclick="processModal.close(); TransactionModal.showModal()"
+                        class="border w-[160px] h-[147px]  items-center sheenFilterBtn rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-file text-[48px]"></i>
+                        <span class="font-medium text-center w-full px-2 whitespace-normal break-words">Sync Specific Transaction</span>
+                    </div>
+                    <div
+                        onclick="processModal.close(); SalesmanModal.showModal()"
+                        id="SyncSalesman"
+                        class="border w-[160px] h-[147px] items-center sheenFilterBtn rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-user text-[48px]"></i>
+                        <span class="flex font-medium">Sync Per Salesman</span>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="TransactionModal" class="modal">
+            <div class="modal-box w-11/12 max-w-6xl p-0">
+                <!-- Header -->
+                <div class="flex items-center justify-between p-5">
+                    <span class="text-[20px] font-semibold">Sync Transactions to FDIS</span>
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-square btn-outline">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </form>
+                </div>
+                <span class="w-full border-t border-gray-300 flex"></span>
+
+                <!-- Toolbar -->
+                <div class="flex items-center justify-between p-5">
+                    <button class="p-1 border rounded-lg text-[12px] Fdis_Btn" onclick="processToFDIS()">
+                        Process to FDIS
+                    </button>
+                    <!-- DataTables' built-in search box will auto-render here if dom option includes 'f' -->
+                </div>
+
+                <!-- Table -->
+                <div class="px-5">
+                    <x-datatable id="TransactionTable" class="w-full"/>
+                </div>
+
+                <!-- Footer -->
+                <span class="w-full border-t border-gray-300 flex mt-5"></span>
+                <div class="flex justify-end p-5">
+                    <form method="dialog">
+                        <button class="btn btn-outline">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+  
+        <dialog id="SalesmanModal" class="modal">
+    <div class="modal-box p-0 w-[500px]">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4">
+            <span class="text-[22px] font-bold">Sync Transactions to FDIS</span>
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost text-xl">✕</button>
+            </form>
+        </div>
+        <span class="w-full border-t border-gray-200 flex"></span>
+
+        <!-- Salesman selector row -->
+        <div class="flex items-center gap-4 px-6 py-6">
+            <span class="font-bold whitespace-nowrap">SALESMAN:</span>
+            <select id="salesmanSelect" multiple placeholder="Select Salesman" class="w-full border">
+                <!-- options populated via JS / Tom Select -->
+            </select>
+        </div>
+
+        <span class="w-full border-t border-gray-200 flex"></span>
+
+        <!-- Footer buttons -->
+        <div class="flex justify-end items-center gap-6 px-6 py-4">
+            <form method="dialog">
+                <button class="btn btn-ghost font-medium">Cancel</button>
+            </form>
+            <button class="btn bg-blue-500 hover:bg-blue-600 text-white border-none px-6" onclick="executeSalesmanSync()">
+                Execute
+            </button>
+        </div>
+    </div>
+        </dialog>
 
 @endsection
 

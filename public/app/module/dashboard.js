@@ -82,6 +82,7 @@ const ProductColumns = [
     {
         title: "Description",
         data: "description",
+        className: "text-left truncate max-w-[100px]"
     },
     {
         title: "Quantity",
@@ -97,7 +98,7 @@ const ProductColumns = [
 const SampleData = [
     {
         stock_code: "FG05241",
-        description: "BT Negosyo HD King BT Negosyo HD King 16+1 1.1kg",
+        description: "BT Negosyo HD King BT BT Negosyo HD King BT BT Negosyo HD King BT ",
         quantity: "2/0/0",
         amount: "₱1,564.92",
     },
@@ -685,9 +686,9 @@ function InfoWindowContent(salesman) {
                     </div>
 
                     <!-- Tabs -->
-                    <div class="tabs tabs-border px-5 pb-2">
+                    <div class="tabs tabs-border items-cemter justify-center px-0 pb-2">
                         <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
-                        <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 text-xs" style="display:block">
+                        <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 px-5 text-xs" style="display:block">
                             <div class="">
                                 <span class="text-gray-400 block">Salesman Assigned:</span>
                                 <!-- <span class="font-semibold">${salesman.salesman_name ?? ""} 🔋 ${salesman.battery ?? "-"}%</span> -->
@@ -746,7 +747,7 @@ function InfoWindowContent(salesman) {
                         </div>
 
                         <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Supporting Docs" data-tab-content="tabContent3" />
-                        <div class="tab-content border-base-300 bg-base-100 pt-3 text-xs" style="display:none">
+                        <div class="tab-content border-base-300 bg-base-100 px-0 pt-3 text-xs" style="display:none">
                             <div class="flex w-full">
                                 <div class="flex w-full">
                                     <div class="w-[125px] h-[125px] rounded-full border"></div>                                    

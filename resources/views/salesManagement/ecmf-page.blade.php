@@ -319,13 +319,13 @@
 
                 <div class="flex w-full pt-5 justify-between">
                     <div class="flex gap-5">
-                        <button class="btn bg-amber-500 rounded-lg">Update</button>
-                        <button class="bg-blue-500  btn rounded-lg">Print</button>
+                        {{-- <button class="btn bg-amber-500 rounded-lg">Update</button> --}}
+                        <button class="bg-[#0dcaf0]  font-medium btn rounded-lg">Print</button>
                     </div>
-                    <div class="flex gap-5">
+                    {{-- <div class="flex gap-5">
                         <button class="btn bg-blue-500 rounded-lg">Approved</button>
                         <button class="btn bg-red-500 rounded-lg">Disapproved</button>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>

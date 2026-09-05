@@ -717,6 +717,167 @@ const autoLogsSampleData = [
     },
 ];
 
+const SyncTransactionsColumns = [
+    {
+        title: '<input type="checkbox" id="selectAll" class="checkbox checkbox-sm">',
+        data: null,
+        orderable: false,
+        className: "text-center",
+        render: function (data, type, row) {
+            return `<input type="checkbox" class="checkbox checkbox-sm row-checkbox" value="${row.transaction_id}">`;
+        }
+    },
+    {
+        title: "Transaction ID",
+        data: "transaction_id",
+    },
+    {
+        title: "Salesman",
+        data: "salesman",
+    },
+    {
+        title: "Customer",
+        data: "customer",
+    },
+    {
+        title: "Document #",
+        data: "document_no",
+    },
+    {
+        title: "Total SKU",
+        data: "total_sku",
+    },
+    {
+        title: "Up Time",
+        data: "up_time",
+    },
+    {
+        title: "Sales",
+        data: "sales",
+    },
+    {
+        title: "Address",
+        data: "address",
+    },
+    {
+        title: "Delivery Date",
+        data: "delivery_date",
+    },
+]
+
+const sampleData = [
+    {
+        transaction_id: "DSP2202605050830201",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2REY STORE",
+        document_no: "DSP2SO260505 -2605052",
+        total_sku: 4,
+        up_time: 76,
+        sales: 6145.92,
+        address: "",
+        delivery_date: "2026-05-05 08:30:20.68"
+    },
+    {
+        transaction_id: "DSP2202605050924361",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2JEFF",
+        document_no: "DSP2SO260505 -2605053",
+        total_sku: 4,
+        up_time: 87,
+        sales: 1157.5,
+        address: "",
+        delivery_date: "2026-05-05 09:24:36.43"
+    },
+    {
+        transaction_id: "DSP2202605050932218",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2ROSE MAE STORE",
+        document_no: "DSP2SO260505 -2605054",
+        total_sku: 1,
+        up_time: 35,
+        sales: 1094.16,
+        address: "",
+        delivery_date: "2026-05-05 09:32:21.86"
+    },
+    {
+        transaction_id: "DSP2202605050937241",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2BATANG STORE",
+        document_no: "DSP2SO260505 -2605055",
+        total_sku: 1,
+        up_time: 20,
+        sales: 838.08,
+        address: "",
+        delivery_date: "2026-05-05 09:37:24.82"
+    },
+    {
+        transaction_id: "DSP2202605050955226",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2LALAH STORE TALA",
+        document_no: "DSP2SO260505 -2605056",
+        total_sku: 7,
+        up_time: 97,
+        sales: 1202.8,
+        address: "",
+        delivery_date: "2026-05-05 09:55:22.87"
+    },
+    {
+        transaction_id: "DSP2202605051010254",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2JENKING STOREPH7",
+        document_no: "DSP2SO260505 -2605058",
+        total_sku: 4,
+        up_time: 34,
+        sales: 1132,
+        address: "",
+        delivery_date: "2026-05-05 10:10:25.66"
+    },
+    {
+        transaction_id: "DSP2202605051048030",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2EMPAS STORE",
+        document_no: "DSP2SO260505 -2605059",
+        total_sku: 1,
+        up_time: 25,
+        sales: 1094.16,
+        address: "",
+        delivery_date: "2026-05-05 10:48:03.66"
+    },
+    {
+        transaction_id: "DSP2202605051055166",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V23M STORE",
+        document_no: "DSP2SO260505 -26050510",
+        total_sku: 3,
+        up_time: 48,
+        sales: 627.75,
+        address: "",
+        delivery_date: "2026-05-05 10:55:16.78"
+    },
+    {
+        transaction_id: "DSP2202605051100520",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2LIZA STORE BANKERS",
+        document_no: "DSP2SO260505 -2605511",
+        total_sku: 3,
+        up_time: 47,
+        sales: 724.5,
+        address: "",
+        delivery_date: "2026-05-05 11:00:52.03"
+    },
+    {
+        transaction_id: "DSP2202605051126567",
+        salesman: "GP_6 GONGORA ALBERT LAGGUI",
+        customer: "V2MENCHIE STORE PANGARAP VILLAGE",
+        document_no: "DSP2SO260505 -26050512",
+        total_sku: 9,
+        up_time: 187,
+        sales: 1433.66,
+        address: "",
+        delivery_date: "2026-05-05 11:26:56.64"
+    },
+];
+
 // SOLogsColumns
 // TableLoader.loadTable({
 //     url: "getDCRtable",
@@ -933,6 +1094,42 @@ TableLoader.tableData(
     {
 
     },
+);
+
+// Select all checkbox toggles all row checkboxes
+$(document).on('change', '#selectAll', function () {
+    const isChecked = $(this).prop('checked');
+    $('.row-checkbox').prop('checked', isChecked);
+});
+
+// If any row checkbox is unchecked, uncheck "select all"
+$(document).on('change', '.row-checkbox', function () {
+    const allChecked = $('.row-checkbox').length === $('.row-checkbox:checked').length;
+    $('#selectAll').prop('checked', allChecked);
+});
+
+// Get selected transaction IDs (e.g., when "Process to FDIS" is clicked)
+function getSelectedTransactions() {
+    return $('.row-checkbox:checked').map(function () {
+        return $(this).val();
+    }).get();
+}
+
+function processToFDIS() {
+    const selectedIds = getSelectedTransactions();
+    if (selectedIds.length === 0) {
+        alert('Please select at least one transaction.');
+        return;
+    }
+    console.log('Processing:', selectedIds);
+    // your AJAX call here
+}
+
+//transactionModal
+TableLoader.tableData(
+    "#TransactionTable",
+    sampleData,
+    SyncTransactionsColumns
 );
 
 // Hide button initially

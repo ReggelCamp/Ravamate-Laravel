@@ -519,7 +519,7 @@
     overflow: hidden;
     background-color: transparent;
     border: 1px solid transparent;          /* FIX #4: give it a real border */
-    border-radius: 9999px;                  /* FIX #2: pill shape matches ::after */
+    /* border-radius: 9999px;                   */
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
                 inset 10px 10px 9px #d1d5db,
                 inset -10px -10px 9px #ffffff;

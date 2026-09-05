@@ -150,6 +150,11 @@
         #sfaQueuingModalTable_wrapper .dt-scroll-head table thead th {
             color: black !important;
         }
+        
+        #sfaQueuingModalTable_wrapper .dt-scroll-body table tbody td {
+            color: black !important;
+            font-size: 10px !important;
+        }
 
         #sfaQueuingModalTable_wrapper .dataTable-info {
             font-size: 10px;
@@ -185,6 +190,12 @@
         #fitScreenTable_wrapper .dt-scroll-body {
             width: 100%;
             overflow-x: auto;
+        }
+
+        #sfaQueuingModalTable tbody td {
+            white-space: normal !important;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         /* .daterangepicker td.disabled {
@@ -359,7 +370,7 @@
                                 </div>
                             </div>
                             <div class="collapse-content px-4">
-                                <div class="border-t border-gray-200 pt-3 h-fit ">
+                                <div class="border-t border-gray-200 w-fit pt-3 h-fit ">
                                     <x-datatable id="sfaQueuingModalTable" class="" />
                                 </div>
                             </div>
