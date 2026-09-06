@@ -20,7 +20,7 @@
         }
 
         .dt-paging {
-            background-color: #a78ca0 !important;
+            background-color: #a78ca0 ;
         }
 
         /* SFA MAINTENANCE */
@@ -153,7 +153,7 @@
         }
 
         .table_container .dt-scroll-body tbody tr:nth-child(even) {
-            background-color: transparent !important;
+            background-color: #b698ae !important;
         }
 
         #TransactionTable_wrapper .dt-scroll-body table tbody td{
@@ -162,6 +162,14 @@
         
         #TransactionTable_wrapper .dt-scroll-head table thead th{
             font-size: 10px !important;
+        }
+
+        #TransactionTable_wrapper .dataTable-info .dt-paging-button{
+            background-color: transparent !important;
+        }
+        
+        #TransactionTable_wrapper .dataTable-info .dt-paging-button.current{
+            color: var(--accent) !important;
         }
 
         .Fdis_btn{

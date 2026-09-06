@@ -117,8 +117,10 @@
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="flex w-full justify-between items-center">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
                             <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">
                                 <ul id="dayOfWeek" class="w-[300px] max-h-[300px] overflow-auto bg-white shadow-lg p-0">
@@ -146,8 +148,10 @@
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                               <div class="flex w-full justify-between items-center">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">
@@ -176,8 +180,10 @@
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="flex w-full justify-between items-center">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <ul id="weekVisitedDropdown"
@@ -196,8 +202,10 @@
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="flex w-full justify-between items-center">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <ul id="weekVisitedDropdown"
@@ -287,8 +295,10 @@
                         <x-dropdown class="w-full z-[9999]"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_frequency_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="w-full justify-between items-center flex">
+                                    <span class="w-full" id="update_frequency_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">
@@ -318,8 +328,10 @@
                         <x-dropdown direction="dropdown-top" class="w-full z-[9999]"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_daysOfVisit_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="w-full justify-between items-center flex">
+                                    <span class="w-full" id="update_daysOfVisit_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">
@@ -349,8 +361,10 @@
                         <x-dropdown direction="dropdown-top" class="w-full z-[50]"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="w-full justify-between items-center flex">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
                             <div class="dropdown_item border w-[300px] rounded-2xl bg-white overflow-hidden flex flex-col">

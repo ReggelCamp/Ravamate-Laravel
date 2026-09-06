@@ -80,7 +80,7 @@
 </style>
 
 <dialog id="{{ $id }}" class="modal">
-    <div class="modal-box w-[800px] rounded-2xl mt-[60px] mb-[60px] max-w-5xl p-0 overflow-auto">
+    <div class="modal-box w-[800px] rounded-2xl mt-[100px] mb-[60px]  max-w-5xl p-0 overflow-auto">
         <div class="primaryBg w-full h-[50px]">
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

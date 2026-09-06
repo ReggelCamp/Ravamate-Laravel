@@ -149,6 +149,7 @@
 
         #sfaQueuingModalTable_wrapper .dt-scroll-head table thead th {
             color: black !important;
+            font-size: 10px !important;
         }
         
         #sfaQueuingModalTable_wrapper .dt-scroll-body table tbody td {
@@ -158,6 +159,7 @@
 
         #sfaQueuingModalTable_wrapper .dataTable-info {
             font-size: 10px;
+            padding-left: 5px;
         }
 
         #sfaQueuingModalTable_wrapper .dt-scroll-body {
@@ -170,6 +172,7 @@
 
         #infoWindowTableContent_wrapper .dataTable-info {
             padding-top: 0 !important;
+            padding-left: 10px !important;
         }
 
         #infoWindowTableContent_wrapper .dt-scroll-head table thead th {

@@ -146,13 +146,13 @@
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">CUSTOMER CODE</span>
                             <input type="text" id="ecmfModal_CustomerCode" value="---" disabled
-                                class="input input-bordered text-[15px] font-semibold bg-gray-100 pointer-events-none rounded-lg" />
+                                class="input input-bordered border-gray-300 text-[15px] font-semibold bg-gray-100 pointer-events-none rounded-lg" />
                         </label>
 
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">SALES PERSON</span>
                             <input type="text" id="ecmfModal_SalesPerson" value="FPM_13_CARLOS ORBINES" disabled
-                                class="input input-bordered text-[15px] font-semibold bg-gray-100 rounded-lg" />
+                                class="input input-bordered text-[15px] border-gray-300 font-semibold bg-gray-100 rounded-lg" />
                         </label>
                     </div>
 

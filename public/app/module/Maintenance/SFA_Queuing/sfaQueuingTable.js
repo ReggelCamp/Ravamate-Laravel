@@ -1310,14 +1310,16 @@ $(document).on("input", '[data-tables]', function () {
 });
 
 $(document).on("click","#Sync_Salesman_Dropdown",function(){
+
     GetSyncSalesman();
     console.log(salesmanName,"pop");
-    $("#Sync_Salesman").text(salesmanName);
+    if(salesmanName == null){
+        $("#Sync_Salesman").text("Select");
+    }
+    else{
+        $("#Sync_Salesman").text(salesmanName);
+    }
 });
-
-// $("#Sync_Salesman_Dropdown").toggle(){
-
-// }
 
 function GetSyncSalesman() {
 
