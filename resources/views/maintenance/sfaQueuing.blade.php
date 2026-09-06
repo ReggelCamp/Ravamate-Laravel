@@ -25,11 +25,10 @@
 
         /* SFA MAINTENANCE */
         .ericPendingVal {
+            font-family: 'Inter', sans-serif !important;
             font-size: 50px !important;
             font-weight: 800 !important;
             color: var(--accent);
-            font-weight: bolder !important;
-            /* This will override the numeric if supported */
         }
 
         .sfaqueuingHeader {
