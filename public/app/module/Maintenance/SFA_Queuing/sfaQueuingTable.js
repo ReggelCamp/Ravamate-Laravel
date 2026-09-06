@@ -1,6 +1,10 @@
 import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
+import ComponentHelper from "../../../helper/ComponentHelper.js"
+import Api from "../../../helper/Api.js";
+
+let salesmanName = null;
 
 const ReturnLogsColumns = [
     {
@@ -1304,3 +1308,32 @@ $(document).on("input", '[data-tables]', function () {
 
     });
 });
+
+$(document).on("click","#Sync_Salesman_Dropdown",function(){
+    GetSyncSalesman();
+    console.log(salesmanName,"pop");
+    $("#Sync_Salesman").text(salesmanName);
+});
+
+// $("#Sync_Salesman_Dropdown").toggle(){
+
+// }
+
+function GetSyncSalesman() {
+
+    ComponentHelper.dropdown().loadByApi({
+        url: "/salesmen",
+        dropdownId: "Sync_Salesman_Transaction",
+        displayField: "salesman_name",
+        dataField: "salesman_id"
+    });
+
+    $(document).off("click.syncSalesman", "#Sync_Salesman_Transaction li")
+        .on("click.syncSalesman", "#Sync_Salesman_Transaction li", function () {
+
+            salesmanName = $(this).text().trim();
+
+            console.log("Clicked salesman:", salesmanName);
+        });
+}
+

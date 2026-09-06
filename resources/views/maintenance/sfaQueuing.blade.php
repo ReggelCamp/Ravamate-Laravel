@@ -170,6 +170,23 @@
                 inset -10px -10px 9px #ffffff;
         }
 
+        #Sync_Salesman_Dropdown {
+            position: relative;
+            z-index: 99999 !important;
+        }
+
+        #Sync_Salesman_Dropdown .dropdown {
+            width: 100% !important;
+        }
+
+        #SalesmanModal {
+            z-index: 9999 !important;
+        }
+
+        #SalesmanModal .modal-box {
+            overflow: visible !important;
+        }
+
     </style>
 
     <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
@@ -646,36 +663,56 @@
         </dialog>
   
         <dialog id="SalesmanModal" class="modal">
-    <div class="modal-box p-0 w-[500px]">
-        <!-- Header -->
-        <div class="flex items-center justify-between px-6 py-4">
-            <span class="text-[22px] font-bold">Sync Transactions to FDIS</span>
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost text-xl">✕</button>
-            </form>
-        </div>
-        <span class="w-full border-t border-gray-200 flex"></span>
+            <div class="modal-box p-0 w-[500px]">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-6 py-4">
+                    <span class="text-[22px] font-bold">Sync Transactions to FDIS</span>
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost text-xl">✕</button>
+                    </form>
+                </div>
+                <span class="w-full border-t border-gray-200 flex"></span>
 
-        <!-- Salesman selector row -->
-        <div class="flex items-center gap-4 px-6 py-6">
-            <span class="font-bold whitespace-nowrap">SALESMAN:</span>
-            <select id="salesmanSelect" multiple placeholder="Select Salesman" class="w-full border">
-                <!-- options populated via JS / Tom Select -->
-            </select>
-        </div>
+                <!-- Salesman selector row -->
+                <div class="flex items-center gap-4 px-6 py-6">
+                    <span class="font-bold whitespace-nowrap">SALESMAN:</span>
 
-        <span class="w-full border-t border-gray-200 flex"></span>
+                    <div id="Sync_Salesman_Dropdown" class="w-full">
+                        <x-dropdown class="w-full"
+                            buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
 
-        <!-- Footer buttons -->
-        <div class="flex justify-end items-center gap-6 px-6 py-4">
-            <form method="dialog">
-                <button class="btn btn-ghost font-medium">Cancel</button>
-            </form>
-            <button class="btn bg-blue-500 hover:bg-blue-600 text-white border-none px-6" onclick="executeSalesmanSync()">
-                Execute
-            </button>
-        </div>
-    </div>
+                            <x-slot:dropdownName>
+                                <div class="w-full flex items-center justify-between">
+                                    <span id="Sync_Salesman">
+                                        Select
+                                    </span>
+
+                                    <i class="fa-solid fa-chevron-down shrink-0 text-xs text-gray-400"></i>
+                                </div>
+                            </x-slot:dropdownName>
+
+                            <div class="dropdown_item absolute left-0 top-full z-[99999] w-fit rounded-[20px] bg-white shadow-lg">
+                                <ul id="Sync_Salesman_Transaction"
+                                    class="w-fit max-h-[300px] overflow-y-auto rounded-2xl border bg-white p-0">
+                                </ul>
+                            </div>
+
+                        </x-dropdown>
+                    </div>
+                </div>
+
+                <span class="w-full border-t border-gray-200 flex"></span>
+
+                <!-- Footer buttons -->
+                <div class="flex justify-end items-center gap-6 px-6 py-4">
+                    <form method="dialog">
+                        <button class="btn btn-ghost font-medium">Cancel</button>
+                    </form>
+                    <button class="btn bg-blue-500 hover:bg-blue-600 text-white border-none px-6" onclick="executeSalesmanSync()">
+                        Execute
+                    </button>
+                </div>
+            </div>
         </dialog>
 
 @endsection
