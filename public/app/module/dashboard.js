@@ -973,8 +973,21 @@ function getSidePanelContent() {
     $("#SalesmanTotal_Sales").text(rowData.sale);
     $("#SalesmanTotal_Sales").text(rowData.sale);
 
-
+    getStores();
 }
+
+function getStores(){
+
+    Api.get({
+        url:"/getStore",
+
+        onSuccess:(data)=>{
+            console.log("store",data);
+        }
+    })
+}
+
+
 // Create the InfoWindow once (reuse it for all markers)
 // const infoWindow = new google.maps.InfoWindow();
 

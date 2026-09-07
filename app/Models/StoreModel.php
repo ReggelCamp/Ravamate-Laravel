@@ -12,4 +12,8 @@ class StoreModel extends Model
     protected $table = 'store';
 
     protected $guarded = ['store_id'];
+
+    public function salesman(){
+        return $this->belongsTo(SalesmanModel::class, 'salesman_id');
+    }
 }

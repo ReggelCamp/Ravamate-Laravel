@@ -21,4 +21,8 @@ class SalesmanModel extends Model
         'selling_hrs',
         'sale',
     ];
+
+    public function stores(){
+        return $this->hasMany(StoreModel::class, 'salesman_id');
+    }
 }
