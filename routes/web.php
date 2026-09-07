@@ -7,6 +7,7 @@ use App\Http\Controllers\DsrController;
 use App\Http\Controllers\DsrrController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\Helpers\DisplaySalesmanController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -326,3 +327,6 @@ Route::post('/DisplaySalesman',[DisplaySalesmanController::class,'getSalesman'])
 Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
 
 Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
+
+Route::get('/getStore',[StoreController::class,'getStore']);
+

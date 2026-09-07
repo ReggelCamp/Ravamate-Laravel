@@ -258,6 +258,7 @@
                             <div class="flex justify-between items-center">
                                 <div>
                                     <span
+                                        id="Salesman_Name"
                                         class="font-bold text-sm block">{{ $salesman->name ?? 'OB07_NICOLAS RAMBOYONG' }}</span>
                                     <span
                                         class="text-[10px] font-semibold tracking-wide opacity-90">{{ $salesman->type ?? 'BOOKING' }}</span>
@@ -326,12 +327,12 @@
                             </button>
                         </div>
 
-                        <div class="flex items-center justify-between w-full gap-8 text-gray-600 text-[9px] whitespace-nowrap">
-                            <span>
+                        <div class="flex items-center justify-between w-full gap-3 text-gray-600 text-[9px] whitespace-nowrap">
+                            <span class="text-[11px]">
                                 <i class="fa-regular fa-clock mr-1"></i>
                                 {{ $store->time ?? '13:00:18' }}
                             </span>
-                            <span class="text-green-600 text-[9px]">
+                            <span class="text-green-600 text-[11px]">
                                 <i class="fa-solid fa-bolt mr-1"></i>
                                 {{ $store->battery ?? '70' }}% battery usage
                             </span>
@@ -432,11 +433,11 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Sales</span>
-                                            <span class="font-semibold ">₱{{ number_format($stats->sales ?? 165143.86, 2) }}
+                                            <span id="SalesmanTotal_Sales" class="font-semibold ">₱
                                             </span>
                                         </div>
                                         <div class="flex justify-between pt-1">
-                                            <span class="pl-2">Balance</span>
+                                            <span id="SalesmanBalance" class="pl-2">Balance</span>
                                             <span
                                                 class="primary_color font-semibold">₱{{ number_format($stats->balance ?? 0, 2) }}</span>
                                         </div>

@@ -16,6 +16,7 @@ let latestInfoWindow = null;
 let latestMarker = null;
 let infoWindow = null;
 let ExpandTable = false;
+let rowData;
 
 const SalesmanColumns = [
     {
@@ -54,7 +55,7 @@ const SalesmanColumns = [
     },
     {
         title: "Sales",
-        data: "sales",
+        data: "sale",
         className: "text-end",
     },
 ];
@@ -249,7 +250,7 @@ $(document)
         if (!$.fn.DataTable.isDataTable("#dashboardDataTable")) return;
 
         const dashboardTable = $("#dashboardDataTable").DataTable();
-        const rowData = dashboardTable.row(this).data();
+        rowData = dashboardTable.row(this).data();
 
         if (!rowData) return;
 
@@ -262,6 +263,8 @@ $(document)
         } else {
             console.log("No marker found for this row.");
         }
+
+        getSidePanelContent();
     });
 
 // Date BTN
@@ -963,6 +966,15 @@ document.addEventListener("fullscreenchange", function () {
     }
 });
 
+
+function getSidePanelContent() {
+
+    $("#Salesman_Name").text(rowData.salesman_name);
+    $("#SalesmanTotal_Sales").text(rowData.sale);
+    $("#SalesmanTotal_Sales").text(rowData.sale);
+
+
+}
 // Create the InfoWindow once (reuse it for all markers)
 // const infoWindow = new google.maps.InfoWindow();
 
