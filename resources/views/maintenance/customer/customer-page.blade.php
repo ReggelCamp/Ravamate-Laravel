@@ -58,47 +58,47 @@
         {{-- Detail rows --}}
         <div class="flex flex-col text-sm px-5" id="customerModalBody">
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">SALES PERSON:</span>
+                <span class="font-semibold w-full">SALES PERSON:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="salesman_name">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">CUSTOMER NAME:</span>
+                <span class="font-semibold w-full">CUSTOMER NAME:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="customer_name">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">MOBILE:</span>
+                <span class="font-semibold w-full">MOBILE:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="contact">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">LANDLINE:</span>
+                <span class="font-semibold w-full">LANDLINE:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="landline">N/A</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">CONTACT PERSON:</span>
+                <span class="font-semibold w-full">CONTACT PERSON:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="contact_person">N/A</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">ADDRESS:</span>
+                <span class="font-semibold w-full">ADDRESS:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="address"></span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">CUST TYPE:</span>
+                <span class="font-semibold w-full">CUST TYPE:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="customer_type">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">MCP DAY:</span>
+                <span class="font-semibold w-full">MCP DAY:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="mcp_day">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">FREQUENCY CATEGORY:</span>
+                <span class="font-semibold w-full">FREQUENCY CATEGORY:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="freq_cat">—</span>
             </div>
             <div class="flex  px-6 py-3 border-b border-gray-300">
-                <span class="font-bold w-full">MCP SCHEDULE:</span>
+                <span class="font-semibold w-full">MCP SCHEDULE:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="mcp_schedule"></span>
             </div>
             <div class="flex  px-6 py-3 bg-gray-100">
-                <span class="font-bold w-full">PRICE CODE:</span>
+                <span class="font-semibold w-full">PRICE CODE:</span>
                 <span class="text-gray-500 w-full justify-start font-semibold" data-field="price_code">—</span>
             </div>
         </div>

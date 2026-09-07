@@ -216,7 +216,7 @@
 
                 {{-- Salesman Info --}}
                 <div id="Salesman_Container"
-                    class="hidden overflow-auto w-full h-full flex flex-col p-3 gap-2 bg-transparent rounded-2xl">
+                    class="hidden overflow-auto w-[410px] h-full flex flex-col p-3 gap-2 bg-transparent rounded-2xl">
 
                     <div class="flex gap-10 w-full">
                         <div>
@@ -429,8 +429,8 @@
                                         </div>
                                     </div>
                                     {{-- right side --}}
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Sales</span>
                                             <span class="font-semibold ">₱{{ number_format($stats->sales ?? 165143.86, 2) }}
                                             </span>
@@ -455,12 +455,12 @@
                                             {{-- <span class="font-bold text-sm">{{ $stats->avg_pct ?? 0 }}%</span> --}}
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Item (No. of SKU)</span>
                                             <span class="font-semibold">{{ $stats->item_count ?? 10 }}</span>
                                         </div>
-                                        <div class="flex justify-between border-b pb-1">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Value (₱)</span>
                                             <span
                                                 class="font-semibold">₱{{ number_format($stats->value ?? 20642.98, 2) }}</span>
@@ -494,8 +494,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l  border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Visited</span>
                                             <span class="font-semibold">{{ $stats->visited ?? 0 }}</span>
                                         </div>
@@ -523,12 +523,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Onsite</span>
                                             <span class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
                                         </div>
-                                        <div class="flex justify-between border-b pb-1">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Offsite</span>
                                             <span class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
                                         </div>
@@ -564,8 +564,8 @@
                                                 
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Sales</span>
                                             <span class="font-semibold">₱
                                                 {{ number_format($mtd->sales ?? 95218225.80, 2) }}</span>
@@ -594,8 +594,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Active Buying</span>
                                             <span class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
                                         </div>
@@ -632,8 +632,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9]  w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Productive Call</span>
                                             <span class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
                                         </div>
@@ -667,12 +667,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l  border-[#c2c5c9]  w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Onsite</span>
                                             <span class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
                                         </div>
-                                        <div class="flex justify-between border-b pb-1">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Offsite</span>
                                             <span class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
                                         </div>
@@ -694,12 +694,12 @@
                                             <span class="text-gray-500">Average Range</span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col leading-5 border-l  w-full text-gray-600">
-                                        <div class="flex justify-between border-b pb-1">
+                                    <div class="flex flex-col leading-5 border-l  border-[#c2c5c9]  w-full text-gray-600">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Item</span>
                                             <span class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
                                         </div>
-                                        <div class="flex justify-between border-b pb-1">
+                                        <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Value</span>
                                             <span class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
                                         </div>
@@ -729,7 +729,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex flex-col leading-5 border-l ml-[30px] w-full h-fit text-gray-600">
+                                    <div class="flex flex-col leading-5 border-l border-[#c2c5c9] ml-[30px] w-full h-fit text-gray-600">
 
                                         <div class="flex gap-2 ">
                                             <div class="flex flex-col items-center justify-center gap-1 flex-1 leading-3.5">
@@ -738,7 +738,7 @@
                                                 <span class="text-[9px] whitespace-nowrap">CDO Sphere</span>
                                             </div>
                                             <div
-                                                class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                class="flex border-l border-[#c2c5c9] pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
                                                 <span class="font-bold text-gray-700">---</span>
                                                 <span class="text-[9px]">eB2B Sales</span>
                                             </div>
@@ -750,12 +750,12 @@
                                                 <span class="text-[9px]">Registered</span>
                                             </div>
                                             <div
-                                                class="flex border-l pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                class="flex border-l border-[#c2c5c9] pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
                                                 <span class="font-bold text-gray-700">---</span>
                                                 <span class="text-[9px]">Productive</span>
                                             </div>
                                             <div
-                                                class="flex border-l whitespace-nowrap pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
+                                                class="flex border-l border-[#c2c5c9] whitespace-nowrap pl-2 flex-col items-center justify-center gap-1 flex-1 leading-3.5">
                                                 <span class="font-bold text-gray-700">---</span>
                                                 <span class="text-[9px]">Hybrid Freq</span>
                                             </div>
@@ -837,7 +837,7 @@
                                                         </span>
                                                     </x-slot:dropdownName>
 
-                                                    <ul id="MinDropdown"
+                                                    <ul id="MinDropdownFitScreen"
                                                         class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
 
                                                     </ul>
@@ -865,7 +865,7 @@
                                                     </div>
 
                                                     <div class="sm:text-[10px] h-[25px] whitespace-nowrap sm:w-fit">
-                                                        <x-dropdown  id="OperationTypeDropdown" class="w-full !h-[25px]"
+                                                        <x-dropdown  id="OperationTypefitScreen" class="w-full !h-[25px]"
                                                             buttonClass="!h-[25px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                                             <x-slot:dropdownName>
                                                                 <span class="text-[10px]  font-semibold gap-5 h-[25px]">
@@ -874,7 +874,7 @@
                                                                 </span>
                                                             </x-slot:dropdownName>
 
-                                                            <ul id="OperationTypeItems"
+                                                            <ul id="OperationTypefitScreen"
                                                                 class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                                             </ul>
                                                         </x-dropdown>
@@ -892,7 +892,7 @@
                                                                     </span>
                                                                 </x-slot:dropdownName>
 
-                                                                <ul id="MinDropdown"
+                                                                <ul id="MinDropdownInfoTable"
                                                                     class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
 
                                                                 </ul>
@@ -920,7 +920,7 @@
                                 </div>
                             </div>
 
-                            <div class="bg-white/70 flex justify-between gap-2 rounded-3xl h-[140px]">
+                            <div class="flex justify-between gap-2 rounded-3xl h-[140px]">
                                 {{-- MTD SALES --}}
                                 <div class="flex w-full bg-white rounded-3xl">
                                     <div class="flex flex-col w-full px-2 gap-2">
@@ -1088,7 +1088,7 @@
                                             </span>
                                         </x-slot:dropdownName>
 
-                                        <ul id="MinDropdown"
+                                        <ul id="MinDropdownMainScreen"
                                             class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
 
                                         </ul>

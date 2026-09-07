@@ -50,8 +50,8 @@
                             Total Sales:
                         </span>
 
-                        <span>
-                            ₱ 0 (₱ 0)
+                        <span class="font-bold">
+                            ₱ 49,952.065 (₱ 14,310,712.915)
                         </span>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
             <div class="p-5 flex flex-col lg:flex-row gap-5 overflow-auto">
 
                 {{-- Sales Report card --}}
-                <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
+                <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px_#949494]">
                     <div class="report_title relative pb-5">
                         <div class="flex flex-col items-center w-full">
                             <div class="absolute inset-0 overflow-hidden opacity-20">
@@ -172,27 +172,27 @@
                     </div>
 
                     <div class="p-4 flex flex-col gap-3 text-center">
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Document No.</span>
                             <span class="font-bold text-[16px]">{{ $report->document_no ?? 'FPM_15SO260820-2608203' }}</span>
                         </div>
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Time Travel (Min.)</span>
                             <span class="font-bold text-[16px]">{{ $report->time_travel ?? 26 }}</span>
                         </div>
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Geo Difference</span>
                             <span class="font-bold text-[16px]">{{ $report->geo_difference ?? 15065 }}</span>
                         </div>
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Longitude</span>
                             <span class="font-bold text-[16px]">{{ $report->longitude ?? '—' }}</span>
                         </div>
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Latitude</span>
                             <span class="font-bold text-[16px]">{{ $report->latitude ?? '—' }}</span>
                         </div>
-                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px]">
+                        <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Source</span>
                             <span class="font-bold text-[16px]">{{ $report->source ?? '—' }}</span>
                         </div>
@@ -200,7 +200,7 @@
                 </div>
 
                 {{-- Sales Details card --}}
-                <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px]">
+                <div class="flex-1 bg-white rounded-2xl overflow-hidden shadow-[2px_2px_10px_#949494]">
                     <div class="report_title relative pb-5">
                         <div class="items-center flex flex-col w-full">
                             <div class="absolute inset-0 overflow-hidden opacity-20">
@@ -232,7 +232,7 @@
                     <div class=" flex flex-col gap-3 pt-5">
                         
                         <div class="px-5">
-                            <div class="bg-gray-50 rounded-xl py-3 px-5 shadow-[2px_2px_10px]">
+                            <div class="bg-gray-50 rounded-xl py-3 px-5 shadow-[2px_2px_10px_#949494]">
                                 <span class="text-[11px] text-gray-500 flex items-center gap-1">
                                     <i class="fa-solid fa-location-dot text-red-600"></i>
                                     Address
@@ -243,7 +243,7 @@
 
                         <div class="flex gap-3 px-5 w-full h-fit">
                            
-                            <div class=" text-gray-600 rounded-4xl flex flex-col w-full gap-2 items-center shadow-[2px_2px_10px]">
+                            <div class=" text-gray-600 rounded-4xl flex flex-col w-full gap-2 items-center shadow-[2px_2px_10px_#949494]">
                                 <span class=" block">Delivery Date</span>
                                 
                                 <div class="flex w-full gap-3 items-center justify-center ">
@@ -270,7 +270,7 @@
 
                             <div class="flex w-full">
                                 <div
-                                    class="salemanInfoCard rounded-4xl p-3 flex flex-col items-center justify-center gap-1 w-full shrink-0 shadow-[2px_2px_10px]">
+                                    class="salemanInfoCard rounded-4xl p-3 flex flex-col items-center justify-center gap-1 w-full shrink-0 shadow-[2px_2px_10px_#949494]">
                                     <span class="text-[15px] opacity-80 pb-3">Battery Status</span>
                                     <div class="radial-progress text-green-400 text-sm font-bold border-4 border-white/20"
                                         style="--value:{{ $report->battery ?? 80 }}; --size: 82px;" role="progressbar">
@@ -282,7 +282,7 @@
                         </div>
 
                         <div class="pl-5 py-0 px-4 rounded-3xl flex w-full h-fit">
-                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px]">
+                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px_#949494]">
                                 <span class="text-3xl rounded-2xl salemanInfoCard border min-h-[50px] w-fit px-1 flex items-center">
                                     <i class="mx-3 mdi mdi-arrange-send-to-back salesDetailsIcon"></i>
                                 </span>
@@ -296,7 +296,7 @@
                         </div>
 
                          <div class="pl-5 py-0 px-4 rounded-3xl flex w-full h-fit">
-                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px]">
+                            <div class="bg-gray-50 rounded-4xl w-full px-4 pr-0 flex h-fit items-center justify-between shadow-[2px_2px_10px_#949494]">
                                 <span class="text-3xl rounded-2xl salemanInfoCard border min-h-[50px] w-fit px-1 flex items-center">
                                     <i class="mx-3 mdi mdi-timer-sand-complete salesDetailsIcon"></i>
                                 </span>
@@ -310,7 +310,7 @@
                         </div>
 
                         <div class="px-5">
-                            <div class="bg-gray-50 rounded-xl py-2 px-4 flex flex-col items-center border justify-between shadow-[2px_2px_10px]">
+                            <div class="bg-gray-50 rounded-xl py-2 px-4 flex flex-col items-center border justify-between shadow-[2px_2px_10px_#949494]">
                                 <span>
                                     Remarks
                                 </span>
@@ -321,7 +321,7 @@
                         </div>
 
                         <div class="">
-                            <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
+                            <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px_#949494]">
                             <div class="flex gap-2">
                                     <i class="mdi mdi-sigma"></i>
                                     <span>
@@ -339,7 +339,7 @@
                 </div>
 
                 {{-- Item Code table --}}
-                <div class="flex-[1.4]  bg-white rounded-2xl overflow-hidden shadow-sm h-fit shadow-[2px_2px_10px]">
+                <div class="flex-[1.4]  bg-white rounded-2xl overflow-hidden shadow-sm h-fit shadow-[2px_2px_10px_#949494]">
                     <div class="report_title relative p-5 py-9 text-center">
                         <div class="absolute inset-0 overflow-hidden opacity-20">
                             <div class="w-24 h-24 rounded-full bg-white absolute -top-5 left-10"></div>
@@ -355,7 +355,7 @@
                     <div class="overflow-x-auto border w-full">
                         <x-datatable id="StockReqModalTable"/>
                     </div>
-                    <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px]">
+                    <div class="report_title rounded-b-xl py-5 px-4 flex items-center text-white justify-between shadow-[2px_2px_10px_#949494]">
                         <span > Payment Type: TERMS</span>
                     </div>
                 </div>

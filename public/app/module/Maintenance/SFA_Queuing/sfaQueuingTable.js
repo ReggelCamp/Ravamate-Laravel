@@ -1133,7 +1133,10 @@ function processToFDIS() {
 TableLoader.tableData(
     "#TransactionTable",
     sampleData,
-    SyncTransactionsColumns
+    SyncTransactionsColumns,
+    {
+        searchInput: "#TransactionTableSearch",
+    }
 );
 
 // Hide button initially
@@ -1323,7 +1326,7 @@ $(document).on("click","#Sync_Salesman_Dropdown",function(){
 
 function GetSyncSalesman() {
 
-    ComponentHelper.dropdown().loadByApi({
+    ComponentHelper.dropdown().LoadCheckBoxByApi({
         url: "/salesmen",
         dropdownId: "Sync_Salesman_Transaction",
         displayField: "salesman_name",
@@ -1338,4 +1341,12 @@ function GetSyncSalesman() {
             console.log("Clicked salesman:", salesmanName);
         });
 }
+
+$(document).on(
+    "click",
+    "#Sync_Salesman_Transaction input[type='search']",
+    function (e) {
+        e.stopPropagation();
+    }
+);
 

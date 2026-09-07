@@ -312,7 +312,25 @@ ComponentHelper.dropdown().LoadDropdownItems({
 });
 
 ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#OperationTypefitScreen",
+    items: OperationItems,
+});
+
+ComponentHelper.dropdown().LoadDropdownItems({
     id: "#MinDropdown",
+    items: MinutesDropdown,
+});
+
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#MinDropdownMainScreen",
+    items: MinutesDropdown,
+});
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#MinDropdownFitScreen",
+    items: MinutesDropdown,
+});
+ComponentHelper.dropdown().LoadDropdownItems({
+    id: "#MinDropdownInfoTable",
     items: MinutesDropdown,
 });
 
@@ -562,6 +580,10 @@ function displayInfoWindow() {
                 });
 
                 $("#latestInfo_Container").off("click.latest").on("click.latest", () => {
+
+                    map.panTo(marker.getPosition());
+                    map.setZoom(17);
+
                     latestInfoWindow.close();
 
                     currentMarker = marker;
@@ -569,6 +591,11 @@ function displayInfoWindow() {
                     infoWindow.setContent(
                         InfoWindowContent(salesman)
                     );
+                    
+                    // Bounce the latest marker
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    //marker.setAnimation(null);
+
 
                     infoWindow.open(map, marker);
 
@@ -576,11 +603,11 @@ function displayInfoWindow() {
                 });
             });
 
-            $("#LatestCloseBtn").on("click", (e) => {      // ← added here
-                e.stopPropagation();
-                latestInfoWindow.close();
-                console.log("Latest transaction popup closed");
-            });
+            // $("#LatestCloseBtn").on("click", (e) => {
+            //     e.stopPropagation();
+            //     latestInfoWindow.close();
+            //     console.log("Latest transaction popup closed");
+            // });
 
             latestInfoWindow.open(map, marker);
         }
@@ -588,7 +615,11 @@ function displayInfoWindow() {
         marker.addListener("click", () => {
 
             console.log("Marker clicked:", salesman.salesman_name);
-
+            console.log("ID clicked:", salesman.id);
+            console.log("ID:", latest.id);
+            if (salesman.id != latest.id && latestMarker) {
+                latestMarker.setAnimation(null);
+            }
             openInfoWindowFor(salesman, marker);
         });;
     });
@@ -736,18 +767,25 @@ function InfoWindowContent(salesman) {
                             data-tab="tabContent2"
                             style="display:none"
                         >
-                            <div class = "flex w-full justify-between salemanInfoCard items-center h-[25px] py-5 px-2 rounded-t-2xl">
-                                <div class="flex gap-1">
-                                    <img class="h-[25px] w-[25px]" src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
-                                    <span class="text-[13px]">Transaction Items</span>
+                                <div class="flex w-full justify-between salemanInfoCard Transaction_Container border items-center h-[25px] py-5 px-2 rounded-t-2xl toggle-item-table cursor-pointer">
+                                    <div class="flex gap-1 items-center">
+                                        <img class="h-[25px] w-[25px]" src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
+                                        <span class="text-[13px]">Transaction Items</span>
+                                    </div>
+                                    <span class="flex items-center gap-1">
+                                        ₱ 7,147.93 (14 SKU)
+                                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
+                                    </span>
                                 </div>
-                                <span>₱ 7,147.93 (14 SKU)</span>
+                                <div class="flex p-2 ViewTable_Container">
+                                    <i class="text-[#86888a] mdi mdi-arrow-up-left"></i>
+                                    <span class="text-[#86888a] text-[10px] pb-[20px]">Click to view Items</span>
+                                </div>
+                                <div id="infoWindowTableContainer" class="w-full text-[9px] overflow-hidden" style="display:none"></div>
                             </div>
-                            <div id="infoWindowTableContainer" class="w-full text-[9px] overflow-hidden"></div>
-                        </div>
 
                         <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Supporting Docs" data-tab-content="tabContent3" />
-                        <div class="tab-content border-base-300 bg-base-100 px-0 pt-3 text-xs" style="display:none">
+                        <div class="tab-content px-5 pb-2 border-base-300 bg-base-100 px-0 pt-3 text-xs" style="display:none">
                             <div class="flex w-full">
                                 <div class="flex w-full">
                                     <div class="w-[125px] h-[125px] rounded-full border"></div>                                    
@@ -792,7 +830,7 @@ function openInfoWindowFor(salesman, marker) {
         if (bouncingMarker === marker) {
             bouncingMarker = null;
         }
-    }, 2400);
+    }, 5400);
 
     // Center map
     map.panTo(marker.getPosition());
@@ -981,3 +1019,21 @@ document.addEventListener("fullscreenchange", function () {
 //         displayInfoWindow(salesmanData, latestData);
 //     });
 // });
+
+$(document).on('click', '.toggle-item-table', function () {
+    const $container = $(this).siblings('#infoWindowTableContainer');
+    const $icon = $(this).find('.toggle-icon');
+
+    $container.slideToggle(200);
+    $icon.toggleClass('rotate-180');
+
+    $(".ViewTable_Container").toggleClass("hidden");
+});
+
+$(document).on("mouseenter", ".Transaction_Container", function(){
+    $(this).addClass("font-bold");
+});
+
+$(document).on("mouseleave", ".Transaction_Container", function(){
+    $(this).removeClass("font-bold");
+});

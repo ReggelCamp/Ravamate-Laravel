@@ -37,12 +37,12 @@ export default class TableLoader {
             lengthChange: false,
             responsive: false,
 
-            scrollX: options.scrollX ?? true,
+            // scrollX: options.scrollX ?? true,
             //scrollY: options.scrollY ?? "100px",
             scrollY: getResponsiveScrollY() ?? "100px",
             pageLength:getPageLength(),
             scrollCollapse: true,
-            autoWidth: true,
+            // autoWidth: true,
 
             dom: '<"top">rt<"dataTable-info"ip><"clear">',
 

@@ -133,12 +133,21 @@ export default class ComponentHelper {
 
                 html += `
                     <li class="border-b">
-                        <input
-                            type="search"
-                            id="dropdown_search"
-                            placeholder="Search..."
-                            class="w-full text-sm text-gray-500 outline-none"
-                        />
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                class="dropdown_checkbox w-4 h-[15px]"
+                                value=""
+                                data-label=""
+                            />
+                            
+                            <input
+                                type="search"
+                                id="dropdown_search"
+                                placeholder="Search..."
+                                class="w-full text-sm text-gray-500 p-2"
+                            />
+                        </label>
                     </li>
                     <li id="NoResult" class="hidden px-4 py-3 text-sm text-gray-400">
                         ${data.noDataText ?? "No Match Result"}

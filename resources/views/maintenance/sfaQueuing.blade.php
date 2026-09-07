@@ -151,6 +151,10 @@
             font-size: 15px !important;
         }
 
+        .dt-paging-button{
+            background-color: #a78ca0 !important;
+        }
+
         .table_container .dt-scroll-body tbody tr:nth-child(even) {
             background-color: #b698ae !important;
         }
@@ -161,18 +165,29 @@
         
         #TransactionTable_wrapper .dt-scroll-head table thead th{
             font-size: 10px !important;
+            background-color: white;
+            color: black;
         }
 
         #TransactionTable_wrapper .dataTable-info .dt-paging-button{
-            background-color: transparent !important;
+            background-color: white !important;
+        }
+        
+        #TransactionTable_wrapper .dataTable-info .dt-paging-button:hover{
+            background-color: var(--primary) !important;
+            color: var(--background) !important;
         }
         
         #TransactionTable_wrapper .dataTable-info .dt-paging-button.current{
             color: var(--accent) !important;
         }
 
+        #TransactionTable_wrapper .dt-scroll-head table thead th{
+            border: none !important;
+        }
+        
         .Fdis_btn{
-                box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08),
+                box-shadow: 2px 2px 10px #949494,
                 inset 10px 10px 9px #d1d5db,
                 inset -10px -10px 9px #ffffff;
         }
@@ -194,6 +209,40 @@
             overflow: visible !important;
         }
 
+        .dt-scroll-head table thead th{
+            border: 1px solid #c9c9c9 !important;
+        }
+
+        .dt-paging{
+            background-color: transparent !important;
+        }
+
+        .sheenFilterBtn i {
+            transition: transform 0.2s ease;
+        }
+
+        .sheenFilterBtn:hover i {
+            animation: iconPop 1s ease;
+        }
+
+        @keyframes iconPop {
+            0% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.25);
+            }
+
+            60% {
+                transform: scale(1.25);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+        
     </style>
 
     <div class="Linear_BG bodyFont overflow-y-auto h-full p-25 pt-10 mb-40">
@@ -605,7 +654,7 @@
         </div>
     </div>
 
-    <x-sfaQueuingModal id="sfaQueueDetailModal" />
+    <x-sfaQueuingModal class="overflow-auto" id="sfaQueueDetailModal" />
 
         <dialog id="processModal" class="modal">
             <div class="modal-box p-0 w-[500px] max-w-[1000px]">
@@ -619,14 +668,14 @@
                         id="SpecificTransaction"
                         onclick="processModal.close(); TransactionModal.showModal()"
                         class="border w-[160px] h-[147px]  items-center sheenFilterBtn rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
-                        <i class="fas fa-file text-[48px]"></i>
+                        <i class="fas fa-file text-[48px] text-[#277e93]"></i>
                         <span class="font-medium text-center w-full px-2 whitespace-normal break-words">Sync Specific Transaction</span>
                     </div>
                     <div
                         onclick="processModal.close(); SalesmanModal.showModal()"
                         id="SyncSalesman"
                         class="border w-[160px] h-[147px] items-center sheenFilterBtn rounded-[20px] justify-center flex flex-col cursor-pointer hover:bg-gray-100 transition-colors">
-                        <i class="fas fa-user text-[48px]"></i>
+                        <i class="fas fa-user text-[48px] text-[#8f2793]"></i>
                         <span class="flex font-medium">Sync Per Salesman</span>
                     </div>
                 </div>
@@ -647,10 +696,11 @@
                 <span class="w-full border-t border-gray-300 flex"></span>
 
                 <!-- Toolbar -->
-                <div class="flex items-center justify-between p-5">
-                    <button class="p-1 border rounded-lg text-[12px] Fdis_Btn" onclick="processToFDIS()">
+                <div class="flex items-center w-full justify-between p-5">
+                    <button class="p-2 rounded-lg text-[12px] Fdis_Btn" onclick="processToFDIS()">
                         Process to FDIS
                     </button>
+                    <x-searchbar class="border rounded-xl" tableId="TransactionTable" id="TransactionTableSearch"/>
                     <!-- DataTables' built-in search box will auto-render here if dom option includes 'f' -->
                 </div>
 
@@ -700,7 +750,7 @@
 
                             <div class="dropdown_item absolute left-0 top-full z-[99999] w-fit rounded-[20px] bg-white shadow-lg">
                                 <ul id="Sync_Salesman_Transaction"
-                                    class="w-fit max-h-[300px] overflow-y-auto rounded-2xl border bg-white p-0">
+                                    class="w-fit max-h-[300px] overflow-y-auto rounded-2xl border bg-white p-5">
                                 </ul>
                             </div>
 
