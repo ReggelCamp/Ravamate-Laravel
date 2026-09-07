@@ -379,7 +379,7 @@ TableLoader.loadTable({
     tableId: "#dashboardDataTable",
     columns: SalesmanColumns,
     scrollY: "200px",
-    pageLength: 25,
+    pageLength: 5,
     searchInput:"#customSearch",
     onSuccess: (data) => {
         console.log("Dashboard data:", data);
@@ -632,6 +632,8 @@ function DisplayitemTable() {
 $(document).on("click", "#storeImg", function () {
     $("#CloseBtn").toggleClass("hidden");
     $("#addsressContainer").toggleClass("hidden");
+    $("#Store_GP").toggleClass("hidden");
+    $("#isVisited").toggleClass("hidden");
     $("#storeImg").toggleClass("brightness-50");
 });
 
@@ -673,12 +675,12 @@ function InfoWindowContent(salesman) {
                             class="w-full h-full object-cover brightness-50" />
         
                         <!-- top-left badge -->
-                        <span id="" class="absolute top-2 left-2 salemanInfoCard p-2 rounded-2xl font-semibold text-xs">
+                        <span id="Store_GP" class="absolute top-2 left-2 salemanInfoCard p-2 rounded-2xl font-semibold text-xs">
                             ${salesman.transaction_code ?? "32_GP"}
                         </span>
 
                         <!-- top-right badge -->
-                        <span class="absolute top-2 right-2 badge text-green-600 badge-outline bg-green-200  text-xs">
+                        <span id="isVisited" class="absolute top-2 right-2 badge text-green-600 badge-outline bg-green-200  text-xs">
                             ⏱ ${salesman.status ?? "Visited Customer"}
                         </span>
 
@@ -830,7 +832,7 @@ function openInfoWindowFor(salesman, marker) {
         if (bouncingMarker === marker) {
             bouncingMarker = null;
         }
-    }, 5400);
+    }, 2400);
 
     // Center map
     map.panTo(marker.getPosition());
