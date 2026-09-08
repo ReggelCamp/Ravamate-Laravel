@@ -37,7 +37,7 @@ export default class ComponentHelper {
             },
 
             loadByApi: (config) => {
-                console.log("fea", config);
+                // console.log("fea", config);
                 Api.get({
                     url: config.url,
                     data: config.data,
@@ -86,7 +86,7 @@ export default class ComponentHelper {
             loading: () => {},
 
             LoadDropdownItems(config) {
-                console.log("fea", config);
+                // console.log("fea", config);
 
                 let html = "";
 
@@ -176,7 +176,7 @@ export default class ComponentHelper {
             },
 
             LoadCheckBoxByApi: (config) => {
-                console.log("fea", config);
+                // console.log("fea", config);
                 Api.get({
                     url: config.url,
                     data: config.data,
@@ -239,7 +239,7 @@ export default class ComponentHelper {
             search: (data) => {},
 
             LoadSelectItems(config) {
-                console.log("fea", config);
+                // console.log("fea", config);
 
                 let html = "";
 
@@ -302,7 +302,7 @@ export default class ComponentHelper {
             },
 
             LoadCheckBoxByApi: (config) => {
-                console.log("fea", config);
+                // console.log("fea", config);
                 Api.get({
                     url: config.url,
                     data: config.data,

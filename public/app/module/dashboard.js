@@ -17,6 +17,10 @@ let latestMarker = null;
 let infoWindow = null;
 let ExpandTable = false;
 let rowData;
+let storeNames = [];
+
+let storeIndex = 0;
+let storeLength = 0;
 
 const SalesmanColumns = [
     {
@@ -378,7 +382,8 @@ TableLoader.tableData("#sfaQueuingModalTable", SampleData, ProductColumns, {
 });
 
 TableLoader.loadTable({
-    url: "getDashboardTable",
+    // url: "getDashboardTable",
+    url: "dashboard/getSalesmanInfo",
     tableId: "#dashboardDataTable",
     columns: SalesmanColumns,
     scrollY: "200px",
@@ -396,13 +401,16 @@ TableLoader.loadTable({
 });
 
 function displayInfoWindow() {
-
+    
     if (!array || array.length === 0) {
         console.log("No salesman data.");
         return;
     }
-    map = window.dashboardMap;
 
+    //console.log("row data from display inffo dwindow",array);
+
+    map = window.dashboardMap;
+    console.log("arraywqq",latest.stores[0].store_name);
      // Close both InfoWindows when clicking on the map
     google.maps.event.clearListeners(map, "click");
 
@@ -474,13 +482,13 @@ function displayInfoWindow() {
     });
 
     array.forEach((salesman) => {
-        //console.log("latest ter in for each",latest.salesman_name);
+        //console.log("latest ter in for each",salesman);
         const isLatest = salesman.id == latest.id;
-
+        salesman.stores.forEach((store) => {
         const marker = new google.maps.Marker({
             position: {
-                lat: Number(salesman.latitude),
-                lng: Number(salesman.longitude),
+                lat: Number(store.latitude),
+                lng: Number(store.longitude),
             },
             map: window.dashboardMap,
             title: salesman.salesman_name,
@@ -550,11 +558,11 @@ function displayInfoWindow() {
                         </div>
                         <div class="px-4 py-3 pt-1 ">
                             <div class="font-medium text-[16px] text-base">
-                                ${salesman.store_name ?? "Manding Store"}
+                                ${latest.stores[0]?.store_name ?? "Manding Store"}
                             </div>
                             <div class="text-xs text-gray-500 italic">${salesman.store_address ?? "Cubacub"}</div>
                             <div class="text-[9px] text-[#b8babc] mt-2">Salesman Assigned:</div>
-                            <div class="text-[11px] font-medium whitespace-nowrap">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) </div>
+                            <div class="text-[11px] font-medium whitespace-nowrap">${latest.salesman_name ?? "OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028)"}</div>
                             <div class="text-[9px] text-[#b8babc]  mt-2">Transaction Sales:</div>
                             <div class="text-[11px] font-medium">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
                         </div>
@@ -626,6 +634,8 @@ function displayInfoWindow() {
             openInfoWindowFor(salesman, marker);
         });;
     });
+    });
+
 }
 
 function DisplayitemTable() {
@@ -655,7 +665,7 @@ $(document).on("click", ".tabs [type='radio'].tab", function () {
 
 function getlatestTransaction() {
     Api.get({
-        url: "/getLatestTransaction",
+        url: "dashboard/getLatestTransaction",
 
         onSuccess: (data) => {
             latest = data;
@@ -665,7 +675,9 @@ function getlatestTransaction() {
     });
 }
 
+// function InfoWindowContent(salesman) {
 function InfoWindowContent(salesman) {
+    console.log("wod data from infoWindow",rowData);
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
 
@@ -707,14 +719,14 @@ function InfoWindowContent(salesman) {
                                     </span>
                                 </div>
                                 <div class = "flex flex-col w-fit">
-                                    <span class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.store_name ?? "Manding Store"}</span>
+                                    <span id="InfoStoreName" class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.stores[storeIndex].store_name ?? "Manding Store"}</span>
                                     <span class="font-medium text-[9px] text-white leading-tight">${salesman.store_address ?? "Cubacub"}</span>
                                 </div>
 
                                  <!-- prev/next store buttons -->
-                                <div class="flex justify-end w-full gap-1 p-2 pb-0">
-                                    <button type="button" class="font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">❮ Prev Store</button>
-                                    <button type="button" class="font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">Next Store ❯</button>
+                                <div class="flex items-center justify-end w-full gap-1 p-2 pb-0">
+                                    <button type="button" id="infoPrev" class="btn py-1.5 h-fit side_Prev font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">❮ Prev Store</button>
+                                    <button type="button" id="infoNext" class="btn py-1.5 h-fit side_Next font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">Next Store ❯</button>
                                 </div>
 
                             </div>
@@ -727,8 +739,8 @@ function InfoWindowContent(salesman) {
                         <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 px-5 text-xs" style="display:block">
                             <div class="">
                                 <span class="text-gray-400 block">Salesman Assigned:</span>
-                                <!-- <span class="font-semibold">${salesman.salesman_name ?? ""} 🔋 ${salesman.battery ?? "-"}%</span> -->
-                                <span class="font-normal text-[11px]">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) 🔋 ${salesman.battery ?? "73"}%</span>
+                                <span class="font-semibold">${salesman.salesman_name ?? ""} 🔋 ${salesman.battery ?? "-"}%</span> 
+                                <!-- <span class="font-normal text-[11px]">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) 🔋 ${salesman.battery ?? "73"}%</span> -->
                             </div>
                             <div class="pt-3">
                                 <span class="text-gray-400 block">Transaction ID:</span>
@@ -809,8 +821,11 @@ function InfoWindowContent(salesman) {
     `;
 }
 
-function openInfoWindowFor(salesman, marker) {
+let currentInfoSalesman = null; // add near your other module-level lets
 
+function openInfoWindowFor(salesman, marker) {
+    currentInfoSalesman = salesman;   // <-- track it here
+    storeIndex = 0;  
     console.log("Opening InfoWindow for:", salesman.salesman_name);
 
     currentMarker = marker;
@@ -969,83 +984,128 @@ document.addEventListener("fullscreenchange", function () {
 
 function getSidePanelContent() {
 
+    storeNames = rowData.stores.map(store => store.store_name);
+
+    //storeIndex = 0;
+    //storeLength = storeNames.length - 1;
+    
+    // let storeIndex = 0;
+    // const storeLength = storeNames.length - 1;
+
     $("#Salesman_Name").text(rowData.salesman_name);
     $("#SalesmanTotal_Sales").text(rowData.sale);
-    $("#SalesmanTotal_Sales").text(rowData.sale);
 
-    getStores();
+    $("#storeName").text(
+        rowData.stores[storeIndex]?.store_name ?? "No Store"
+    );
+
+    // Initial button state
+    // $(".side_Prev").prop("disabled", true);
+    // $(".side_Next").prop("disabled", storeLength <= 0);
+
+
+    // $(".side_Next").on("click", function() {
+
+    //     if (storeIndex < storeLength) {
+
+    //         storeIndex++;
+
+    //         console.log("Store Index:", storeIndex);
+
+    //         $("#storeName").text(
+    //             rowData.stores[storeIndex]?.store_name ?? "No Store"
+    //         );
+
+    //         // Disable Next at last store
+    //         $("#side_Next").prop(
+    //             "disabled",
+    //             storeIndex === storeLength
+    //         );
+
+    //         // Enable Previous
+    //         $(".side_Prev").prop("disabled", false);
+    //     }
+    // });
+
+
+    // $(".side_Prev").on("click", function() {
+
+    //     if (storeIndex > 0) {
+
+    //         storeIndex--;
+
+    //         console.log("Store Index:", storeIndex);
+
+    //         $("#storeName").text(
+    //             rowData.stores[storeIndex]?.store_name ?? "No Store"
+    //         );
+
+    //         // Disable Previous at first store
+    //         $(".side_Prev").prop(
+    //             "disabled",
+    //             storeIndex === 0
+    //         );
+
+    //         // Enable Next
+    //         $(".side_Next").prop("disabled", false);
+    //     }
+    // });
+
 }
 
-function getStores(){
+   // Initial button state
+    // $(".side_Prev").prop("disabled", true);
+    // $(".side_Next").prop("disabled", storeLength <= 0);
 
-    Api.get({
-        url:"/getStore",
+$(document)
+    .off("click.storeNav", ".side_Next")
+    .on("click.storeNav", ".side_Next", function (e) {
 
-        onSuccess:(data)=>{
-            console.log("store",data);
+        e.stopPropagation();
+
+        if (storeIndex <= storeLength) {
+            storeIndex++;
+            console.log("NEXT CLICKED", storeIndex);
+            $("#InfoStoreName").text(
+                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
+            );
+            $("#storeName").text(
+                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
+            );
         }
-    })
+        // else{
+        //    $(".side_Next").prop("disabled", true);
+        // }
+    });
+
+$(document)
+    .off("click.storeNav", ".side_Prev")
+    .on("click.storeNav", ".side_Prev", function (e) {
+
+        e.stopPropagation();
+        console.log("PREV CLICKED");
+
+        if (storeIndex > 0) {
+            storeIndex--;
+            console.log("NEXT CLICKED", storeIndex);
+            $("#InfoStoreName").text(
+                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
+            );
+            $("#storeName").text(
+                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
+            );
+        }
+
+        // else{
+        //     $(".side_Prev").prop("disabled", true);
+        // }
+
+});
+
+function getStore() {
+
 }
 
-
-// Create the InfoWindow once (reuse it for all markers)
-// const infoWindow = new google.maps.InfoWindow();
-
-// // When creating a marker
-// const marker = new google.maps.Marker({
-//     position: { lat: 10.7202, lng: 122.5621 }, // e.g. Iloilo City
-//     map: map,
-//     title: "Iloilo City"
-// });
-
-// // Show InfoWindow on marker click
-// marker.addListener("click", () => {
-//     infoWindow.setContent(`
-//         <div class="p-2">
-//             <h3 class="font-bold">${marker.getTitle()}</h3>
-//             <p>Some details here</p>
-//         </div>
-//     `);
-//     infoWindow.open(map, marker);
-// });
-
-// $(document).ready(function () {
-//     DisplaySalesmanTable();
-// });
-
-// function DisplaySalesmanTable() {
-
-//     Api.post({
-//         url: "/DisplaySalesman",
-
-//         onSuccess: (response) => {
-
-//             rows = response.data ?? response;
-
-//             console.log("rows:", rows);
-//             console.log("count:", rows.length);
-
-//             TableLoader.tableData(
-//                 "#dashboardDataTable",
-//                 rows,
-//                 SalesmanColumns,
-//                 {
-//                     scrollY: "500px",
-//                     pageLength: 5
-//                 }
-//             );
-//         }
-//     });
-// }
-
-// $(document).ready(function () {
-//     Promise.all([
-//         fetchSalesmanData(),
-//         fetchLatestTransaction(),
-//     ]).then(([salesmanData, latestData]) => {
-//         displayInfoWindow(salesmanData, latestData);
-//     });
-// });
 
 $(document).on('click', '.toggle-item-table', function () {
     const $container = $(this).siblings('#infoWindowTableContainer');
@@ -1064,3 +1124,54 @@ $(document).on("mouseenter", ".Transaction_Container", function(){
 $(document).on("mouseleave", ".Transaction_Container", function(){
     $(this).removeClass("font-bold");
 });
+
+
+// Initial button state
+// $("#infoPrev").prop("disabled", true);
+// $("#infoNext").prop("disabled", storeLength <= 0);
+
+
+// $(document).on("click","#infoNext",function(){
+//     console.log("asq");
+//     if (storeIndex < storeLength) {
+
+//         storeIndex++;
+
+//         console.log("Store Index:", storeIndex);
+
+//         $("#InfoStoreName").text(
+//             rowData.stores[storeIndex]?.store_name ?? "No Store"
+//         );
+
+//         // Disable Next at last store
+//         $("#infoNextt").prop(
+//             "disabled",
+//             storeIndex === storeLength
+//         );
+
+//         // Enable Previous
+//         $("#infoNext").prop("disabled", false);
+//     }
+// }); 
+    
+// $("#infoPrev").on("click", function() {
+
+// if (storeIndex > 0) {
+
+//     storeIndex--;
+
+//     console.log("Store Index:", storeIndex);
+
+//     $("#InfoStoreName").text(
+//         rowData.stores[storeIndex]?.store_name ?? "No Store"
+//     );
+
+//     // Disable Previous at first store
+//     $("#infoPrev").prop(
+//         "disabled",
+//         storeIndex === 0
+//     );
+
+//     // Enable Next
+//     $("#infoPrev").prop("disabled", false);
+// }});

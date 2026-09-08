@@ -61,7 +61,8 @@ TableLoader.loadTable({
 });
 
 ComponentHelper.dropdown().loadByApi({
-    url: "/salesmen",
+    // url: "/salesmen",
+    url: "/getSalesman",
     dropdownId: "dcrItems",
     noDataText: "No SalesMan Found",
     displayField: "salesman_name",

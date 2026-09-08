@@ -64,10 +64,10 @@ class SalesmanModelController extends Controller
     }
 
     public function getSalesman(){
-        // $salesman = SalesmanModel::all();
-        // return response()->json($salesman);
-
-        $salesman = SalesmanModel::with("stores")->get();
+        $salesman = SalesmanModel::all();
         return response()->json($salesman);
+
+        // $salesman = SalesmanModel::with("stores")->get();
+        // return response()->json($salesman);
     }
 }

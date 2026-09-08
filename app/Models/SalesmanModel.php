@@ -22,7 +22,7 @@ class SalesmanModel extends Model
         'sale',
     ];
 
-    public function stores(){
-        return $this->hasMany(StoreModel::class, 'salesman_id');
-    }
+    // public function stores(){
+    //     return $this->hasMany(StoreModel::class, 'salesman_id');
+    // }
 }

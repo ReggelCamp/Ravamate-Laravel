@@ -12,4 +12,8 @@ class DashboardModel extends Model
     protected $table = 'salesman';
     protected $guarded = ['id'];
 
+    public function stores(){
+        return $this->hasMany(StoreModel::class, 'salesman_id','id');
+    }
+
 }

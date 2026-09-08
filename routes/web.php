@@ -12,6 +12,8 @@ use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Routes\ApiRoute;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -219,8 +221,8 @@ Route::get('/customize_theme/getActive',[ThemeController::class,'getActive']);
 
 });//end of middleware group
 
-//getsalesman
-Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
+//getsalesman DCR
+//Route::get('/getSalesman',[SalesmanModelController::class,'getSalesman']);
 
 Route::get('/getDCRtable',[DcrController::class,'getDCRtable']);
 
@@ -324,9 +326,10 @@ Route::get('/sosyocalendar', function () {
 // API
 Route::post('/DisplaySalesman',[DisplaySalesmanController::class,'getSalesman']);
 
-Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
+// Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
 
-Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
+// Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
 
 Route::get('/getStore',[StoreController::class,'getStore']);
 
+new ApiRoute();

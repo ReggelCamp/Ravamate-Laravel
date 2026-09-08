@@ -10,10 +10,10 @@ class StoreModel extends Model
     use HasFactory;
 
     protected $table = 'store';
-
+    protected $primaryKey = 'store_id';
     protected $guarded = ['store_id'];
 
     public function salesman(){
-        return $this->belongsTo(SalesmanModel::class, 'salesman_id');
+        return $this->belongsTo(DashboardModel::class, 'salesman_id');
     }
 }

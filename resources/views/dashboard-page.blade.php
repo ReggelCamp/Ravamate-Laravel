@@ -302,7 +302,8 @@
                             </div>
                             <div class="flex flex-col leading-3">
                                 <span
-                                    class="text-blue-700 font-bold text-[12px]">{{ $store->name ?? 'MALDITAS PRIDE' }}</span>
+                                    id="storeName"
+                                    class="text-blue-700 font-bold text-[12px]">{{ $store_name ?? 'No Store' }}</span>
                                 <span class="text-gray-400 text-[10px]">,,</span>
                             </div>
                         </div>
@@ -340,11 +341,13 @@
                             <div class="flex justify-between items-center">
                                 <div class="flex gap-1 ">
                                     <button
-                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3">
+                                        id="side_Prev"
+                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3 side_Prev">
                                         &lt; Prev Store
                                     </button>
                                     <button
-                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3">
+                                        id="side_Next"
+                                        class="btn btn-xs salemanInfoCard rounded-full border-none text-[9px] px-3 side_Next">
                                         Next Store &gt;
                                     </button>
                                 </div>
