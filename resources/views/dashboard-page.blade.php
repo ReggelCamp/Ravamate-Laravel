@@ -259,7 +259,7 @@
                                 <div>
                                     <span
                                         id="Salesman_Name"
-                                        class="font-bold text-sm block">{{ $salesman->name ?? 'OB07_NICOLAS RAMBOYONG' }}</span>
+                                        class="font-bold text-sm block">{{ $salesman->name ?? 'No Salesman' }}</span>
                                     <span
                                         class="text-[10px] font-semibold tracking-wide opacity-90">{{ $salesman->type ?? 'BOOKING' }}</span>
                                 </div>

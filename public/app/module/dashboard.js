@@ -21,6 +21,8 @@ let storeNames = [];
 
 let storeIndex = 0;
 let storeLength = 0;
+let InfoStoreLength = 0;
+let currentInfoSalesman = null; 
 
 const SalesmanColumns = [
     {
@@ -268,7 +270,7 @@ $(document)
             console.log("No marker found for this row.");
         }
 
-        getSidePanelContent();
+         getSidePanelContent(rowData);
     });
 
 // Date BTN
@@ -421,6 +423,7 @@ function displayInfoWindow() {
 
         if (infoWindow) {
             infoWindow.close();
+            DisplayCarousel();
         }
 
         currentMarker = null;
@@ -439,9 +442,6 @@ function displayInfoWindow() {
                 infoWindowWrapper.addClass("Info-Window");
             }
         }
-
-        $("#CloseBtn").on("click", () => infoWindow.close());
-        $("#LatestCloseBtn").on("click", () => infoWindow.close());
 
         latestInfoWindow.close();
         
@@ -598,6 +598,9 @@ function displayInfoWindow() {
                     latestInfoWindow.close();
 
                     currentMarker = marker;
+                    
+                    showRowDetails(salesman);
+                    getSidePanelContent(salesman);
 
                     infoWindow.setContent(
                         InfoWindowContent(salesman)
@@ -677,7 +680,9 @@ function getlatestTransaction() {
 
 // function InfoWindowContent(salesman) {
 function InfoWindowContent(salesman) {
-    console.log("wod data from infoWindow",rowData);
+    console.log("salesman infoWindow",salesman);
+    console.log("Salesman length",salesman.stores.length);
+
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
 
@@ -821,10 +826,8 @@ function InfoWindowContent(salesman) {
     `;
 }
 
-let currentInfoSalesman = null; // add near your other module-level lets
-
 function openInfoWindowFor(salesman, marker) {
-    currentInfoSalesman = salesman;   // <-- track it here
+    currentInfoSalesman = salesman; 
     storeIndex = 0;  
     console.log("Opening InfoWindow for:", salesman.salesman_name);
 
@@ -982,75 +985,20 @@ document.addEventListener("fullscreenchange", function () {
 });
 
 
-function getSidePanelContent() {
+function getSidePanelContent(salesman) {
 
-    storeNames = rowData.stores.map(store => store.store_name);
+    if (!salesman) return;
 
-    //storeIndex = 0;
-    //storeLength = storeNames.length - 1;
-    
-    // let storeIndex = 0;
-    // const storeLength = storeNames.length - 1;
+    rowData = salesman;
+console.log("rowdata sidepanel",salesman);
+    storeNames = salesman.stores?.map(store => store.store_name) ?? [];
 
-    $("#Salesman_Name").text(rowData.salesman_name);
-    $("#SalesmanTotal_Sales").text(rowData.sale);
+    $("#Salesman_Name").text(salesman.salesman_name);
+    $("#SalesmanTotal_Sales").text(salesman.sale);
 
     $("#storeName").text(
-        rowData.stores[storeIndex]?.store_name ?? "No Store"
+        salesman.stores?.[storeIndex]?.store_name ?? "No Store"
     );
-
-    // Initial button state
-    // $(".side_Prev").prop("disabled", true);
-    // $(".side_Next").prop("disabled", storeLength <= 0);
-
-
-    // $(".side_Next").on("click", function() {
-
-    //     if (storeIndex < storeLength) {
-
-    //         storeIndex++;
-
-    //         console.log("Store Index:", storeIndex);
-
-    //         $("#storeName").text(
-    //             rowData.stores[storeIndex]?.store_name ?? "No Store"
-    //         );
-
-    //         // Disable Next at last store
-    //         $("#side_Next").prop(
-    //             "disabled",
-    //             storeIndex === storeLength
-    //         );
-
-    //         // Enable Previous
-    //         $(".side_Prev").prop("disabled", false);
-    //     }
-    // });
-
-
-    // $(".side_Prev").on("click", function() {
-
-    //     if (storeIndex > 0) {
-
-    //         storeIndex--;
-
-    //         console.log("Store Index:", storeIndex);
-
-    //         $("#storeName").text(
-    //             rowData.stores[storeIndex]?.store_name ?? "No Store"
-    //         );
-
-    //         // Disable Previous at first store
-    //         $(".side_Prev").prop(
-    //             "disabled",
-    //             storeIndex === 0
-    //         );
-
-    //         // Enable Next
-    //         $(".side_Next").prop("disabled", false);
-    //     }
-    // });
-
 }
 
    // Initial button state
@@ -1060,47 +1008,52 @@ function getSidePanelContent() {
 $(document)
     .off("click.storeNav", ".side_Next")
     .on("click.storeNav", ".side_Next", function (e) {
-
         e.stopPropagation();
 
         if (storeIndex <= storeLength) {
             storeIndex++;
-            console.log("NEXT CLICKED", storeIndex);
-            $("#InfoStoreName").text(
-                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
-            );
-            $("#storeName").text(
-                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
-            );
+
+            const newStore = currentInfoSalesman.stores[storeIndex];
+
+            $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
+            $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
+
+            if (newStore && currentMarker) {
+                const newPos = {
+                    lat: Number(newStore.latitude),
+                    lng: Number(newStore.longitude),
+                };
+
+                currentMarker.setPosition(newPos);
+                map.panTo(newPos);
+            }
         }
-        // else{
-        //    $(".side_Next").prop("disabled", true);
-        // }
     });
 
 $(document)
     .off("click.storeNav", ".side_Prev")
     .on("click.storeNav", ".side_Prev", function (e) {
-
         e.stopPropagation();
-        console.log("PREV CLICKED");
 
         if (storeIndex > 0) {
             storeIndex--;
-            console.log("NEXT CLICKED", storeIndex);
-            $("#InfoStoreName").text(
-                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
-            );
-            $("#storeName").text(
-                currentInfoSalesman.stores[storeIndex]?.store_name ?? "No Store"
-            );
+
+            const newStore = currentInfoSalesman.stores[storeIndex];
+
+            $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
+            $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
+
+            if (newStore && currentMarker) {
+                const newPos = {
+                    lat: Number(newStore.latitude),
+                    lng: Number(newStore.longitude),
+                };
+
+                currentMarker.setPosition(newPos);
+                map.panTo(newPos);
+            }
         }
-
-        // else{
-        //     $(".side_Prev").prop("disabled", true);
-        // }
-
-});
+    });
 
 function getStore() {
 
