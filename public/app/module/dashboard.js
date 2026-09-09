@@ -19,7 +19,7 @@ let ExpandTable = false;
 let rowData;
 let storeNames = [];
 
-let storeIndex = 0;
+let storeIndex;
 let storeLength = 0;
 let InfoStoreLength = 0;
 let currentInfoSalesman = null; 
@@ -252,7 +252,6 @@ const TotalAmount = "₱79,209.90";
 $(document)
     .off("click.dashboardRow", "#dashboardDataTable tbody tr")
     .on("click.dashboardRow", "#dashboardDataTable tbody tr", function () {
-        // salesman.js loads the data asynchronously; ensure DataTable is ready
         if (!$.fn.DataTable.isDataTable("#dashboardDataTable")) return;
 
         const dashboardTable = $("#dashboardDataTable").DataTable();
@@ -260,17 +259,18 @@ $(document)
 
         if (!rowData) return;
 
-        console.log("Clicked row:", rowData);;
         showRowDetails(rowData);
 
-        const entry = markersById[rowData.id];
-        if (entry) {
+        const entries = markersById[rowData.id];
+
+        if (entries && entries.length) {
+            const entry = entries[0]; // same salesman object regardless of which store entry
             openInfoWindowFor(entry.salesman, entry.marker);
         } else {
             console.log("No marker found for this row.");
         }
 
-         getSidePanelContent(rowData);
+        getSidePanelContent(rowData);
     });
 
 // Date BTN
@@ -403,13 +403,12 @@ TableLoader.loadTable({
 });
 
 function displayInfoWindow() {
-    
     if (!array || array.length === 0) {
         console.log("No salesman data.");
         return;
     }
 
-    //console.log("row data from display inffo dwindow",array);
+    console.log("row data from display inffo dwindow",array);
 
     map = window.dashboardMap;
     console.log("arraywqq",latest.stores[0].store_name);
@@ -432,7 +431,7 @@ function displayInfoWindow() {
     infoWindow = new google.maps.InfoWindow();
 
     google.maps.event.addListener(infoWindow, "domready", () => {
-
+        updateStoreNavButtons();
         const InfoContainer = $("#Info_Tab");
 
         if (InfoContainer) {
@@ -482,9 +481,10 @@ function displayInfoWindow() {
     });
 
     array.forEach((salesman) => {
-        //console.log("latest ter in for each",salesman);
+        console.log("latest ter in for each",salesman);
         const isLatest = salesman.id == latest.id;
         salesman.stores.forEach((store) => {
+            console.log("stores",store.store_id);
         const marker = new google.maps.Marker({
             position: {
                 lat: Number(store.latitude),
@@ -520,7 +520,7 @@ function displayInfoWindow() {
                         font-size="16"
                         font-weight="bold"
                         fill="white">
-                        ${salesman.id}
+                        ${store.store_id}
                     </text>
 
                 </svg>
@@ -533,7 +533,17 @@ function displayInfoWindow() {
             // animation: isLatest ? google.maps.Animation.BOUNCE : null,
         });
 
-        markersById[salesman.id] = { marker, salesman }
+        // markersById[salesman.id] = { marker, salesman }
+
+        if (!markersById[salesman.id]) {
+    markersById[salesman.id] = [];
+}
+
+markersById[salesman.id].push({
+    marker,
+    salesman,
+    store
+});
 
         if (isLatest) {
             latestMarker = marker;
@@ -599,6 +609,9 @@ function displayInfoWindow() {
 
                     currentMarker = marker;
                     
+                    currentInfoSalesman = salesman;   // keep this in sync — Next/Prev read from it
+                    storeIndex = 0; 
+
                     showRowDetails(salesman);
                     getSidePanelContent(salesman);
 
@@ -630,12 +643,16 @@ function displayInfoWindow() {
 
             console.log("Marker clicked:", salesman.salesman_name);
             console.log("ID clicked:", salesman.id);
+            console.log("salesman wow clicked:", salesman);
             console.log("ID:", latest.id);
             if (salesman.id != latest.id && latestMarker) {
                 latestMarker.setAnimation(null);
             }
             openInfoWindowFor(salesman, marker);
-        });;
+            showRowDetails(salesman);
+            getSidePanelContent(salesman);
+            //console.log("dew",showRowDetails(salesman));
+        });
     });
     });
 
@@ -828,7 +845,8 @@ function InfoWindowContent(salesman) {
 
 function openInfoWindowFor(salesman, marker) {
     currentInfoSalesman = salesman; 
-    storeIndex = 0;  
+    storeIndex = 0;
+    updateStoreNavButtons();  
     console.log("Opening InfoWindow for:", salesman.salesman_name);
 
     currentMarker = marker;
@@ -986,11 +1004,11 @@ document.addEventListener("fullscreenchange", function () {
 
 
 function getSidePanelContent(salesman) {
-
+    
     if (!salesman) return;
 
     rowData = salesman;
-console.log("rowdata sidepanel",salesman);
+    console.log("rowdata sidepanel",salesman);
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
 
     $("#Salesman_Name").text(salesman.salesman_name);
@@ -1027,6 +1045,7 @@ $(document)
                 currentMarker.setPosition(newPos);
                 map.panTo(newPos);
             }
+            updateStoreNavButtons();
         }
     });
 
@@ -1052,12 +1071,9 @@ $(document)
                 currentMarker.setPosition(newPos);
                 map.panTo(newPos);
             }
+            updateStoreNavButtons();
         }
     });
-
-function getStore() {
-
-}
 
 
 $(document).on('click', '.toggle-item-table', function () {
@@ -1078,6 +1094,23 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
     $(this).removeClass("font-bold");
 });
 
+
+function updateStoreNavButtons() {
+    if (!currentInfoSalesman || !currentInfoSalesman.stores) return;
+
+    const lastIndex = currentInfoSalesman.stores.length - 1;
+
+    // $(".side_Prev, #infoPrev").prop("disabled", storeIndex <= 0);
+    // $(".side_Next, #infoNext").prop("disabled", storeIndex >= lastIndex);
+
+    $(".side_Prev, #infoPrev")
+    .prop("disabled", storeIndex <= 0)
+    .toggleClass("nav-disabled", storeIndex <= 0);
+
+    $(".side_Next, #infoNext")
+    .prop("disabled", storeIndex >= lastIndex)
+    .toggleClass("nav-disabled", storeIndex >= lastIndex);
+}
 
 // Initial button state
 // $("#infoPrev").prop("disabled", true);

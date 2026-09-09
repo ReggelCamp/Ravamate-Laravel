@@ -201,6 +201,10 @@
             overflow-wrap: anywhere;
         }
 
+        .nav-disabled{
+            filter: brightness(70%);
+        }
+
         /* .daterangepicker td.disabled {
             visibility: visible !important;
             opacity: 0.4;
