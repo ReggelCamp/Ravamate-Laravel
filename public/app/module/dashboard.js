@@ -741,6 +741,8 @@ function getlatestTransaction() {
 function InfoWindowContent(salesman) {
     console.log("salesman infoWindow",salesman);
     console.log("salesman storeindex",storeIndex);
+    const InfoTableSKU = getTableLength();
+    console.log(InfoTableSKU,"wowowow");
     const date = new Date(salesman.stores[storeIndex].transaction_date);
     
     const formattedDate = date.toLocaleString("en-PH", {
@@ -859,15 +861,19 @@ function InfoWindowContent(salesman) {
                             data-tab="tabContent2"
                             style="display:none"
                         >
-                                <div class="flex w-full justify-between salemanInfoCard Transaction_Container border items-center h-[25px] py-5 px-2 rounded-t-2xl toggle-item-table cursor-pointer">
+                                <div id="InfoTableContainer" data-table="infoWindowTableContent" class="flex w-full justify-between salemanInfoCard Transaction_Container border items-center h-[25px] py-5 px-2 rounded-t-2xl toggle-item-table cursor-pointer">
                                     <div class="flex gap-1 items-center">
                                         <img class="h-[25px] w-[25px]" src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
                                         <span class="text-[13px]">Transaction Items</span>
                                     </div>
-                                    <span class="flex items-center gap-1">
-                                        ₱ 7,147.93 ( SKU)
+                                    <div class="flex gap-1 items-center">
+                                        <span>
+                                            ₱ 7,147.93
+                                        </span>
+                                        <span class="Sku_Num">
+                                        </span>
                                         <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
-                                    </span>
+                                    </div>
                                 </div>
                                 <div class="flex p-2 ViewTable_Container">
                                     <i class="text-[#86888a] mdi mdi-arrow-up-left"></i>
@@ -1143,13 +1149,13 @@ $(document)
 $(document).on('click', '.toggle-item-table', function () {
     const $container = $(this).siblings('#infoWindowTableContainer');
     const $icon = $(this).find('.toggle-icon');
-    tableLength = getTableLength();
+    //tableLength = getTableLength();
     $container.slideToggle(200);
     $icon.toggleClass('rotate-180');
 
     $(".ViewTable_Container").toggleClass("hidden");
-
-    console.log("length of table",tableLength);
+    // $(".Sku_Num").text(tableLength,"SKU");
+    // console.log("length of table",tableLength);
 });
 
 $(document).on("mouseenter", ".Transaction_Container", function(){
@@ -1174,10 +1180,31 @@ function updateStoreNavButtons() {
     .toggleClass("nav-disabled", storeIndex >= lastIndex);
 }
 
-function getTableLength() {
-    const table = $("#infoWindowTableContent").DataTable();
+function getTableLength(tableId) {
 
-    const length = table.column(1).data().length;
+    if (!$.fn.DataTable.isDataTable("#" + tableId)) {
+        console.log("DataTable not initialized:", tableId);
+        return 0;
+    }
+
+    const table = $("#" + tableId).DataTable();
+
+    const length = table.rows().count();
+
     return length;
-    //console.log("table length",length);
 }
+
+
+
+$(document)
+    .off("click.table", "#InfoTableContainer")
+    .on("click.table", "#InfoTableContainer", function () {
+
+        const tableId = $(this).data("table");
+        const length = getTableLength(tableId);
+
+        console.log("Clicked table:", tableId);
+        console.log("Table length:", length);
+
+        $(this).find(".Sku_Num").text(`(${length} SKU)`);
+    });
