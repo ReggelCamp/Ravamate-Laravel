@@ -15,5 +15,8 @@ class DashboardModel extends Model
     public function stores(){
         return $this->hasMany(StoreModel::class, 'salesman_id','id');
     }
+    public function transactions(){
+        return $this->hasMany(Transaction::class, 'salesman_id', 'id');
+    }
 
 }

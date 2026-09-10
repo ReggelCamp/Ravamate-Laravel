@@ -35,7 +35,10 @@ class DashboardController extends Controller
     }
 
     public function getSalesmanInfo(){
-        $salesman = DashboardModel::with("stores")->get();
+        $salesman = DashboardModel::with([
+            "stores",
+            "transactions"
+        ])->get();
         return response()->json($salesman);
     }
 }

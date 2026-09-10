@@ -24,6 +24,9 @@ let storeLength = 0;
 let InfoStoreLength = 0;
 let currentInfoSalesman = null; 
 
+let tableLength;
+
+
 const SalesmanColumns = [
     {
         title: "Salesman Name",
@@ -392,9 +395,9 @@ TableLoader.loadTable({
     pageLength: 5,
     searchInput:"#customSearch",
     onSuccess: (data) => {
-        console.log("Dashboard data:", data);
-        console.log("Dashboard count:", data.length);
-        console.log("load table",ExpandTable);
+        // console.log("Dashboard data:", data);
+        // console.log("Dashboard count:", data.length);
+        // console.log("load table",ExpandTable);
         // IMPORTANT
         array = data;
 
@@ -411,7 +414,7 @@ function displayInfoWindow() {
     console.log("row data from display inffo dwindow",array);
 
     map = window.dashboardMap;
-    console.log("arraywqq",latest.stores[0].store_name);
+    // console.log("arraywqq",latest.stores[0].store_name);
      // Close both InfoWindows when clicking on the map
     google.maps.event.clearListeners(map, "click");
 
@@ -481,25 +484,27 @@ function displayInfoWindow() {
     });
 
     array.forEach((salesman) => {
-        console.log("latest ter in for each",salesman);
-        const isLatest = salesman.id == latest.id;
-        salesman.stores.forEach((store) => {
-            console.log("stores",store.store_id);
-        const marker = new google.maps.Marker({
-            position: {
-                lat: Number(store.latitude),
-                lng: Number(store.longitude),
-            },
-            map: window.dashboardMap,
-            title: salesman.salesman_name,
-            icon: {
+        //console.log("latest ter in for each",salesman);
+        
+        const isLatestSalesman = salesman.id == latest.id;
+
+        salesman.stores.forEach((store, index) => {
+
+    const marker = new google.maps.Marker({
+        position: {
+            lat: Number(store.latitude),
+            lng: Number(store.longitude),
+        },
+        map: window.dashboardMap,
+        title: salesman.salesman_name,
+
+        icon: {
             url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
                 <svg xmlns="http://www.w3.org/2000/svg"
                      width="50"
                      height="60"
                      viewBox="0 0 50 60">
 
-                    <!-- Your marker -->
                     <path
                         d="M25 58
                            C25 58 5 36 5 23
@@ -511,7 +516,6 @@ function displayInfoWindow() {
                         stroke-width="3"
                     />
 
-                    <!-- Number -->
                     <text
                         x="25"
                         y="29"
@@ -520,7 +524,7 @@ function displayInfoWindow() {
                         font-size="16"
                         font-weight="bold"
                         fill="white">
-                        ${store.store_id}
+                        ${index + 1}
                     </text>
 
                 </svg>
@@ -529,133 +533,171 @@ function displayInfoWindow() {
             scaledSize: new google.maps.Size(40, 48),
             anchor: new google.maps.Point(20, 48),
         },
+    });
 
-            // animation: isLatest ? google.maps.Animation.BOUNCE : null,
+        // Store marker under salesman
+        if (!markersById[salesman.id]) {
+            markersById[salesman.id] = [];
+        }
+
+        markersById[salesman.id].push({
+            marker,
+            salesman,
+            store,
+            storeIndex
         });
 
-        // markersById[salesman.id] = { marker, salesman }
 
-        if (!markersById[salesman.id]) {
-    markersById[salesman.id] = [];
-}
+        // Marker click
+        marker.addListener("click", () => {
 
-markersById[salesman.id].push({
-    marker,
-    salesman,
-    store
-});
+            console.log("Marker clicked:", salesman.salesman_name);
+            console.log("Store clicked:", store.store_name);
+            console.log("Store index:", storeIndex);
 
-        if (isLatest) {
+            if (salesman.id != latest.id && latestMarker) {
+                latestMarker.setAnimation(null);
+            }
+
+            currentMarker = marker;
+            currentInfoSalesman = salesman;
+            window.storeIndex = storeIndex;
+
+            openInfoWindowFor(salesman, marker);
+            showRowDetails(salesman);
+            getSidePanelContent(salesman);
+        });
+
+
+        // Only create latest popup for the actual latest store
+        const latestStore = latest.stores?.[0];
+
+        const isLatestStore =
+            isLatestSalesman &&
+            store.store_id == latestStore?.store_id;
+
+
+        if (isLatestStore) {
+            console.log("latest info",latestStore);
             latestMarker = marker;
+
             latestInfoWindow = new google.maps.InfoWindow({
+                
                 content: `
-                    <div id= "latestInfo_Container" class="latest-transaction-popup min-w-[193px] rounded-3xl ">
+                    <div id="latestInfo_Container"
+                         class="latest-transaction-popup min-w-[193px] rounded-3xl">
+
                         <div class="salemanInfoCard px-4 py-3 relative w-full">
-                           
+
                             <div class="flex gap-1">
+
                                 <span class="items-center justify-center flex">
-                                    <i class="fa-solid fa-location-dot" style="font-size: 20px;"></i>
+                                    <i class="fa-solid fa-location-dot"
+                                       style="font-size: 20px;"></i>
                                 </span>
-                                <div class="flex flex-col items-center">   
+
+                                <div class="flex flex-col items-center">
+
                                     <span class="font-bold w-full text-[16px]">
                                         Latest Transaction
                                     </span>
+
                                     <span class="w-full text-xs opacity-90">
                                         added ${salesman.time_ago ?? "recently"}
                                     </span>
+
                                 </div>
+
                             </div>
+
                         </div>
-                        <div class="px-4 py-3 pt-1 ">
-                            <div class="font-medium text-[16px] text-base">
-                                ${latest.stores[0]?.store_name ?? "Manding Store"}
+
+                        <div class="px-4 py-3 pt-1">
+
+                            <div class="font-medium text-[16px]">
+                                ${latestStore.store_name ?? "Manding Store"}
                             </div>
-                            <div class="text-xs text-gray-500 italic">${salesman.store_address ?? "Cubacub"}</div>
-                            <div class="text-[9px] text-[#b8babc] mt-2">Salesman Assigned:</div>
-                            <div class="text-[11px] font-medium whitespace-nowrap">${latest.salesman_name ?? "OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028)"}</div>
-                            <div class="text-[9px] text-[#b8babc]  mt-2">Transaction Sales:</div>
-                            <div class="text-[11px] font-medium">${salesman.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}</div>
+
+                            <div class="text-xs text-gray-500 italic">
+                                ${latest.store_address ?? "Cubacub"}
+                            </div>
+
+                            <div class="text-[9px] text-[#b8babc] mt-2">
+                                Salesman Assigned:
+                            </div>
+
+                            <div class="text-[11px] font-medium whitespace-nowrap">
+                                ${salesman.salesman_name}
+                            </div>
+
+                            <div class="text-[9px] text-[#b8babc] mt-2">
+                                Transaction Sales:
+                            </div>
+
+                            <div class="text-[11px] font-medium">
+                                ${latestStore.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}
+                            </div>
+
                         </div>
+
                     </div>
                 `,
                 disableAutoPan: false,
             });
 
-            //latestInfoWindow.open(map, marker); // opens immediately, no click required
-           google.maps.event.addListener(latestInfoWindow, "domready", () => {
+            google.maps.event.addListener(
+                latestInfoWindow,
+                "domready",
+                () => {
 
-                // Find the Google Maps InfoWindow wrapper
-                const latestContainer = $("#latestInfo_Container");
+                    $("#latestInfo_Container")
+                        .off("click.latest")
+                        .on("click.latest", () => {
+                            
+                            map.panTo(marker.getPosition());
+                            map.setZoom(17);
 
-                if (latestContainer) {
-                    const infoWindowWrapper = latestContainer.closest(".gm-style-iw-c");
+                            latestInfoWindow.close();
 
-                    if (infoWindowWrapper) {
-                        infoWindowWrapper.addClass("latest-info-window");
-                    }
+                            currentMarker = marker;
+                            currentInfoSalesman = salesman;
+                            
+                            console.log("sa",currentInfoSalesman);
+                            
+                            // IMPORTANT
+                           // window.storeIndex = storeIndex;
+
+                            storeIndex = index;
+
+                            showRowDetails(salesman);
+                            getSidePanelContent(salesman);
+
+                            // infoWindow.setContent(
+                            //     InfoWindowContent(salesman)
+                            // );
+                            infoWindow.setContent(
+                                InfoWindowContent(currentInfoSalesman)
+                            );
+
+                            marker.setAnimation(
+                                google.maps.Animation.BOUNCE
+                            );
+
+                            infoWindow.open(map, marker);
+
+                            console.log(
+                                "Latest store index:",
+                                storeIndex
+                            );
+                        });
                 }
-
-                $("#LatestCloseBtn").off("click.latest").on("click.latest", (e) => {
-                    e.stopPropagation();
-                    latestInfoWindow.close();
-                });
-
-                $("#latestInfo_Container").off("click.latest").on("click.latest", () => {
-
-                    map.panTo(marker.getPosition());
-                    map.setZoom(17);
-
-                    latestInfoWindow.close();
-
-                    currentMarker = marker;
-                    
-                    currentInfoSalesman = salesman;   // keep this in sync — Next/Prev read from it
-                    storeIndex = 0; 
-
-                    showRowDetails(salesman);
-                    getSidePanelContent(salesman);
-
-                    infoWindow.setContent(
-                        InfoWindowContent(salesman)
-                    );
-                    
-                    // Bounce the latest marker
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                    //marker.setAnimation(null);
-
-
-                    infoWindow.open(map, marker);
-
-                    console.log("clicked info Window");
-                });
-            });
-
-            // $("#LatestCloseBtn").on("click", (e) => {
-            //     e.stopPropagation();
-            //     latestInfoWindow.close();
-            //     console.log("Latest transaction popup closed");
-            // });
+            );
 
             latestInfoWindow.open(map, marker);
         }
 
-        marker.addListener("click", () => {
-
-            console.log("Marker clicked:", salesman.salesman_name);
-            console.log("ID clicked:", salesman.id);
-            console.log("salesman wow clicked:", salesman);
-            console.log("ID:", latest.id);
-            if (salesman.id != latest.id && latestMarker) {
-                latestMarker.setAnimation(null);
-            }
-            openInfoWindowFor(salesman, marker);
-            showRowDetails(salesman);
-            getSidePanelContent(salesman);
-            //console.log("dew",showRowDetails(salesman));
-        });
     });
-    });
-
+});
 }
 
 function DisplayitemTable() {
@@ -698,7 +740,18 @@ function getlatestTransaction() {
 // function InfoWindowContent(salesman) {
 function InfoWindowContent(salesman) {
     console.log("salesman infoWindow",salesman);
-    console.log("Salesman length",salesman.stores.length);
+    console.log("salesman storeindex",storeIndex);
+    const date = new Date(salesman.stores[storeIndex].transaction_date);
+    
+    const formattedDate = date.toLocaleString("en-PH", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+    //console.log("Salesman length",formatted);
 
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
@@ -771,11 +824,11 @@ function InfoWindowContent(salesman) {
                             <div class="flex justify-between pt-3">
                                 <div class="w-full">
                                     <span class="text-gray-400 block">Transaction Date:</span>
-                                    <span class="font-normal text-[11px]">${salesman.transaction_date ?? "Sep 3, 2026, 4:11 PM"}</span>
+                                    <span class="font-normal text-[11px]">${formattedDate ?? "N/A"}</span>
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Sent Date:</span>
-                                    <span class="font-normal text-[11px]">${salesman.sent_date ?? "Sep 3, 2026, 4:11 PM"}</span>
+                                    <span class="font-normal text-[11px]">${formattedDate ?? "N/A"}</span>
                                 </div>
                             </div>
                             <div class="flex justify-between pt-3">
@@ -795,7 +848,7 @@ function InfoWindowContent(salesman) {
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Transaction Sales:</span>
-                                    <span class="font-normal text-[11px]">${salesman.transaction_sales ?? "₱ 3,823.74 (3 SKU) "}</span>
+                                    <span class="font-normal text-[11px]">₱ ${salesman.stores[storeIndex].transaction_sales} " (3 SKU) "</span>
                                 </div>
                             </div>
                         </div>
@@ -812,7 +865,7 @@ function InfoWindowContent(salesman) {
                                         <span class="text-[13px]">Transaction Items</span>
                                     </div>
                                     <span class="flex items-center gap-1">
-                                        ₱ 7,147.93 (14 SKU)
+                                        ₱ 7,147.93 ( SKU)
                                         <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
                                     </span>
                                 </div>
@@ -949,8 +1002,8 @@ $(document).on("click", "#fitScreenTable", function () {
         searchInput: "#customSearch",
 
         onSuccess: (data) => {
-            console.log("Dashboard data:", data);
-            console.log("Dashboard count:", data.length);
+            // console.log("Dashboard data:", data);
+            // console.log("Dashboard count:", data.length);
 
             // Force DataTables to recalculate widths
             const table = $("#fitScreenTable").DataTable();
@@ -1006,22 +1059,25 @@ document.addEventListener("fullscreenchange", function () {
 function getSidePanelContent(salesman) {
     
     if (!salesman) return;
-
+    let totalSales = 0;
     rowData = salesman;
+
     console.log("rowdata sidepanel",salesman);
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
 
+    salesman.stores?.forEach(store => {
+        totalSales += Number(store.transaction_sales ?? 0);
+    });
+
+    console.log("total",totalSales);
     $("#Salesman_Name").text(salesman.salesman_name);
-    $("#SalesmanTotal_Sales").text(salesman.sale);
+    $("#SalesmanTotal_Sales").text(totalSales);
+    $("#VisitedStore").text(salesman.stores.length);
 
     $("#storeName").text(
         salesman.stores?.[storeIndex]?.store_name ?? "No Store"
     );
 }
-
-   // Initial button state
-    // $(".side_Prev").prop("disabled", true);
-    // $(".side_Next").prop("disabled", storeLength <= 0);
 
 $(document)
     .off("click.storeNav", ".side_Next")
@@ -1030,8 +1086,12 @@ $(document)
 
         if (storeIndex <= storeLength) {
             storeIndex++;
-
+            console.log("store index val plus",storeIndex)
             const newStore = currentInfoSalesman.stores[storeIndex];
+
+            infoWindow.setContent(
+                InfoWindowContent(currentInfoSalesman)
+            );
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
             $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
@@ -1056,8 +1116,12 @@ $(document)
 
         if (storeIndex > 0) {
             storeIndex--;
-
+            console.log("store index val minus",storeIndex)
             const newStore = currentInfoSalesman.stores[storeIndex];
+
+            infoWindow.setContent(
+                InfoWindowContent(currentInfoSalesman)
+            );
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
             $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
@@ -1079,11 +1143,13 @@ $(document)
 $(document).on('click', '.toggle-item-table', function () {
     const $container = $(this).siblings('#infoWindowTableContainer');
     const $icon = $(this).find('.toggle-icon');
-
+    tableLength = getTableLength();
     $container.slideToggle(200);
     $icon.toggleClass('rotate-180');
 
     $(".ViewTable_Container").toggleClass("hidden");
+
+    console.log("length of table",tableLength);
 });
 
 $(document).on("mouseenter", ".Transaction_Container", function(){
@@ -1094,15 +1160,11 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
     $(this).removeClass("font-bold");
 });
 
-
 function updateStoreNavButtons() {
     if (!currentInfoSalesman || !currentInfoSalesman.stores) return;
 
     const lastIndex = currentInfoSalesman.stores.length - 1;
-
-    // $(".side_Prev, #infoPrev").prop("disabled", storeIndex <= 0);
-    // $(".side_Next, #infoNext").prop("disabled", storeIndex >= lastIndex);
-
+ 
     $(".side_Prev, #infoPrev")
     .prop("disabled", storeIndex <= 0)
     .toggleClass("nav-disabled", storeIndex <= 0);
@@ -1112,52 +1174,10 @@ function updateStoreNavButtons() {
     .toggleClass("nav-disabled", storeIndex >= lastIndex);
 }
 
-// Initial button state
-// $("#infoPrev").prop("disabled", true);
-// $("#infoNext").prop("disabled", storeLength <= 0);
+function getTableLength() {
+    const table = $("#infoWindowTableContent").DataTable();
 
-
-// $(document).on("click","#infoNext",function(){
-//     console.log("asq");
-//     if (storeIndex < storeLength) {
-
-//         storeIndex++;
-
-//         console.log("Store Index:", storeIndex);
-
-//         $("#InfoStoreName").text(
-//             rowData.stores[storeIndex]?.store_name ?? "No Store"
-//         );
-
-//         // Disable Next at last store
-//         $("#infoNextt").prop(
-//             "disabled",
-//             storeIndex === storeLength
-//         );
-
-//         // Enable Previous
-//         $("#infoNext").prop("disabled", false);
-//     }
-// }); 
-    
-// $("#infoPrev").on("click", function() {
-
-// if (storeIndex > 0) {
-
-//     storeIndex--;
-
-//     console.log("Store Index:", storeIndex);
-
-//     $("#InfoStoreName").text(
-//         rowData.stores[storeIndex]?.store_name ?? "No Store"
-//     );
-
-//     // Disable Previous at first store
-//     $("#infoPrev").prop(
-//         "disabled",
-//         storeIndex === 0
-//     );
-
-//     // Enable Next
-//     $("#infoPrev").prop("disabled", false);
-// }});
+    const length = table.column(1).data().length;
+    return length;
+    //console.log("table length",length);
+}

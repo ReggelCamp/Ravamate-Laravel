@@ -505,7 +505,7 @@
                                     <div class="flex flex-col leading-5 border-l  border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Visited</span>
-                                            <span class="font-semibold">{{ $stats->visited ?? 0 }}</span>
+                                            <span id="VisitedStore" class="font-semibold"></span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Balance</span>
