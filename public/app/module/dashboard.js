@@ -64,9 +64,22 @@ const SalesmanColumns = [
     },
     {
         title: "Sales",
-        data: "sale",
+        data: null,
         className: "text-end",
-    },
+
+        render: function (data, type, row) {
+
+            let totalSales = 0;
+
+            row.stores?.forEach(store => {
+                totalSales += Number(store.transaction_sales ?? 0);
+            });
+
+            console.log("Total Sales:", totalSales);
+
+            return totalSales.toLocaleString();
+        }
+    }
 ];
 
 const OperationItems = [
@@ -395,7 +408,7 @@ TableLoader.loadTable({
     pageLength: 5,
     searchInput:"#customSearch",
     onSuccess: (data) => {
-        // console.log("Dashboard data:", data);
+        console.log("Dashboard data:", data);
         // console.log("Dashboard count:", data.length);
         // console.log("load table",ExpandTable);
         // IMPORTANT

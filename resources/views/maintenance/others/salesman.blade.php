@@ -52,83 +52,86 @@
 
     <dialog id="AddSalesman" class="modal">
         <div class="modal-box p-0 w-11/12 max-w-3xl">
-            <form method="dialog">
-                <button class=" btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
+            <button type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onclick="AddSalesman.close()">✕</button>
 
             <h3 class="text-lg font-bold p-5">New Salesman</h3>
 
             <div class="flex w-full border-t-1 text-gray-400"></div>
 
-            <div class="flex w-full flex-col p-5">
+            <form id="AddSalesmanForm" class="flex w-full flex-col p-5">
 
                 <div class="flex justify-between items-center">
                     <span> Name </span>
-                    <input type="text" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <input type="text" name="salesman_name" required placeholder="Type here" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Password </span>
-                    <input type="password" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <input type="password" name="password" required minlength="8" placeholder="At least 8 characters" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Call Time </span>
-                    <input type="time" value="07:00 AM" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <input type="time" name="call_time" value="07:00" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Default Ord. Type </span>
-                    <input type="text" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <select name="default_ord_type" class="select select-bordered w-[350px]">
+                        <option value="BOOKING">BOOKING</option>
+                        <option value="VAN SELLING">VAN SELLING</option>
+                        <option value="PRE BOOKING">PRE BOOKING</option>
+                        <option value="LOGISTICS">LOGISTICS</option>
+                        <option value="HYBRID">HYBRID</option>
+                    </select>
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Loading Capacity (₱) </span>
-                    <input type="text" value="0" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <input type="number" name="loading_capacity" value="0" min="0" step="0.01" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Color </span>
-                    <input type="color" placeholder="Type here" class="input input-bordered w-[350px]" />
+                    <input type="color" name="color" value="#ff0000" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Contact No. </span>
-                    <input type="text" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="contact_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Cashier(Mobile #) </span>
-                    <input type="text" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="cashier_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Supervisor Name </span>
-                    <input type="text" placeholder="supervisor name" class="input input-bordered w-[350px]" />
+                    <input type="text" name="supervisor_name" placeholder="Supervisor name" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Supervisor (Mobile #) </span>
-                    <input type="text" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="supervisor_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="justify-end flex w-full gap-3">
-                    <form method="dialog">
-                        <button class="btn btn-default">Close</button>
-                    </form>
-                    <button class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-default" onclick="AddSalesman.close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </div>
-            </div>
+            </form>
         </div>
     </dialog>
 

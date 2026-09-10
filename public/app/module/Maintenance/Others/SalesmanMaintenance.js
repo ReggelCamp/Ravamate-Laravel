@@ -43,6 +43,8 @@
 import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
+import Api from "../../../helper/Api.js";
+
 const SalesmanMaintenanceTable = [
     {
         title: "Md Code",
@@ -255,3 +257,27 @@ function toggleSalesmanPassword(btn) {
     icon.classList.toggle("fa-eye");
     icon.classList.toggle("fa-eye-slash");
 }
+
+$("#AddSalesmanForm").on("submit", function (e) {
+
+    e.preventDefault();
+
+    console.log("Adding salesman...");
+
+    Api.post({
+        url: "/salesman/createSalesman",
+        data: $(this).serialize(),
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+
+        onSuccess: (data) => {
+            this.reset();
+            AddSalesman.close();
+            alert(data.message);
+        },
+        on422: (xhr) => {
+            const errors = Object.values(xhr.responseJSON.errors ?? {}).flat().join("\n");
+            alert(errors || "Please check the salesman details.");
+        },
+        onError: () => alert("Unable to create the salesman. Please try again.")
+    });
+});

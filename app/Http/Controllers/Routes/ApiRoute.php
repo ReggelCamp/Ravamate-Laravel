@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Routes;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SalesmanModelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,10 @@ class ApiRoute extends Controller
             Route::get('/getSalesmanInfo', [DashboardController::class, 'getSalesmanInfo']);
             Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
             Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
+        });
+
+        Route::prefix('salesman')->group(function () {
+            Route::post('/createSalesman',[SalesmanModelController::class, 'CreateSalesman']);
         });
     }
 }
