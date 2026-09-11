@@ -27,6 +27,15 @@ let currentInfoSalesman = null;
 let tableLength;
 let dashboardLoadVersion = 0;
 
+let globalSkuCount = 0;
+let globalTotalSku = 0;
+
+// The dashboard opens with the last completed business day selected.
+// Clone before subtracting so the current moment is never mutated.
+const defaultDashboardDate = moment()
+    .subtract(1, "day")
+    .format("YYYY-MM-DD");
+
 
 const SalesmanColumns = [
     {
@@ -94,7 +103,7 @@ const SalesmanColumns = [
         render: function (data, type, row) {
 
             let totalSales = 0;
-
+            console.log("FE",row);
             row.stores?.forEach(store => {
                 totalSales += Number(store.transaction_sales ?? 0);
             });
@@ -312,7 +321,10 @@ $(document)
 
         console.log("data",rowData.id);
         getSidePanelContent(rowData);
-        getSku(rowData);
+        // getSku(rowData);
+        getSku(rowData,"#sfaQueuingModalTable");
+
+        //$("#SideSku").text(length);
 
     });
 
@@ -467,7 +479,7 @@ function loadDashboardData(date = null) {
     });
 }
 
-loadDashboardData();
+loadDashboardData(defaultDashboardDate);
 
 function displayInfoWindow() {
     if (!array || array.length === 0) {
@@ -519,20 +531,6 @@ function displayInfoWindow() {
 
         // Insert component into InfoWindow
         $("#infoWindowTableContainer").empty().append(tableComponent);
-
-        // TableLoader.tableData(
-        //     "#infoWindowTableContent",
-        //     SampleData,
-        //     ProductColumns,
-        //     {
-        //         searching: false,
-        //         ordering: false,
-        //         lengthChange: false,
-        //         pageLength: 5,
-        //         scrollY: "200px",
-        //         scrollX: false,
-        //     },
-        // );
 
         console.log("DataTable component inserted");
     });
@@ -713,11 +711,10 @@ function displayInfoWindow() {
                 latestInfoWindow,
                 "domready",
                 () => {
-
                     $("#latestInfo_Container")
                         .off("click.latest")
                         .on("click.latest", () => {
-                            getSku(latest);
+                            // getSku(latest);
                             map.panTo(marker.getPosition());
                             map.setZoom(17);
 
@@ -799,7 +796,7 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
 
             latest = data;
             console.log("latest:", latest);
-            displayInfoWindow();
+            displayInfoWindow();    
         },
     });
 }
@@ -927,10 +924,11 @@ function InfoWindowContent(salesman) {
                                         <span class="text-[13px]">Transaction Items</span>
                                     </div>
                                     <div class="flex gap-1 items-center">
-                                        <span>
-                                            ₱ 7,147.93
+                                        <span id="TotalSku" >
+                                            ${globalTotalSku}
                                         </span>
                                         <span class="Sku_Num">
+                                        ${globalSkuCount}
                                         </span>
                                         <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
                                     </div>
@@ -1008,10 +1006,29 @@ function openInfoWindowFor(salesman, marker) {
 $(document).ready(function () {
     DatePicker.init();
 
+    // The picker starts at today even though the initial dashboard data uses
+    // the last completed business day.
+    const dashboardDatePicker = $("#dashboardDatePicker").data("daterangepicker");
+    if (dashboardDatePicker) {
+        const today = moment();
+        dashboardDatePicker.setStartDate(today);
+        dashboardDatePicker.setEndDate(today);
+    }
+
     $("#dashboardDatePicker")
         .off("apply.daterangepicker.dashboard")
         .on("apply.daterangepicker.dashboard", function (event, picker) {
             loadDashboardData(picker.startDate.format("YYYY-MM-DD"));
+        });
+
+    $("#dashboardDatePicker")
+        .off("cancel.daterangepicker.dashboard")
+        .on("cancel.daterangepicker.dashboard", function () {
+            const today = moment();
+
+            dashboardDatePicker?.setStartDate(today);
+            dashboardDatePicker?.setEndDate(today);
+            loadDashboardData(today.format("YYYY-MM-DD"));
         });
 });
 
@@ -1127,30 +1144,6 @@ document.addEventListener("fullscreenchange", function () {
     }
 });
 
-
-function getSidePanelContent(salesman) {
-    
-    if (!salesman) return;
-    let totalSales = 0;
-    rowData = salesman;
-
-    console.log("rowdata sidepanel",salesman);
-    storeNames = salesman.stores?.map(store => store.store_name) ?? [];
-
-    salesman.stores?.forEach(store => {
-        totalSales += Number(store.transaction_sales ?? 0);
-    });
-
-    console.log("total",totalSales);
-    $("#Salesman_Name").text(salesman.salesman_name);
-    $("#SalesmanTotal_Sales").text(totalSales);
-    $("#CurrentDayValue").text(totalSales);
-    $("#VisitedStore").text(salesman.stores.length);
-
-    $("#storeName").text(
-        salesman.stores?.[storeIndex]?.store_name ?? "No Store"
-    );
-}
 
 $(document)
     .off("click.storeNav", ".side_Next")
@@ -1268,16 +1261,16 @@ $(document)
         getSku(rowData, "#infoWindowTableContent");
     });
 
-$("#Sku_Container").on("click",function(){
-    const tableId = $(this).data("table");
-    const length = getTableLength(tableId);
+// $("#Sku_Container").on("click",function(){
+//     const tableId = $(this).data("table");
+//     const length = getTableLength(tableId);
 
-    console.log("Clicked table:", tableId);
-    console.log("Table length:", length);
+//     console.log("Clicked table:", tableId);
+//     console.log("Table length:", length);
 
-    $(this).find("#SkuCount").text(`(${length} SKU)`);
-    $("#SideSku").text(length);
-});
+//     $(this).find("#SkuCount").text(`(${length} SKU)`);
+//     $("#SideSku").text(length);
+// });
 
 function DateFormatter(transactionDate, type = "datetime") {
     const date = new Date(transactionDate);
@@ -1300,18 +1293,68 @@ function DateFormatter(transactionDate, type = "datetime") {
     });
 }
 
-function getSku(data, tableId = "#sfaQueuingModalTable") {
+// function getSku(data, tableId = "#sfaQueuingModalTable") {
+// function getSku(data, tableId ) {
+//     const selectedStore = data?.stores?.[storeIndex];
+//     const selectedTransaction = data?.transactions?.find(
+//         (transaction) => String(transaction.store_id) === String(selectedStore?.store_id),
+//     ) ?? data?.transactions?.[0];
+//     const transactionId = selectedStore?.transaction_id
+//         ?? selectedTransaction?.transaction_id
+//         ?? data?.transaction_id;
+
+//     if (!transactionId) {
+//         renderProductTable(tableId, []);
+//         $(".Sku_Num").text("(0 SKU)");
+//         return;
+//     }
+
+//     Api.get({
+//         url: "product/getProduct",
+//         data: {
+//             transaction_id: transactionId,
+//         },
+//         onSuccess: (products) => {
+//             const productRows = products.data ?? [];
+//             //let totalAmt = 0;
+
+//             //totalAmt += products.amount;
+
+//             console.log("pro",productRows);
+           
+//             renderProductTable(tableId, productRows);
+//             const length = products.length ?? productRows.length;
+//             const total = productRows.reduce((sum, item) => sum + item.amount, 0);
+
+//             console.log("po",total);
+
+//             $(".Sku_Num").text(`(${length} SKU)`);
+//             $("#TotalSku").text(`₱ ${total}`);
+//         },
+//     });
+// }
+
+function getSku(data, tableId) {
     const selectedStore = data?.stores?.[storeIndex];
+
     const selectedTransaction = data?.transactions?.find(
-        (transaction) => String(transaction.store_id) === String(selectedStore?.store_id),
+        (transaction) =>
+            String(transaction.store_id) === String(selectedStore?.store_id)
     ) ?? data?.transactions?.[0];
-    const transactionId = selectedStore?.transaction_id
+
+    const transactionId =
+        selectedStore?.transaction_id
         ?? selectedTransaction?.transaction_id
         ?? data?.transaction_id;
 
     if (!transactionId) {
+        globalSkuCount = 0;
+        globalTotalSku = 0;
+
         renderProductTable(tableId, []);
         $(".Sku_Num").text("(0 SKU)");
+        $("#TotalSku").text("₱ 0");
+
         return;
     }
 
@@ -1320,19 +1363,51 @@ function getSku(data, tableId = "#sfaQueuingModalTable") {
         data: {
             transaction_id: transactionId,
         },
+
         onSuccess: (products) => {
             const productRows = products.data ?? [];
-            let totalAmt = 0;
 
-            //totalAmt += products.amount;
+            globalSkuCount = products.length ?? productRows.length;
 
-            console.log("pro",productRows);
-            console.log("po",products.amount);
+            globalTotalSku = productRows.reduce(
+                (sum, item) => sum + Number(item.amount ?? 0),
+                0
+            );
+
+            console.log("SKU count:", globalSkuCount);
+            console.log("Total:", globalTotalSku);
+
             renderProductTable(tableId, productRows);
-            const length = products.length ?? productRows.length;
-            $(".Sku_Num").text(`(${length} SKU)`);
+
+            $(".Sku_Num").text(`(${globalSkuCount} SKU)`);
+            $("#TotalSku").text(`₱ ${globalTotalSku}`);
         },
     });
+}
+
+function getSidePanelContent(salesman) {
+    if (!salesman) return;
+    let totalSales = 0;
+    rowData = salesman;
+
+    console.log("rowdata sidepanel",salesman);
+    storeNames = salesman.stores?.map(store => store.store_name) ?? [];
+
+    salesman.stores?.forEach(store => {
+        totalSales += Number(store.transaction_sales ?? 0);
+    });
+
+    console.log("total",totalSales);
+    $("#Salesman_Name").text(salesman.salesman_name);
+    $("#SalesmanTotal_Sales").text(totalSales);
+    $("#CurrentDayValue").text(globalTotalSku);
+    $("#VisitedStore").text(salesman.stores.length);
+    
+    $("#SkuCount").text(globalSkuCount);
+
+    $("#storeName").text(
+        salesman.stores?.[storeIndex]?.store_name ?? "No Store"
+    );
 }
 
 function renderProductTable(tableId, products) {
