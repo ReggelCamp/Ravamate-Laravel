@@ -25,6 +25,7 @@ let InfoStoreLength = 0;
 let currentInfoSalesman = null; 
 
 let tableLength;
+let dashboardLoadVersion = 0;
 
 
 const SalesmanColumns = [
@@ -34,8 +35,31 @@ const SalesmanColumns = [
     },
     {
         title: "Attendance",
-        data: "attendance",
+        data: null,
         className: "text-center",
+
+        render: function(row) {
+
+            const transactionDate = row.stores?.[0]?.transaction_date;
+
+            if (!transactionDate) {
+                return "No Transaction";
+            }
+
+            const date = new Date(transactionDate);
+
+            const transactionMinutes =
+                date.getHours() * 60 +
+                date.getMinutes();
+
+            const cutoffMinutes = 8 * 60;
+
+            if (transactionMinutes < cutoffMinutes) {
+                return "Early";
+            }
+
+            return "Late";
+        }
     },
     {
         title: "Target MCP",
@@ -100,7 +124,7 @@ const OperationItems = [
 const ProductColumns = [
     {
         title: "StockCode",
-        data: "stock_code",
+        data: "StockCode",
     },
     {
         title: "Description",
@@ -286,7 +310,10 @@ $(document)
             console.log("No marker found for this row.");
         }
 
+        console.log("data",rowData.id);
         getSidePanelContent(rowData);
+        getSku(rowData);
+
     });
 
 // Date BTN
@@ -394,29 +421,53 @@ $(document).on("click", "#Mtd_Overview_Btn", function () {
     $("#Current_Day_Btn").removeClass("hidden");
 });
 
-TableLoader.tableData("#sfaQueuingModalTable", SampleData, ProductColumns, {
+TableLoader.tableData("#sfaQueuingModalTable", [], ProductColumns, {
     pageLength: 10,
     scrollY: "500px",
 });
 
-TableLoader.loadTable({
-    // url: "getDashboardTable",
-    url: "dashboard/getSalesmanInfo",
-    tableId: "#dashboardDataTable",
-    columns: SalesmanColumns,
-    scrollY: "200px",
-    pageLength: 5,
-    searchInput:"#customSearch",
-    onSuccess: (data) => {
-        console.log("Dashboard data:", data);
-        // console.log("Dashboard count:", data.length);
-        // console.log("load table",ExpandTable);
-        // IMPORTANT
-        array = data;
+function clearDashboardMarkers() {
+    Object.values(markersById).flat().forEach(({ marker }) => marker.setMap(null));
+    markersById = {};
 
-        getlatestTransaction();
-    },
-});
+    latestInfoWindow?.close();
+    infoWindow?.close();
+    latestInfoWindow = null;
+    latestMarker = null;
+    currentMarker = null;
+}
+
+function loadDashboardData(date = null) {
+    const loadVersion = ++dashboardLoadVersion;
+    clearDashboardMarkers();
+    array = [];
+
+    if ($.fn.DataTable.isDataTable("#dashboardDataTable")) {
+        $("#dashboardDataTable").DataTable().destroy();
+    }
+
+    TableLoader.loadTable({
+        url: "dashboard/getSalesmanInfo",
+        filters: date ? { date } : undefined,
+        tableId: "#dashboardDataTable",
+        columns: SalesmanColumns,
+        scrollY: "200px",
+        pageLength: 5,
+        searchInput:"#customSearch",
+        onSuccess: (data) => {
+            if (loadVersion !== dashboardLoadVersion) return;
+
+            console.log("Dashboard data:", data);
+            array = data;
+
+            if (data.length) {
+                getlatestTransaction(date, loadVersion);
+            }
+        },
+    });
+}
+
+loadDashboardData();
 
 function displayInfoWindow() {
     if (!array || array.length === 0) {
@@ -469,19 +520,19 @@ function displayInfoWindow() {
         // Insert component into InfoWindow
         $("#infoWindowTableContainer").empty().append(tableComponent);
 
-        TableLoader.tableData(
-            "#infoWindowTableContent",
-            SampleData,
-            ProductColumns,
-            {
-                searching: false,
-                ordering: false,
-                lengthChange: false,
-                pageLength: 5,
-                scrollY: "200px",
-                scrollX: false,
-            },
-        );
+        // TableLoader.tableData(
+        //     "#infoWindowTableContent",
+        //     SampleData,
+        //     ProductColumns,
+        //     {
+        //         searching: false,
+        //         ordering: false,
+        //         lengthChange: false,
+        //         pageLength: 5,
+        //         scrollY: "200px",
+        //         scrollX: false,
+        //     },
+        // );
 
         console.log("DataTable component inserted");
     });
@@ -593,7 +644,7 @@ function displayInfoWindow() {
         if (isLatestStore) {
             console.log("latest info",latestStore);
             latestMarker = marker;
-
+           
             latestInfoWindow = new google.maps.InfoWindow({
                 
                 content: `
@@ -666,7 +717,7 @@ function displayInfoWindow() {
                     $("#latestInfo_Container")
                         .off("click.latest")
                         .on("click.latest", () => {
-                            
+                            getSku(latest);
                             map.panTo(marker.getPosition());
                             map.setZoom(17);
 
@@ -738,11 +789,14 @@ $(document).on("click", ".tabs [type='radio'].tab", function () {
     }
 });
 
-function getlatestTransaction() {
+function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
     Api.get({
         url: "dashboard/getLatestTransaction",
+        data: date ? { date } : undefined,
 
         onSuccess: (data) => {
+            if (loadVersion !== dashboardLoadVersion || !data) return;
+
             latest = data;
             console.log("latest:", latest);
             displayInfoWindow();
@@ -754,18 +808,11 @@ function getlatestTransaction() {
 function InfoWindowContent(salesman) {
     console.log("salesman infoWindow",salesman);
     console.log("salesman storeindex",storeIndex);
-    const InfoTableSKU = getTableLength();
-    console.log(InfoTableSKU,"wowowow");
-    const date = new Date(salesman.stores[storeIndex].transaction_date);
     
-    const formattedDate = date.toLocaleString("en-PH", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit"
-    });
+    const InfoTableSKU = getTableLength();
+
+    const transactionDate = salesman.stores[storeIndex].transaction_date;
+    const formattedDate = DateFormatter(transactionDate);
     //console.log("Salesman length",formatted);
 
     return `
@@ -960,6 +1007,12 @@ function openInfoWindowFor(salesman, marker) {
 
 $(document).ready(function () {
     DatePicker.init();
+
+    $("#dashboardDatePicker")
+        .off("apply.daterangepicker.dashboard")
+        .on("apply.daterangepicker.dashboard", function (event, picker) {
+            loadDashboardData(picker.startDate.format("YYYY-MM-DD"));
+        });
 });
 
 function updateLiveDateTime() {
@@ -1091,6 +1144,7 @@ function getSidePanelContent(salesman) {
     console.log("total",totalSales);
     $("#Salesman_Name").text(salesman.salesman_name);
     $("#SalesmanTotal_Sales").text(totalSales);
+    $("#CurrentDayValue").text(totalSales);
     $("#VisitedStore").text(salesman.stores.length);
 
     $("#storeName").text(
@@ -1208,16 +1262,92 @@ function getTableLength(tableId) {
 }
 
 
-
 $(document)
     .off("click.table", "#InfoTableContainer")
     .on("click.table", "#InfoTableContainer", function () {
-
-        const tableId = $(this).data("table");
-        const length = getTableLength(tableId);
-
-        console.log("Clicked table:", tableId);
-        console.log("Table length:", length);
-
-        $(this).find(".Sku_Num").text(`(${length} SKU)`);
+        getSku(rowData, "#infoWindowTableContent");
     });
+
+$("#Sku_Container").on("click",function(){
+    const tableId = $(this).data("table");
+    const length = getTableLength(tableId);
+
+    console.log("Clicked table:", tableId);
+    console.log("Table length:", length);
+
+    $(this).find("#SkuCount").text(`(${length} SKU)`);
+    $("#SideSku").text(length);
+});
+
+function DateFormatter(transactionDate, type = "datetime") {
+    const date = new Date(transactionDate);
+
+    if (type === "time") {
+        return date.toLocaleTimeString("en-PH", {
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+    }
+
+    return date.toLocaleString("en-PH", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+function getSku(data, tableId = "#sfaQueuingModalTable") {
+    const selectedStore = data?.stores?.[storeIndex];
+    const selectedTransaction = data?.transactions?.find(
+        (transaction) => String(transaction.store_id) === String(selectedStore?.store_id),
+    ) ?? data?.transactions?.[0];
+    const transactionId = selectedStore?.transaction_id
+        ?? selectedTransaction?.transaction_id
+        ?? data?.transaction_id;
+
+    if (!transactionId) {
+        renderProductTable(tableId, []);
+        $(".Sku_Num").text("(0 SKU)");
+        return;
+    }
+
+    Api.get({
+        url: "product/getProduct",
+        data: {
+            transaction_id: transactionId,
+        },
+        onSuccess: (products) => {
+            const productRows = products.data ?? [];
+            let totalAmt = 0;
+
+            //totalAmt += products.amount;
+
+            console.log("pro",productRows);
+            console.log("po",products.amount);
+            renderProductTable(tableId, productRows);
+            const length = products.length ?? productRows.length;
+            $(".Sku_Num").text(`(${length} SKU)`);
+        },
+    });
+}
+
+function renderProductTable(tableId, products) {
+    if (!$(tableId).length) return;
+
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().destroy();
+    }
+
+    TableLoader.tableData(tableId, products, ProductColumns, {
+        searching: false,
+        ordering: false,
+        lengthChange: false,
+        pageLength: 5,
+        scrollY: "200px",
+        scrollX: false,
+    });
+}

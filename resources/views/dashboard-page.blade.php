@@ -363,6 +363,8 @@
 
                     <div class="w-full max-w-4xl mx-auto">
                         <div
+                            id="Sku_Container"
+                            data-table = "sfaQueuingModalTable"
                             class="collapse collapse-arrow bg-white border rounded-4xl border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
                             <input type="checkbox" class="peer" id="salesCollapse" />
                             <div class="collapse-title flex items-center gap-2 p-2 min-h-[30px] peer-checked:bg-gray-50 cursor-pointer">
@@ -373,8 +375,10 @@
                                 <div class="flex flex-col">
                                     <span class="font-bold text-base">
                                         ₱ {{ number_format($sales->amount ?? 252.50, 2) }}
-                                        <span class="font-normal text-sm text-gray-500">
-                                            ({{ $sales->sku_count ?? 1 }} SKU)
+                                        <span 
+                                        id = "SkuCount"
+                                        class="font-normal text-sm text-gray-500">
+                                            {{-- ({{ $sales->sku_count ?? 1 }} SKU) --}}
                                         </span>
                                     </span>
                                     <span class="text-gray-400 text-xs">Sales</span>
@@ -466,12 +470,13 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Item (No. of SKU)</span>
-                                            <span class="font-semibold">{{ $stats->item_count ?? 10 }}</span>
+                                            <span id="SideSku" class="font-semibold"></span>
                                         </div>
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Value (₱)</span>
                                             <span
-                                                class="font-semibold">₱{{ number_format($stats->value ?? 20642.98, 2) }}</span>
+                                                id="CurrentDayValue"
+                                                class="font-semibold">₱</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <div class="flex pl-2 whitespace-nowrap gap-1">
