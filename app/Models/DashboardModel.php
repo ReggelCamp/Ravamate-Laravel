@@ -20,3 +20,4 @@ class DashboardModel extends Model
     }
 
 }
+

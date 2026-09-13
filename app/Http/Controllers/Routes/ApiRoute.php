@@ -19,6 +19,7 @@ class ApiRoute extends Controller
             Route::get('/getSalesmanInfo', [DashboardController::class, 'getSalesmanInfo']);
             Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
             Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
+            Route::get('/getSalesmanSummary', [DashboardController::class, 'getSalesmanSummary']);
         });
 
         Route::prefix('salesman')->group(function () {

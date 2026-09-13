@@ -8,15 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
+
     protected $table = 'transaction';
     protected $primaryKey = 'transaction_id';
     protected $guarded = ['transaction_id'];
 
-    public function TransactionSalesman() {
-        return $this->belongsTo(DashboardModel::class, 'salesman_id');
+    public function TransactionSalesman()
+    {
+        return $this->belongsTo(
+            DashboardModel::class,
+            'salesman_id',
+            'id'
+        );
     }
-    
-    public function TransactionStore() {
-        return $this->belongsTo(StoreModel::class, 'store_id');
+
+    public function TransactionStore()
+    {
+        return $this->belongsTo(
+            StoreModel::class,
+            'store_id',
+            'store_id'
+        );
+    }
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(
+            transactionDetails::class,
+            'transaction_id',
+            'transaction_id'
+        );
     }
 }

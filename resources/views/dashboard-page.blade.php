@@ -220,7 +220,7 @@
 
                 {{-- Salesman Info --}}
                 <div id="Salesman_Container"
-                    class="hidden overflow-auto w-[410px] h-full flex flex-col p-3 gap-2 bg-transparent rounded-2xl">
+                    class="hidden overflow-auto w-full max-w-[410px] h-full flex flex-col p-3 gap-2 bg-transparent rounded-2xl">
 
                     <div class="flex gap-10 w-full">
                         <div>
@@ -373,19 +373,20 @@
                                     <i class="fa-solid fa-peso-sign text-sm"></i>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-base">
-                                        ₱ {{ number_format($sales->amount ?? 252.50, 2) }}
+                                    <div class="flex gap-1">
+                                        <span id="sku_sales" class="font-bold text-base"></span>
+                                        {{-- ₱ {{ number_format($sales->amount ?? 252.50, 2) }} --}}
                                         <span 
                                         id = "SkuCount"
                                         class="font-normal text-sm text-gray-500">
                                             {{-- ({{ $sales->sku_count ?? 1 }} SKU) --}}
                                         </span>
-                                    </span>
+                                    </div>
                                     <span class="text-gray-400 text-xs">Sales</span>
                                 </div>
                             </div>
                             <div class="collapse-content px-4">
-                                <div class="border-t border-gray-200 w-fit pt-3 h-fit ">
+                                <div class="border-t border-gray-200 w-full pt-3 h-fit ">
                                     <x-datatable id="sfaQueuingModalTable" class="" />
                                 </div>
                             </div>
@@ -580,7 +581,7 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Sales</span>
-                                            <span class="font-semibold">₱
+                                            <span id="MtdSalesmanTotal_Sales" class="font-semibold">₱
                                                 {{ number_format($mtd->sales ?? 95218225.80, 2) }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
@@ -710,11 +711,11 @@
                                     <div class="flex flex-col leading-5 border-l  border-[#c2c5c9]  w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Item</span>
-                                            <span class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
+                                            <span id="MtdSku" class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
                                         </div>
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Value</span>
-                                            <span class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
+                                            <span id="MtdValue" class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Time Spent</span>

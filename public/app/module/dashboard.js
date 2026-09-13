@@ -29,6 +29,9 @@ let dashboardLoadVersion = 0;
 
 let globalSkuCount = 0;
 let globalTotalSku = 0;
+let selectedDashboardDate;
+let overviewPeriod = "day";
+let summaryRequestVersion = 0;
 
 // The dashboard opens with the last completed business day selected.
 // Clone before subtracting so the current moment is never mutated.
@@ -308,6 +311,11 @@ $(document)
 
         if (!rowData) return;
 
+        // A table-row selection always starts on that salesman's first store.
+        // Without this, SKU lookup can reuse the store index from a previously
+        // opened map info window.
+        storeIndex = 0;
+
         showRowDetails(rowData);
 
         const entries = markersById[rowData.id];
@@ -424,6 +432,8 @@ $(document).on("click", "#Current_Day_Btn", function () {
 
     $("#Current_Day_Btn").addClass("hidden");
     $("#Mtd_Overview_Btn").removeClass("hidden");
+    overviewPeriod = "mtd";
+    refreshSelectedSalesmanSummary();
 });
 
 $(document).on("click", "#Mtd_Overview_Btn", function () {
@@ -431,6 +441,8 @@ $(document).on("click", "#Mtd_Overview_Btn", function () {
 
     $("#Mtd_Overview_Btn").addClass("hidden");
     $("#Current_Day_Btn").removeClass("hidden");
+    overviewPeriod = "day";
+    refreshSelectedSalesmanSummary();
 });
 
 TableLoader.tableData("#sfaQueuingModalTable", [], ProductColumns, {
@@ -451,6 +463,7 @@ function clearDashboardMarkers() {
 
 function loadDashboardData(date = null) {
     const loadVersion = ++dashboardLoadVersion;
+    selectedDashboardDate = date ?? moment().format("YYYY-MM-DD");
     clearDashboardMarkers();
     array = [];
 
@@ -469,6 +482,10 @@ function loadDashboardData(date = null) {
         onSuccess: (data) => {
             if (loadVersion !== dashboardLoadVersion) return;
 
+            if(data == 0){
+                console.log("no data");
+                Swal.fire("No data available on selected date");
+            }
             console.log("Dashboard data:", data);
             array = data;
 
@@ -925,10 +942,10 @@ function InfoWindowContent(salesman) {
                                     </div>
                                     <div class="flex gap-1 items-center">
                                         <span id="TotalSku" >
-                                            ${globalTotalSku}
+                                           
                                         </span>
                                         <span class="Sku_Num">
-                                        ${globalSkuCount}
+                                        
                                         </span>
                                         <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
                                     </div>
@@ -1072,6 +1089,7 @@ TableLoader.tableData(
     },
 );
 
+// fit to screen table
 $(document).on("click", "#fitScreenTable", function () {
 
     $("#fitScreenSalesmanToolbar").removeClass("hidden");
@@ -1367,7 +1385,7 @@ function getSku(data, tableId) {
         onSuccess: (products) => {
             const productRows = products.data ?? [];
 
-            globalSkuCount = products.length ?? productRows.length;
+            globalSkuCount = Number(products.length ?? productRows.length);
 
             globalTotalSku = productRows.reduce(
                 (sum, item) => sum + Number(item.amount ?? 0),
@@ -1380,34 +1398,67 @@ function getSku(data, tableId) {
             renderProductTable(tableId, productRows);
 
             $(".Sku_Num").text(`(${globalSkuCount} SKU)`);
-            $("#TotalSku").text(`₱ ${globalTotalSku}`);
+            $("#TotalSku").text(formatCurrency(globalTotalSku));
         },
     });
 }
 
 function getSidePanelContent(salesman) {
     if (!salesman) return;
-    let totalSales = 0;
     rowData = salesman;
 
     console.log("rowdata sidepanel",salesman);
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
 
-    salesman.stores?.forEach(store => {
-        totalSales += Number(store.transaction_sales ?? 0);
-    });
-
-    console.log("total",totalSales);
     $("#Salesman_Name").text(salesman.salesman_name);
-    $("#SalesmanTotal_Sales").text(totalSales);
-    $("#CurrentDayValue").text(globalTotalSku);
-    $("#VisitedStore").text(salesman.stores.length);
-    
-    $("#SkuCount").text(globalSkuCount);
+    $("#VisitedStore").text(salesman.stores?.length ?? 0);
 
     $("#storeName").text(
         salesman.stores?.[storeIndex]?.store_name ?? "No Store"
     );
+
+    refreshSelectedSalesmanSummary();
+}
+
+function formatCurrency(value) {
+    return `₱ ${Number(value ?? 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`;
+}
+
+function refreshSelectedSalesmanSummary() {
+    if (!rowData?.id || !selectedDashboardDate) return;
+
+    const requestVersion = ++summaryRequestVersion;
+    Api.get({
+        url: "dashboard/getSalesmanSummary",
+        data: {
+            salesman_id: rowData.id,
+            date: selectedDashboardDate,
+            period: overviewPeriod,
+        },
+        onSuccess: (summary) => {
+            if (requestVersion !== summaryRequestVersion) return;
+
+            const sales = formatCurrency(summary.sales);
+            const skuCount = Number(summary.sku_count ?? 0);
+
+            if (overviewPeriod === "mtd") {
+                $("#MtdSalesmanTotal_Sales").text(sales);
+                $("#MtdSku").text(skuCount);
+                $("#MtdValue").text(sales);
+                return;
+            }
+
+            $("#SalesmanTotal_Sales").text(sales);
+            $("#SkuCount").text(`(${skuCount} SKU)`);
+            $("#SideSku").text(skuCount);
+            $("#CurrentDayValue").text(sales);
+            $("#VisitedStore").text(summary.visited_stores ?? 0);
+            $("#sku_sales").text(sales ?? 0);
+        },
+    });
 }
 
 function renderProductTable(tableId, products) {
