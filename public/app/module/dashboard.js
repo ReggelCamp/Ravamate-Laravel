@@ -29,6 +29,9 @@ let dashboardLoadVersion = 0;
 
 let globalSkuCount = 0;
 let globalTotalSku = 0;
+
+let TableTotalSku = 0;
+
 let selectedDashboardDate;
 let overviewPeriod = "day";
 let summaryRequestVersion = 0;
@@ -52,13 +55,24 @@ const SalesmanColumns = [
 
         render: function(row) {
 
-            const transactionDate = row.stores?.[0]?.transaction_date;
+            // The attendance cut-off check uses the transaction date from the
+            // transaction model (transaction.transaction_date). Use the
+            // salesman's earliest transaction of the selected business day.
+            const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
 
-            if (!transactionDate) {
+            const transactionTimes = (row.transactions ?? [])
+                .filter((transaction) =>
+                    moment(transaction.transaction_date).isSame(filterDay, "day")
+                )
+                .map((transaction) =>
+                    new Date(transaction.transaction_date).getTime()
+                );
+
+            if (!transactionTimes.length) {
                 return "No Transaction";
             }
 
-            const date = new Date(transactionDate);
+            const date = new Date(Math.min(...transactionTimes));
 
             const transactionMinutes =
                 date.getHours() * 60 +
@@ -98,24 +112,32 @@ const SalesmanColumns = [
         data: "selling_hrs",
         className: "text-nowrap",
     },
-    {
-        title: "Sales",
-        data: null,
-        className: "text-end",
+{
+    title: "Sales",
+    data: null,
+    className: "text-end",
 
-        render: function (data, type, row) {
-
-            let totalSales = 0;
-            console.log("FE",row);
-            row.stores?.forEach(store => {
-                totalSales += Number(store.transaction_sales ?? 0);
+    render: function (data, type, row) {
+        let totalSales = 0; 
+        
+        const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+        
+        console.log("fg",selectedDashboardDate);
+        row.transactions?.forEach(transaction => {
+            const dailyTransaction = moment(transaction.transaction_date);
+            if (!dailyTransaction.isSame(filterDay, "day")) {
+                return;
+            }
+            transaction.transaction_details?.forEach(detail => {
+                const quantity = Number(detail.quantity ?? 0);
+                const price = Number(detail.product_details?.price ?? 0);
+                totalSales += quantity * price;
             });
+        });
 
-            console.log("Total Sales:", totalSales);
-
-            return totalSales.toLocaleString();
-        }
+        return totalSales.toLocaleString();
     }
+}
 ];
 
 const OperationItems = [
@@ -287,17 +309,6 @@ const OperationColumns = [
     },
 ];
 
-const sampleOperationData = [
-    {
-        operation_type: "Booking",
-        target_mcp: 45,
-        productive: 32,
-        unproductive: 13,
-        strike_rate: "71.1%",
-        sales: "₱125,400.00",
-    },
-];
-
 // Total amount
 const TotalAmount = "₱79,209.90";
 
@@ -305,7 +316,7 @@ $(document)
     .off("click.dashboardRow", "#dashboardDataTable tbody tr")
     .on("click.dashboardRow", "#dashboardDataTable tbody tr", function () {
         if (!$.fn.DataTable.isDataTable("#dashboardDataTable")) return;
-
+        
         const dashboardTable = $("#dashboardDataTable").DataTable();
         rowData = dashboardTable.row(this).data();
 
@@ -317,12 +328,12 @@ $(document)
         storeIndex = 0;
 
         showRowDetails(rowData);
-
+        //console.log("fer",rowData);
         const entries = markersById[rowData.id];
 
         if (entries && entries.length) {
             const entry = entries[0]; // same salesman object regardless of which store entry
-            openInfoWindowFor(entry.salesman, entry.marker);
+            openInfoWindowFor(entry.salesman, entry.marker, 0);
         } else {
             console.log("No marker found for this row.");
         }
@@ -623,7 +634,7 @@ function displayInfoWindow() {
             marker,
             salesman,
             store,
-            storeIndex
+            storeIndex: index
         });
 
 
@@ -632,7 +643,7 @@ function displayInfoWindow() {
 
             console.log("Marker clicked:", salesman.salesman_name);
             console.log("Store clicked:", store.store_name);
-            console.log("Store index:", storeIndex);
+            console.log("Store index:", index);
 
             if (salesman.id != latest.id && latestMarker) {
                 latestMarker.setAnimation(null);
@@ -640,11 +651,14 @@ function displayInfoWindow() {
 
             currentMarker = marker;
             currentInfoSalesman = salesman;
+            rowData = salesman;
+            storeIndex = index;
             window.storeIndex = storeIndex;
 
-            openInfoWindowFor(salesman, marker);
+            openInfoWindowFor(salesman, marker, index);
             showRowDetails(salesman);
             getSidePanelContent(salesman);
+            getSku(salesman, "#sfaQueuingModalTable");
         });
 
 
@@ -749,6 +763,7 @@ function displayInfoWindow() {
 
                             showRowDetails(salesman);
                             getSidePanelContent(salesman);
+                            getSku(salesman, "#sfaQueuingModalTable");
 
                             // infoWindow.setContent(
                             //     InfoWindowContent(salesman)
@@ -820,13 +835,31 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
 
 // function InfoWindowContent(salesman) {
 function InfoWindowContent(salesman) {
-    console.log("salesman infoWindow",salesman);
+    console.log("salesman infoWindow oww",salesman);
     console.log("salesman storeindex",storeIndex);
-    
+    let TotalSalesOnStore = 0;
     const InfoTableSKU = getTableLength();
+    
+    // The transaction date shown in the info window comes from the transaction
+    // model (transaction.transaction_date) for the selected store.
+    const selectedStore = salesman.stores?.[storeIndex];
+    const selectedTransaction = salesman.transactions?.find(
+        (transaction) =>
+            String(transaction.store_id) === String(selectedStore?.store_id)
+    );
 
-    const transactionDate = salesman.stores[storeIndex].transaction_date;
-    const formattedDate = DateFormatter(transactionDate);
+    salesman.transactions?.forEach(transaction => {
+        transaction.transaction_details?.forEach(detail => {
+            const quantity = Number(detail.quantity ?? 0);
+            const price = Number(detail.product_details?.price ?? 0);
+            TotalSalesOnStore += quantity * price;
+        });
+    });
+
+    const transactionDate =
+        selectedTransaction?.transaction_date
+        ?? selectedStore?.transaction_date;
+    const formattedDate = transactionDate ? DateFormatter(transactionDate) : "N/A";
     //console.log("Salesman length",formatted);
 
     return `
@@ -870,7 +903,7 @@ function InfoWindowContent(salesman) {
                                     </span>
                                 </div>
                                 <div class = "flex flex-col w-fit">
-                                    <span id="InfoStoreName" class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.stores[storeIndex].store_name ?? "Manding Store"}</span>
+                                    <span id="InfoStoreName" class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.stores?.[storeIndex]?.store_name ?? "Manding Store"}</span>
                                     <span class="font-medium text-[9px] text-white leading-tight">${salesman.store_address ?? "Cubacub"}</span>
                                 </div>
 
@@ -924,7 +957,7 @@ function InfoWindowContent(salesman) {
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Transaction Sales:</span>
-                                    <span class="font-normal text-[11px]">₱ ${salesman.stores[storeIndex].transaction_sales} " (3 SKU) "</span>
+                                    <span id="totalStoreDetails" class="font-normal text-[11px]"></span>
                                 </div>
                             </div>
                         </div>
@@ -977,11 +1010,12 @@ function InfoWindowContent(salesman) {
     `;
 }
 
-function openInfoWindowFor(salesman, marker) {
+function openInfoWindowFor(salesman, marker, targetIndex = 0) {
     currentInfoSalesman = salesman; 
-    storeIndex = 0;
+    rowData = salesman;
+    storeIndex = targetIndex;
     updateStoreNavButtons();  
-    console.log("Opening InfoWindow for:", salesman.salesman_name);
+    console.log("Opening InfoWindow for:", salesman.salesman_name, "Store index:", storeIndex);
 
     currentMarker = marker;
 
@@ -1081,7 +1115,7 @@ document.addEventListener("fullscreenchange", function () {
 
 TableLoader.tableData(
     "#fitScreenTable",
-    sampleOperationData,
+    [],
     OperationColumns,
     {
         scrollY: "400px",
@@ -1089,9 +1123,9 @@ TableLoader.tableData(
     },
 );
 
-// fit to screen table
-$(document).on("click", "#fitScreenTable", function () {
-
+// Loads the real dashboard (salesman) data into the fit-to-screen table so it
+// reflects the same data as the main dashboard table for the selected date.
+function loadFitScreenTable(date = null) {
     $("#fitScreenSalesmanToolbar").removeClass("hidden");
     $("#fitScreenHeader").addClass("hidden");
 
@@ -1100,26 +1134,30 @@ $(document).on("click", "#fitScreenTable", function () {
     }
 
     TableLoader.loadTable({
-        url: "getDashboardTable",
+        url: "dashboard/getDashboardTable",
+        filters: date ? { date } : undefined,
         tableId: "#fitScreenTable",
         columns: SalesmanColumns,
-        scrollY: "200px",
+        scrollY: "400px",
         scrollX: true,
         pageLength: 10,
         searchInput: "#customSearch",
 
-        onSuccess: (data) => {
-            // console.log("Dashboard data:", data);
-            // console.log("Dashboard count:", data.length);
-
-            // Force DataTables to recalculate widths
-            const table = $("#fitScreenTable").DataTable();
-
+        onSuccess: () => {
+            // Force DataTables to recalculate widths once the data has rendered.
             setTimeout(() => {
-                table.columns.adjust().draw(false);
+                if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
+                    $("#fitScreenTable").DataTable().columns.adjust().draw(false);
+                }
             }, 300);
         },
     });
+}
+
+// fit to screen table: clicking the fit-screen table switches to the salesman
+// view and (re)loads the real dashboard data.
+$(document).on("click", "#fitScreenTable", function () {
+    loadFitScreenTable(selectedDashboardDate);
 });
 
 $("#displayTable").on("click", function () {
@@ -1134,16 +1172,17 @@ $("#displayTable").on("click", function () {
     // Remove old DataTable content
     $("#fitScreenTable").empty();
 
-    // Rebuild original table
+    // Rebuild the operation-type view (no fake data; the salesman data is
+    // (re)loaded when the fit-screen table is clicked).
     TableLoader.tableData(
         "#fitScreenTable",
-        sampleOperationData,
+        [],
         OperationColumns,
         {
             scrollY: "400px",
             pageLength: 10,
             autoWidth: false,
-            scrollX: true
+            scrollX: true,
         }
     );
 });
@@ -1152,6 +1191,11 @@ $("#displayTable").on("click", function () {
 document.addEventListener("fullscreenchange", function () {
     const isFull = !!document.fullscreenElement;
     $("#fitScreenInfo").toggleClass("hidden", !isFull);
+
+    if (isFull) {
+        // Reflect the dashboard data as soon as the fit-screen is shown.
+        loadFitScreenTable(selectedDashboardDate);
+    }
 
     if (isFull && $.fn.DataTable.isDataTable("#fitScreenTable")) {
         // wait one frame so the container has its real width first
@@ -1168,17 +1212,20 @@ $(document)
     .on("click.storeNav", ".side_Next", function (e) {
         e.stopPropagation();
 
-        if (storeIndex <= storeLength) {
+        const activeSalesman = currentInfoSalesman ?? rowData;
+        const lastIndex = (activeSalesman?.stores?.length ?? 1) - 1;
+
+        if (storeIndex < lastIndex) {
             storeIndex++;
-            console.log("store index val plus",storeIndex)
-            const newStore = currentInfoSalesman.stores[storeIndex];
+            console.log("store index val plus", storeIndex);
+            const newStore = activeSalesman.stores[storeIndex];
 
             infoWindow.setContent(
-                InfoWindowContent(currentInfoSalesman)
+                InfoWindowContent(activeSalesman)
             );
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
-            $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
+            $("#storeName").text(newStore?.store_name ?? "No Store");
 
             if (newStore && currentMarker) {
                 const newPos = {
@@ -1190,6 +1237,7 @@ $(document)
                 map.panTo(newPos);
             }
             updateStoreNavButtons();
+            getSku(activeSalesman, "#sfaQueuingModalTable");
         }
     });
 
@@ -1200,15 +1248,16 @@ $(document)
 
         if (storeIndex > 0) {
             storeIndex--;
-            console.log("store index val minus",storeIndex)
-            const newStore = currentInfoSalesman.stores[storeIndex];
+            console.log("store index val minus", storeIndex);
+            const activeSalesman = currentInfoSalesman ?? rowData;
+            const newStore = activeSalesman.stores[storeIndex];
 
             infoWindow.setContent(
-                InfoWindowContent(currentInfoSalesman)
+                InfoWindowContent(activeSalesman)
             );
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
-            $("#storeName").text(rowData.stores[storeIndex]?.store_name ?? "No Store");
+            $("#storeName").text(newStore?.store_name ?? "No Store");
 
             if (newStore && currentMarker) {
                 const newPos = {
@@ -1220,6 +1269,7 @@ $(document)
                 map.panTo(newPos);
             }
             updateStoreNavButtons();
+            getSku(activeSalesman, "#sfaQueuingModalTable");
         }
     });
 
@@ -1245,9 +1295,10 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
 });
 
 function updateStoreNavButtons() {
-    if (!currentInfoSalesman || !currentInfoSalesman.stores) return;
+    const activeSalesman = currentInfoSalesman ?? rowData;
+    if (!activeSalesman || !activeSalesman.stores) return;
 
-    const lastIndex = currentInfoSalesman.stores.length - 1;
+    const lastIndex = activeSalesman.stores.length - 1;
  
     $(".side_Prev, #infoPrev")
     .prop("disabled", storeIndex <= 0)
@@ -1256,6 +1307,8 @@ function updateStoreNavButtons() {
     $(".side_Next, #infoNext")
     .prop("disabled", storeIndex >= lastIndex)
     .toggleClass("nav-disabled", storeIndex >= lastIndex);
+
+    refreshSelectedSalesmanSummary();
 }
 
 function getTableLength(tableId) {
@@ -1276,23 +1329,12 @@ function getTableLength(tableId) {
 $(document)
     .off("click.table", "#InfoTableContainer")
     .on("click.table", "#InfoTableContainer", function () {
-        getSku(rowData, "#infoWindowTableContent");
+        getSku(currentInfoSalesman ?? rowData, "#infoWindowTableContent");
     });
-
-// $("#Sku_Container").on("click",function(){
-//     const tableId = $(this).data("table");
-//     const length = getTableLength(tableId);
-
-//     console.log("Clicked table:", tableId);
-//     console.log("Table length:", length);
-
-//     $(this).find("#SkuCount").text(`(${length} SKU)`);
-//     $("#SideSku").text(length);
-// });
 
 function DateFormatter(transactionDate, type = "datetime") {
     const date = new Date(transactionDate);
-
+    console.log("bed",date);
     if (type === "time") {
         return date.toLocaleTimeString("en-PH", {
             hour: "numeric",
@@ -1311,64 +1353,23 @@ function DateFormatter(transactionDate, type = "datetime") {
     });
 }
 
-// function getSku(data, tableId = "#sfaQueuingModalTable") {
-// function getSku(data, tableId ) {
-//     const selectedStore = data?.stores?.[storeIndex];
-//     const selectedTransaction = data?.transactions?.find(
-//         (transaction) => String(transaction.store_id) === String(selectedStore?.store_id),
-//     ) ?? data?.transactions?.[0];
-//     const transactionId = selectedStore?.transaction_id
-//         ?? selectedTransaction?.transaction_id
-//         ?? data?.transaction_id;
-
-//     if (!transactionId) {
-//         renderProductTable(tableId, []);
-//         $(".Sku_Num").text("(0 SKU)");
-//         return;
-//     }
-
-//     Api.get({
-//         url: "product/getProduct",
-//         data: {
-//             transaction_id: transactionId,
-//         },
-//         onSuccess: (products) => {
-//             const productRows = products.data ?? [];
-//             //let totalAmt = 0;
-
-//             //totalAmt += products.amount;
-
-//             console.log("pro",productRows);
-           
-//             renderProductTable(tableId, productRows);
-//             const length = products.length ?? productRows.length;
-//             const total = productRows.reduce((sum, item) => sum + item.amount, 0);
-
-//             console.log("po",total);
-
-//             $(".Sku_Num").text(`(${length} SKU)`);
-//             $("#TotalSku").text(`₱ ${total}`);
-//         },
-//     });
-// }
-
 function getSku(data, tableId) {
     const selectedStore = data?.stores?.[storeIndex];
 
     const selectedTransaction = data?.transactions?.find(
         (transaction) =>
             String(transaction.store_id) === String(selectedStore?.store_id)
-    ) ?? data?.transactions?.[0];
+    );
 
     const transactionId =
         selectedStore?.transaction_id
-        ?? selectedTransaction?.transaction_id
-        ?? data?.transaction_id;
+        ?? selectedTransaction?.transaction_id;
 
-    if (!transactionId) {
+        if (!transactionId) {
+        
         globalSkuCount = 0;
         globalTotalSku = 0;
-
+        
         renderProductTable(tableId, []);
         $(".Sku_Num").text("(0 SKU)");
         $("#TotalSku").text("₱ 0");
@@ -1383,6 +1384,7 @@ function getSku(data, tableId) {
         },
 
         onSuccess: (products) => {
+            console.log("pas",products);
             const productRows = products.data ?? [];
 
             globalSkuCount = Number(products.length ?? productRows.length);
@@ -1399,6 +1401,7 @@ function getSku(data, tableId) {
 
             $(".Sku_Num").text(`(${globalSkuCount} SKU)`);
             $("#TotalSku").text(formatCurrency(globalTotalSku));
+            $("#totalStoreDetails").text(formatCurrency(globalTotalSku));
         },
     });
 }
@@ -1406,17 +1409,47 @@ function getSku(data, tableId) {
 function getSidePanelContent(salesman) {
     if (!salesman) return;
     rowData = salesman;
-
-    console.log("rowdata sidepanel",salesman);
+    console.log("salw0",rowData);
+    console.log("s0",salesman.stores.length);
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
+    
+    const firstTransaction = salesman.transactions?.[0].transaction_date;
+    const timeIn = moment(firstTransaction).format("h:mm:ss A"); 
+    const selectedStore = salesman.stores?.[storeIndex];
 
+    // Find the index of the transaction matching the currently selected store
+    const transactionIndex = salesman.transactions?.findIndex(
+        (transaction) => String(transaction.store_id) === String(selectedStore?.store_id)
+    ) ?? -1;
+
+    const transactionDate = transactionIndex !== -1
+        ? salesman.transactions[transactionIndex].transaction_date
+        : undefined;
+
+    const formattedDate = transactionDate
+        ? moment(transactionDate).format("MMM DD, YYYY")
+        : "N/A";
+    
+    const TransTime = salesman.transactions?.[transactionIndex]?.transaction_date;
+    const transTimeMoment = moment(TransTime);              // moment object — use for comparison
+    const TransactionTime = transTimeMoment.format("h:mm:ss A"); // string — use for display only
+
+    console.log("transaction index:", transactionIndex, "date:", formattedDate);
+
+    if (transTimeMoment.isBefore(timeIn)) {
+        $("#Attendance").text("Early");   // before cutoff = Early (fixed the swapped labels from before too)
+    } else {
+        $("#Attendance").text("Late");
+    }
+    
     $("#Salesman_Name").text(salesman.salesman_name);
     $("#VisitedStore").text(salesman.stores?.length ?? 0);
+    $("#call_time").text(salesman.call_time ?? "NULL");
+    $("#storeName").text(selectedStore?.store_name ?? "No Store");
+    $("#time_in").text(timeIn ?? "----");
+    $("#transaction_time").text(TransactionTime ?? "----");
 
-    $("#storeName").text(
-        salesman.stores?.[storeIndex]?.store_name ?? "No Store"
-    );
-
+    $(".TransactionDate").text(formattedDate);
     refreshSelectedSalesmanSummary();
 }
 
@@ -1432,7 +1465,8 @@ function refreshSelectedSalesmanSummary() {
 
     const requestVersion = ++summaryRequestVersion;
     Api.get({
-        url: "dashboard/getSalesmanSummary",
+        //url: "dashboard/getSalesmanSummary",
+        url: "dashboard/getSalesmanInfo",
         data: {
             salesman_id: rowData.id,
             date: selectedDashboardDate,
@@ -1440,22 +1474,50 @@ function refreshSelectedSalesmanSummary() {
         },
         onSuccess: (summary) => {
             if (requestVersion !== summaryRequestVersion) return;
+            console.log("few",globalTotalSku);
+            console.log("fewqw",summary);
 
-            const sales = formatCurrency(summary.sales);
-            const skuCount = Number(summary.sku_count ?? 0);
-
+            //const sales = formatCurrency(summary.sales);
+            const sales = formatCurrency(globalTotalSku);
+            //const skuCount = Number(summary.sku_count ?? 0);
+            //const skuCount = Number(summary.stores[storeIndex].sku_count ?? 0);
+            const skuCount = Number(globalSkuCount ?? 0);
+            
             if (overviewPeriod === "mtd") {
-                $("#MtdSalesmanTotal_Sales").text(sales);
+                const salesmanData = summary.find(s => s.id === rowData.id);
+                let MonthtotalSales = 0;
+
+                const filterMonth = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+                salesmanData?.transactions?.forEach(transaction => {
+                    const transactionMonth = moment(transaction.transaction_date);
+
+                    // Skip transactions that fall outside the selected month/year
+                    if (!transactionMonth.isSame(filterMonth, "month")) {
+                        return;
+                    }
+
+                    transaction.transaction_details?.forEach(detail => {
+                        const quantity = Number(detail.quantity ?? 0);
+                        const price = Number(detail.product_details?.price ?? 0);
+                        MonthtotalSales += quantity * price;
+                    });
+                });
+
+                const formattedTotal = formatCurrency(MonthtotalSales);
+
+                $("#MtdSalesmanTotal_Sales").text(formattedTotal);
                 $("#MtdSku").text(skuCount);
-                $("#MtdValue").text(sales);
+                $("#MtdValue").text(MonthtotalSales);
                 return;
             }
 
             $("#SalesmanTotal_Sales").text(sales);
+            $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
             $("#SideSku").text(skuCount);
             $("#CurrentDayValue").text(sales);
-            $("#VisitedStore").text(summary.visited_stores ?? 0);
+            //$("#VisitedStore").text(summary.visited_stores ?? 0);
             $("#sku_sales").text(sales ?? 0);
         },
     });

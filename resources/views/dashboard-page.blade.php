@@ -267,11 +267,12 @@
                                     <span
                                         class="text-[10px] font-semibold tracking-wide opacity-90">{{ $salesman->type ?? 'BOOKING' }}</span>
                                 </div>
-                                <span
+                                <div
                                     class="badge badge-sm bg-white/20 border-white/40 text-white text-[10px] gap-1 rounded-full px-3">
                                     <i class="fa-regular fa-face-frown"></i>
-                                    {{ $salesman->status ?? 'LATE' }}
-                                </span>
+                                    <span id="Attendance"></span>
+                                    {{-- {{ $salesman->status ?? 'LATE' }} --}}
+                                </div>
                             </div>
 
                             <div class="flex text-[12px] w-full gap-10 mt-1">
@@ -279,21 +280,23 @@
                                     <i class="fa-solid fa-mobile-screen-button mr-1"></i>
                                     {{ $salesman->contact ?? '09296225456' }}
                                 </span>
-                                <span>
+                                <div>
                                     <i class="fa-solid fa-phone mr-1"></i>
-                                    {{ $salesman->time_in ?? '07:00:00' }}
-                                </span>
+                                    <span id="time_in"></span>
+                                    {{-- {{ $salesman->time_in ?? '07:00:00' }} --}}
+                                </div>
                             </div>
 
                             <div class="flex text-[12px] w-full gap-10">
-                                <span>
+                                <div class="flex gap-1">
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
-                                    {{ $salesman->date ?? 'Aug 19, 2026' }}
-                                </span>
-                                <span class="bg-white/15 rounded px-1">
+                                   <span id="TransactionDate" class="TransactionDate"></span>
+                                </div>
+                                <div class="bg-white/15 rounded px-1">
                                     <i class="fa-regular fa-clock mr-1"></i>
-                                    {{ $salesman->current_time ?? '13:00:18' }}
-                                </span>
+                                    <span id="call_time"></span>
+                                    {{-- {{ $salesman->current_time ?? '13:00:18' }} --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -314,10 +317,10 @@
 
                         <div class="flex justify-between items-center">
                             <div class="flex gap-2 text-gray-600">
-                                <span>
+                                <div class="flex gap-1">
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
-                                    {{ $store->visit_date ?? 'Aug 19, 2026' }}
-                                </span>
+                                   <span class="TransactionDate"></span>
+                                </div>
                                 <span>
                                     <i class="fa-solid fa-location-dot mr-1"></i>
                                     {{ $store->distance ?? '0 km in 0 min' }}
@@ -333,10 +336,11 @@
                         </div>
 
                         <div class="flex items-center justify-between w-full gap-3 text-gray-600 text-[9px] whitespace-nowrap">
-                            <span class="text-[11px]">
+                            <div class="text-[11px]">
                                 <i class="fa-regular fa-clock mr-1"></i>
-                                {{ $store->time ?? '13:00:18' }}
-                            </span>
+                                <span id="transaction_time"></span>
+                                {{-- {{ $store->time ?? '13:00:18' }} --}}
+                            </div>
                             <span class="text-green-600 text-[11px]">
                                 <i class="fa-solid fa-bolt mr-1"></i>
                                 {{ $store->battery ?? '70' }}% battery usage
