@@ -53,30 +53,34 @@ const SalesmanColumns = [
         data: null,
         className: "text-center",
 
-        render: function(row) {
+        render: function(data, type, row) {
 
-            // The attendance cut-off check uses the transaction date from the
-            // transaction model (transaction.transaction_date). Use the
-            // salesman's earliest transaction of the selected business day.
             const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
 
-            const transactionTimes = (row.transactions ?? [])
-                .filter((transaction) =>
-                    moment(transaction.transaction_date).isSame(filterDay, "day")
-                )
-                .map((transaction) =>
-                    new Date(transaction.transaction_date).getTime()
-                );
+            const transactionTimes = [];
+
+            row.stores?.forEach(store => {
+                store.transactions?.forEach(transaction => {
+                    const transactionMoment = moment(
+                        transaction.transaction_date,
+                        "YYYY-MM-DD HH:mm:ss"
+                    );
+
+                    if (transactionMoment.isSame(filterDay, "day")) {
+                        transactionTimes.push(transactionMoment.valueOf());
+                    }
+                });
+            });
 
             if (!transactionTimes.length) {
                 return "No Transaction";
             }
 
-            const date = new Date(Math.min(...transactionTimes));
+            const earliest = new Date(Math.min(...transactionTimes));
 
             const transactionMinutes =
-                date.getHours() * 60 +
-                date.getMinutes();
+                earliest.getHours() * 60 +
+                earliest.getMinutes();
 
             const cutoffMinutes = 8 * 60;
 
@@ -112,32 +116,49 @@ const SalesmanColumns = [
         data: "selling_hrs",
         className: "text-nowrap",
     },
-{
-    title: "Sales",
-    data: null,
-    className: "text-end",
+    {
+        title: "Sales",
+        data: null,
+        className: "text-end",
 
-    render: function (data, type, row) {
-        let totalSales = 0; 
-        
-        const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
-        
-        console.log("fg",selectedDashboardDate);
-        row.transactions?.forEach(transaction => {
-            const dailyTransaction = moment(transaction.transaction_date);
-            if (!dailyTransaction.isSame(filterDay, "day")) {
-                return;
-            }
-            transaction.transaction_details?.forEach(detail => {
-                const quantity = Number(detail.quantity ?? 0);
-                const price = Number(detail.product_details?.price ?? 0);
-                totalSales += quantity * price;
+        render: function (data, type, row) {
+            let totalSales = 0;
+
+            console.log("fq", row);
+
+            const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+            row.stores?.forEach(store => {
+
+                store.transactions?.forEach(transaction => {
+
+                    const dailyTransaction = moment(
+                        transaction.transaction_date,
+                        "YYYY-MM-DD HH:mm:ss"
+                    );
+
+                    if (!dailyTransaction.isSame(filterDay, "day")) {
+                        return;
+                    }
+
+                    transaction.transaction_details?.forEach(detail => {
+
+                        const quantity = Number(detail.quantity ?? 0);
+
+                        const price = Number(
+                            detail.current_price ?? 0
+                        );
+
+                        totalSales += quantity * price;
+                    });
+
+                });
+
             });
-        });
 
-        return totalSales.toLocaleString();
+            return totalSales.toLocaleString();
+        }
     }
-}
 ];
 
 const OperationItems = [
@@ -172,76 +193,6 @@ const ProductColumns = [
     {
         title: "Amount",
         data: "amount",
-    },
-];
-
-// Sample data based on the table
-const SampleData = [
-    {
-        stock_code: "FG05241",
-        description: "BT Negosyo HD King BT BT Negosyo HD King BT BT Negosyo HD King BT ",
-        quantity: "2/0/0",
-        amount: "₱1,564.92",
-    },
-    {
-        stock_code: "FG05242",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "2/0/0",
-        amount: "₱2,233.98",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
-    },
-    {
-        stock_code: "FG03798",
-        description: "BT Negosyo HD King 16+1 1.1kg",
-        quantity: "5/0/0",
-        amount: "₱6,804.00",
     },
 ];
 
@@ -349,6 +300,7 @@ $(document)
 
 // Date BTN
 $(document).ready(function () {
+
     function updateClock() {
         $("#dateButton").html(`
             <strong>${moment().format("ddd")}</strong>
@@ -359,8 +311,21 @@ $(document).ready(function () {
         `);
     }
 
-    updateClock(); // run immediately so there's no 1s blank delay
-    setInterval(updateClock, 1000); // then run every 1000ms (1 second)
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    const today = moment().format("YYYY-MM-DD");
+
+    const dashboardDatePicker =
+        $("#dashboardDatePicker").data("daterangepicker");
+
+    if (dashboardDatePicker) {
+        dashboardDatePicker.setStartDate(today);
+        dashboardDatePicker.setEndDate(today);
+    }
+
+    loadDashboardData(today);
+
 });
 
 // Expand collapse
@@ -507,8 +472,6 @@ function loadDashboardData(date = null) {
     });
 }
 
-loadDashboardData(defaultDashboardDate);
-
 function displayInfoWindow() {
     if (!array || array.length === 0) {
         console.log("No salesman data.");
@@ -574,7 +537,7 @@ function displayInfoWindow() {
     });
 
     array.forEach((salesman) => {
-        //console.log("latest ter in for each",salesman);
+        console.log("latest ter in for each",salesman);
         
         const isLatestSalesman = salesman.id == latest.id;
 
@@ -843,7 +806,7 @@ function InfoWindowContent(salesman) {
     // The transaction date shown in the info window comes from the transaction
     // model (transaction.transaction_date) for the selected store.
     const selectedStore = salesman.stores?.[storeIndex];
-    const selectedTransaction = salesman.transactions?.find(
+    const selectedTransaction = salesman.stores?.find(
         (transaction) =>
             String(transaction.store_id) === String(selectedStore?.store_id)
     );
@@ -851,7 +814,7 @@ function InfoWindowContent(salesman) {
     salesman.transactions?.forEach(transaction => {
         transaction.transaction_details?.forEach(detail => {
             const quantity = Number(detail.quantity ?? 0);
-            const price = Number(detail.product_details?.price ?? 0);
+            const price = Number(detail.current_price ?? 0);
             TotalSalesOnStore += quantity * price;
         });
     });
@@ -860,7 +823,8 @@ function InfoWindowContent(salesman) {
         selectedTransaction?.transaction_date
         ?? selectedStore?.transaction_date;
     const formattedDate = transactionDate ? DateFormatter(transactionDate) : "N/A";
-    //console.log("Salesman length",formatted);
+    console.log("selected store",selectedStore);
+    console.log("selected trans",selectedTransaction);
 
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
@@ -928,7 +892,7 @@ function InfoWindowContent(salesman) {
                             </div>
                             <div class="pt-3">
                                 <span class="text-gray-400 block">Transaction ID:</span>
-                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${salesman.transaction_id ?? "GP_2202609031611537"}</span>
+                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${salesman.stores.transaction_id ?? "GP_2202609031611537"}</span>
                             </div>
                             <div class="flex justify-between pt-3">
                                 <div class="w-full">
@@ -1064,6 +1028,7 @@ $(document).ready(function () {
         const today = moment();
         dashboardDatePicker.setStartDate(today);
         dashboardDatePicker.setEndDate(today);
+        loadDashboardData(today.format("YYYY-MM-DD"));
     }
 
     $("#dashboardDatePicker")
@@ -1356,20 +1321,10 @@ function DateFormatter(transactionDate, type = "datetime") {
 function getSku(data, tableId) {
     const selectedStore = data?.stores?.[storeIndex];
 
-    const selectedTransaction = data?.transactions?.find(
-        (transaction) =>
-            String(transaction.store_id) === String(selectedStore?.store_id)
-    );
-
-    const transactionId =
-        selectedStore?.transaction_id
-        ?? selectedTransaction?.transaction_id;
-
-        if (!transactionId) {
-        
+    if (!selectedStore) {
         globalSkuCount = 0;
         globalTotalSku = 0;
-        
+
         renderProductTable(tableId, []);
         $(".Sku_Num").text("(0 SKU)");
         $("#TotalSku").text("₱ 0");
@@ -1377,79 +1332,85 @@ function getSku(data, tableId) {
         return;
     }
 
-    Api.get({
-        url: "product/getProduct",
-        data: {
-            transaction_id: transactionId,
-        },
+    const productRows = (selectedStore.transactions ?? []).flatMap((transaction) =>
+        (transaction.transaction_details ?? []).map((detail) => {
+            const quantity = Number(detail.quantity ?? 0);
+            const price = Number(detail.current_price ?? 0);
 
-        onSuccess: (products) => {
-            console.log("pas",products);
-            const productRows = products.data ?? [];
+            return {
+                ...detail,
+                transaction_id: transaction.transaction_id,
+                store_id: transaction.store_id,
+                StockCode: detail.product_details?.StockCode ?? null,
+                description: detail.product_details?.description ?? null,
+                brand: detail.product_details?.brand ?? null,
+                supplier: detail.product_details?.supplier ?? null,
+                price,
+                quantity,
+                amount: quantity * price,
+            };
+        })
+    );
 
-            globalSkuCount = Number(products.length ?? productRows.length);
+    globalSkuCount = productRows.length;
+    globalTotalSku = productRows.reduce((sum, item) => sum + item.amount, 0);
 
-            globalTotalSku = productRows.reduce(
-                (sum, item) => sum + Number(item.amount ?? 0),
-                0
-            );
+    renderProductTable(tableId, productRows);
 
-            console.log("SKU count:", globalSkuCount);
-            console.log("Total:", globalTotalSku);
-
-            renderProductTable(tableId, productRows);
-
-            $(".Sku_Num").text(`(${globalSkuCount} SKU)`);
-            $("#TotalSku").text(formatCurrency(globalTotalSku));
-            $("#totalStoreDetails").text(formatCurrency(globalTotalSku));
-        },
-    });
+    $(".Sku_Num").text(`(${globalSkuCount} SKU)`);
+    $("#TotalSku").text(formatCurrency(globalTotalSku));
+    $("#totalStoreDetails").text(formatCurrency(globalTotalSku));
 }
 
 function getSidePanelContent(salesman) {
     if (!salesman) return;
     rowData = salesman;
-    console.log("salw0",rowData);
-    console.log("s0",salesman.stores.length);
+
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
-    
-    const firstTransaction = salesman.transactions?.[0].transaction_date;
-    const timeIn = moment(firstTransaction).format("h:mm:ss A"); 
+
     const selectedStore = salesman.stores?.[storeIndex];
+    const storeTransactions = selectedStore?.transactions ?? [];
 
-    // Find the index of the transaction matching the currently selected store
-    const transactionIndex = salesman.transactions?.findIndex(
-        (transaction) => String(transaction.store_id) === String(selectedStore?.store_id)
-    ) ?? -1;
+    // Earliest transaction for this store, used as "time in"
+    const sortedTransactions = [...storeTransactions].sort(
+        (a, b) => new Date(a.transaction_date) - new Date(b.transaction_date)
+    );
+    const firstTransaction = sortedTransactions[0];
+    const timeInMoment = firstTransaction
+        ? moment(firstTransaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
+        : null;
+    const timeIn = timeInMoment ? timeInMoment.format("h:mm:ss A") : "----";
 
-    const transactionDate = transactionIndex !== -1
-        ? salesman.transactions[transactionIndex].transaction_date
-        : undefined;
+    // Transaction to display for this store
+    const selectedTransaction = storeTransactions[0];
+    const transactionDate = selectedTransaction?.transaction_date;
 
     const formattedDate = transactionDate
-        ? moment(transactionDate).format("MMM DD, YYYY")
+        ? moment(transactionDate, "YYYY-MM-DD HH:mm:ss").format("MMM DD, YYYY")
         : "N/A";
-    
-    const TransTime = salesman.transactions?.[transactionIndex]?.transaction_date;
-    const transTimeMoment = moment(TransTime);              // moment object — use for comparison
-    const TransactionTime = transTimeMoment.format("h:mm:ss A"); // string — use for display only
 
-    console.log("transaction index:", transactionIndex, "date:", formattedDate);
+    const transTimeMoment = transactionDate
+        ? moment(transactionDate, "YYYY-MM-DD HH:mm:ss")
+        : null;
+    const TransactionTime = transTimeMoment ? transTimeMoment.format("h:mm:ss A") : "----";
 
-    if (transTimeMoment.isBefore(timeIn)) {
-        $("#Attendance").text("Early");   // before cutoff = Early (fixed the swapped labels from before too)
+    // Same 8:00 AM cutoff used in the SalesmanColumns Attendance render —
+    // kept consistent instead of comparing against timeIn.
+    if (transTimeMoment) {
+        const cutoff = moment(transTimeMoment).set({ hour: 8, minute: 0, second: 0 });
+        $("#Attendance").text(transTimeMoment.isBefore(cutoff) ? "Early" : "Late");
     } else {
-        $("#Attendance").text("Late");
+        $("#Attendance").text("No Transaction");
     }
-    
+
     $("#Salesman_Name").text(salesman.salesman_name);
     $("#VisitedStore").text(salesman.stores?.length ?? 0);
     $("#call_time").text(salesman.call_time ?? "NULL");
     $("#storeName").text(selectedStore?.store_name ?? "No Store");
-    $("#time_in").text(timeIn ?? "----");
-    $("#transaction_time").text(TransactionTime ?? "----");
-
+    $("#time_in").text(timeIn);
+    $("#transaction_time").text(TransactionTime);
     $(".TransactionDate").text(formattedDate);
+
     refreshSelectedSalesmanSummary();
 }
 
@@ -1489,18 +1450,19 @@ function refreshSelectedSalesmanSummary() {
 
                 const filterMonth = moment(selectedDashboardDate, "YYYY-MM-DD");
 
-                salesmanData?.transactions?.forEach(transaction => {
-                    const transactionMonth = moment(transaction.transaction_date);
+                salesmanData?.stores?.forEach(store => {
+                    store.transactions?.forEach(transaction => {
+                        const transactionMonth = moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss");
 
-                    // Skip transactions that fall outside the selected month/year
-                    if (!transactionMonth.isSame(filterMonth, "month")) {
-                        return;
-                    }
+                        if (!transactionMonth.isSame(filterMonth, "month")) {
+                            return;
+                        }
 
-                    transaction.transaction_details?.forEach(detail => {
-                        const quantity = Number(detail.quantity ?? 0);
-                        const price = Number(detail.product_details?.price ?? 0);
-                        MonthtotalSales += quantity * price;
+                        transaction.transaction_details?.forEach(detail => {
+                            const quantity = Number(detail.quantity ?? 0);
+                            const price = Number(detail.current_price ?? 0);
+                            MonthtotalSales += quantity * price;
+                        });
                     });
                 });
 

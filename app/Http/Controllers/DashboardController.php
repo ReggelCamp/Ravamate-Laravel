@@ -75,19 +75,13 @@ class DashboardController extends Controller
                     });
                 }
             },
-
-            'transactions.transactionDetails.productDetails'
-
+            'stores.transactions.transactionDetails.productDetails'
         ])
         ->get();
 
     return response()->json($salesman);
 }
 
-    /**
-     * Summarize a salesman's sales and SKU lines for the selected business day
-     * or for the month-to-date ending on that day.
-     */
 public function getSalesmanSummary(Request $request){
     $validated = $request->validate([
         'salesman_id' => ['required', 'integer', 'exists:salesman,id'],
@@ -146,6 +140,12 @@ public function getSalesmanSummary(Request $request){
     ]);
 }
 
+// public function createTransaction(Request $request){
+//     $transaction = Transaction::created([
+
+//     ]);
 }
+
+
 
 

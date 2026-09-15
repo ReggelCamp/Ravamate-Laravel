@@ -9,7 +9,24 @@ use Illuminate\Http\Request;
 class TransactionDetailsController extends Controller
 {
     public function getTransactionDetails(){
-        $transactionDetails= transactionDetails::with('transaction')->get();
+        $transactionDetails = transactionDetails::with('transaction')->get();
+        return response()->json($transactionDetails);
+    }
+
+    public function createTransactionDetails(Request $request){
+        $request->validate([
+            'transaction_id' => ['required', 'exists:transaction,transaction_id'],
+        ]);
+        $transactionDetails = TransactionDetails::create([
+            
+            'transaction_id' => $request->transaction_id,
+            'product_id'     => $request->product_id,
+            'quantity'       => $request->quantity,
+            'current_price'  => $request->current_price,
+            'u_m'            => $request->u_m,
+            'export_status'  => $request->export_status ?? null,
+        ]);
+
         return response()->json($transactionDetails);
     }
 }

@@ -13,6 +13,10 @@ class Transaction extends Model
     protected $primaryKey = 'transaction_id';
     protected $guarded = ['transaction_id'];
 
+    protected $except = [
+        'transaction/getTransaction',
+    ];
+
     public function TransactionSalesman()
     {
         return $this->belongsTo(

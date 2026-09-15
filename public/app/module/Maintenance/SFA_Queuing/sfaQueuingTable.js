@@ -9,7 +9,7 @@ let salesmanName = null;
 const ReturnLogsColumns = [
     {
         title: "Transaction ID",
-        data: "transactionId",
+        data: "transaction_id",
     },
     {
         title: "Salesman",
@@ -53,18 +53,18 @@ const ReturnLogsColumns = [
     },
     {
         title: "Last Updated",
-        data: "last_updated",
+        data: "updated_at",
     },
     {
         title: "Date Added",
-        data: "date_added",
+        data: "created_at",
     },
 ];
 
 const SoToFdisColumns = [
     {
         title: "Transaction ID",
-        data: "transactionId",
+        data: "transaction_id",
     },
     {
         title: "Salesman",
@@ -72,7 +72,7 @@ const SoToFdisColumns = [
     },
     {
         title: "Order Type",
-        data: "order_type",
+        data: "transaction_salesman.default_ord_type",
     },
     {
         title: "CustomerCode",
@@ -104,18 +104,18 @@ const SoToFdisColumns = [
     },
     {
         title: "Last Updated",
-        data: "last_updated",
+        data: "updated_at",
     },
     {
         title: "Date Added",
-        data: "date_added",
+        data: "created_at",
     },
 ];
 
 const PaymentLogsColumns = [
     {
         title: "Transaction ID",
-        data: "transactionId",
+        data: "transaction_id",
     },
     {
         title: "Invoice No.",
@@ -135,7 +135,7 @@ const PaymentLogsColumns = [
     },
     {
         title: "Bank",
-        data: "bank",
+        data: "bank_code",
     },
     {
         title: "Check No.",
@@ -155,18 +155,18 @@ const PaymentLogsColumns = [
     },
     {
         title: "Last Updated",
-        data: "last_updated",
+        data: "updated_at",
     },
     {
         title: "Date Added",
-        data: "date_added",
+        data: "created_at",
     },
 ];
 
 const AutoLogsColumns = [
     {
         title: "Transaction ID",
-        data: "transactionId",
+        data: "transaction_id",
     },
     {
         title: "Source",
@@ -198,526 +198,11 @@ const AutoLogsColumns = [
     },
     {
         title: "Last Updated",
-        data: "last_updated",
+        data: "updated_at",
     },
     {
         title: "Date Added",
-        data: "date_added",
-    },
-];
-
-// Sample Data
-const soToFdisSampleData = [
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100001",
-        salesman_name: "Juan Dela Cruz",
-        order_type: "Regular",
-        customercode: "CUST-1001",
-        item_no: "FG00233",
-        site: "CEBU",
-        um: "CASE",
-        quantity: 10,
-        api_status: "Success",
-        api_response: "Transaction Posted",
-        last_updated: "2026-08-07 10:15 AM",
-        date_added: "2026-08-07 09:50 AM",
-    },
-    {
-        transactionId: "SO-100002",
-        salesman_name: "Maria Santos",
-        order_type: "Promo",
-        customercode: "CUST-1002",
-        item_no: "FG00452",
-        site: "MANDAUE",
-        um: "PCS",
-        quantity: 24,
-        api_status: "Pending",
-        api_response: "Waiting for Sync",
-        last_updated: "2026-08-07 10:20 AM",
-        date_added: "2026-08-07 10:00 AM",
-    },
-];
-
-const returnLogsSampleData = [
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-    {
-        transactionId: "RT-200001",
-        salesman_name: "Pedro Reyes",
-        customercode: "CUST-2001",
-        invoice_no: "INV-100001",
-        site: "CEBU",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 2,
-        reason_code: "DAMAGED",
-        api_status: "Success",
-        api_response: "Return Accepted",
-        last_updated: "2026-08-07 11:00 AM",
-        date_added: "2026-08-07 10:45 AM",
-    },
-    {
-        transactionId: "RT-200002",
-        salesman_name: "John Cruz",
-        customercode: "CUST-2002",
-        invoice_no: "INV-100002",
-        site: "LAPU-LAPU",
-        item_no: "FG00120",
-        um: "PCS",
-        quantity: 1,
-        reason_code: "EXPIRED",
-        api_status: "Failed",
-        api_response: "Invoice Not Found",
-        last_updated: "2026-08-07 11:10 AM",
-        date_added: "2026-08-07 10:55 AM",
-    },
-];
-
-const paymentLogsSampleData = [
-    {
-        transactionId: "PAY-300001",
-        invoice_no: "INV-300001",
-        document_no: "DOC-001",
-        mode: "Cash",
-        transaction_amt: "₱5,250.00",
-        bank: "-",
-        check_no: "-",
-        check_date: "-",
-        api_status: "Success",
-        api_response: "Payment Posted",
-        last_updated: "2026-08-07 01:30 PM",
-        date_added: "2026-08-07 01:00 PM",
-    },
-    {
-        transactionId: "PAY-300002",
-        invoice_no: "INV-300002",
-        document_no: "DOC-002",
-        mode: "Check",
-        transaction_amt: "₱12,800.00",
-        bank: "BDO",
-        check_no: "CHK123456",
-        check_date: "2026-08-07",
-        api_status: "Pending",
-        api_response: "Awaiting Confirmation",
-        last_updated: "2026-08-07 01:45 PM",
-        date_added: "2026-08-07 01:15 PM",
-    },
-];
-
-const autoLogsSampleData = [
-    {
-        transactionId: "AT-400001",
-        source: "Warehouse A",
-        destination: "Warehouse B",
-        item_no: "FG00233",
-        um: "CASE",
-        quantity: 15,
-        api_status: "Success",
-        api_response: "Transfer Completed",
-        last_updated: "2026-08-07 02:00 PM",
-        date_added: "2026-08-07 01:30 PM",
-    },
-    {
-        transactionId: "AT-400002",
-        source: "Warehouse B",
-        destination: "Warehouse C",
-        item_no: "FG00452",
-        um: "PCS",
-        quantity: 30,
-        api_status: "Failed",
-        api_response: "Insufficient Stock",
-        last_updated: "2026-08-07 02:15 PM",
-        date_added: "2026-08-07 01:45 PM",
+        data: "created_at",
     },
 ];
 
@@ -769,271 +254,32 @@ const SyncTransactionsColumns = [
     },
 ]
 
-const sampleData = [
-    {
-        transaction_id: "DSP2202605050830201",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2REY STORE",
-        document_no: "DSP2SO260505 -2605052",
-        total_sku: 4,
-        up_time: 76,
-        sales: 6145.92,
-        address: "",
-        delivery_date: "2026-05-05 08:30:20.68"
-    },
-    {
-        transaction_id: "DSP2202605050924361",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2JEFF",
-        document_no: "DSP2SO260505 -2605053",
-        total_sku: 4,
-        up_time: 87,
-        sales: 1157.5,
-        address: "",
-        delivery_date: "2026-05-05 09:24:36.43"
-    },
-    {
-        transaction_id: "DSP2202605050932218",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2ROSE MAE STORE",
-        document_no: "DSP2SO260505 -2605054",
-        total_sku: 1,
-        up_time: 35,
-        sales: 1094.16,
-        address: "",
-        delivery_date: "2026-05-05 09:32:21.86"
-    },
-    {
-        transaction_id: "DSP2202605050937241",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2BATANG STORE",
-        document_no: "DSP2SO260505 -2605055",
-        total_sku: 1,
-        up_time: 20,
-        sales: 838.08,
-        address: "",
-        delivery_date: "2026-05-05 09:37:24.82"
-    },
-    {
-        transaction_id: "DSP2202605050955226",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2LALAH STORE TALA",
-        document_no: "DSP2SO260505 -2605056",
-        total_sku: 7,
-        up_time: 97,
-        sales: 1202.8,
-        address: "",
-        delivery_date: "2026-05-05 09:55:22.87"
-    },
-    {
-        transaction_id: "DSP2202605051010254",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2JENKING STOREPH7",
-        document_no: "DSP2SO260505 -2605058",
-        total_sku: 4,
-        up_time: 34,
-        sales: 1132,
-        address: "",
-        delivery_date: "2026-05-05 10:10:25.66"
-    },
-    {
-        transaction_id: "DSP2202605051048030",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2EMPAS STORE",
-        document_no: "DSP2SO260505 -2605059",
-        total_sku: 1,
-        up_time: 25,
-        sales: 1094.16,
-        address: "",
-        delivery_date: "2026-05-05 10:48:03.66"
-    },
-    {
-        transaction_id: "DSP2202605051055166",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V23M STORE",
-        document_no: "DSP2SO260505 -26050510",
-        total_sku: 3,
-        up_time: 48,
-        sales: 627.75,
-        address: "",
-        delivery_date: "2026-05-05 10:55:16.78"
-    },
-    {
-        transaction_id: "DSP2202605051100520",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2LIZA STORE BANKERS",
-        document_no: "DSP2SO260505 -2605511",
-        total_sku: 3,
-        up_time: 47,
-        sales: 724.5,
-        address: "",
-        delivery_date: "2026-05-05 11:00:52.03"
-    },
-    {
-        transaction_id: "DSP2202605051126567",
-        salesman: "GP_6 GONGORA ALBERT LAGGUI",
-        customer: "V2MENCHIE STORE PANGARAP VILLAGE",
-        document_no: "DSP2SO260505 -26050512",
-        total_sku: 9,
-        up_time: 187,
-        sales: 1433.66,
-        address: "",
-        delivery_date: "2026-05-05 11:26:56.64"
-    },
-];
-
-// SOLogsColumns
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#SOPendingLogs",
-//     columns: SoToFdisColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#SOFailedLogs",
-//     columns:  SoToFdisColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#SOSuccessLogs",
-//     columns:  SoToFdisColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// ReturnLogsColumns
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#ReturnPendingLogs",
-//     columns: ReturnLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#ReturnFailedLogs",
-//     columns: ReturnLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#ReturnSuccessLogs",
-//     columns: ReturnLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// PaymentLogColumns
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#PaymentPendingLogs",
-//     columns: PaymentLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#PaymentFailedLogs",
-//     columns: PaymentLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#PaymentSuccessLogs",
-//     columns: PaymentLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// AutoLogsColumns
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#AutoStockPendingLogs",
-//     columns: AutoLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#AutoStockFailedLogs",
-//     columns: AutoLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// TableLoader.loadTable({
-//     url: "getDCRtable",
-//     tableId: "#AutoStockSuccessLogs",
-//     columns: AutoLogsColumns,
-//     pageLength: 5,
-
-//     onSuccess: (data) => {
-//     },
-// });
-
-// Sample Data
-
-//sotofdis
-
-TableLoader.tableData("#SOPendingLogs", soToFdisSampleData, SoToFdisColumns, {
-
-});
-
-TableLoader.tableData("#SOFailedLogs", soToFdisSampleData, SoToFdisColumns, {
-
-});
-
-TableLoader.tableData("#SOSuccessLogs", soToFdisSampleData, SoToFdisColumns, {
-
-});
+// SO
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#SOPendingLogs",
+    columns: SoToFdisColumns
+})
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#SOFailedLogs",
+    columns: SoToFdisColumns
+})
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#SOSuccessLogs",
+    columns: SoToFdisColumns
+})
 
 //return
-TableLoader.tableData(
-    "#ReturnPendingLogs",
-    returnLogsSampleData,
-    ReturnLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#ReturnPendingLogs",
+    columns: ReturnLogsColumns
+})
 TableLoader.tableData(
     "#ReturnFailedLogs",
-    returnLogsSampleData,
+    [],
     ReturnLogsColumns,
     {
 
@@ -1041,7 +287,7 @@ TableLoader.tableData(
 );
 TableLoader.tableData(
     "#ReturnSuccessLogs",
-    returnLogsSampleData,
+    [],
     ReturnLogsColumns,
     {
 
@@ -1049,17 +295,14 @@ TableLoader.tableData(
 );
 
 //payment
-TableLoader.tableData(
-    "#PaymentPendingLogs",
-    paymentLogsSampleData,
-    PaymentLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#PaymentPendingLogs",
+    columns: PaymentLogsColumns
+})
 TableLoader.tableData(
     "#PaymentFailedLogs",
-    paymentLogsSampleData,
+    [],
     PaymentLogsColumns,
     {
 
@@ -1067,7 +310,7 @@ TableLoader.tableData(
 );
 TableLoader.tableData(
     "#PaymentSuccessLogs",
-    paymentLogsSampleData,
+    [],
     PaymentLogsColumns,
     {
 
@@ -1075,17 +318,14 @@ TableLoader.tableData(
 );
 
 //autostock
-TableLoader.tableData(
-    "#AutoStockPendingLogs",
-    autoLogsSampleData,
-    AutoLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+    url: "transaction/getTransaction",
+    tableId:"#AutoStockPendingLogs",
+    columns: AutoLogsColumns
+})
 TableLoader.tableData(
     "#AutoStockFailedLogs",
-    autoLogsSampleData,
+    [],
     AutoLogsColumns,
     {
 
@@ -1093,12 +333,13 @@ TableLoader.tableData(
 );
 TableLoader.tableData(
     "#AutoStockSuccessLogs",
-    autoLogsSampleData,
+    [],
     AutoLogsColumns,
     {
 
     },
 );
+
 
 // Select all checkbox toggles all row checkboxes
 $(document).on('change', '#selectAll', function () {
@@ -1132,7 +373,7 @@ function processToFDIS() {
 //transactionModal
 TableLoader.tableData(
     "#TransactionTable",
-    sampleData,
+    [],
     SyncTransactionsColumns,
     {
         searchInput: "#TransactionTableSearch",
@@ -1214,7 +455,7 @@ function DisplayQueueInfo(type, rowData) {
         case "so":
             $("#qmodal_title").text("Sales Order to FDIS");
             $("#qmodal_salesman").text(rowData.salesman_name);
-            $("#qmodal_ref").text(rowData.transactionId);
+            $("#qmodal_ref").text(rowData.transaction_id);
             renderQueueTable(
                 "itemCodeBody",
                 [rowData],
@@ -1230,7 +471,7 @@ function DisplayQueueInfo(type, rowData) {
         case "return":
             $("#qmodal_title").text("Return to FDIS");
             $("#qmodal_salesman").text(rowData.salesman_name);
-            $("#qmodal_ref").text(rowData.transactionId);
+            $("#qmodal_ref").text(rowData.transaction_id);
             renderQueueTable(
                 "itemCodeBody",
                 [rowData],
@@ -1245,7 +486,7 @@ function DisplayQueueInfo(type, rowData) {
 
         case "payment":
             $("#qmodal_title").text("Payment to FDIS");
-            $("#qmodal_ref").text(rowData.transactionId);
+            $("#qmodal_ref").text(rowData.transaction_id);
             renderQueueTable(
                 "itemCodeBody",
                 [rowData],
@@ -1260,7 +501,7 @@ function DisplayQueueInfo(type, rowData) {
 
         case "autostock":
             $("#qmodal_title").text("Auto Stock Transfer to FDIS");
-            $("#qmodal_ref").text(rowData.transactionId);
+            $("#qmodal_ref").text(rowData.transaction_id);
             renderQueueTable(
                 "itemCodeBody",
                 [rowData],

@@ -29,48 +29,48 @@ function getResponsiveScrollY() {
 }
 
 export default class TableLoader {
-    static tableData(id, json, columns, options = {}) {
-        const table = $(id).DataTable({
-            data: json,
+   static tableData(id, json, columns, options = {}) {
 
-            searching: true,
-            lengthChange: false,
-            responsive: false,
+    const table = $(id).DataTable({
+        data: json,
 
-            // scrollX: options.scrollX ?? true,
-            //scrollY: options.scrollY ?? "100px",
-            scrollY: getResponsiveScrollY() ?? "100px",
-            pageLength:getPageLength(),
-            scrollCollapse: true,
-            // autoWidth: true,
+        searching: true,
+        lengthChange: false,
+        responsive: false,
 
-            dom: '<"top">rt<"dataTable-info"ip><"clear">',
+        autoWidth: true,
 
-            buttons: [
-                {
-                    extend: "copy",
-                    className: "dt-hidden-copy",
-                },
-                {
-                    extend: "csv",
-                    className: "dt-hidden-csv",
-                },
-                {
-                    extend: "excel",
-                    text: "Export Excel",
-                    className: "dt-hidden-excel",
-                },
-                {
-                    extend: "print",
-                    className: "dt-hidden-print",
-                },
-            ],
+        scrollY: options.scrollY ?? getResponsiveScrollY(),
+        scrollX: options.scrollX ?? true,
+        scrollCollapse: true,
 
-            columns,
+        pageLength: options.pageLength ?? getPageLength(),
 
-            ...options,
+        dom: '<"top">rt<"dataTable-info"ip><"clear">',
 
-             drawCallback: function () {
+        buttons: [
+            {
+                extend: "copy",
+                className: "dt-hidden-copy",
+            },
+            {
+                extend: "csv",
+                className: "dt-hidden-csv",
+            },
+            {
+                extend: "excel",
+                text: "Export Excel",
+                className: "dt-hidden-excel",
+            },
+            {
+                extend: "print",
+                className: "dt-hidden-print",
+            },
+        ],
+
+        columns: columns,
+
+        drawCallback: function () {
             const api = this.api();
             const pageInfo = api.page.info();
 
@@ -83,24 +83,29 @@ export default class TableLoader {
                 pagination.show();
             }
 
-            // Keep any drawCallback passed through options
             if (typeof options.drawCallback === "function") {
                 options.drawCallback.call(this, api);
             }
         },
+    });
 
-        });
-        setTimeout(() => $(id).DataTable().columns.adjust(), 250);
+    setTimeout(() => {
+        table.columns.adjust();
+    }, 250);
 
-        const searchSelector =
-            options.searchInput || `[data-table-search="${id}"]`;
+    const searchSelector =
+        options.searchInput || `[data-table-search="${id}"]`;
 
-        TableLoader.bindSearch(searchSelector, table);
+    TableLoader.bindSearch(searchSelector, table);
 
-        TableLoader.getTableId(id, table, options.onRowClick);
+    TableLoader.getTableId(
+        id,
+        table,
+        options.onRowClick
+    );
 
-        return table;
-    }
+    return table;
+}
 
     static bindSearch(selector, table) {
         $(document)
