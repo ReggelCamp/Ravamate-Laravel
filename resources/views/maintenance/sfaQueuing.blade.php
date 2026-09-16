@@ -242,6 +242,19 @@
                 transform: scale(1);
             }
         }
+
+        .api-response-column {
+            width: 200px !important;
+            max-width: 200px !important;
+        }
+
+        .api-response-text {
+            width: 200px;
+            max-width: 200px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
         
     </style>
 
@@ -398,6 +411,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <button
+                                id="ReProcess_btn"
                                 class="reprocess_btn sfaShine_Btn flex w-fit px-5 h-[30px] hidden items-center justify-center text-white rounded-2xl border">
                                 Reprocess SO
                             </button>

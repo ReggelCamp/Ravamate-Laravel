@@ -45,7 +45,15 @@ const ReturnLogsColumns = [
     },
     {
         title: "API Status",
-        data: "api_status",
+        data: null,
+        render: function(row){
+            const statusMap = {
+                PENDING: '<span class="badge badge-warning">To Sync</span>',
+                SYNCED: '<span class="badge badge-success">Synced</span>',
+                FAILED: '<span class="badge badge-error">Failed</span>',
+            };
+            return statusMap[row.api_status] || row.api_status;
+        }
     },
     {
         title: "API Response",
@@ -90,17 +98,35 @@ const SoToFdisColumns = [
         title: "UM",
         data: "um",
     },
-    {
-        title: "QTY Ordered",
-        data: "quantity",
-    },
+{
+    title: "QTY Ordered",
+    data: null,
+    render: function(row) {
+        return (row.transaction_details ?? [])
+            .map(detail => detail.quantity)
+            .join("<br>");
+    }
+},
     {
         title: "API Status",
-        data: "api_status",
+        data: null,
+        render: function(row){
+            const statusMap = {
+                PENDING: '<span class="badge badge-warning">To Sync</span>',
+                SYNCED: '<span class="badge badge-success">Synced</span>',
+                FAILED: '<span class="badge badge-error">Failed</span>',
+            };
+            return statusMap[row.api_status] || row.api_status;
+        }
     },
     {
         title: "API Response",
         data: "api_response",
+        className: "api-response-column",
+        width: "200px",
+        render: function(data) {
+            return `<div class="api-response-text">${data ?? ""}</div>`;
+        }
     },
     {
         title: "Last Updated",
@@ -147,7 +173,15 @@ const PaymentLogsColumns = [
     },
     {
         title: "API Status",
-        data: "api_status",
+        data: null,
+        render: function(row){
+            const statusMap = {
+                PENDING: '<span class="badge badge-warning">To Sync</span>',
+                SYNCED: '<span class="badge badge-success">Synced</span>',
+                FAILED: '<span class="badge badge-error">Failed</span>',
+            };
+            return statusMap[row.api_status] || row.api_status;
+        }
     },
     {
         title: "API Response",
@@ -190,11 +224,25 @@ const AutoLogsColumns = [
     },
     {
         title: "API Status",
-        data: "api_status",
+        data: null,
+        render: function(row){
+            const statusMap = {
+                PENDING: '<span class="badge badge-warning">To Sync</span>',
+                SYNCED: '<span class="badge badge-success">Synced</span>',
+                FAILED: '<span class="badge badge-error">Failed</span>',
+            };
+            return statusMap[row.api_status] || row.api_status;
+        }
     },
     {
         title: "API Response",
-        data: "api_response",
+        data: null,
+        className: "whitespace-normal break-words",
+        render: function(){
+            return '<div class="whitespace-normal break-words max-w-xs">' +
+                "" +
+                '</div>';
+        }
     },
     {
         title: "Last Updated",
@@ -222,11 +270,11 @@ const SyncTransactionsColumns = [
     },
     {
         title: "Salesman",
-        data: "salesman",
+        data: "salesman_name",
     },
     {
         title: "Customer",
-        data: "customer",
+        data: "customercode",
     },
     {
         title: "Document #",
@@ -255,90 +303,105 @@ const SyncTransactionsColumns = [
 ]
 
 // SO
-TableLoader.loadTable({
-    url: "transaction/getTransaction",
-    tableId:"#SOPendingLogs",
-    columns: SoToFdisColumns
-})
-TableLoader.loadTable({
-    url: "transaction/getTransaction",
-    tableId:"#SOFailedLogs",
-    columns: SoToFdisColumns
-})
-TableLoader.loadTable({
-    url: "transaction/getTransaction",
-    tableId:"#SOSuccessLogs",
-    columns: SoToFdisColumns
-})
+function loadSoTables() {
+
+    TableLoader.loadTable({
+        url: "transaction/getSoPendingTransaction",
+        tableId:"#SOPendingLogs",
+        columns: SoToFdisColumns,
+        onSuccess: function (response) {
+
+            const count = response.count ?? 0;
+
+            $("#SOPendingLogsTab").attr(
+                "aria-label",
+                `Pending Logs (${count})`
+            );
+        }
+    })
+    TableLoader.loadTable({
+        url: "transaction/getSoFailedTransaction",
+        tableId:"#SOFailedLogs",
+        columns: SoToFdisColumns,
+        onSuccess: function (response) {
+
+            const count = response.count ?? 0;
+
+            $("#SOFailedLogsTab").attr(
+                "aria-label",
+                `Failed Logs (${count})`
+            );
+        }
+    })
+    TableLoader.loadTable({
+        url: "transaction/getSoSuccessTransaction",
+        tableId:"#SOSuccessLogs",
+        columns: SoToFdisColumns,
+        onSuccess: function (response) {
+
+            const count = response.count ?? 0;
+
+            $("#SOSuccessLogsTab").attr(
+                "aria-label",
+                `Success Logs (${count})`
+            );
+        }
+    })
+
+}
+
+loadSoTables();
 
 //return
 TableLoader.loadTable({
-    url: "transaction/getTransaction",
+ url: "transaction/getSoSuccessTransaction",
     tableId:"#ReturnPendingLogs",
     columns: ReturnLogsColumns
 })
-TableLoader.tableData(
-    "#ReturnFailedLogs",
-    [],
-    ReturnLogsColumns,
-    {
-
-    },
-);
-TableLoader.tableData(
-    "#ReturnSuccessLogs",
-    [],
-    ReturnLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+ url: "transaction/getSoSuccessTransaction",
+    tableId: "#ReturnFailedLogs",
+    columns: ReturnLogsColumns,
+});
+TableLoader.loadTable({
+ url: "transaction/getSoSuccessTransaction",
+    tableId: "#ReturnSuccessLogs",
+    columns: ReturnLogsColumns,
+});
 
 //payment
 TableLoader.loadTable({
-    url: "transaction/getTransaction",
+     url: "transaction/getSoSuccessTransaction",
     tableId:"#PaymentPendingLogs",
     columns: PaymentLogsColumns
 })
-TableLoader.tableData(
-    "#PaymentFailedLogs",
-    [],
-    PaymentLogsColumns,
-    {
-
-    },
-);
-TableLoader.tableData(
-    "#PaymentSuccessLogs",
-    [],
-    PaymentLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+     url: "transaction/getSoSuccessTransaction",
+    tableId: "#PaymentFailedLogs",
+    columns: PaymentLogsColumns,
+});
+TableLoader.loadTable({
+    url: "transaction/getSoSuccessTransaction",
+    tableId: "#PaymentSuccessLogs",
+    columns: PaymentLogsColumns,
+});
 
 //autostock
 TableLoader.loadTable({
-    url: "transaction/getTransaction",
+     url: "transaction/getSoSuccessTransaction",
     tableId:"#AutoStockPendingLogs",
     columns: AutoLogsColumns
 })
-TableLoader.tableData(
-    "#AutoStockFailedLogs",
-    [],
-    AutoLogsColumns,
-    {
-
-    },
-);
-TableLoader.tableData(
-    "#AutoStockSuccessLogs",
-    [],
-    AutoLogsColumns,
-    {
-
-    },
-);
+TableLoader.loadTable({
+ url: "transaction/getSoSuccessTransaction",
+    tableId: "#AutoStockFailedLogs",
+    columns: AutoLogsColumns,
+});
+TableLoader.loadTable({
+    url: "transaction/getSoSuccessTransaction",
+    tableId: "#AutoStockSuccessLogs",
+    columns: AutoLogsColumns,
+});
 
 
 // Select all checkbox toggles all row checkboxes
@@ -360,25 +423,15 @@ function getSelectedTransactions() {
     }).get();
 }
 
-function processToFDIS() {
-    const selectedIds = getSelectedTransactions();
-    if (selectedIds.length === 0) {
-        alert('Please select at least one transaction.');
-        return;
-    }
-    console.log('Processing:', selectedIds);
-    // your AJAX call here
-}
-
 //transactionModal
-TableLoader.tableData(
-    "#TransactionTable",
-    [],
-    SyncTransactionsColumns,
-    {
+TableLoader.loadTable({
+    url: "transaction/getFdisTransaction",
+    tableId: "#TransactionTable",
+    columns: SyncTransactionsColumns,
+    
         searchInput: "#TransactionTableSearch",
-    }
-);
+    
+});
 
 // Hide button initially
 $(".reprocess_btn").addClass("hidden");
@@ -522,11 +575,57 @@ function renderQueueTable(bodyId, rows, rowTemplate) {
     $("#" + bodyId).html(rows.map(rowTemplate).join(""));
 }
 
+function reloadPendingTable(tableId, url, onDone) {
+    Api.get({
+        url,
+        onSuccess: (data) => {
+            const rows = Array.isArray(data) ? data : (data?.data ?? []);
+
+            if ($.fn.DataTable.isDataTable(tableId)) {
+                const table = $(tableId).DataTable();
+                table.clear();
+                table.rows.add(rows);
+                table.draw();
+                table.columns.adjust();
+            }
+
+            if (typeof onDone === "function") onDone();
+        },
+        onError: () => {
+            if (typeof onDone === "function") onDone();
+        },
+    });
+}
+
 $(document).on("click", "#sfaRefresh", function () {
     Swal.fire({
-        text: "This could take time, please wait while we process your request.",
-        icon: "question",
+        title: 'Refreshing…',
+        text: 'Reloading pending transactions, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
     });
+
+    // Reload all four Pending tables
+    let completed = 0;
+    const total = 4;
+
+    function onDone() {
+        completed++;
+        if (completed >= total) {
+            Swal.fire({
+                title: 'Refreshed',
+                text: 'Pending records have been updated.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        }
+    }
+
+    reloadPendingTable('#SOPendingLogs',        'transaction/getPendingTransaction', onDone);
+    reloadPendingTable('#ReturnPendingLogs',     'transaction/getPendingTransaction', onDone);
+    reloadPendingTable('#PaymentPendingLogs',    'transaction/getPendingTransaction', onDone);
+    reloadPendingTable('#AutoStockPendingLogs',  'transaction/getPendingTransaction', onDone);
 });
 
 
@@ -591,3 +690,23 @@ $(document).on(
     }
 );
 
+$(document).on("click", "#ReProcess_btn", function () {
+
+    Api.post({
+        url: "transaction/retryAllFailed",
+
+        onSuccess: function (response) {
+
+            console.log("Reprocess successful:", response);
+
+            loadSoTables();
+        },
+
+        onError: function (error) {
+
+            console.log("Reprocess failed:", error);
+
+        }
+    });
+
+});

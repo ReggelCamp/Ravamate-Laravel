@@ -142,9 +142,14 @@ export default class TableLoader {
             data: config.filters,
 
             onSuccess: (data) => {
+                // Some API endpoints return the rows as a plain array, while others
+                // wrap them in { data: [...], count: N }. DataTables' "data" option
+                // only accepts an array of rows, so normalize the payload here.
+                const rows = Array.isArray(data) ? data : (data?.data ?? []);
+
                 const table = TableLoader.tableData(
                     config.tableId,
-                    data,
+                    rows,
                     config.columns,
                     {
                         pageLength: config.pageLength ?? getPageLength(),

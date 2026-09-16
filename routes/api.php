@@ -26,3 +26,15 @@ Route::post('/createTransaction',[TransactionController::class, 'createTransacti
 Route::post('/createStore',[StoreController::class, 'createStore']);
 
 Route::post('/createTransactionDetails',[TransactionDetailsController::class, 'createTransactionDetails']);
+
+Route::post('/syncSo', function (Request $request) {
+    return response()->json([
+        'success' => true,
+        'message' =>
+            'Transaction received successfully',
+        'data' =>
+            $request->all()
+    ], 200);
+});
+
+Route::post('/retryTransaction',[TransactionController::class, 'retryTransaction']);

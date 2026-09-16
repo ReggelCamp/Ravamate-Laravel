@@ -16,8 +16,8 @@ class StoreController extends Controller
     public function createStore(Request $request){
         $store = StoreModel::create([
             'store_name'          => $request->store_name,
-            'longitude'           => $request->longitude,
-            'latitude'            => $request->latitude,
+            // 'longitude'           => $request->longitude,
+            // 'latitude'            => $request->latitude,
             'salesman_id'         => $request->salesman_id,
             'transaction_sales'   => $request->transaction_sales ?? null,
             'transaction_date'    => $request->transaction_date,
