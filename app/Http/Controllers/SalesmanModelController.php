@@ -73,47 +73,29 @@ class SalesmanModelController extends Controller
         // return response()->json($salesman);
     }
 
-    public function CreateSalesman(Request $request)
-    {
-        $validated = $request->validate([
-            'salesman_name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'max:255'],
-            'call_time' => ['nullable', 'date_format:H:i'],
-            'default_ord_type' => ['nullable', 'string', 'max:100'],
-            'loading_capacity' => ['nullable', 'numeric', 'min:0'],
-            'color' => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'contact_no' => ['nullable', 'string', 'max:25'],
-            'cashier_no' => ['nullable', 'string', 'max:25'],
-            'supervisor_name' => ['nullable', 'string', 'max:255'],
-            'supervisor_no' => ['nullable', 'string', 'max:25'],
-        ]);
-
+    public function CreateSalesman(Request $request){
         $salesmanData = [
-            ...$validated,
-            'password' => Hash::make($validated['password']),
-            // These legacy columns are required by the existing salesman table.
-            'attendance' => '0',
-            'target_mcp' => '0',
-            'productive' => '0',
-            'unproductive' => '0',
-            'strike_rate' => '0',
-            'selling_hrs' => '0',
-            'sale' => '0',
+            'salesman_name'      => $request->salesman_name,
+            'password'           => Hash::make($request->password),
+            'call_time'          => $request->call_time ?? null,
+            'default_ord_type'   => $request->default_ord_type ?? null,
+            'loading_capacity'   => $request->loading_capacity ?? null,
+            'color'              => $request->color ?? null,
+            'contact_no'         => $request->contact_no ?? null,
+            'cashier_no'         => $request->cashier_no ?? null,
+            'supervisor_name'    => $request->supervisor_name ?? null,
+            'supervisor_no'      => $request->supervisor_no ?? null,
+
+            'attendance'    => '0',
+            'target_mcp'    => '0',
+            'productive'    => '0',
+            'unproductive'  => '0',
+            'strike_rate'   => '0',
+            'selling_hrs'   => '0',
+            'sale'          => '0',
         ];
 
-        // Some existing installations have these accounting columns although
-        // they are not part of the original salesman migration. They are NOT
-        // NULL, so initialize them for a newly created salesman when present.
-        foreach ([
-            'or_no',
-            'customer',
-            'si_no',
-            'si_amount',
-            'check_date',
-            'bank_code',
-            'check_no',
-            'amount',
-        ] as $column) {
+        foreach (['or_no', 'customer', 'si_no', 'si_amount', 'check_date', 'bank_code', 'check_no', 'amount'] as $column) {
             if (Schema::hasColumn('salesman', $column)) {
                 $salesmanData[$column] = '';
             }
@@ -126,4 +108,34 @@ class SalesmanModelController extends Controller
             'salesman' => $salesman,
         ], 201);
     }
+
+public function updateSalesman(Request $request){
+    $salesman = SalesmanModel::updateOrCreate(
+        ['salesman_name' => $request->salesman_name],
+        [
+            'call_time'         => $request->call_time,
+            'default_ord_type'  => $request->default_ord_type,
+            'loading_capacity'  => $request->loading_capacity,
+            'color'             => $request->color,
+            'contact_no'        => $request->contact_no,
+            'cashier_no'        => $request->cashier_no,
+            'supervisor_name'   => $request->supervisor_name,
+            'supervisor_no'     => $request->supervisor_no,
+            'geolocking'        => $request->geolocking,
+            'price_code'        => $request->price_code,
+            'bo_warehouse'      => $request->bo_warehouse,
+            'gs_warehouse'      => $request->gs_warehouse,
+            'osa_checking'      => $request->osa_checking,
+            'eod'               => $request->eod,
+            'is_hybrid'         => $request->is_hybrid,
+            'restrict_customer' => $request->restrict_customer,
+            'disable_otp'       => $request->disable_otp,
+        ]
+    );
+
+    return response()->json([
+        'message' => 'Salesman saved successfully',
+        'salesman' => $salesman,
+    ], 200);
+}
 }

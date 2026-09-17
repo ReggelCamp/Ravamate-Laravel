@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailsController;
@@ -38,3 +40,5 @@ Route::post('/syncSo', function (Request $request) {
 });
 
 Route::post('/retryTransaction',[TransactionController::class, 'retryTransaction']);
+Route::post('/createBank',[BankController::class, 'createBank']);
+Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);

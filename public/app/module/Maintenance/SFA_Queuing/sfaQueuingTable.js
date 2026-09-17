@@ -4,9 +4,6 @@ import "../../../helper/exportDataTable.js";
 import ComponentHelper from "../../../helper/ComponentHelper.js"
 import Api from "../../../helper/Api.js";
 
-
-let salesmanName = null;
-
 const ReturnLogsColumns = [
     {
         title: "Transaction ID",
@@ -419,7 +416,17 @@ $(document).on("click", "#ReProcess_btn", function () {
 
 
 $(document).on("click","#syncSalesman",function(){
-    const selectedTransactions = GetSyncSalesman();
+    const selectedSalesmen = getSelectedSalesmanIds();
+
+    // Nothing ticked -> don't fire an empty sync request
+    if (!selectedSalesmen.length) {
+        Swal.fire({
+            title: 'No Salesman Selected',
+            text: 'Please select at least one salesman to sync.',
+            icon: 'warning',
+        });
+        return;
+    }
 
     document.getElementById('SalesmanModal')?.close(); // close the native dialog first
 
@@ -432,10 +439,19 @@ $(document).on("click","#syncSalesman",function(){
 
     Api.get({
         url: "transaction/syncTransaction",
-        data: { transaction_ids: selectedTransactions },
+        data: { salesman_ids: selectedSalesmen },
         onSuccess: function (response) {
             Swal.close();
+            GetSyncSalesman(); // refresh the salesman list after a sync
             loadSoTables();
+        },
+        onError: function (error) {
+            Swal.fire({
+                title: 'Sync Failed',
+                text: error?.responseJSON?.message
+                    ?? 'Unable to sync the selected salesmen.',
+                icon: 'error',
+            });
         }
     });
 });
@@ -731,35 +747,80 @@ $(document).on("input", '[data-tables]', function () {
     });
 });
 
-$(document).on("click","#Sync_Salesman_Dropdown",function(){
+// ---------------------------------------------------------------------------
+// Sync Per Salesman
+// ---------------------------------------------------------------------------
 
-    GetSyncSalesman();
-    console.log(salesmanName,"pop");
-    if(salesmanName == null){
-        $("#Sync_Salesman").text("Select");
-    }
-    else{
-        $("#Sync_Salesman").text(salesmanName);
-    }
-});
+function getSelectedSalesmanIds() {
+    return $("#Sync_Salesman_Transaction .dropdown_checkbox:checked")
+        .map(function () {
+            return $(this).val();
+        })
+        .get()
+        .filter(function (salesmanId) {
+            return salesmanId !== "" && salesmanId != null;
+        });
+}
+
+// Reflects the ticked salesmen on the dropdown trigger label
+function updateSyncSalesmanLabel() {
+const selectedLabels = $("#Sync_Salesman_Transaction .dropdown_checkbox:checked")
+        .map(function () {
+            return $(this).data("label");
+        })
+        .get()
+        .filter(function (label) {
+            return label !== "" && label != null;
+        });
+
+    $("#Sync_Salesman").text(
+        selectedLabels.length ? selectedLabels.join(", ") : "Select"
+    );
+}
 
 function GetSyncSalesman() {
+
+    // Keep the salesmen the user already ticked before the list is re-rendered
+    const checkedSalesmen = getSelectedSalesmanIds();
 
     ComponentHelper.dropdown().LoadCheckBoxByApi({
         url: "transaction/getSoPendingSalesman",
         dropdownId: "Sync_Salesman_Transaction",
         displayField: "salesman_name",
-        dataField: "transaction_id"
-    })
+        dataField: "salesman_id",
+        noDataText: "No Pending Salesman Found",
+        onSuccess: function () {
 
-    $(document).off("click.syncSalesman", "#Sync_Salesman_Transaction li")
-        .on("click.syncSalesman", "#Sync_Salesman_Transaction li", function () {
+            // Re-check the previously selected salesmen
+            $("#Sync_Salesman_Transaction .dropdown_checkbox").each(function () {
+                $(this).prop(
+                    "checked",
+                    checkedSalesmen.includes($(this).val())
+                );
+            });
 
-            salesmanName = $(this).text().trim();
-
-            console.log("Clicked salesman:", salesmanName);
-        });
+            updateSyncSalesmanLabel();
+        }
+    });
 }
+
+// Load a fresh salesman list every time the modal is opened
+$(document).ready(function () {
+    const salesmanModal = document.getElementById("SalesmanModal");
+
+    salesmanModal?.addEventListener("toggle", function () {
+        if (salesmanModal.open) {
+            GetSyncSalesman();
+        }
+    });
+});
+
+// Keep the trigger label in sync with the ticked checkboxes
+$(document).on(
+    "change.syncSalesman",
+    "#Sync_Salesman_Transaction .dropdown_checkbox",
+    updateSyncSalesmanLabel
+);
 
 $(document).on(
     "click",

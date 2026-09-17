@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Routes;
 
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -25,7 +26,9 @@ class ApiRoute extends Controller
         });
 
         Route::prefix('salesman')->group(function () {
+            Route::get('/getSalesman',[SalesmanModelController::class, 'getSalesman']);
             Route::post('/createSalesman',[SalesmanModelController::class, 'CreateSalesman']);
+            Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
         });
         
         Route::prefix('store')->group(function () {
@@ -64,6 +67,10 @@ class ApiRoute extends Controller
         Route::prefix('product')->group(function () {
             Route::get('/getProduct',[ProductController::class, 'getAllProduct']);
             Route::get('/getProductDetails',[ProductController::class, 'getProductDetails']);
+        });
+
+        Route::prefix('bank')->group(function () {
+            Route::post('/createBank',[BankController::class, 'createBank']);
         });
         
     }

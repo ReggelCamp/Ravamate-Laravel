@@ -1,45 +1,3 @@
-// import TableLoader from "../../../helper/TableLoader.js";
-
-// const SalesmanMaintenanceTable = [
-//     {
-//         title: "Md Code",
-//         data: "md_code"
-//     },
-//     {
-//         title: "Name",
-//         data: "name"
-//     },
-//     {
-//         title: "Salesman Contact No.",
-//         data: "salesman_contact_no"
-//     },
-//     {
-//         title: "Cashier Contact No.",
-//         data: "cashier_contact_no"
-//     },
-//     {
-//         title: "Supervisor Contact No.",
-//         data: "supervisor_contact_no"
-//     },
-//     {
-//         title: "Date Created",
-//         data: "date_created"
-//     },
-//     {
-//         title: "Geo Locking",
-//         data: "geo_locking"
-//     },
-//     {
-//         title: "Salesman Type",
-//         data: "salesman_type"
-//     },
-//     {
-//         title: "Status",
-//         data: "status"
-//     }
-// ];
-
-
 import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
@@ -52,23 +10,23 @@ const SalesmanMaintenanceTable = [
     },
     {
         title: "Name",
-        data: "name"
+        data: "salesman_name"
     },
     {
         title: "Salesman Contact No.",
-        data: "salesman_contact_no"
+        data: "contact_no"
     },
     {
         title: "Cashier Contact No.",
-        data: "cashier_contact_no"
+        data: "cashier_no"
     },
     {
         title: "Supervisor Contact No.",
-        data: "supervisor_contact_no"
+        data: "supervisor_no"
     },
     {
         title: "Date Created",
-        data: "date_created"
+        data: "created_at"
     },
     {
         title: "Geo Locking",
@@ -142,14 +100,12 @@ const sampleData = [
     }
 ];
 
-TableLoader.tableData(
-    "#salesmanMaintenanceTable", // Replace with your actual table ID
-    sampleData,
-    SalesmanMaintenanceTable,
-    {
+TableLoader.loadTable({
+    url: "salesman/getSalesman", 
+    tableId:"#salesmanMaintenanceTable",
+    columns: SalesmanMaintenanceTable,
+});
 
-    }
-);
 $(document).ready(function () {
     DatePicker.init();
 });
@@ -279,5 +235,52 @@ $("#AddSalesmanForm").on("submit", function (e) {
             alert(errors || "Please check the salesman details.");
         },
         onError: () => alert("Unable to create the salesman. Please try again.")
+    });
+});
+
+$(document).on("click", "#salesmanInfo_SaveChanges", function () {
+
+    Api.post({
+        url: "salesman/updateSalesman",
+        data: {
+            id:                 $("#salesmanInfo_id").val() || null,
+            salesman_name:      $("#salesmanInfo_name").val(),
+            call_time:          $("#salesmanInfo_callTime").val(),
+            default_ord_type:   $("#salesmanInfo_defaultOrdType").val(),
+            loading_capacity:   $("#salesmanInfo_loadingCapacity").val(),
+            color:              $("#salesmanInfo_color").val(),
+            contact_no:         $("#salesmanInfo_contactNo").val(),
+            cashier_no:         $("#salesmanInfo_cashierNo").val(),
+            supervisor_name:    $("#salesmanInfo_supervisorName").val(),
+            supervisor_no:      $("#salesmanInfo_supervisorNo").val(),
+            geolocking:         $("#salesmanInfo_geolocking").val(),
+            price_code:         $("#salesmanInfo_priceCode").val(),
+            bo_warehouse:       $("#salesmanInfo_boWarehouse").val(),
+            gs_warehouse:       $("#salesmanInfo_gsWarehouse").val(),
+            osa_checking:       $("#salesmanInfo_osaChecking").is(":checked") ? 1 : 0,
+            eod:                $("#salesmanInfo_eod").is(":checked") ? 1 : 0,
+            is_hybrid:          $("#salesmanInfo_isHybrid").is(":checked") ? 1 : 0,
+            restrict_customer:  $("#salesmanInfo_restrictCustomer").is(":checked") ? 1 : 0,
+            disable_otp:        $("#salesmanInfo_disableOtp").is(":checked") ? 1 : 0,
+        },
+        onSuccess: function (response) {
+            Swal.fire({
+                title: 'Saved',
+                text: response.message ?? 'Salesman saved successfully.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+
+            // refresh whatever table lists salesmen, e.g.:
+            // loadSalesmanTable();
+        },
+        onError: function (error) {
+            Swal.fire({
+                title: 'Error',
+                text: error?.message ?? 'Failed to save salesman.',
+                icon: 'error',
+            });
+        }
     });
 });

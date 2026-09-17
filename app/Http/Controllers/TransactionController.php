@@ -104,14 +104,16 @@ class TransactionController extends Controller
     $salesmen = Transaction::with('TransactionSalesman')
         ->where('api_status', 'PENDING')
         ->get()
-        ->map(function ($transaction) {
+        ->groupBy('salesman_id')
+        ->map(function ($transactions) {
             return [
-                'salesman_id' => $transaction->salesman_id,
+                'salesman_id' => $transactions->first()->salesman_id,
                 'salesman_name' =>
-                    $transaction->TransactionSalesman?->salesman_name,
+                    $transactions->first()->TransactionSalesman?->salesman_name,
+                'transaction_ids' =>
+                    $transactions->pluck('transaction_id')->values()->all(),
             ];
         })
-        ->unique('salesman_id')
         ->values();
 
     return response()->json([
@@ -173,7 +175,41 @@ class TransactionController extends Controller
     public function syncTransaction(Request $request){
     try {
 
-        foreach ($request->transaction_ids as $transactionId) {
+        // "Sync Specific Transaction" sends transaction_ids,
+        // "Sync Per Salesman" sends salesman_ids.
+        $transactionIds = array_filter((array) $request->input('transaction_ids', []));
+        $salesmanIds = array_filter((array) $request->input('salesman_ids', []));
+
+        if (empty($transactionIds) && empty($salesmanIds)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No transaction or salesman selected.',
+            ], 422);
+        }
+
+        // Expand the selected salesmen into their pending transactions
+        if (!empty($salesmanIds)) {
+            $transactionIds = array_merge(
+                $transactionIds,
+                Transaction::where('api_status', 'PENDING')
+                    ->whereIn('salesman_id', $salesmanIds)
+                    ->pluck('transaction_id')
+                    ->all()
+            );
+        }
+
+        $transactionIds = array_values(array_unique($transactionIds));
+
+        if (empty($transactionIds)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No pending transaction found for the selected salesman.',
+            ], 422);
+        }
+
+        $processed = 0;
+
+        foreach ($transactionIds as $transactionId) {
 
             $transaction = Transaction::with('TransactionDetails', 'TransactionSalesman')
                 ->where('transaction_id', $transactionId)
@@ -210,6 +246,8 @@ class TransactionController extends Controller
                         . $transaction->invoice_no,
                 ]);
 
+                $processed++;
+
             } catch (\Throwable $e) {
 
                 // Mark this transaction as failed
@@ -227,6 +265,7 @@ class TransactionController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Selected transactions processed successfully.',
+            'count' => $processed,
         ], 200);
 
     } catch (\Throwable $e) {
