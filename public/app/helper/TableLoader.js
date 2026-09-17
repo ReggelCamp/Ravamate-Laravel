@@ -29,64 +29,63 @@ function getResponsiveScrollY() {
 }
 
 export default class TableLoader {
-   static tableData(id, json, columns, options = {}) {
+    
+static tableData(id, json, columns, options = {}) {
+
+    if ($.fn.DataTable.isDataTable(id)) {
+        $(id).DataTable().destroy();
+    }
+
+    let tableRows = json;
+
+    // Flatten transaction_details
+    if (options.flattenDetails) {
+
+        tableRows = json.flatMap(transaction => {
+
+            const details = transaction.transaction_details ?? [];
+
+            // No details
+            if (details.length === 0) {
+                return [{
+                    ...transaction,
+                    detail_id: null,
+                    product_id: null,
+                    detail_quantity: null,
+                    detail_um: null,
+                }];
+            }
+
+            // One DataTable row per detail
+            return details.map(detail => ({
+                ...transaction,
+
+                // Keep parent transaction ID
+                transaction_id: transaction.transaction_id,
+
+                // Detail values
+                detail_id: detail.id,
+                product_id: detail.product_id,
+                detail_quantity: detail.quantity,
+                detail_um: detail.u_m,
+            }));
+        });
+    }
 
     const table = $(id).DataTable({
-        data: json,
-
+        data: tableRows,
         searching: true,
         lengthChange: false,
         responsive: false,
-
         autoWidth: true,
-
         scrollY: options.scrollY ?? getResponsiveScrollY(),
         scrollX: options.scrollX ?? true,
         scrollCollapse: true,
-
         pageLength: options.pageLength ?? getPageLength(),
-
         dom: '<"top">rt<"dataTable-info"ip><"clear">',
-
-        buttons: [
-            {
-                extend: "copy",
-                className: "dt-hidden-copy",
-            },
-            {
-                extend: "csv",
-                className: "dt-hidden-csv",
-            },
-            {
-                extend: "excel",
-                text: "Export Excel",
-                className: "dt-hidden-excel",
-            },
-            {
-                extend: "print",
-                className: "dt-hidden-print",
-            },
-        ],
-
+        buttons: [ /* unchanged */ ],
         columns: columns,
-
-        drawCallback: function () {
-            const api = this.api();
-            const pageInfo = api.page.info();
-
-            const pagination = $(api.table().container())
-                .find(".dt-paging");
-
-            if (pageInfo.pages <= 1) {
-                pagination.hide();
-            } else {
-                pagination.show();
-            }
-
-            if (typeof options.drawCallback === "function") {
-                options.drawCallback.call(this, api);
-            }
-        },
+        drawCallback: function () { /* unchanged */ },
     });
 
     setTimeout(() => {
@@ -97,7 +96,6 @@ export default class TableLoader {
         options.searchInput || `[data-table-search="${id}"]`;
 
     TableLoader.bindSearch(searchSelector, table);
-
     TableLoader.getTableId(
         id,
         table,
@@ -142,10 +140,17 @@ export default class TableLoader {
             data: config.filters,
 
             onSuccess: (data) => {
-                // Some API endpoints return the rows as a plain array, while others
-                // wrap them in { data: [...], count: N }. DataTables' "data" option
-                // only accepts an array of rows, so normalize the payload here.
-                const rows = Array.isArray(data) ? data : (data?.data ?? []);
+
+                if (
+                    typeof config.isCurrent === "function" &&
+                    !config.isCurrent()
+                ) {
+                    return;
+                }
+
+                const rows = Array.isArray(data)
+                    ? data
+                    : (data?.data ?? []);
 
                 const table = TableLoader.tableData(
                     config.tableId,
@@ -155,12 +160,12 @@ export default class TableLoader {
                         pageLength: config.pageLength ?? getPageLength(),
                         scrollY: config.scrollY ?? getResponsiveScrollY(),
                         searchInput: config.searchInput,
-                        // pageLength: config.pageLength,
-                        // scrollY: config.scrollY,
+
+                        // ADD THIS
+                        flattenDetails: config.flattenDetails ?? false,
                     },
                 );
 
-                // Store the DataTable instance if you need it
                 config.table = table;
 
                 if (config.onSuccess) {

@@ -455,6 +455,7 @@ function loadDashboardData(date = null) {
         scrollY: "200px",
         pageLength: 5,
         searchInput:"#customSearch",
+        isCurrent: () => loadVersion === dashboardLoadVersion,
         onSuccess: (data) => {
             if (loadVersion !== dashboardLoadVersion) return;
 
@@ -803,12 +804,18 @@ function InfoWindowContent(salesman) {
     let TotalSalesOnStore = 0;
     const InfoTableSKU = getTableLength();
     
-    // The transaction date shown in the info window comes from the transaction
-    // model (transaction.transaction_date) for the selected store.
+    // The transaction date shown in the info window comes from the selected
+    // day's transactions for the store (transaction.transaction_date), matching
+    // the dashboard's date filter; the store row's own transaction_date is only
+    // a fallback when the store has no transactions on the selected day.
     const selectedStore = salesman.stores?.[storeIndex];
-    const selectedTransaction = salesman.stores?.find(
+
+    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+    const dayTransaction = (selectedStore?.transactions ?? []).find(
         (transaction) =>
-            String(transaction.store_id) === String(selectedStore?.store_id)
+            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
+                .isSame(filterDay, "day")
     );
 
     salesman.transactions?.forEach(transaction => {
@@ -820,11 +827,12 @@ function InfoWindowContent(salesman) {
     });
 
     const transactionDate =
-        selectedTransaction?.transaction_date
+        dayTransaction?.transaction_date
         ?? selectedStore?.transaction_date;
     const formattedDate = transactionDate ? DateFormatter(transactionDate) : "N/A";
     console.log("selected store",selectedStore);
-    console.log("selected trans",selectedTransaction);
+    console.log("selected trans", dayTransaction);
+    console.log("selected date",formattedDate);
 
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
@@ -892,7 +900,7 @@ function InfoWindowContent(salesman) {
                             </div>
                             <div class="pt-3">
                                 <span class="text-gray-400 block">Transaction ID:</span>
-                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${salesman.stores.transaction_id ?? "GP_2202609031611537"}</span>
+                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${dayTransaction.transaction_id ?? "GP_2202609031611537"}</span>
                             </div>
                             <div class="flex justify-between pt-3">
                                 <div class="w-full">
@@ -1332,8 +1340,18 @@ function getSku(data, tableId) {
         return;
     }
 
-    const productRows = (selectedStore.transactions ?? []).flatMap((transaction) =>
-        (transaction.transaction_details ?? []).map((detail) => {
+    // Only the selected day's transactions belong in this store's SKU/item
+    // totals. The API returns every transaction on the store (the month-to-date
+    // overview needs them), so filter here using the dashboard's selected date.
+    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+    const productRows = (selectedStore.transactions ?? [])
+        .filter((transaction) =>
+            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
+                .isSame(filterDay, "day")
+        )
+        .flatMap((transaction) =>
+            (transaction.transaction_details ?? []).map((detail) => {
             const quantity = Number(detail.quantity ?? 0);
             const price = Number(detail.current_price ?? 0);
 
@@ -1369,7 +1387,17 @@ function getSidePanelContent(salesman) {
     storeNames = salesman.stores?.map(store => store.store_name) ?? [];
 
     const selectedStore = salesman.stores?.[storeIndex];
-    const storeTransactions = selectedStore?.transactions ?? [];
+
+    // Only the selected day's transactions belong to this store view. The API
+    // returns every transaction on the store (the month-to-date overview needs
+    // them), so filter here instead of showing a stale transaction from another
+    // day (e.g. September 15) after the dashboard date was changed.
+    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+    const storeTransactions = (selectedStore?.transactions ?? []).filter(
+        (transaction) =>
+            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
+                .isSame(filterDay, "day")
+    );
 
     // Earliest transaction for this store, used as "time in"
     const sortedTransactions = [...storeTransactions].sort(

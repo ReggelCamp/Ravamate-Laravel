@@ -30,7 +30,8 @@ class TransactionController extends Controller
 
             'longitude'           => $request->longitude,
             'latitude'            => $request->latitude,
-            
+
+            'document_no'      => $request->document_no,
             'customercode'     => $request->customercode,
             'invoice_no'       => $request->invoice_no,
             'site'             => $request->site,
@@ -99,6 +100,25 @@ class TransactionController extends Controller
         //return response()->json($transactions);
     }
 
+    public function getSoPendingSalesman(){
+    $salesmen = Transaction::with('TransactionSalesman')
+        ->where('api_status', 'PENDING')
+        ->get()
+        ->map(function ($transaction) {
+            return [
+                'salesman_id' => $transaction->salesman_id,
+                'salesman_name' =>
+                    $transaction->TransactionSalesman?->salesman_name,
+            ];
+        })
+        ->unique('salesman_id')
+        ->values();
+
+    return response()->json([
+        'data' => $salesmen,
+    ]);
+}
+
     public function getSoFailedTransaction(){
         $transaction = Transaction::with('TransactionSalesman','TransactionDetails')
         ->where('api_status', 'FAILED')
@@ -150,38 +170,27 @@ class TransactionController extends Controller
         ], 200);
     }
 
-    // public function syncTransaction(){
-    //     try{
-
-    //     }
-    //     catch (\Throwable $e) {
-    //         return response()->json([
-    //             'message' => 'Transaction sync failed',
-    //             'error'   => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
-
-
     public function syncTransaction(Request $request){
-        try {
+    try {
 
-            $transaction = Transaction::with('TransactionDetails')
-                ->where('transaction_id', $request->transaction_id)
+        foreach ($request->transaction_ids as $transactionId) {
+
+            $transaction = Transaction::with('TransactionDetails', 'TransactionSalesman')
+                ->where('transaction_id', $transactionId)
                 ->where('api_status', 'PENDING')
                 ->first();
 
+            // Skip transactions that don't exist
+            // or have already been processed
             if (!$transaction) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Transaction not found or already processed.'
-                ], 404);
+                continue;
             }
 
             try {
 
                 // Save transaction to SyncData
                 $syncTransaction = SyncData::create([
+                    'order_type'   => $transaction->TransactionSalesman?->default_ord_type,
                     'customercode' => $transaction->customercode,
                     'invoice_no'   => $transaction->invoice_no,
                     'site'         => $transaction->site,
@@ -194,48 +203,40 @@ class TransactionController extends Controller
                 // Mark original transaction as synced
                 $transaction->update([
                     'api_status' => 'SYNCED',
-                    'api_response' => json_encode([
-                        'success' => true,
-                        'message' => 'Transaction synced successfully',
-                        'data' => $syncTransaction
-                    ]),
+                    'api_response' =>
+                        'Sale order processed successfully. Transaction No: '
+                        . $transaction->document_no
+                        . ' | SO Number: '
+                        . $transaction->invoice_no,
                 ]);
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Transaction synced successfully',
-                    'status' => 'SYNCED',
-                    'transaction_id' => $transaction->transaction_id,
-                    'data' => $syncTransaction
-                ], 200);
 
             } catch (\Throwable $e) {
 
-                // Something failed while saving
+                // Mark this transaction as failed
                 $transaction->update([
                     'api_status' => 'FAILED',
-                    //'api_response' => $e->getMessage(),
-                    'api_response' => 'Sync Failed',
+                    'api_response' => $e->getMessage(),
+                    // 'api_response' => 'Sync Failed',
                 ]);
 
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Transaction sync failed',
-                    'status' => 'FAILED',
-                    'transaction_id' => $transaction->transaction_id,
-                    'error' => "Failes Sync" 
-                    //'error' => $e->getMessage()
-                ], 500);
+                continue;
             }
-
-        } catch (\Throwable $e) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to process transaction.',
-                'error' => $e->getMessage()
-            ], 500);
         }
+
+        // Return only after ALL selected transactions have been processed
+        return response()->json([
+            'success' => true,
+            'message' => 'Selected transactions processed successfully.',
+        ], 200);
+
+    } catch (\Throwable $e) {
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Unable to process transactions.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
     }
 
     public function retryAllFailed(){

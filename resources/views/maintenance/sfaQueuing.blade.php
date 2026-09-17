@@ -255,6 +255,10 @@
             overflow-wrap: anywhere;
             word-break: break-word;
         }
+
+        .swal-on-top {
+            z-index: 99999 !important;
+        }
         
     </style>
 
@@ -711,7 +715,7 @@
 
                 <!-- Toolbar -->
                 <div class="flex items-center w-full justify-between p-5">
-                    <button class="p-2 rounded-lg text-[12px] Fdis_Btn" onclick="processToFDIS()">
+                    <button id="syncFdis" class="p-2 btn rounded-lg text-[12px] Fdis_Btn">
                         Process to FDIS
                     </button>
                     <x-searchbar class="border rounded-xl" tableId="TransactionTable" id="TransactionTableSearch"/>
@@ -779,7 +783,7 @@
                     <form method="dialog">
                         <button class="btn btn-ghost font-medium">Cancel</button>
                     </form>
-                    <button class="btn bg-blue-500 hover:bg-blue-600 text-white border-none px-6" onclick="executeSalesmanSync()">
+                    <button id="syncSalesman" class="btn bg-blue-500 hover:bg-blue-600 text-white border-none px-6">
                         Execute
                     </button>
                 </div>

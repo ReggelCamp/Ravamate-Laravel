@@ -4,6 +4,7 @@ import "../../../helper/exportDataTable.js";
 import ComponentHelper from "../../../helper/ComponentHelper.js"
 import Api from "../../../helper/Api.js";
 
+
 let salesmanName = null;
 
 const ReturnLogsColumns = [
@@ -98,15 +99,10 @@ const SoToFdisColumns = [
         title: "UM",
         data: "um",
     },
-{
-    title: "QTY Ordered",
-    data: null,
-    render: function(row) {
-        return (row.transaction_details ?? [])
-            .map(detail => detail.quantity)
-            .join("<br>");
-    }
-},
+    {
+        title: "QTY Ordered",
+        data: "detail_quantity"
+    },
     {
         title: "API Status",
         data: null,
@@ -130,11 +126,25 @@ const SoToFdisColumns = [
     },
     {
         title: "Last Updated",
-        data: "updated_at",
+        data: null,
+        render: function(row) {
+            const updatedAt = row.transaction_details?.[0]?.updated_at; 
+
+            if (!updatedAt) return "N/A";
+
+            return moment(updatedAt).format("MMM DD, YYYY h:mm A");
+        }
     },
     {
         title: "Date Added",
-        data: "created_at",
+        data: null,
+        render: function(row) {
+            const createdAt = row.transaction_details?.[0]?.created_at; 
+
+            if (!createdAt) return "N/A";
+
+            return moment(createdAt).format("MMM DD, YYYY h:mm A");
+        }
     },
 ];
 
@@ -309,8 +319,8 @@ function loadSoTables() {
         url: "transaction/getSoPendingTransaction",
         tableId:"#SOPendingLogs",
         columns: SoToFdisColumns,
+        flattenDetails: true,
         onSuccess: function (response) {
-
             const count = response.count ?? 0;
 
             $("#SOPendingLogsTab").attr(
@@ -323,6 +333,7 @@ function loadSoTables() {
         url: "transaction/getSoFailedTransaction",
         tableId:"#SOFailedLogs",
         columns: SoToFdisColumns,
+        flattenDetails: true,
         onSuccess: function (response) {
 
             const count = response.count ?? 0;
@@ -337,9 +348,10 @@ function loadSoTables() {
         url: "transaction/getSoSuccessTransaction",
         tableId:"#SOSuccessLogs",
         columns: SoToFdisColumns,
-        onSuccess: function (response) {
+        flattenDetails: true,
+        onSuccess: function(response, table) {
 
-            const count = response.count ?? 0;
+            const count = table.rows().count();
 
             $("#SOSuccessLogsTab").attr(
                 "aria-label",
@@ -348,9 +360,86 @@ function loadSoTables() {
         }
     })
 
+    //transactionModal
+    TableLoader.loadTable({
+        //url: "transaction/getFdisTransaction",
+        url: "transaction/getSoPendingTransaction",
+        tableId: "#TransactionTable",
+        columns: SyncTransactionsColumns,
+        flattenDetails: true,
+        searchInput: "#TransactionTableSearch",
+        
+    });
 }
 
 loadSoTables();
+
+$(document).on("click", "#syncFdis", function () {
+    const selectedTransactions = getSelectedTransactions();
+
+    document.getElementById('TransactionModal')?.close(); // close the native dialog first
+
+    Swal.fire({
+        title: 'Syncing…',
+        text: 'Syncing transactions, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    Api.get({
+        url: "transaction/syncTransaction",
+        data: { transaction_ids: selectedTransactions },
+        onSuccess: function (response) {
+            Swal.close();
+            loadSoTables();
+        }
+    });
+});
+
+$(document).on("click", "#ReProcess_btn", function () {
+
+    Api.post({
+        url: "transaction/retryAllFailed",
+
+        onSuccess: function (response) {
+
+            console.log("Reprocess successful:", response);
+
+            loadSoTables();
+        },
+
+        onError: function (error) {
+
+            console.log("Reprocess failed:", error);
+
+        }
+    });
+
+});
+
+
+$(document).on("click","#syncSalesman",function(){
+    const selectedTransactions = GetSyncSalesman();
+
+    document.getElementById('SalesmanModal')?.close(); // close the native dialog first
+
+    Swal.fire({
+        title: 'Syncing…',
+        text: 'Syncing transactions, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    Api.get({
+        url: "transaction/syncTransaction",
+        data: { transaction_ids: selectedTransactions },
+        onSuccess: function (response) {
+            Swal.close();
+            loadSoTables();
+        }
+    });
+});
+
 
 //return
 TableLoader.loadTable({
@@ -422,16 +511,6 @@ function getSelectedTransactions() {
         return $(this).val();
     }).get();
 }
-
-//transactionModal
-TableLoader.loadTable({
-    url: "transaction/getFdisTransaction",
-    tableId: "#TransactionTable",
-    columns: SyncTransactionsColumns,
-    
-        searchInput: "#TransactionTableSearch",
-    
-});
 
 // Hide button initially
 $(".reprocess_btn").addClass("hidden");
@@ -577,7 +656,7 @@ function renderQueueTable(bodyId, rows, rowTemplate) {
 
 function reloadPendingTable(tableId, url, onDone) {
     Api.get({
-        url,
+        url:"/transaction/getSoPendingTransaction",
         onSuccess: (data) => {
             const rows = Array.isArray(data) ? data : (data?.data ?? []);
 
@@ -667,11 +746,11 @@ $(document).on("click","#Sync_Salesman_Dropdown",function(){
 function GetSyncSalesman() {
 
     ComponentHelper.dropdown().LoadCheckBoxByApi({
-        url: "/salesmen",
+        url: "transaction/getSoPendingSalesman",
         dropdownId: "Sync_Salesman_Transaction",
         displayField: "salesman_name",
-        dataField: "salesman_id"
-    });
+        dataField: "transaction_id"
+    })
 
     $(document).off("click.syncSalesman", "#Sync_Salesman_Transaction li")
         .on("click.syncSalesman", "#Sync_Salesman_Transaction li", function () {
@@ -690,23 +769,3 @@ $(document).on(
     }
 );
 
-$(document).on("click", "#ReProcess_btn", function () {
-
-    Api.post({
-        url: "transaction/retryAllFailed",
-
-        onSuccess: function (response) {
-
-            console.log("Reprocess successful:", response);
-
-            loadSoTables();
-        },
-
-        onError: function (error) {
-
-            console.log("Reprocess failed:", error);
-
-        }
-    });
-
-});

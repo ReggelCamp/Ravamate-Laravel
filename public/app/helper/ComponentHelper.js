@@ -176,18 +176,40 @@ export default class ComponentHelper {
             },
 
             LoadCheckBoxByApi: (config) => {
-                // console.log("fea", config);
                 Api.get({
                     url: config.url,
                     data: config.data,
 
-                    onSuccess: (data) => {
+                    onSuccess: (response) => {
+
+                        let rows = Array.isArray(response)
+                            ? response
+                            : (response?.data ?? []);
+
+                        // Remove duplicate values
+                        const seen = new Set();
+
+                        rows = rows.filter(item => {
+                            const value = item[config.dataField];
+
+                            if (seen.has(value)) {
+                                return false;
+                            }
+
+                            seen.add(value);
+                            return true;
+                        });
+
                         this.dropdown().LoadCheckbox({
                             ...config,
-                            json: data,
+                            json: rows,
                         });
-                        if (config.onSuccess) config.onSuccess(data);
+
+                        if (config.onSuccess) {
+                            config.onSuccess(response);
+                        }
                     },
+
                     onError: config.onError,
                 });
             },
