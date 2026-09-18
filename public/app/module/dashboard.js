@@ -257,6 +257,7 @@ const OperationColumns = [
 
 // Total amount
 const TotalAmount = "₱79,209.90";
+let _mm = [];
 
 $(document)
     .off("click.dashboardRow", "#dashboardDataTable tbody tr")
@@ -282,6 +283,16 @@ $(document)
             openInfoWindowFor(entry.salesman, entry.marker, 0);
         } else {
             console.log("No marker found for this row.");
+        }
+
+        console.log(rowData);
+
+        const _m = _mm.find(m => m.trid == rowData.transaction_details[0].id);
+
+        if (_m) {
+            google.maps.event.trigger(_m, "click");
+        } else {
+            console.log("No marker found for transaction:");
         }
 
         console.log("data",rowData.id);
@@ -471,6 +482,8 @@ function loadDashboardData(date = null) {
     });
 }
 
+
+
 function displayInfoWindow() {
     if (!array || array.length === 0) {
         console.log("No salesman data.");
@@ -602,6 +615,12 @@ function displayInfoWindow() {
                 anchor: new google.maps.Point(20, 48),
             },
         });
+
+        marker.trid = transaction.transaction_id;
+
+        console.log(transaction.transaction_id)
+
+        _mm.push(marker);
 
         // Store marker under salesman
         if (!markersById[salesman.id]) {
@@ -779,6 +798,8 @@ function displayInfoWindow() {
         }
     });
 }
+
+
 
 function DisplayitemTable() {
     $("#itemDetailsTable").removeClass("hidden");
