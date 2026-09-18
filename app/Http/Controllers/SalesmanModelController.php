@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SalesmanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class SalesmanModelController extends Controller
@@ -66,7 +67,7 @@ class SalesmanModelController extends Controller
     }
 
     public function getSalesman(){
-        $salesman = SalesmanModel::all();
+        $salesman = SalesmanModel::with("salesmanTransactionDetails")->get();
         return response()->json($salesman);
 
         // $salesman = SalesmanModel::with("stores")->get();
@@ -74,8 +75,12 @@ class SalesmanModelController extends Controller
     }
 
     public function CreateSalesman(Request $request){
+        $mdCode = $this->generateMdCode();
+
         $salesmanData = [
+            'md_code'            => $mdCode,
             'salesman_name'      => $request->salesman_name,
+            'geo_locking'        => $request->geo_locking ?? 50 ,
             'password'           => Hash::make($request->password),
             'call_time'          => $request->call_time ?? null,
             'default_ord_type'   => $request->default_ord_type ?? null,
@@ -86,7 +91,6 @@ class SalesmanModelController extends Controller
             'supervisor_name'    => $request->supervisor_name ?? null,
             'supervisor_no'      => $request->supervisor_no ?? null,
 
-            'attendance'    => '0',
             'target_mcp'    => '0',
             'productive'    => '0',
             'unproductive'  => '0',
@@ -109,33 +113,67 @@ class SalesmanModelController extends Controller
         ], 201);
     }
 
-public function updateSalesman(Request $request){
-    $salesman = SalesmanModel::updateOrCreate(
-        ['salesman_name' => $request->salesman_name],
-        [
-            'call_time'         => $request->call_time,
-            'default_ord_type'  => $request->default_ord_type,
-            'loading_capacity'  => $request->loading_capacity,
-            'color'             => $request->color,
-            'contact_no'        => $request->contact_no,
-            'cashier_no'        => $request->cashier_no,
-            'supervisor_name'   => $request->supervisor_name,
-            'supervisor_no'     => $request->supervisor_no,
-            'geolocking'        => $request->geolocking,
-            'price_code'        => $request->price_code,
-            'bo_warehouse'      => $request->bo_warehouse,
-            'gs_warehouse'      => $request->gs_warehouse,
-            'osa_checking'      => $request->osa_checking,
-            'eod'               => $request->eod,
-            'is_hybrid'         => $request->is_hybrid,
-            'restrict_customer' => $request->restrict_customer,
-            'disable_otp'       => $request->disable_otp,
-        ]
-    );
+    private function generateMdCode(): string
+    {
+        return DB::transaction(function () {
+            $lastCode = SalesmanModel::lockForUpdate()
+                ->orderByRaw("CAST(SUBSTRING(md_code, 4) AS UNSIGNED) DESC")
+                ->value('md_code');
 
-    return response()->json([
-        'message' => 'Salesman saved successfully',
-        'salesman' => $salesman,
-    ], 200);
-}
+            $nextNumber = 1001; // starting point matching MD-1001
+
+            if ($lastCode) {
+                $lastNumber = (int) substr($lastCode, 3); // strip "MD-"
+                $nextNumber = $lastNumber + 1;
+            }
+
+            return 'MD-' . $nextNumber;
+        });
+    }
+
+    public function updateSalesman(Request $request){
+        $salesman = SalesmanModel::find($request->id);
+
+        if (!$salesman) {
+            return response()->json([
+                'message' => 'Salesman not found.'
+            ], 404);
+        }
+
+        $salesman->update([
+            'salesman_name'      => $request->salesman_name,
+            'call_time'          => $request->call_time,
+            'default_ord_type'   => $request->default_ord_type,
+            'loading_capacity'   => $request->loading_capacity,
+            'color'              => $request->color,
+            'contact_no'         => $request->contact_no,
+            'cashier_no'         => $request->cashier_no,
+            'supervisor_name'    => $request->supervisor_name,
+            'supervisor_no'      => $request->supervisor_no,
+            'geolocking'         => $request->geolocking,
+            'price_code'         => $request->price_code,
+            'bo_warehouse'       => $request->bo_warehouse,
+            'gs_warehouse'       => $request->gs_warehouse,
+            'osa_checking'       => $request->osa_checking,
+            'eod'                => $request->eod,
+            'is_hybrid'          => $request->is_hybrid,
+            'restrict_customer'  => $request->restrict_customer,
+            'disable_otp'        => $request->disable_otp,
+        ]);
+
+        return response()->json([
+            'message' => 'Salesman saved successfully.',
+            'salesman' => $salesman->fresh(),
+        ], 200);
+    }
+
+//     public function updateSalesman(Request $request)
+// {
+//     dd([
+//         'request_all' => $request->all(),
+//         'request_id' => $request->input('id'),
+//         'request_method' => $request->method(),
+//         'content_type' => $request->header('Content-Type'),
+//     ]);
+// }
 }

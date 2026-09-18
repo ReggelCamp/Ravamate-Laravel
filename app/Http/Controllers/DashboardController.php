@@ -140,10 +140,6 @@ public function getSalesmanSummary(Request $request){
     ]);
 }
 
-// public function createTransaction(Request $request){
-//     $transaction = Transaction::created([
-
-//     ]);
 }
 
 

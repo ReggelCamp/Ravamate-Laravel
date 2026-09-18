@@ -183,7 +183,7 @@
                                     </div>
                                     <div class="text-white leading-tight">
                                         <span class="text-[10px] opacity-80 block">Salesman</span>
-                                        <span class="font-bold">{{ $report->salesman_name ?? 'ALEJANDRO CRUZ' }}</span>
+                                        <span id="salesmanName" class="font-bold"></span>
                                     </div>
                                 </div>
                             </div>
@@ -191,8 +191,8 @@
                             <div class="flex justify-end">
                                 <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center w-[150px]">
                                     <span class="text-[10px] text-gray-500 block">Md Code</span>
-                                    <span class="font-bold text-sm text-gray-600">
-                                        CD00020
+                                    <span id="mdCode" class="font-bold text-sm text-gray-600">
+                                        
                                     </span>
                                 </div>
                             </div>
@@ -249,14 +249,14 @@
 
                             <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
                                 <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Price Code</span>
-                                <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                <input type="text" id="salesmanInfo_PriceCode" value="50"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
 
                             <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
                                 <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Loading
                                     Capacity</span>
-                                <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                <input type="text" id="salesmanInfo_LoadingCapacity" value="50"
                                     class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                             </div>
                         </div>

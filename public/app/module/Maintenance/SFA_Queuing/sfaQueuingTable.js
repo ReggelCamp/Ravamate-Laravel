@@ -374,7 +374,7 @@ loadSoTables();
 $(document).on("click", "#syncFdis", function () {
     const selectedTransactions = getSelectedTransactions();
 
-    document.getElementById('TransactionModal')?.close(); // close the native dialog first
+    document.getElementById('TransactionModal')?.close();
 
     Swal.fire({
         title: 'Syncing…',

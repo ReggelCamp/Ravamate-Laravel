@@ -43,4 +43,8 @@ class Transaction extends Model
             'transaction_id'
         );
     }
+
+    public function productDetails(){
+        return $this->belongsTo(product::class, 'product_id', 'id');
+    }
 }

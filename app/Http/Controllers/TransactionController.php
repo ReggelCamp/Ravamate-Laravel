@@ -11,10 +11,15 @@ use Illuminate\Support\Facades\Http;
 
 class TransactionController extends Controller
 {
-    public function getSalesmanTransaction(){
-        $salesmanTransaction = Transaction::with('TransactionSalesman')->get();
-        return response()->json($salesmanTransaction);
-    }
+public function getSalesmanTransaction(){
+    $salesmanTransaction = Transaction::with([
+        'TransactionSalesman',
+        'transactionDetails.productDetails',
+        'TransactionStore',
+    ])->get();
+
+    return response()->json($salesmanTransaction);
+}
     public function getStoreTransaction(){
         $storeTransaction = Transaction::with('TransactionStore')->get();
         return response()->json($storeTransaction);
@@ -25,20 +30,22 @@ class TransactionController extends Controller
             'transaction_date' => $request->transaction_date,
             'salesman_id'      => $request->salesman_id,
             'store_id'         => $request->store_id,
-            'sales'            => $request->sales ?? null,
-            'store_name'       => $request->store_name,
+            // 'sales'            => $request->sales ?? null,
 
-            'longitude'           => $request->longitude,
-            'latitude'            => $request->latitude,
+            'longitude'        => $request->longitude,
+            'latitude'         => $request->latitude,
 
             'document_no'      => $request->document_no,
-            'customercode'     => $request->customercode,
+            'customercode'     => 'CC0' . $request->store_id,
             'invoice_no'       => $request->invoice_no,
             'site'             => $request->site,
             'item_no'          => $request->item_no,
             'um'               => $request->um,
-            'quantity'         => $request->quantity ?? null,
+            // 'quantity'         => $request->quantity ?? null,
             'reason_code'      => $request->reason_code,
+            
+            'remarks'          => $request->remarks,
+            'payment_type'     => $request->payment_type,
 
             'api_status'       => $request->api_status ?? "PENDING",
             'api_response'     => $request->api_response ?? null,
@@ -63,12 +70,12 @@ class TransactionController extends Controller
         );
     }
 
-    public function TransactionDetails(){
-            return $this->hasMany(
-                transactionDetails::class,
-                'transaction_id',
-                'id'
-            );
+    public function TransactionDetails(Request $request){
+        $details = transactionDetails::with('productDetails')
+            ->where('transaction_id', $request->transaction_id)
+            ->get();
+
+        return response()->json($details);
     }
 
     public function getFdisTransaction(){
@@ -101,6 +108,7 @@ class TransactionController extends Controller
     }
 
     public function getSoPendingSalesman(){
+        
     $salesmen = Transaction::with('TransactionSalesman')
         ->where('api_status', 'PENDING')
         ->get()
@@ -119,7 +127,7 @@ class TransactionController extends Controller
     return response()->json([
         'data' => $salesmen,
     ]);
-}
+    }
 
     public function getSoFailedTransaction(){
         $transaction = Transaction::with('TransactionSalesman','TransactionDetails')

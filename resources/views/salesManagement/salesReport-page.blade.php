@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="text-white leading-tight">
                                     <span class="text-[10px] opacity-80 block">Salesman</span>
-                                    <span class="font-bold">{{ $report->salesman_name ?? 'ALEJANDRO CRUZ' }}</span>
+                                    <span id="salesman_name" class="font-bold"></span>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                         <div class="flex justify-end">
                             <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center">
                                 <span class="text-[10px] text-gray-500 block">Status</span>
-                                <span class="font-medium text-[12px] flex items-center gap-1 text-black">
+                                <span id="status" class="font-medium text-[12px] flex items-center gap-1 text-black">
                                     {{ $report->status ?? 'VALID' }}
                                     <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
                                 </span>
@@ -174,27 +174,27 @@
                     <div class="p-4 flex flex-col gap-3 text-center">
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Document No.</span>
-                            <span class="font-bold text-[16px]">{{ $report->document_no ?? 'FPM_15SO260820-2608203' }}</span>
+                            <span id="documentNum" class="font-bold text-[16px]"></span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Time Travel (Min.)</span>
-                            <span class="font-bold text-[16px]">{{ $report->time_travel ?? 26 }}</span>
+                            <span id="timeTravel" class="font-bold text-[16px]"></span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Geo Difference</span>
-                            <span class="font-bold text-[16px]">{{ $report->geo_difference ?? 15065 }}</span>
+                            <span id="geoDiff" class="font-bold text-[16px]">{{ $report->geo_difference ?? 15065 }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Longitude</span>
-                            <span class="font-bold text-[16px]">{{ $report->longitude ?? '—' }}</span>
+                            <span id="Long" class="font-bold text-[16px]">{{ $report->longitude ?? '—' }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Latitude</span>
-                            <span class="font-bold text-[16px]">{{ $report->latitude ?? '—' }}</span>
+                            <span id="Lat" class="font-bold text-[16px]">{{ $report->latitude ?? '—' }}</span>
                         </div>
                         <div class="bg-gray-50 rounded-xl py-3 px-4 shadow-[2px_2px_10px_#949494]">
                             <span class="text-[14px] text-gray-500 block">Source</span>
-                            <span class="font-bold text-[16px]">{{ $report->source ?? '—' }}</span>
+                            <span id="Source" class="font-bold text-[16px]">{{ $report->source ?? '—' }}</span>
                         </div>
                     </div>
                 </div>
@@ -215,16 +215,16 @@
                                     <i class="fa-solid fa-store text-gray-400 text-2xl"></i>
                                 </div>
                                 <div class="text-white leading-tight">
-                                    <span class="text-[10px] opacity-80 block">Customer</span>
-                                    <span class="font-bold">{{ $report->customer_name ?? 'ARGEL JOSEPH E. GARCIA' }}</span>
-                                    <span class="text-[11px] opacity-80 block">{{ $report->customer_code ?? '42_FPM' }}</span>
+                                    <span id="customerName" class="text-[10px] opacity-80 block">Customer</span>
+                                    <span id="StoreName" class="font-bold">{{ $report->customer_name ?? 'ARGEL JOSEPH E. GARCIA' }}</span>
+                                    <span id="custCode" class="text-[11px] opacity-80 block">{{ $report->customer_code ?? '42_FPM' }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="flex justify-end ">
                             <div class="bg-white rounded-tl-xl px-4 py-1 -mb-5 text-center">
                                 <span class="text-[10px] text-gray-500 block">Reference No.</span>
-                                <span class="font-medium text-black text-[12px]">{{ $report->reference_no ?? '3-2608203' }}</span>
+                                <span id="RefNum" class="font-medium text-black text-[12px]">{{ $report->reference_no ?? '3-2608203' }}</span>
                             </div>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
                                     <i class="fa-solid fa-location-dot text-red-600"></i>
                                     Address
                                 </span>
-                                <span class="font-bold text-sm">{{ $report->address ?? ', ,' }}</span>
+                                <span id="address" class="font-bold text-sm">{{ $report->address ?? ', ,' }}</span>
                             </div>
                         </div>
 
@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <span class="opacity-70 block text-[9px]">Date</span>
-                                        <span class="font-bold text-[12px]">{{ $report->delivery_date ?? '08/20/2026' }}</span>
+                                        <span id="DeliveryDate" class="font-bold text-[12px]">{{ $report->delivery_date ?? '08/20/2026' }}</span>
                                         <span class="opacity-50 block text-[9px]">MM/DD/YYYY</span>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                     </div>
                                     <div class="flex flex-col gap-1">
                                         <span class="opacity-70 block text-[9px]">Time</span>
-                                        <span class="font-bold text-[12px]">{{ $report->delivery_time ?? '10:36:09.843' }}</span>
+                                        <span id="DeliveryTime" class="font-bold text-[12px]">{{ $report->delivery_time ?? '10:36:09.843' }}</span>
                                         <span class="opacity-50 block text-[9px]">H/M/S/MS</span>
                                     </div>
                                 </div>
@@ -329,8 +329,8 @@
                                     </span>
                             </div>
                             <div>
-                                    <span class="font-bold">
-                                        ₱22,109.65
+                                    <span id="Sales" class="font-bold">
+                                        
                                     </span>
                                 </div>
                             </div>

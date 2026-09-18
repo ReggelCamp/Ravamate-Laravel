@@ -1,74 +1,3 @@
-// import TableLoader from "../../helper/TableLoader.js";
-
-// const StockRequestColumns = [
-//     {
-//         title: "Status",
-//         data: "status"
-//     },
-//     {
-//         title: "Salesman",
-//         data: "salesman"
-//     },
-//     {
-//         title: "Date",
-//         data: "date"
-//     },
-//     {
-//         title: "Custcode",
-//         data: "custcode"
-//     },
-//     {
-//         title: "Customer",
-//         data: "customer"
-//     },
-//     {
-//         title: "Document No.",
-//         data: "document_no"
-//     },
-//     {
-//         title: "Range",
-//         data: "range"
-//     },
-//     {
-//         title: "Time Travel (Min.)",
-//         data: "time_travel"
-//     },
-//     {
-//         title: "Time Spent (Min.)",
-//         data: "time_spent"
-//     },
-//     {
-//         title: "Geo Difference",
-//         data: "geo_difference"
-//     },
-//     {
-//         title: "Longitude",
-//         data: "longitude"
-//     },
-//     {
-//         title: "Latitude",
-//         data: "latitude"
-//     },
-//     {
-//         title: "Remarks",
-//         data: "remarks"
-//     },
-//     {
-//         title: "Payment Type",
-//         data: "payment_type"
-//     },
-//     {
-//         title: "Sales",
-//         data: "sales"
-//     }
-// ];
-
-// TableLoader.tableData(
-//     "#salesReportTable",
-//     [],
-//     StockRequestColumns
-// );
-
 import ComponentHelper from "../../helper/ComponentHelper.js";
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
@@ -81,19 +10,30 @@ const StockRequestColumns = [
     },
     {
         title: "Salesman",
-        data: "salesman"
+        data: null,
+        render: function(row) {
+            return row.transaction_salesman.salesman_name;
+        }
     },
     {
         title: "Date",
-        data: "date"
+        data: null,
+        render: function (row) {
+            return row.transaction_date
+                ? moment(row.transaction_date).format("MMM DD, YYYY h:mm A")
+                : "N/A";
+        }
     },
     {
         title: "Custcode",
-        data: "custcode"
+        data: "customercode"
     },
     {
         title: "Customer",
-        data: "customer"
+        data: null,
+        render: function(row){
+            return row.transaction_store.store_name;
+        }
     },
     {
         title: "Document No.",
@@ -133,436 +73,18 @@ const StockRequestColumns = [
     },
     {
         title: "Sales",
-        data: "sales"
-    }
-];
+        data: null,
+        render: function (row) {
+            const transactionSale = (row.transaction_details ?? [])
+                .reduce((total, detail) => {
+                    return total +
+                        (Number(detail.quantity ?? 0) *
+                        Number(detail.current_price ?? 0));
+                }, 0);
 
-const sampleData = [
-    {
-        status: "Completed",
-        salesman: "Juan Dela Cruz",
-        date: "2026-08-05",
-        custcode: "CUST001",
-        customer: "ABC Store",
-        document_no: "DOC-10001",
-        range: "120 m",
-        time_travel: 15,
-        time_spent: 35,
-        geo_difference: "5 m",
-        longitude: "123.8854",
-        latitude: "10.3157",
-        remarks: "Successful visit",
-        payment_type: "Cash",
-        sales: "₱12,500.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Maria Santos",
-        date: "2026-08-05",
-        custcode: "CUST002",
-        customer: "XYZ Mart",
-        document_no: "DOC-10002",
-        range: "250 m",
-        time_travel: 20,
-        time_spent: 40,
-        geo_difference: "10 m",
-        longitude: "123.9226",
-        latitude: "10.3231",
-        remarks: "Collected payment",
-        payment_type: "Credit",
-        sales: "₱8,750.00"
-    },
-    {
-        status: "Pending",
-        salesman: "Pedro Reyes",
-        date: "2026-08-04",
-        custcode: "CUST003",
-        customer: "LMN Grocery",
-        document_no: "DOC-10003",
-        range: "90 m",
-        time_travel: 10,
-        time_spent: 25,
-        geo_difference: "3 m",
-        longitude: "123.9498",
-        latitude: "10.3102",
-        remarks: "Awaiting payment",
-        payment_type: "Charge",
-        sales: "₱15,300.00"
-    },
-    {
-        status: "Cancelled",
-        salesman: "Ana Garcia",
-        date: "2026-08-03",
-        custcode: "CUST004",
-        customer: "Fresh Market",
-        document_no: "DOC-10004",
-        range: "180 m",
-        time_travel: 18,
-        time_spent: 15,
-        geo_difference: "20 m",
-        longitude: "123.9021",
-        latitude: "10.2915",
-        remarks: "Customer unavailable",
-        payment_type: "N/A",
-        sales: "₱0.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Jose Lim",
-        date: "2026-08-02",
-        custcode: "CUST005",
-        customer: "Corner Shop",
-        document_no: "DOC-10005",
-        range: "75 m",
-        time_travel: 8,
-        time_spent: 30,
-        geo_difference: "2 m",
-        longitude: "123.9412",
-        latitude: "10.3378",
-        remarks: "Delivered successfully",
-        payment_type: "GCash",
-        sales: "₱20,100.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Juan Dela Cruz",
-        date: "2026-08-05",
-        custcode: "CUST001",
-        customer: "ABC Store",
-        document_no: "DOC-10001",
-        range: "120 m",
-        time_travel: 15,
-        time_spent: 35,
-        geo_difference: "5 m",
-        longitude: "123.8854",
-        latitude: "10.3157",
-        remarks: "Successful visit",
-        payment_type: "Cash",
-        sales: "₱12,500.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Maria Santos",
-        date: "2026-08-05",
-        custcode: "CUST002",
-        customer: "XYZ Mart",
-        document_no: "DOC-10002",
-        range: "250 m",
-        time_travel: 20,
-        time_spent: 40,
-        geo_difference: "10 m",
-        longitude: "123.9226",
-        latitude: "10.3231",
-        remarks: "Collected payment",
-        payment_type: "Credit",
-        sales: "₱8,750.00"
-    },
-    {
-        status: "Pending",
-        salesman: "Pedro Reyes",
-        date: "2026-08-04",
-        custcode: "CUST003",
-        customer: "LMN Grocery",
-        document_no: "DOC-10003",
-        range: "90 m",
-        time_travel: 10,
-        time_spent: 25,
-        geo_difference: "3 m",
-        longitude: "123.9498",
-        latitude: "10.3102",
-        remarks: "Awaiting payment",
-        payment_type: "Charge",
-        sales: "₱15,300.00"
-    },
-    {
-        status: "Cancelled",
-        salesman: "Ana Garcia",
-        date: "2026-08-03",
-        custcode: "CUST004",
-        customer: "Fresh Market",
-        document_no: "DOC-10004",
-        range: "180 m",
-        time_travel: 18,
-        time_spent: 15,
-        geo_difference: "20 m",
-        longitude: "123.9021",
-        latitude: "10.2915",
-        remarks: "Customer unavailable",
-        payment_type: "N/A",
-        sales: "₱0.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Jose Lim",
-        date: "2026-08-02",
-        custcode: "CUST005",
-        customer: "Corner Shop",
-        document_no: "DOC-10005",
-        range: "75 m",
-        time_travel: 8,
-        time_spent: 30,
-        geo_difference: "2 m",
-        longitude: "123.9412",
-        latitude: "10.3378",
-        remarks: "Delivered successfully",
-        payment_type: "GCash",
-        sales: "₱20,100.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Juan Dela Cruz",
-        date: "2026-08-05",
-        custcode: "CUST001",
-        customer: "ABC Store",
-        document_no: "DOC-10001",
-        range: "120 m",
-        time_travel: 15,
-        time_spent: 35,
-        geo_difference: "5 m",
-        longitude: "123.8854",
-        latitude: "10.3157",
-        remarks: "Successful visit",
-        payment_type: "Cash",
-        sales: "₱12,500.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Maria Santos",
-        date: "2026-08-05",
-        custcode: "CUST002",
-        customer: "XYZ Mart",
-        document_no: "DOC-10002",
-        range: "250 m",
-        time_travel: 20,
-        time_spent: 40,
-        geo_difference: "10 m",
-        longitude: "123.9226",
-        latitude: "10.3231",
-        remarks: "Collected payment",
-        payment_type: "Credit",
-        sales: "₱8,750.00"
-    },
-    {
-        status: "Pending",
-        salesman: "Pedro Reyes",
-        date: "2026-08-04",
-        custcode: "CUST003",
-        customer: "LMN Grocery",
-        document_no: "DOC-10003",
-        range: "90 m",
-        time_travel: 10,
-        time_spent: 25,
-        geo_difference: "3 m",
-        longitude: "123.9498",
-        latitude: "10.3102",
-        remarks: "Awaiting payment",
-        payment_type: "Charge",
-        sales: "₱15,300.00"
-    },
-    {
-        status: "Cancelled",
-        salesman: "Ana Garcia",
-        date: "2026-08-03",
-        custcode: "CUST004",
-        customer: "Fresh Market",
-        document_no: "DOC-10004",
-        range: "180 m",
-        time_travel: 18,
-        time_spent: 15,
-        geo_difference: "20 m",
-        longitude: "123.9021",
-        latitude: "10.2915",
-        remarks: "Customer unavailable",
-        payment_type: "N/A",
-        sales: "₱0.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Jose Lim",
-        date: "2026-08-02",
-        custcode: "CUST005",
-        customer: "Corner Shop",
-        document_no: "DOC-10005",
-        range: "75 m",
-        time_travel: 8,
-        time_spent: 30,
-        geo_difference: "2 m",
-        longitude: "123.9412",
-        latitude: "10.3378",
-        remarks: "Delivered successfully",
-        payment_type: "GCash",
-        sales: "₱20,100.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Juan Dela Cruz",
-        date: "2026-08-05",
-        custcode: "CUST001",
-        customer: "ABC Store",
-        document_no: "DOC-10001",
-        range: "120 m",
-        time_travel: 15,
-        time_spent: 35,
-        geo_difference: "5 m",
-        longitude: "123.8854",
-        latitude: "10.3157",
-        remarks: "Successful visit",
-        payment_type: "Cash",
-        sales: "₱12,500.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Maria Santos",
-        date: "2026-08-05",
-        custcode: "CUST002",
-        customer: "XYZ Mart",
-        document_no: "DOC-10002",
-        range: "250 m",
-        time_travel: 20,
-        time_spent: 40,
-        geo_difference: "10 m",
-        longitude: "123.9226",
-        latitude: "10.3231",
-        remarks: "Collected payment",
-        payment_type: "Credit",
-        sales: "₱8,750.00"
-    },
-    {
-        status: "Pending",
-        salesman: "Pedro Reyes",
-        date: "2026-08-04",
-        custcode: "CUST003",
-        customer: "LMN Grocery",
-        document_no: "DOC-10003",
-        range: "90 m",
-        time_travel: 10,
-        time_spent: 25,
-        geo_difference: "3 m",
-        longitude: "123.9498",
-        latitude: "10.3102",
-        remarks: "Awaiting payment",
-        payment_type: "Charge",
-        sales: "₱15,300.00"
-    },
-    {
-        status: "Cancelled",
-        salesman: "Ana Garcia",
-        date: "2026-08-03",
-        custcode: "CUST004",
-        customer: "Fresh Market",
-        document_no: "DOC-10004",
-        range: "180 m",
-        time_travel: 18,
-        time_spent: 15,
-        geo_difference: "20 m",
-        longitude: "123.9021",
-        latitude: "10.2915",
-        remarks: "Customer unavailable",
-        payment_type: "N/A",
-        sales: "₱0.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Jose Lim",
-        date: "2026-08-02",
-        custcode: "CUST005",
-        customer: "Corner Shop",
-        document_no: "DOC-10005",
-        range: "75 m",
-        time_travel: 8,
-        time_spent: 30,
-        geo_difference: "2 m",
-        longitude: "123.9412",
-        latitude: "10.3378",
-        remarks: "Delivered successfully",
-        payment_type: "GCash",
-        sales: "₱20,100.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Juan Dela Cruz",
-        date: "2026-08-05",
-        custcode: "CUST001",
-        customer: "ABC Store",
-        document_no: "DOC-10001",
-        range: "120 m",
-        time_travel: 15,
-        time_spent: 35,
-        geo_difference: "5 m",
-        longitude: "123.8854",
-        latitude: "10.3157",
-        remarks: "Successful visit",
-        payment_type: "Cash",
-        sales: "₱12,500.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Maria Santos",
-        date: "2026-08-05",
-        custcode: "CUST002",
-        customer: "XYZ Mart",
-        document_no: "DOC-10002",
-        range: "250 m",
-        time_travel: 20,
-        time_spent: 40,
-        geo_difference: "10 m",
-        longitude: "123.9226",
-        latitude: "10.3231",
-        remarks: "Collected payment",
-        payment_type: "Credit",
-        sales: "₱8,750.00"
-    },
-    {
-        status: "Pending",
-        salesman: "Pedro Reyes",
-        date: "2026-08-04",
-        custcode: "CUST003",
-        customer: "LMN Grocery",
-        document_no: "DOC-10003",
-        range: "90 m",
-        time_travel: 10,
-        time_spent: 25,
-        geo_difference: "3 m",
-        longitude: "123.9498",
-        latitude: "10.3102",
-        remarks: "Awaiting payment",
-        payment_type: "Charge",
-        sales: "₱15,300.00"
-    },
-    {
-        status: "Cancelled",
-        salesman: "Ana Garcia",
-        date: "2026-08-03",
-        custcode: "CUST004",
-        customer: "Fresh Market",
-        document_no: "DOC-10004",
-        range: "180 m",
-        time_travel: 18,
-        time_spent: 15,
-        geo_difference: "20 m",
-        longitude: "123.9021",
-        latitude: "10.2915",
-        remarks: "Customer unavailable",
-        payment_type: "N/A",
-        sales: "₱0.00"
-    },
-    {
-        status: "Completed",
-        salesman: "Jose Lim",
-        date: "2026-08-02",
-        custcode: "CUST005",
-        customer: "Corner Shop",
-        document_no: "DOC-10005",
-        range: "75 m",
-        time_travel: 8,
-        time_spent: 30,
-        geo_difference: "2 m",
-        longitude: "123.9412",
-        latitude: "10.3378",
-        remarks: "Delivered successfully",
-        payment_type: "GCash",
-        sales: "₱20,100.00"
-    },
+            return transactionSale.toFixed(2);
+        }
+    }
 ];
 
 const salesReportsItems = [
@@ -616,11 +138,19 @@ const salesReportsItems = [
 const SalesReqColumns = [
     {
         title: "STOCKCODE",
-        data: "stockcode"
+        data: null,
+        render: function(row) {
+            console.log(row.product_details.StockCode);
+            return row.product_details.StockCode;
+        }
     },
     {
         title: "DESCRIPTION",
-        data: "description"
+         data: null,
+        render: function(row) {
+            console.log(row.product_details.description);
+            return row.product_details.description;
+        }
     },
     {
         title: "QUANTITY",
@@ -629,124 +159,24 @@ const SalesReqColumns = [
     },
     {
         title: "AMOUNT",
-        data: "amount",
-        className: "text-right"
+         data: null,
+        render: function(row) {
+           const totalAmt = row.current_price * row.quantity;
+            return totalAmt;
+        }
     }
 ];
 
-const StockReqData = [
-    {
-        stockcode: "SKU-001",
-        description: "Coca-Cola 1.5L",
-        quantity: 10,
-        amount: "₱750.00"
-    },
-    {
-        stockcode: "SKU-002",
-        description: "Sprite 1.5L",
-        quantity: 8,
-        amount: "₱600.00"
-    },
-    {
-        stockcode: "SKU-003",
-        description: "Royal Tru-Orange 1.5L",
-        quantity: 12,
-        amount: "₱900.00"
-    },
-    {
-        stockcode: "SKU-004",
-        description: "Wilkins Distilled Water 1L",
-        quantity: 15,
-        amount: "₱525.00"
-    },
-    {
-        stockcode: "SKU-005",
-        description: "C2 Green Tea Apple 500ml",
-        quantity: 20,
-        amount: "₱1,000.00"
-    },
-    {
-        stockcode: "SKU-001",
-        description: "Coca-Cola 1.5L",
-        quantity: 10,
-        amount: "₱750.00"
-    },
-    {
-        stockcode: "SKU-002",
-        description: "Sprite 1.5L",
-        quantity: 8,
-        amount: "₱600.00"
-    },
-    {
-        stockcode: "SKU-003",
-        description: "Royal Tru-Orange 1.5L",
-        quantity: 12,
-        amount: "₱900.00"
-    },
-    {
-        stockcode: "SKU-004",
-        description: "Wilkins Distilled Water 1L",
-        quantity: 15,
-        amount: "₱525.00"
-    },
-    {
-        stockcode: "SKU-005",
-        description: "C2 Green Tea Apple 500ml",
-        quantity: 20,
-        amount: "₱1,000.00"
-    },
-    {
-        stockcode: "SKU-001",
-        description: "Coca-Cola 1.5L",
-        quantity: 10,
-        amount: "₱750.00"
-    },
-    {
-        stockcode: "SKU-002",
-        description: "Sprite 1.5L",
-        quantity: 8,
-        amount: "₱600.00"
-    },
-    {
-        stockcode: "SKU-003",
-        description: "Royal Tru-Orange 1.5L",
-        quantity: 12,
-        amount: "₱900.00"
-    },
-    {
-        stockcode: "SKU-004",
-        description: "Wilkins Distilled Water 1L",
-        quantity: 15,
-        amount: "₱525.00"
-    },
-    {
-        stockcode: "SKU-005",
-        description: "C2 Green Tea Apple 500ml",
-        quantity: 20,
-        amount: "₱1,000.00"
-    },
-    
-];
+function LoadTable() {
+    TableLoader.loadTable({
+        url: "transaction/getSalesmanTransaction",
+        tableId: "#salesReportTable",
+        columns: StockRequestColumns,
+        // flattenDetails: true,
+    });
+}
 
-TableLoader.tableData(
-    "#salesReportTable",
-    sampleData,
-    StockRequestColumns,
-    {
-        // pageLength: 20,
-        // scrollY:'55vh'
-    }
-);
-
-TableLoader.tableData(
-    "#StockReqModalTable",
-    StockReqData,
-    SalesReqColumns,
-    {
-        pageLength: 20,
-        scrollY:'55vh'
-    }
-);
+LoadTable();
 
 $(document).ready(function () {
     DatePicker.init();
@@ -783,6 +213,60 @@ $(document)
     });
 
 function DisplayReport(rowData) {
-    // Open modal
+    console.log("report row:", rowData);
+
+    // --- Sales Report card ---
+    $("#salesman_name").text(rowData.transaction_salesman.salesman_name ?? "");
+    $("#status").html(
+        (rowData.api_status ?? "VALID") +
+        ' <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>'
+    );
+    $("#documentNum").text(rowData.document_no ?? "");
+    $("#timeTravel").text(rowData.time_travel ?? "N/A");
+    $("#geoDiff").text(rowData.geo_difference ?? "N/A");
+    $("#Long").text(rowData.longitude ?? "—");
+    $("#Lat").text(rowData.latitude ?? "—");
+    $("#Source").text(rowData.source ?? "—");
+
+    // --- Sales Details card ---
+    $("#StoreName").text(rowData.transaction_store.store_name ?? "");
+    $("#custCode").text(rowData.customercode ?? "");
+    $("#RefNum").text(rowData.transaction_id ?? "");
+    $("#address").text(rowData.address ?? ", ,");
+
+    if (rowData.transaction_date) {
+        $("#DeliveryDate").text(moment(rowData.transaction_date).format("MM/DD/YYYY"));
+        $("#DeliveryTime").text(moment(rowData.transaction_date).format("HH:mm:ss.SSS"));
+    } else {
+        $("#DeliveryDate").text("N/A");
+        $("#DeliveryTime").text("N/A");
+    }
+
+    $("#Sales").text(rowData.sales ?? "0.00");
+
+    // --- Item Code table ---
+    const details = rowData.transaction_details ?? [];
+
+    const itemRows = details.map(detail => {
+        const price = detail.product_details?.price ?? 0;
+        const qty = detail.quantity ?? 0;
+
+        return {
+            stockcode: detail.product_details?.StockCode ?? "",
+            description: detail.product_details?.description ?? "",
+            quantity: qty,
+            amount: "₱" + (price * qty).toFixed(2),
+        };
+    });
+
+    $(document).ready(function(){
+        TableLoader.loadTable({
+            url: "transaction/DisplayTransactionDetailsById",
+            tableId: "#StockReqModalTable",
+            columns: SalesReqColumns,
+            filters: { transaction_id: rowData.transaction_id },
+        });
+    });
+
     $("#reportModal")[0].showModal();
 }

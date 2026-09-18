@@ -46,7 +46,10 @@ const defaultDashboardDate = moment()
 const SalesmanColumns = [
     {
         title: "Salesman Name",
-        data: "salesman_name",
+        data: null,
+        render: function(row){
+            return row.transaction_salesman.salesman_name;
+        }
     },
     {
         title: "Attendance",
@@ -55,66 +58,55 @@ const SalesmanColumns = [
 
         render: function(data, type, row) {
 
-            const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
-
-            const transactionTimes = [];
-
-            row.stores?.forEach(store => {
-                store.transactions?.forEach(transaction => {
-                    const transactionMoment = moment(
-                        transaction.transaction_date,
-                        "YYYY-MM-DD HH:mm:ss"
-                    );
-
-                    if (transactionMoment.isSame(filterDay, "day")) {
-                        transactionTimes.push(transactionMoment.valueOf());
-                    }
-                });
-            });
-
-            if (!transactionTimes.length) {
-                return "No Transaction";
+            if (!row.transaction_date || !row.transaction_salesman?.call_time) {
+                return "N/A";
             }
 
-            const earliest = new Date(Math.min(...transactionTimes));
+            const transactionTime = moment(row.transaction_date).format("HH:mm:ss");
+            const callTime = row.transaction_salesman.call_time; // assumed "HH:mm:ss"
 
-            const transactionMinutes =
-                earliest.getHours() * 60 +
-                earliest.getMinutes();
-
-            const cutoffMinutes = 8 * 60;
-
-            if (transactionMinutes < cutoffMinutes) {
-                return "Early";
-            }
-
-            return "Late";
+            return transactionTime > callTime ? "Late" : "On Time";
         }
     },
     {
         title: "Target MCP",
-        data: "target_mcp",
+        data: null,
         className: "text-center dt-type-numeric",
+        render: function(row) {
+            return row.transaction_salesman.target_mcp
+        }
     },
     {
         title: "Productive",
-        data: "productive",
+        data: null,
         className: "text-center dt-type-numeric",
+        render: function(row) {
+            return row.transaction_salesman.productive
+        }
     },
     {
         title: "Unproductive",
-        data: "unproductive",
+       data: null,
         className: "text-center dt-type-numeric",
+        render: function(row) {
+            return row.transaction_salesman.unproductive
+        }
     },
     {
         title: "Strike Rate",
-        data: "strike_rate",
+        data: null,
         className: "text-center dt-type-numeric",
+        render: function(row) {
+            return row.transaction_salesman.strike_rate
+        }
     },
     {
         title: "Selling Hrs",
-        data: "selling_hrs",
-        className: "text-nowrap",
+        data: null,
+        className: "text-center dt-type-numeric",
+        render: function(row) {
+            return row.transaction_salesman.selling_hrs
+        }
     },
     {
         title: "Sales",
@@ -179,7 +171,10 @@ const OperationItems = [
 const ProductColumns = [
     {
         title: "StockCode",
-        data: "StockCode",
+        data: null,
+        render: function(row) {
+            return row.product_details?.StockCode ?? "";
+        }
     },
     {
         title: "Description",
@@ -440,6 +435,7 @@ function clearDashboardMarkers() {
 function loadDashboardData(date = null) {
     const loadVersion = ++dashboardLoadVersion;
     selectedDashboardDate = date ?? moment().format("YYYY-MM-DD");
+
     clearDashboardMarkers();
     array = [];
 
@@ -448,27 +444,29 @@ function loadDashboardData(date = null) {
     }
 
     TableLoader.loadTable({
-        url: "dashboard/getSalesmanInfo",
+        url: "transaction/getSalesmanTransaction",
         filters: date ? { date } : undefined,
         tableId: "#dashboardDataTable",
         columns: SalesmanColumns,
         scrollY: "200px",
         pageLength: 5,
-        searchInput:"#customSearch",
+        searchInput: "#customSearch",
         isCurrent: () => loadVersion === dashboardLoadVersion,
+
         onSuccess: (data) => {
             if (loadVersion !== dashboardLoadVersion) return;
 
-            if(data == 0){
+            console.log("Dashboard data:", data);
+
+            if (!Array.isArray(data) || data.length === 0) {
                 console.log("no data");
                 Swal.fire("No data available on selected date");
+                return;
             }
-            console.log("Dashboard data:", data);
+
             array = data;
 
-            if (data.length) {
-                getlatestTransaction(date, loadVersion);
-            }
+            getlatestTransaction(date, loadVersion);
         },
     });
 }
@@ -479,11 +477,11 @@ function displayInfoWindow() {
         return;
     }
 
-    console.log("row data from display inffo dwindow",array);
+    console.log("row data from display info window", array);
 
     map = window.dashboardMap;
-    // console.log("arraywqq",latest.stores[0].store_name);
-     // Close both InfoWindows when clicking on the map
+
+    // Close both InfoWindows when clicking on the map
     google.maps.event.clearListeners(map, "click");
 
     map.addListener("click", () => {
@@ -503,6 +501,7 @@ function displayInfoWindow() {
 
     google.maps.event.addListener(infoWindow, "domready", () => {
         updateStoreNavButtons();
+
         const InfoContainer = $("#Info_Tab");
 
         if (InfoContainer) {
@@ -513,8 +512,10 @@ function displayInfoWindow() {
             }
         }
 
-        latestInfoWindow.close();
-        
+        if (latestInfoWindow) {
+            latestInfoWindow.close();
+        }
+
         // Get the Blade DataTable component
         const tableComponent = $("#itemDetailsTable").children().clone();
 
@@ -522,72 +523,85 @@ function displayInfoWindow() {
         tableComponent.find("table").attr("id", "infoWindowTableContent");
 
         // Insert component into InfoWindow
-        $("#infoWindowTableContainer").empty().append(tableComponent);
+        $("#infoWindowTableContainer")
+            .empty()
+            .append(tableComponent);
 
         console.log("DataTable component inserted");
     });
 
-
-
-    // When the marker info window (shown for a clicked salesman) is closed,
+    // When the marker info window is closed,
     // re-open the "Latest Transaction" popup again.
     google.maps.event.addListener(infoWindow, "close", () => {
-        if ( latestInfoWindow) {
-        latestInfoWindow.open(map, latestMarker);
-    }
+        if (latestInfoWindow) {
+            latestInfoWindow.open(map, latestMarker);
+        }
     });
 
-    array.forEach((salesman) => {
-        console.log("latest ter in for each",salesman);
-        
-        const isLatestSalesman = salesman.id == latest.id;
+    // API now returns transactions directly
+    array.forEach((transaction, index) => {
 
-        salesman.stores.forEach((store, index) => {
+        const salesman = transaction.transaction_salesman;
+        const store = transaction.transaction_store;
 
-    const marker = new google.maps.Marker({
-        position: {
-            lat: Number(store.latitude),
-            lng: Number(store.longitude),
-        },
-        map: window.dashboardMap,
-        title: salesman.salesman_name,
+        console.log("Transaction:", transaction);
+        console.log("Salesman:", salesman);
+        console.log("Store:", store);
 
-        icon: {
-            url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="50"
-                     height="60"
-                     viewBox="0 0 50 60">
+        if (!salesman || !store) {
+            console.log("Missing salesman or store:", transaction);
+            return;
+        }
 
-                    <path
-                        d="M25 58
-                           C25 58 5 36 5 23
-                           C5 10 14 2 25 2
-                           C36 2 45 10 45 23
-                           C45 36 25 58 25 58Z"
-                        fill="#ef4444"
-                        stroke="white"
-                        stroke-width="3"
-                    />
+        const isLatestTransaction =
+            transaction.transaction_id == latest?.transaction_id;
 
-                    <text
-                        x="25"
-                        y="29"
-                        text-anchor="middle"
-                        font-family="Arial"
-                        font-size="16"
-                        font-weight="bold"
-                        fill="white">
-                        ${index + 1}
-                    </text>
+        const marker = new google.maps.Marker({
+            position: {
+                lat: Number(store.latitude),
+                lng: Number(store.longitude),
+            },
+            map: window.dashboardMap,
+            title: salesman.salesman_name,
 
-                </svg>
-            `),
+            icon: {
+                url:
+                    "data:image/svg+xml;charset=UTF-8," +
+                    encodeURIComponent(`
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="50"
+                             height="60"
+                             viewBox="0 0 50 60">
 
-            scaledSize: new google.maps.Size(40, 48),
-            anchor: new google.maps.Point(20, 48),
-        },
-    });
+                            <path
+                                d="M25 58
+                                   C25 58 5 36 5 23
+                                   C5 10 14 2 25 2
+                                   C36 2 45 10 45 23
+                                   C45 36 25 58 25 58Z"
+                                fill="#ef4444"
+                                stroke="white"
+                                stroke-width="3"
+                            />
+
+                            <text
+                                x="25"
+                                y="29"
+                                text-anchor="middle"
+                                font-family="Arial"
+                                font-size="16"
+                                font-weight="bold"
+                                fill="white">
+                                ${index + 1}
+                            </text>
+
+                        </svg>
+                    `),
+
+                scaledSize: new google.maps.Size(40, 48),
+                anchor: new google.maps.Point(20, 48),
+            },
+        });
 
         // Store marker under salesman
         if (!markersById[salesman.id]) {
@@ -598,48 +612,54 @@ function displayInfoWindow() {
             marker,
             salesman,
             store,
-            storeIndex: index
+            transaction,
+            storeIndex: 0
         });
-
 
         // Marker click
         marker.addListener("click", () => {
 
             console.log("Marker clicked:", salesman.salesman_name);
             console.log("Store clicked:", store.store_name);
-            console.log("Store index:", index);
+            console.log("Transaction ID:", transaction.transaction_id);
 
-            if (salesman.id != latest.id && latestMarker) {
+            if (!isLatestTransaction && latestMarker) {
                 latestMarker.setAnimation(null);
             }
 
             currentMarker = marker;
             currentInfoSalesman = salesman;
-            rowData = salesman;
-            storeIndex = index;
+
+            // Keep the transaction as row data
+            rowData = transaction;
+
+            // Each transaction now represents one store
+            storeIndex = 0;
             window.storeIndex = storeIndex;
 
-            openInfoWindowFor(salesman, marker, index);
-            showRowDetails(salesman);
-            getSidePanelContent(salesman);
-            getSku(salesman, "#sfaQueuingModalTable");
+            openInfoWindowFor(transaction, marker, 0);
+
+            // Pass transaction instead of salesman
+            showRowDetails(transaction);
+            getSidePanelContent(transaction);
+            getSku(transaction, "#sfaQueuingModalTable");
         });
 
-
-        // Only create latest popup for the actual latest store
-        const latestStore = latest.stores?.[0];
+        // Latest transaction
+        const latestStore = latest?.transaction_store;
 
         const isLatestStore =
-            isLatestSalesman &&
+            isLatestTransaction &&
             store.store_id == latestStore?.store_id;
 
-
         if (isLatestStore) {
-            console.log("latest info",latestStore);
+
+            console.log("latest info", latestStore);
+
             latestMarker = marker;
-           
+
             latestInfoWindow = new google.maps.InfoWindow({
-                
+
                 content: `
                     <div id="latestInfo_Container"
                          class="latest-transaction-popup min-w-[193px] rounded-3xl">
@@ -660,7 +680,7 @@ function displayInfoWindow() {
                                     </span>
 
                                     <span class="w-full text-xs opacity-90">
-                                        added ${salesman.time_ago ?? "recently"}
+                                        added ${transaction.time_ago ?? "recently"}
                                     </span>
 
                                 </div>
@@ -672,11 +692,11 @@ function displayInfoWindow() {
                         <div class="px-4 py-3 pt-1">
 
                             <div class="font-medium text-[16px]">
-                                ${latestStore.store_name ?? "Manding Store"}
+                                ${store.store_name ?? "N/A"}
                             </div>
 
                             <div class="text-xs text-gray-500 italic">
-                                ${latest.store_address ?? "Cubacub"}
+                                ${transaction.store_address ?? "N/A"}
                             </div>
 
                             <div class="text-[9px] text-[#b8babc] mt-2">
@@ -684,7 +704,7 @@ function displayInfoWindow() {
                             </div>
 
                             <div class="text-[11px] font-medium whitespace-nowrap">
-                                ${salesman.salesman_name}
+                                ${salesman.salesman_name ?? "N/A"}
                             </div>
 
                             <div class="text-[9px] text-[#b8babc] mt-2">
@@ -692,13 +712,14 @@ function displayInfoWindow() {
                             </div>
 
                             <div class="text-[11px] font-medium">
-                                ${latestStore.transaction_sales ?? "₱ 106,392.50 (22 SKU)"}
+                                ${store.transaction_sales ?? "N/A"}
                             </div>
 
                         </div>
 
                     </div>
                 `,
+
                 disableAutoPan: false,
             });
 
@@ -706,10 +727,11 @@ function displayInfoWindow() {
                 latestInfoWindow,
                 "domready",
                 () => {
+
                     $("#latestInfo_Container")
                         .off("click.latest")
                         .on("click.latest", () => {
-                            // getSku(latest);
+
                             map.panTo(marker.getPosition());
                             map.setZoom(17);
 
@@ -717,23 +739,26 @@ function displayInfoWindow() {
 
                             currentMarker = marker;
                             currentInfoSalesman = salesman;
-                            
-                            console.log("sa",currentInfoSalesman);
-                            
-                            // IMPORTANT
-                           // window.storeIndex = storeIndex;
 
-                            storeIndex = index;
+                            console.log(
+                                "Current salesman:",
+                                currentInfoSalesman
+                            );
 
-                            showRowDetails(salesman);
-                            getSidePanelContent(salesman);
-                            getSku(salesman, "#sfaQueuingModalTable");
+                            // One transaction = one store
+                            storeIndex = 0;
+                            window.storeIndex = storeIndex;
 
-                            // infoWindow.setContent(
-                            //     InfoWindowContent(salesman)
-                            // );
+                            // Pass transaction data
+                            showRowDetails(transaction);
+                            getSidePanelContent(transaction);
+                            getSku(
+                                transaction,
+                                "#sfaQueuingModalTable"
+                            );
+
                             infoWindow.setContent(
-                                InfoWindowContent(currentInfoSalesman)
+                                InfoWindowContent(transaction)
                             );
 
                             marker.setAnimation(
@@ -752,9 +777,7 @@ function displayInfoWindow() {
 
             latestInfoWindow.open(map, marker);
         }
-
     });
-});
 }
 
 function DisplayitemTable() {
@@ -784,6 +807,7 @@ $(document).on("click", ".tabs [type='radio'].tab", function () {
 
 function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
     Api.get({
+        // url: "dashboard/getLatestTransaction",
         url: "dashboard/getLatestTransaction",
         data: date ? { date } : undefined,
 
@@ -798,41 +822,37 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
 }
 
 // function InfoWindowContent(salesman) {
-function InfoWindowContent(salesman) {
-    console.log("salesman infoWindow oww",salesman);
-    console.log("salesman storeindex",storeIndex);
+function InfoWindowContent(transaction) {
+    console.log("transaction infoWindow", transaction);
+    console.log("transaction storeIndex", storeIndex);
+
     let TotalSalesOnStore = 0;
     const InfoTableSKU = getTableLength();
-    
-    // The transaction date shown in the info window comes from the selected
-    // day's transactions for the store (transaction.transaction_date), matching
-    // the dashboard's date filter; the store row's own transaction_date is only
-    // a fallback when the store has no transactions on the selected day.
-    const selectedStore = salesman.stores?.[storeIndex];
 
-    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+    // New API structure
+    const selectedStore = transaction.transaction_store;
 
-    const dayTransaction = (selectedStore?.transactions ?? []).find(
-        (transaction) =>
-            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
-                .isSame(filterDay, "day")
-    );
+    // The transaction itself is now the selected transaction
+    const dayTransaction = transaction;
 
-    salesman.transactions?.forEach(transaction => {
-        transaction.transaction_details?.forEach(detail => {
-            const quantity = Number(detail.quantity ?? 0);
-            const price = Number(detail.current_price ?? 0);
-            TotalSalesOnStore += quantity * price;
-        });
+    // Calculate total sales from transaction details
+    transaction.transaction_details?.forEach(detail => {
+        const quantity = Number(detail.quantity ?? 0);
+        const price = Number(detail.current_price ?? 0);
+
+        TotalSalesOnStore += quantity * price;
     });
 
-    const transactionDate =
-        dayTransaction?.transaction_date
-        ?? selectedStore?.transaction_date;
-    const formattedDate = transactionDate ? DateFormatter(transactionDate) : "N/A";
-    console.log("selected store",selectedStore);
+    const transactionDate = dayTransaction?.transaction_date;
+
+    const formattedDate = transactionDate
+        ? DateFormatter(transactionDate)
+        : "N/A";
+
+    console.log("selected store", selectedStore);
     console.log("selected trans", dayTransaction);
-    console.log("selected date",formattedDate);
+    console.log("selected date", formattedDate);
+    console.log("Total sales", TotalSalesOnStore);
 
     return `
         <div id="Info_Tab" class="w-[360px] max-w-full max-h-[500px] flex flex-col rounded-lg bg-base-100 Info_Tab">
@@ -841,24 +861,25 @@ function InfoWindowContent(salesman) {
                     <div class="relative w-full h-[160px]">
                         <img
                             id="storeImg"
-                            src="${salesman.customer_image ?? "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"}"
+                            src="${transaction.customer_image ?? "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"}"
                             alt="Store"
                             class="w-full h-full object-cover brightness-50" />
-        
+
                         <!-- top-left badge -->
                         <span id="Store_GP" class="absolute top-2 left-2 salemanInfoCard p-2 rounded-2xl font-semibold text-xs">
-                            ${salesman.transaction_code ?? "32_GP"}
+                            ${transaction.transaction_code ?? "32_GP"}
                         </span>
 
                         <!-- top-right badge -->
-                        <span id="isVisited" class="absolute top-2 right-2 badge text-green-600 badge-outline bg-green-200  text-xs">
-                            ⏱ ${salesman.status ?? "Visited Customer"}
+                        <span id="isVisited" class="absolute top-2 right-2 badge text-green-600 badge-outline bg-green-200 text-xs">
+                            ⏱ ${transaction.status ?? "Visited Customer"}
                         </span>
 
                         <!-- carousel arrows -->
                         <button type="button" class="carousel-prev absolute left-1 top-1/2 -translate-y-1/2 btn btn-circle btn-xs">
                             ❮
                         </button>
+
                         <button type="button" class="carousel-next absolute right-1 top-1/2 -translate-y-1/2 btn btn-circle btn-xs">
                             ❯
                         </button>
@@ -866,23 +887,46 @@ function InfoWindowContent(salesman) {
                         <!-- store name overlay -->
                         <div class="absolute bottom-0 left-0 right-0 p-2 text-white">
                             <div id="addsressContainer" class="flex items-center gap-1">
+
                                 <div class="relative flex items-center justify-center shrink-0">
                                     <i class="fa-solid fa-location-pin text-2xl"></i>
+
                                     <span class="absolute top-[3.5px] left-1/2 -translate-x-1/2
                                         flex items-center justify-center
                                         text-black font-bold text-[11px] leading-none">
-                                        ${salesman.id}
+                                        ${selectedStore?.store_id ?? transaction.store_id}
                                     </span>
                                 </div>
-                                <div class = "flex flex-col w-fit">
-                                    <span id="InfoStoreName" class="font-semibold text-sm whitespace-nowrap leading-tight">${salesman.stores?.[storeIndex]?.store_name ?? "Manding Store"}</span>
-                                    <span class="font-medium text-[9px] text-white leading-tight">${salesman.store_address ?? "Cubacub"}</span>
+
+                                <div class="flex flex-col w-fit">
+                                    <span
+                                        id="InfoStoreName"
+                                        class="font-semibold text-sm whitespace-nowrap leading-tight">
+                                        ${selectedStore?.store_name ?? "N/A"}
+                                    </span>
+
+                                    <span class="font-medium text-[9px] text-white leading-tight">
+                                        ${transaction.store_address ?? "Cubacub"}
+                                    </span>
                                 </div>
 
-                                 <!-- prev/next store buttons -->
+                                <!-- prev/next store buttons -->
                                 <div class="flex items-center justify-end w-full gap-1 p-2 pb-0">
-                                    <button type="button" id="infoPrev" class="btn py-1.5 h-fit side_Prev font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">❮ Prev Store</button>
-                                    <button type="button" id="infoNext" class="btn py-1.5 h-fit side_Next font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">Next Store ❯</button>
+
+                                    <button
+                                        type="button"
+                                        id="infoPrev"
+                                        class="btn py-1.5 h-fit side_Prev font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">
+                                        ❮ Prev Store
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        id="infoNext"
+                                        class="btn py-1.5 h-fit side_Next font-medium w-fit p-1.5 salemanInfoCard text-[8px] rounded-full border-none">
+                                        Next Store ❯
+                                    </button>
+
                                 </div>
 
                             </div>
@@ -891,109 +935,237 @@ function InfoWindowContent(salesman) {
 
                     <!-- Tabs -->
                     <div class="tabs tabs-border items-cemter justify-center px-0 pb-2">
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Transaction Details" checked="checked" data-tab-content="tabContent1" />
-                        <div class="tab-content flex flex-col gap-3 bg-base-100 py-3 px-5 text-xs" style="display:block">
-                            <div class="">
-                                <span class="text-gray-400 block">Salesman Assigned:</span>
-                                <span class="font-semibold">${salesman.salesman_name ?? ""} 🔋 ${salesman.battery ?? "-"}%</span> 
-                                <!-- <span class="font-normal text-[11px]">OBS2_OBS2-DUCUT, NESCAR DE LA CRUZ (CD00028) 🔋 ${salesman.battery ?? "73"}%</span> -->
-                            </div>
-                            <div class="pt-3">
-                                <span class="text-gray-400 block">Transaction ID:</span>
-                                <span class="font-mono  px-1 rounded font-normal text-[11px]">${dayTransaction.transaction_id ?? "GP_2202609031611537"}</span>
-                            </div>
-                            <div class="flex justify-between pt-3">
-                                <div class="w-full">
-                                    <span class="text-gray-400 block">Transaction Date:</span>
-                                    <span class="font-normal text-[11px]">${formattedDate ?? "N/A"}</span>
-                                </div>
-                                <div class="flex flex-col justify-start w-full">
-                                    <span class="text-gray-400 block">Sent Date:</span>
-                                    <span class="font-normal text-[11px]">${formattedDate ?? "N/A"}</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between pt-3">
-                                 <div class="w-full">
-                                    <span class="text-gray-400 block">Time Spent:</span>
-                                    <span class="font-normal text-[11px]">${salesman.time_spent ?? "N/A"}</span>
-                                </div>
-                                <div class="flex flex-col justify-start w-full">
-                                    <span class="text-gray-400 block">Distance Travel:</span>
-                                    <span class="font-normal text-[11px]">${salesman.distance_travel ?? "6.95 km in 5 hrs 11 mins"}</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between pt-3">
-                                 <div class="w-full">
-                                    <span class="text-gray-400 block">Remakrs:</span>
-                                    <span class="font-normal text-[11px]">${salesman.remarks ?? "---"}</span>
-                                </div>
-                                <div class="flex flex-col justify-start w-full">
-                                    <span class="text-gray-400 block">Transaction Sales:</span>
-                                    <span id="totalStoreDetails" class="font-normal text-[11px]"></span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Item Details" data-tab-content="tabContent2" />
+                        <input
+                            type="radio"
+                            name="my_tabs_2"
+                            class="tab text-[11px] Info_Window_Tab"
+                            aria-label="Transaction Details"
+                            checked="checked"
+                            data-tab-content="tabContent1" />
+
                         <div
-                            class="tab-content w-full  flex flex-col border-base-300 bg-base-100 text-xs""
-                            data-tab="tabContent2"
-                            style="display:none"
-                        >
-                                <div id="InfoTableContainer" data-table="infoWindowTableContent" class="flex w-full justify-between salemanInfoCard Transaction_Container border items-center h-[25px] py-5 px-2 rounded-t-2xl toggle-item-table cursor-pointer">
-                                    <div class="flex gap-1 items-center">
-                                        <img class="h-[25px] w-[25px]" src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
-                                        <span class="text-[13px]">Transaction Items</span>
-                                    </div>
-                                    <div class="flex gap-1 items-center">
-                                        <span id="TotalSku" >
-                                           
-                                        </span>
-                                        <span class="Sku_Num">
-                                        
-                                        </span>
-                                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
-                                    </div>
-                                </div>
-                                <div class="flex p-2 ViewTable_Container">
-                                    <i class="text-[#86888a] mdi mdi-arrow-up-left"></i>
-                                    <span class="text-[#86888a] text-[10px] pb-[20px]">Click to view Items</span>
-                                </div>
-                                <div id="infoWindowTableContainer" class="w-full text-[9px] overflow-hidden" style="display:none"></div>
+                            class="tab-content flex flex-col gap-3 bg-base-100 py-3 px-5 text-xs"
+                            style="display:block">
+
+                            <div class="">
+                                <span class="text-gray-400 block">
+                                    Salesman Assigned:
+                                </span>
+
+                                <span class="font-semibold">
+                                    ${transaction.transaction_salesman?.salesman_name ?? ""}
+                                    🔋 ${transaction.battery ?? "-"}%
+                                </span>
                             </div>
 
-                        <input type="radio" name="my_tabs_2" class="tab text-[11px] Info_Window_Tab" aria-label="Supporting Docs" data-tab-content="tabContent3" />
-                        <div class="tab-content px-5 pb-2 border-base-300 bg-base-100 px-0 pt-3 text-xs" style="display:none">
-                            <div class="flex w-full">
-                                <div class="flex w-full">
-                                    <div class="w-[125px] h-[125px] rounded-full border"></div>                                    
-                                </div>
-                                <div class="flex flex-col w-full justify-center items-center px-2 gap-2">
-                                    <span class="flex text-[11px] text-[##505664]">Reference Number:</span>
-                                    <span class="flex text-[11px] text-black">FPM_4202609041642023</span>
-                                    <span class="flex text-[11px] text-[##505664]">Remarks:</span>
-                                    <span class="flex text-[11px] text-[##505664]">---</span>
+                            <div class="pt-3">
+                                <span class="text-gray-400 block">
+                                    Transaction ID:
+                                </span>
 
-                                </div>
+                                <span class="font-mono px-1 rounded font-normal text-[11px]">
+                                    ${transaction.transaction_id ?? "N/A"}
+                                </span>
                             </div>
+
+                            <div class="flex justify-between pt-3">
+
+                                <div class="w-full">
+                                    <span class="text-gray-400 block">
+                                        Transaction Date:
+                                    </span>
+
+                                    <span class="font-normal text-[11px]">
+                                        ${formattedDate}
+                                    </span>
+                                </div>
+
+                                <div class="flex flex-col justify-start w-full">
+                                    <span class="text-gray-400 block">
+                                        Sent Date:
+                                    </span>
+
+                                    <span class="font-normal text-[11px]">
+                                        ${formattedDate}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="flex justify-between pt-3">
+
+                                <div class="w-full">
+                                    <span class="text-gray-400 block">
+                                        Time Spent:
+                                    </span>
+
+                                    <span class="font-normal text-[11px]">
+                                        ${transaction.time_spent ?? "N/A"}
+                                    </span>
+                                </div>
+
+                                <div class="flex flex-col justify-start w-full">
+                                    <span class="text-gray-400 block">
+                                        Distance Travel:
+                                    </span>
+
+                                    <span class="font-normal text-[11px]">
+                                        ${transaction.distance_travel ?? "6.95 km in 5 hrs 11 mins"}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="flex justify-between pt-3">
+
+                                <div class="w-full">
+                                    <span class="text-gray-400 block">
+                                        Remakrs:
+                                    </span>
+
+                                    <span class="font-normal text-[11px]">
+                                        ${transaction.remarks ?? "---"}
+                                    </span>
+                                </div>
+
+                                <div class="flex flex-col justify-start w-full">
+                                    <span class="text-gray-400 block">
+                                        Transaction Sales:
+                                    </span>
+
+                                    <span
+                                        id="totalStoreDetails"
+                                        class="font-normal text-[11px]">
+                                        ${TotalSalesOnStore.toFixed(2)}
+                                    </span>
+                                </div>
+
+                            </div>
+
                         </div>
+
+                        <input
+                            type="radio"
+                            name="my_tabs_2"
+                            class="tab text-[11px] Info_Window_Tab"
+                            aria-label="Item Details"
+                            data-tab-content="tabContent2" />
+
+                        <div
+                            class="tab-content w-full flex flex-col border-base-300 bg-base-100 text-xs"
+                            data-tab="tabContent2"
+                            style="display:none">
+
+                            <div
+                                id="InfoTableContainer"
+                                data-table="infoWindowTableContent"
+                                class="flex w-full justify-between salemanInfoCard Transaction_Container border items-center h-[25px] py-5 px-2 rounded-t-2xl toggle-item-table cursor-pointer">
+
+                                <div class="flex gap-1 items-center">
+
+                                    <img
+                                        class="h-[25px] w-[25px]"
+                                        src="https://cdo.sfa-plus.com/SFA/v2/img/PesoSign.svg"/>
+
+                                    <span class="text-[13px]">
+                                        Transaction Items
+                                    </span>
+
+                                </div>
+
+                                <div class="flex gap-1 items-center">
+
+                                    <span id="TotalSku">
+                                    </span>
+
+                                    <span class="Sku_Num">
+                                    </span>
+
+                                    <i class="fa-solid fa-chevron-down text-[10px] transition-transform toggle-icon rotate-180"></i>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex p-2 ViewTable_Container">
+                                <i class="text-[#86888a] mdi mdi-arrow-up-left"></i>
+
+                                <span class="text-[#86888a] text-[10px] pb-[20px]">
+                                    Click to view Items
+                                </span>
+                            </div>
+
+                            <div
+                                id="infoWindowTableContainer"
+                                class="w-full text-[9px] overflow-hidden"
+                                style="display:none">
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="radio"
+                            name="my_tabs_2"
+                            class="tab text-[11px] Info_Window_Tab"
+                            aria-label="Supporting Docs"
+                            data-tab-content="tabContent3" />
+
+                        <div
+                            class="tab-content px-5 pb-2 border-base-300 bg-base-100 px-0 pt-3 text-xs"
+                            style="display:none">
+
+                            <div class="flex w-full">
+
+                                <div class="flex w-full">
+                                    <div class="w-[125px] h-[125px] rounded-full border"></div>
+                                </div>
+
+                                <div class="flex flex-col w-full justify-center items-center px-2 gap-2">
+
+                                    <span class="flex text-[11px] text-[##505664]">
+                                        Reference Number:
+                                    </span>
+
+                                    <span class="flex text-[11px] text-black">
+                                        FPM_4202609041642023
+                                    </span>
+
+                                    <span class="flex text-[11px] text-[##505664]">
+                                        Remarks:
+                                    </span>
+
+                                    <span class="flex text-[11px] text-[##505664]">
+                                        ---
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
     `;
 }
 
-function openInfoWindowFor(salesman, marker, targetIndex = 0) {
-    currentInfoSalesman = salesman; 
-    rowData = salesman;
+function openInfoWindowFor(transaction, marker, targetIndex = 0) {
+
+    currentInfoSalesman = transaction.transaction_salesman;
+    rowData = transaction;
     storeIndex = targetIndex;
-    updateStoreNavButtons();  
-    console.log("Opening InfoWindow for:", salesman.salesman_name, "Store index:", storeIndex);
+
+    updateStoreNavButtons();
+
+    console.log(
+        "Opening InfoWindow for:",
+        transaction.transaction_salesman?.salesman_name,
+        "Store index:",
+        storeIndex
+    );
 
     currentMarker = marker;
-
-    // if (currentMarker && latestInfoWindow) {
-    //     latestInfoWindow.close();
-    // }
 
     // Close latest transaction popup
     if (latestInfoWindow) {
@@ -1017,9 +1189,9 @@ function openInfoWindowFor(salesman, marker, targetIndex = 0) {
     map.panTo(marker.getPosition());
     map.setZoom(17);
 
-    // Set content
+    // Set InfoWindow content
     infoWindow.setContent(
-        InfoWindowContent(salesman)
+        InfoWindowContent(transaction)
     );
 
     // Open InfoWindow
@@ -1269,17 +1441,17 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
 
 function updateStoreNavButtons() {
     const activeSalesman = currentInfoSalesman ?? rowData;
-    if (!activeSalesman || !activeSalesman.stores) return;
+    if (!activeSalesman) return;
 
-    const lastIndex = activeSalesman.stores.length - 1;
- 
+    const lastIndex = (activeSalesman.transactions?.length ?? 1) - 1;
+
     $(".side_Prev, #infoPrev")
-    .prop("disabled", storeIndex <= 0)
-    .toggleClass("nav-disabled", storeIndex <= 0);
+        .prop("disabled", storeIndex <= 0)
+        .toggleClass("nav-disabled", storeIndex <= 0);
 
     $(".side_Next, #infoNext")
-    .prop("disabled", storeIndex >= lastIndex)
-    .toggleClass("nav-disabled", storeIndex >= lastIndex);
+        .prop("disabled", storeIndex >= lastIndex)
+        .toggleClass("nav-disabled", storeIndex >= lastIndex);
 
     refreshSelectedSalesmanSummary();
 }
@@ -1327,51 +1499,50 @@ function DateFormatter(transactionDate, type = "datetime") {
 }
 
 function getSku(data, tableId) {
-    const selectedStore = data?.stores?.[storeIndex];
 
-    if (!selectedStore) {
+    const transaction = data;
+
+    if (!transaction) {
         globalSkuCount = 0;
         globalTotalSku = 0;
 
         renderProductTable(tableId, []);
         $(".Sku_Num").text("(0 SKU)");
         $("#TotalSku").text("₱ 0");
+        $("#totalStoreDetails").text("₱ 0");
 
         return;
     }
 
-    // Only the selected day's transactions belong in this store's SKU/item
-    // totals. The API returns every transaction on the store (the month-to-date
-    // overview needs them), so filter here using the dashboard's selected date.
-    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+    const productRows = (transaction.transaction_details ?? [])
+        .map((detail) => {
 
-    const productRows = (selectedStore.transactions ?? [])
-        .filter((transaction) =>
-            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
-                .isSame(filterDay, "day")
-        )
-        .flatMap((transaction) =>
-            (transaction.transaction_details ?? []).map((detail) => {
             const quantity = Number(detail.quantity ?? 0);
             const price = Number(detail.current_price ?? 0);
 
             return {
                 ...detail,
+
                 transaction_id: transaction.transaction_id,
                 store_id: transaction.store_id,
+
                 StockCode: detail.product_details?.StockCode ?? null,
                 description: detail.product_details?.description ?? null,
                 brand: detail.product_details?.brand ?? null,
                 supplier: detail.product_details?.supplier ?? null,
-                price,
-                quantity,
+
+                price: price,
+                quantity: quantity,
                 amount: quantity * price,
             };
-        })
-    );
+        });
 
     globalSkuCount = productRows.length;
-    globalTotalSku = productRows.reduce((sum, item) => sum + item.amount, 0);
+
+    globalTotalSku = productRows.reduce(
+        (sum, item) => sum + item.amount,
+        0
+    );
 
     renderProductTable(tableId, productRows);
 
@@ -1380,63 +1551,94 @@ function getSku(data, tableId) {
     $("#totalStoreDetails").text(formatCurrency(globalTotalSku));
 }
 
-function getSidePanelContent(salesman) {
-    if (!salesman) return;
-    rowData = salesman;
+function getSidePanelContent(transaction) {
 
-    storeNames = salesman.stores?.map(store => store.store_name) ?? [];
+    if (!transaction) return;
 
-    const selectedStore = salesman.stores?.[storeIndex];
+    rowData = transaction;
 
-    // Only the selected day's transactions belong to this store view. The API
-    // returns every transaction on the store (the month-to-date overview needs
-    // them), so filter here instead of showing a stale transaction from another
-    // day (e.g. September 15) after the dashboard date was changed.
-    const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
-    const storeTransactions = (selectedStore?.transactions ?? []).filter(
-        (transaction) =>
-            moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
-                .isSame(filterDay, "day")
-    );
+    const salesman = transaction.transaction_salesman;
+    const store = transaction.transaction_store;
 
-    // Earliest transaction for this store, used as "time in"
-    const sortedTransactions = [...storeTransactions].sort(
-        (a, b) => new Date(a.transaction_date) - new Date(b.transaction_date)
-    );
-    const firstTransaction = sortedTransactions[0];
-    const timeInMoment = firstTransaction
-        ? moment(firstTransaction.transaction_date, "YYYY-MM-DD HH:mm:ss")
-        : null;
-    const timeIn = timeInMoment ? timeInMoment.format("h:mm:ss A") : "----";
-
-    // Transaction to display for this store
-    const selectedTransaction = storeTransactions[0];
-    const transactionDate = selectedTransaction?.transaction_date;
+    // Transaction date
+    const transactionDate = transaction.transaction_date;
 
     const formattedDate = transactionDate
-        ? moment(transactionDate, "YYYY-MM-DD HH:mm:ss").format("MMM DD, YYYY")
+        ? moment(
+            transactionDate,
+            "YYYY-MM-DD HH:mm:ss"
+        ).format("MMM DD, YYYY")
         : "N/A";
 
+    // Transaction time
     const transTimeMoment = transactionDate
-        ? moment(transactionDate, "YYYY-MM-DD HH:mm:ss")
+        ? moment(
+            transactionDate,
+            "YYYY-MM-DD HH:mm:ss"
+        )
         : null;
-    const TransactionTime = transTimeMoment ? transTimeMoment.format("h:mm:ss A") : "----";
 
-    // Same 8:00 AM cutoff used in the SalesmanColumns Attendance render —
-    // kept consistent instead of comparing against timeIn.
+    const TransactionTime = transTimeMoment
+        ? transTimeMoment.format("h:mm:ss A")
+        : "----";
+
+    // Time in
+    // Since the current API response represents one transaction,
+    // use its transaction time as the available time.
+    const timeIn = transTimeMoment
+        ? transTimeMoment.format("h:mm:ss A")
+        : "----";
+
+    // Attendance
+    // Same 8:00 AM cutoff used in SalesmanColumns.
     if (transTimeMoment) {
-        const cutoff = moment(transTimeMoment).set({ hour: 8, minute: 0, second: 0 });
-        $("#Attendance").text(transTimeMoment.isBefore(cutoff) ? "Early" : "Late");
+
+        const cutoff = moment(transTimeMoment).set({
+            hour: 8,
+            minute: 0,
+            second: 0
+        });
+
+        $("#Attendance").text(
+            transTimeMoment.isBefore(cutoff)
+                ? "Early"
+                : "Late"
+        );
+
     } else {
+
         $("#Attendance").text("No Transaction");
+
     }
 
-    $("#Salesman_Name").text(salesman.salesman_name);
-    $("#VisitedStore").text(salesman.stores?.length ?? 0);
-    $("#call_time").text(salesman.call_time ?? "NULL");
-    $("#storeName").text(selectedStore?.store_name ?? "No Store");
+    // Salesman
+    $("#Salesman_Name").text(
+        salesman?.salesman_name ?? "No Salesman"
+    );
+
+    // Visited Store
+    // New API represents one transaction/store at a time.
+    $("#VisitedStore").text(
+        store?.store_name ? 1 : 0
+    );
+
+    // Call time
+    $("#call_time").text(
+        salesman?.call_time ?? "NULL"
+    );
+
+    // Store
+    $("#storeName").text(
+        store?.store_name ?? "No Store"
+    );
+
+    // Time in
     $("#time_in").text(timeIn);
+
+    // Transaction time
     $("#transaction_time").text(TransactionTime);
+
+    // Transaction date
     $(".TransactionDate").text(formattedDate);
 
     refreshSelectedSalesmanSummary();
@@ -1453,8 +1655,8 @@ function refreshSelectedSalesmanSummary() {
     if (!rowData?.id || !selectedDashboardDate) return;
 
     const requestVersion = ++summaryRequestVersion;
+
     Api.get({
-        //url: "dashboard/getSalesmanSummary",
         url: "dashboard/getSalesmanInfo",
         data: {
             salesman_id: rowData.id,
@@ -1463,34 +1665,37 @@ function refreshSelectedSalesmanSummary() {
         },
         onSuccess: (summary) => {
             if (requestVersion !== summaryRequestVersion) return;
-            console.log("few",globalTotalSku);
-            console.log("fewqw",summary);
 
-            //const sales = formatCurrency(summary.sales);
+            console.log("few", globalTotalSku);
+            console.log("fewqw", summary);
+
             const sales = formatCurrency(globalTotalSku);
-            //const skuCount = Number(summary.sku_count ?? 0);
-            //const skuCount = Number(summary.stores[storeIndex].sku_count ?? 0);
             const skuCount = Number(globalSkuCount ?? 0);
-            
+
             if (overviewPeriod === "mtd") {
-                const salesmanData = summary.find(s => s.id === rowData.id);
                 let MonthtotalSales = 0;
 
-                const filterMonth = moment(selectedDashboardDate, "YYYY-MM-DD");
+                const filterMonth = moment(
+                    selectedDashboardDate,
+                    "YYYY-MM-DD"
+                );
 
-                salesmanData?.stores?.forEach(store => {
-                    store.transactions?.forEach(transaction => {
-                        const transactionMonth = moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss");
+                // New API returns transactions directly
+                summary?.forEach(transaction => {
+                    const transactionMonth = moment(
+                        transaction.transaction_date,
+                        "YYYY-MM-DD HH:mm:ss"
+                    );
 
-                        if (!transactionMonth.isSame(filterMonth, "month")) {
-                            return;
-                        }
+                    if (!transactionMonth.isSame(filterMonth, "month")) {
+                        return;
+                    }
 
-                        transaction.transaction_details?.forEach(detail => {
-                            const quantity = Number(detail.quantity ?? 0);
-                            const price = Number(detail.current_price ?? 0);
-                            MonthtotalSales += quantity * price;
-                        });
+                    transaction.transaction_details?.forEach(detail => {
+                        const quantity = Number(detail.quantity ?? 0);
+                        const price = Number(detail.current_price ?? 0);
+
+                        MonthtotalSales += quantity * price;
                     });
                 });
 
@@ -1499,15 +1704,14 @@ function refreshSelectedSalesmanSummary() {
                 $("#MtdSalesmanTotal_Sales").text(formattedTotal);
                 $("#MtdSku").text(skuCount);
                 $("#MtdValue").text(MonthtotalSales);
+
                 return;
             }
 
             $("#SalesmanTotal_Sales").text(sales);
-            $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
             $("#SideSku").text(skuCount);
             $("#CurrentDayValue").text(sales);
-            //$("#VisitedStore").text(summary.visited_stores ?? 0);
             $("#sku_sales").text(sales ?? 0);
         },
     });

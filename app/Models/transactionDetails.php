@@ -15,9 +15,17 @@ class transactionDetails extends Model
     public function transaction(){
         return $this->belongsTo(Transaction::class,'transaction_id');
     }
-    // public function productDetails(){
-    //     return $this->hasMany(Transaction::class,'transaction_id','id');
+
+    //     public function TransactionStore()
+    // {
+    //     return $this->belongsTo(
+    //         StoreModel::class,
+    //         'store_id',
+    //         'store_id'
+    //     );
     // }
+
+
     public function productDetails(){
         return $this->belongsTo(product::class, 'product_id', 'id');
     }

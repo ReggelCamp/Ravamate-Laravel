@@ -26,7 +26,11 @@ const SalesmanMaintenanceTable = [
     },
     {
         title: "Date Created",
-        data: "created_at"
+        data: null,
+        render: function(row){
+            const date = moment(row.created_at).format("MMM DD, YYYY h:mm A");
+            return date;
+        }
     },
     {
         title: "Geo Locking",
@@ -34,7 +38,7 @@ const SalesmanMaintenanceTable = [
     },
     {
         title: "Salesman Type",
-        data: "salesman_type"
+        data: "default_ord_type"
     },
     {
         title: "Status",
@@ -42,72 +46,18 @@ const SalesmanMaintenanceTable = [
     }
 ];
 
-const sampleData = [
-    {
-        md_code: "MD-1001",
-        name: "Juan Dela Cruz",
-        salesman_contact_no: "09171234567",
-        cashier_contact_no: "09181234567",
-        supervisor_contact_no: "09191234567",
-        date_created: "2026-08-07",
-        geo_locking: '50',
-        salesman_type: "Booking",
-        status: '<span class="text-green-600 font-bold">Active</span>'
-    },
-    {
-        md_code: "MD-1002",
-        name: "Maria Santos",
-        salesman_contact_no: "09221234567",
-        cashier_contact_no: "09231234567",
-        supervisor_contact_no: "09241234567",
-        date_created: "2026-08-06",
-        geo_locking: '50',
-        salesman_type: "Van Sales",
-        status: '<span class="text-green-600 font-bold">Active</span>'
-    },
-    {
-        md_code: "MD-1003",
-        name: "Pedro Reyes",
-        salesman_contact_no: "09351234567",
-        cashier_contact_no: "09361234567",
-        supervisor_contact_no: "09371234567",
-        date_created: "2026-08-05",
-        geo_locking: '50',
-        salesman_type: "Booking",
-        status: '<span class="text-green-600 font-bold">Active</span>'
-    },
-    {
-        md_code: "MD-1004",
-        name: "Ana Lopez",
-        salesman_contact_no: "09451234567",
-        cashier_contact_no: "09461234567",
-        supervisor_contact_no: "09471234567",
-        date_created: "2026-08-04",
-        geo_locking: '50',
-        salesman_type: "Van Sales",
-        status: '<span class="text-green-600 font-bold">Active</span>'
-    },
-    {
-        md_code: "MD-1005",
-        name: "Mark Villanueva",
-        salesman_contact_no: "09551234567",
-        cashier_contact_no: "09561234567",
-        supervisor_contact_no: "09571234567",
-        date_created: "2026-08-03",
-        geo_locking: '50',
-        salesman_type: "Booking",
-        status: '<span class="text-red-500 font-bold">Suspended</span>'
-    }
-];
-
-TableLoader.loadTable({
-    url: "salesman/getSalesman", 
-    tableId:"#salesmanMaintenanceTable",
-    columns: SalesmanMaintenanceTable,
-});
+function DisplaySalesman() {
+    TableLoader.loadTable({
+        url: "salesman/getSalesman", 
+        tableId:"#salesmanMaintenanceTable",
+        columns: SalesmanMaintenanceTable,
+        scrollX: false,
+    });
+}
 
 $(document).ready(function () {
     DatePicker.init();
+    DisplaySalesman();
 });
 
 $(document)
@@ -127,13 +77,15 @@ $(document)
     });
 
 function DisplaySalesmanInfo(rowData) {
+    console.log("hhh",rowData);
     // --- ID card fields ---
-    $("#salesmanInfo_Name").text(rowData.name ?? "");
+    $("#salesmanName").text(rowData.salesman_name ?? "");
+    $("#mdCode").text(rowData.md_code ?? "");
     $("#salesmanInfo_MdCode").text(rowData.md_code ?? "");
-    $("#salesmanInfo_ContactNo").val(rowData.salesman_contact_no ?? "");
-    $("#salesmanInfo_CashierNo").val(rowData.cashier_contact_no ?? "");
-    $("#salesmanInfo_SupervisorNo").val(rowData.supervisor_contact_no ?? "");
-    $("#salesmanInfo_Geolocking").val(rowData.geo_locking ?? "");
+    $("#salesmanInfo_ContactNo").val(rowData.contact_no ?? "N/A");
+    $("#salesmanInfo_CashierNo").val(rowData.cashier_no ?? "N/A");
+    $("#salesmanInfo_SupervisorNo").val(rowData.supervisor_no ?? "N/A");
+    $("#salesmanInfo_Geolocking").val(rowData.geo_locking ?? "N/A");
 
     // Not in sampleData yet — falls back until backend/sample data includes them
     $("#salesmanInfo_CallTime").val(rowData.call_time ?? "07:00:00");
@@ -171,8 +123,8 @@ function DisplaySalesmanInfo(rowData) {
     $("#salesmanInfo_ColorPicker").val(color);
 
     // keep the current row's md_code around for the Save Changes handler
-    $("#SalesmanInfo_Modal").data("mdCode", rowData.md_code);
-
+    // $("#SalesmanInfo_Modal").data("mdCode", rowData.md_code);
+    $("#SalesmanInfo_Modal").data("id", rowData.id);
     $("#SalesmanInfo_Modal")[0].showModal();
 }
 
@@ -215,20 +167,27 @@ function toggleSalesmanPassword(btn) {
 }
 
 $("#AddSalesmanForm").on("submit", function (e) {
-
+    
     e.preventDefault();
-
-    console.log("Adding salesman...");
-
+    document.getElementById('AddSalesman')?.close();
+    Swal.fire({
+        title: 'Creating',
+        text: 'Creating salesman, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+    
     Api.post({
         url: "/salesman/createSalesman",
         data: $(this).serialize(),
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 
         onSuccess: (data) => {
+            Swal.close();
             this.reset();
             AddSalesman.close();
             alert(data.message);
+            DisplaySalesman();
         },
         on422: (xhr) => {
             const errors = Object.values(xhr.responseJSON.errors ?? {}).flat().join("\n");
@@ -240,46 +199,64 @@ $("#AddSalesmanForm").on("submit", function (e) {
 
 $(document).on("click", "#salesmanInfo_SaveChanges", function () {
 
+    const id = $("#SalesmanInfo_Modal").data("id");
+    console.log("ID being updated:", id);
+
+    document.getElementById('SalesmanInfo_Modal')?.close();
+    
+    Swal.fire({
+        title: 'Updating',
+        text: 'Updating salesman, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
     Api.post({
         url: "salesman/updateSalesman",
-        data: {
-            id:                 $("#salesmanInfo_id").val() || null,
-            salesman_name:      $("#salesmanInfo_name").val(),
-            call_time:          $("#salesmanInfo_callTime").val(),
-            default_ord_type:   $("#salesmanInfo_defaultOrdType").val(),
-            loading_capacity:   $("#salesmanInfo_loadingCapacity").val(),
-            color:              $("#salesmanInfo_color").val(),
-            contact_no:         $("#salesmanInfo_contactNo").val(),
-            cashier_no:         $("#salesmanInfo_cashierNo").val(),
-            supervisor_name:    $("#salesmanInfo_supervisorName").val(),
-            supervisor_no:      $("#salesmanInfo_supervisorNo").val(),
-            geolocking:         $("#salesmanInfo_geolocking").val(),
-            price_code:         $("#salesmanInfo_priceCode").val(),
-            bo_warehouse:       $("#salesmanInfo_boWarehouse").val(),
-            gs_warehouse:       $("#salesmanInfo_gsWarehouse").val(),
-            osa_checking:       $("#salesmanInfo_osaChecking").is(":checked") ? 1 : 0,
-            eod:                $("#salesmanInfo_eod").is(":checked") ? 1 : 0,
-            is_hybrid:          $("#salesmanInfo_isHybrid").is(":checked") ? 1 : 0,
-            restrict_customer:  $("#salesmanInfo_restrictCustomer").is(":checked") ? 1 : 0,
-            disable_otp:        $("#salesmanInfo_disableOtp").is(":checked") ? 1 : 0,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: {
+            id: id,
+            salesman_name: $("#salesmanName").text(),
+            call_time: $("#salesmanInfo_CallTime").val(),
+            default_ord_type: $("#salesmanInfo_DefaultOrdType").val(),
+            loading_capacity: $("#salesmanInfo_LoadingCapacity").val() || null,
+            color: $("#salesmanInfo_ColorPicker").val() || null,
+            contact_no: $("#salesmanInfo_ContactNo").val() || null,
+            cashier_no: $("#salesmanInfo_CashierNo").val() || null,
+            supervisor_name: $("#salesmanInfo_SupervisorName").val() || null,
+            supervisor_no: $("#salesmanInfo_SupervisorNo").val() || null,
+            geolocking: $("#salesmanInfo_Geolocking").val() || null,
+            price_code: $("#salesmanInfo_PriceCode").val() || null,
+            bo_warehouse: $("#salesmanInfo_BadOrderWarehouse").val() || null,
+            gs_warehouse: $("#salesmanInfo_GoodStockReturnWarehouse").val() || null,
+
+            osa_checking: $("#salesmanInfo_OsaChecking").is(":checked") ? 1 : 0,
+            eod: $("#salesmanInfo_Eod").is(":checked") ? 1 : 0,
+            is_hybrid: $("#salesmanInfo_IsHybrid").is(":checked") ? 1 : 0,
+            restrict_customer: $("#salesmanInfo_RestrictNewCustomer").is(":checked") ? 1 : 0,
+            disable_otp: $("#salesmanInfo_DisableOtp").is(":checked") ? 1 : 0,
         },
         onSuccess: function (response) {
+            Swal.close();
+
             Swal.fire({
-                title: 'Saved',
-                text: response.message ?? 'Salesman saved successfully.',
-                icon: 'success',
+                title: "Saved",
+                text: response.message ?? "Salesman saved successfully.",
+                icon: "success",
                 timer: 1500,
                 showConfirmButton: false,
             });
 
-            // refresh whatever table lists salesmen, e.g.:
-            // loadSalesmanTable();
+            DisplaySalesman();
         },
+
         onError: function (error) {
+            console.error("Update error:", error);
+
             Swal.fire({
-                title: 'Error',
-                text: error?.message ?? 'Failed to save salesman.',
-                icon: 'error',
+                title: "Error",
+                text: error?.message ?? "Failed to save salesman.",
+                icon: "error",
             });
         }
     });
