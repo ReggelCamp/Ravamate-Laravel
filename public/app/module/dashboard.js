@@ -257,53 +257,49 @@ const OperationColumns = [
 
 // Total amount
 const TotalAmount = "₱79,209.90";
-let _mm = [];
+// let _mm = [];
 
 $(document)
     .off("click.dashboardRow", "#dashboardDataTable tbody tr")
     .on("click.dashboardRow", "#dashboardDataTable tbody tr", function () {
+
         if (!$.fn.DataTable.isDataTable("#dashboardDataTable")) return;
-        
+
         const dashboardTable = $("#dashboardDataTable").DataTable();
         rowData = dashboardTable.row(this).data();
 
         if (!rowData) return;
 
-        // A table-row selection always starts on that salesman's first store.
-        // Without this, SKU lookup can reuse the store index from a previously
-        // opened map info window.
         storeIndex = 0;
 
         showRowDetails(rowData);
-        //console.log("fer",rowData);
-        const entries = markersById[rowData.id];
 
-        if (entries && entries.length) {
-            const entry = entries[0]; // same salesman object regardless of which store entry
-            openInfoWindowFor(entry.salesman, entry.marker, 0);
+        console.log("Transaction ID:", rowData.transaction_id);
+
+        const entry =
+            markersById[String(rowData.transaction_id)];
+
+        if (entry) {
+
+            openInfoWindowFor(
+                entry.transaction,
+                entry.marker,
+                0
+            );
+
+            console.log("Marker transaction:", entry.transaction);
+
         } else {
-            console.log("No marker found for this row.");
+
+            console.log(
+                "No marker found for transaction:",
+                rowData.transaction_id
+            );
         }
 
-        console.log(rowData);
-
-        const _m = _mm.find(m => m.trid == rowData.transaction_details[0].id);
-
-        if (_m) {
-            google.maps.event.trigger(_m, "click");
-        } else {
-            console.log("No marker found for transaction:");
-        }
-
-        console.log("data",rowData.id);
         getSidePanelContent(rowData);
-        // getSku(rowData);
-        getSku(rowData,"#sfaQueuingModalTable");
-
-        //$("#SideSku").text(length);
-
+        getSku(rowData, "#sfaQueuingModalTable");
     });
-
 // Date BTN
 $(document).ready(function () {
 
@@ -454,35 +450,78 @@ function loadDashboardData(date = null) {
         $("#dashboardDataTable").DataTable().destroy();
     }
 
+    // TableLoader.loadTable({
+    //     url: "transaction/getSalesmanTransaction",
+    //     filters: date ? { date } : undefined,
+    //     tableId: "#dashboardDataTable",
+    //     columns: SalesmanColumns,
+    //     scrollY: "200px",
+    //     pageLength: 5,
+    //     searchInput: "#customSearch",
+    //     isCurrent: () => loadVersion === dashboardLoadVersion,
+
+    // onSuccess: (data) => {
+    //     if (loadVersion !== dashboardLoadVersion) return;
+
+    //     console.log("Dashboard data:", data);
+
+    //     if (!Array.isArray(data) || data.length === 0) {
+    //         console.log("no data");
+    //         Swal.fire("No data available on selected date");
+    //         return;
+    //     }
+
+    //     // Filter using the transaction_date actually present in the API response,
+    //     // instead of trusting the backend's date filter.
+    //     const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+    //     const filteredData = data.filter(transaction => {
+    //         const transactionDay = moment(transaction.transaction_date, "YYYY-MM-DD HH:mm:ss");
+    //         return transactionDay.isValid() && transactionDay.isSame(filterDay, "day");
+    //     });
+
+    //     console.log("Filtered to selected date:", filteredData);
+
+    //     if (filteredData.length === 0) {
+    //         Swal.fire("No data available on selected date");
+    //         array = [];
+    //         return;
+    //     }
+
+    //     array = filteredData;
+    //     getlatestTransaction(date, loadVersion);
+    // },
+
+    // });
+
     TableLoader.loadTable({
-        url: "transaction/getSalesmanTransaction",
-        filters: date ? { date } : undefined,
-        tableId: "#dashboardDataTable",
-        columns: SalesmanColumns,
-        scrollY: "200px",
-        pageLength: 5,
-        searchInput: "#customSearch",
-        isCurrent: () => loadVersion === dashboardLoadVersion,
+    url: "transaction/getSalesmanTransaction",
+    filters: date ? { date } : undefined,
+    tableId: "#dashboardDataTable",
+    columns: SalesmanColumns,
+    scrollY: "200px",
+    pageLength: 5,
+    searchInput: "#customSearch",
+    isCurrent: () => loadVersion === dashboardLoadVersion,
 
-        onSuccess: (data) => {
-            if (loadVersion !== dashboardLoadVersion) return;
+    filterRows: (rows) => {
+        const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+        return rows.filter(t => {
+            const d = moment(t.transaction_date, "YYYY-MM-DD HH:mm:ss");
+            return d.isValid() && d.isSame(filterDay, "day");
+        });
+    },
 
-            console.log("Dashboard data:", data);
-
-            if (!Array.isArray(data) || data.length === 0) {
-                console.log("no data");
-                Swal.fire("No data available on selected date");
-                return;
-            }
-
-            array = data;
-
-            getlatestTransaction(date, loadVersion);
-        },
-    });
+    onSuccess: (data) => {
+        if (!Array.isArray(data) || data.length === 0) {
+            Swal.fire("No data available on selected date");
+            return;
+        }
+        array = data;   // now this IS the filtered set, matching the table
+        getlatestTransaction(date, loadVersion);
+    },
+});
 }
-
-
 
 function displayInfoWindow() {
     if (!array || array.length === 0) {
@@ -551,6 +590,7 @@ function displayInfoWindow() {
         }
     });
 
+    const salesmanTransactionCount = {};
     // API now returns transactions directly
     array.forEach((transaction, index) => {
 
@@ -566,9 +606,15 @@ function displayInfoWindow() {
             return;
         }
 
-        const isLatestTransaction =
-            transaction.transaction_id == latest?.transaction_id;
+        salesmanTransactionCount[salesman.id] =
+                (salesmanTransactionCount[salesman.id] || 0) + 1;
+        
+        const markerNumber = salesmanTransactionCount[salesman.id];
 
+        const isLatestTransaction =
+        String(transaction.transaction_id) ===
+        String(latest?.transaction_id);
+   
         const marker = new google.maps.Marker({
             position: {
                 lat: Number(store.latitude),
@@ -605,7 +651,7 @@ function displayInfoWindow() {
                                 font-size="16"
                                 font-weight="bold"
                                 fill="white">
-                                ${index + 1}
+                                ${markerNumber}
                             </text>
 
                         </svg>
@@ -616,24 +662,24 @@ function displayInfoWindow() {
             },
         });
 
-        marker.trid = transaction.transaction_id;
+        // marker.trid = transaction.transaction_id;
 
         console.log(transaction.transaction_id)
 
-        _mm.push(marker);
+        // _mm.push(marker);
 
         // Store marker under salesman
         if (!markersById[salesman.id]) {
             markersById[salesman.id] = [];
         }
 
-        markersById[salesman.id].push({
+        markersById[String(transaction.transaction_id)] = {
             marker,
             salesman,
             store,
             transaction,
             storeIndex: 0
-        });
+        };
 
         // Marker click
         marker.addListener("click", () => {
@@ -665,13 +711,15 @@ function displayInfoWindow() {
         });
 
         // Latest transaction
-        const latestStore = latest?.transaction_store;
+        if (isLatestTransaction) {
 
-        const isLatestStore =
-            isLatestTransaction &&
-            store.store_id == latestStore?.store_id;
-
-        if (isLatestStore) {
+            const transactionSales = (
+                transaction.transaction_details ?? []
+            ).reduce((total, detail) => {
+                return total +
+                    Number(detail.quantity ?? 0) *
+                    Number(detail.current_price ?? 0);
+            }, 0);
 
             console.log("latest info", latestStore);
 
@@ -681,7 +729,7 @@ function displayInfoWindow() {
 
                 content: `
                     <div id="latestInfo_Container"
-                         class="latest-transaction-popup min-w-[193px] rounded-3xl">
+                        class="latest-transaction-popup min-w-[193px] rounded-3xl">
 
                         <div class="salemanInfoCard px-4 py-3 relative w-full">
 
@@ -689,7 +737,7 @@ function displayInfoWindow() {
 
                                 <span class="items-center justify-center flex">
                                     <i class="fa-solid fa-location-dot"
-                                       style="font-size: 20px;"></i>
+                                    style="font-size: 20px;"></i>
                                 </span>
 
                                 <div class="flex flex-col items-center">
@@ -699,7 +747,7 @@ function displayInfoWindow() {
                                     </span>
 
                                     <span class="w-full text-xs opacity-90">
-                                        added ${transaction.time_ago ?? "recently"}
+                                        ${transaction.transaction_date ?? "N/A"}
                                     </span>
 
                                 </div>
@@ -712,10 +760,6 @@ function displayInfoWindow() {
 
                             <div class="font-medium text-[16px]">
                                 ${store.store_name ?? "N/A"}
-                            </div>
-
-                            <div class="text-xs text-gray-500 italic">
-                                ${transaction.store_address ?? "N/A"}
                             </div>
 
                             <div class="text-[9px] text-[#b8babc] mt-2">
@@ -731,7 +775,10 @@ function displayInfoWindow() {
                             </div>
 
                             <div class="text-[11px] font-medium">
-                                ${store.transaction_sales ?? "N/A"}
+                                ₱${transactionSales.toLocaleString("en-PH", {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
                             </div>
 
                         </div>
@@ -797,8 +844,8 @@ function displayInfoWindow() {
             latestInfoWindow.open(map, marker);
         }
     });
+    
 }
-
 
 
 function DisplayitemTable() {
@@ -828,16 +875,21 @@ $(document).on("click", ".tabs [type='radio'].tab", function () {
 
 function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
     Api.get({
-        // url: "dashboard/getLatestTransaction",
         url: "dashboard/getLatestTransaction",
         data: date ? { date } : undefined,
 
         onSuccess: (data) => {
-            if (loadVersion !== dashboardLoadVersion || !data) return;
+            if (loadVersion !== dashboardLoadVersion) return;
 
-            latest = data;
-            console.log("latest:", latest);
-            displayInfoWindow();    
+            console.log("Latest transaction response:", data);
+
+            latest = Array.isArray(data)
+                ? data[0]
+                : data?.data ?? data;
+
+            console.log("Latest normalized:", latest);
+
+            displayInfoWindow();
         },
     });
 }
@@ -1378,32 +1430,43 @@ $(document)
     .on("click.storeNav", ".side_Next", function (e) {
         e.stopPropagation();
 
-        const activeSalesman = currentInfoSalesman ?? rowData;
-        const lastIndex = (activeSalesman?.stores?.length ?? 1) - 1;
+        const activeSalesman = currentInfoSalesman;
+        if (!activeSalesman) return;
+
+        const salesmanTransactions = array.filter(
+            t => t.transaction_salesman?.id === activeSalesman.id
+        );
+
+        const lastIndex = salesmanTransactions.length - 1;
 
         if (storeIndex < lastIndex) {
             storeIndex++;
-            console.log("store index val plus", storeIndex);
-            const newStore = activeSalesman.stores[storeIndex];
+
+            const newTransaction = salesmanTransactions[storeIndex];
+            const newStore = newTransaction.transaction_store;
+
+            rowData = newTransaction;
+
+            const entry = markersById[String(newTransaction.transaction_id)];
 
             infoWindow.setContent(
-                InfoWindowContent(activeSalesman)
+                InfoWindowContent(newTransaction)
             );
+
+            if (entry) {
+                currentMarker = entry.marker;
+
+                map.panTo(entry.marker.getPosition());
+                map.setZoom(17);
+
+                infoWindow.open(map, entry.marker);
+            }
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
             $("#storeName").text(newStore?.store_name ?? "No Store");
 
-            if (newStore && currentMarker) {
-                const newPos = {
-                    lat: Number(newStore.latitude),
-                    lng: Number(newStore.longitude),
-                };
-
-                currentMarker.setPosition(newPos);
-                map.panTo(newPos);
-            }
             updateStoreNavButtons();
-            getSku(activeSalesman, "#sfaQueuingModalTable");
+            getSku(newTransaction, "#sfaQueuingModalTable");
         }
     });
 
@@ -1414,31 +1477,41 @@ $(document)
 
         if (storeIndex > 0) {
             storeIndex--;
-            console.log("store index val minus", storeIndex);
-            const activeSalesman = currentInfoSalesman ?? rowData;
-            const newStore = activeSalesman.stores[storeIndex];
+
+            const activeSalesman = currentInfoSalesman;
+            if (!activeSalesman) return;
+
+            const salesmanTransactions = array.filter(
+                t => t.transaction_salesman?.id === activeSalesman.id
+            );
+
+            const newTransaction = salesmanTransactions[storeIndex];
+            const newStore = newTransaction.transaction_store;
+
+            rowData = newTransaction;
+
+            const entry = markersById[String(newTransaction.transaction_id)];
 
             infoWindow.setContent(
-                InfoWindowContent(activeSalesman)
+                InfoWindowContent(newTransaction)
             );
+
+            if (entry) {
+                currentMarker = entry.marker;
+
+                map.panTo(entry.marker.getPosition());
+                map.setZoom(17);
+
+                infoWindow.open(map, entry.marker);
+            }
 
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
             $("#storeName").text(newStore?.store_name ?? "No Store");
 
-            if (newStore && currentMarker) {
-                const newPos = {
-                    lat: Number(newStore.latitude),
-                    lng: Number(newStore.longitude),
-                };
-
-                currentMarker.setPosition(newPos);
-                map.panTo(newPos);
-            }
             updateStoreNavButtons();
-            getSku(activeSalesman, "#sfaQueuingModalTable");
+            getSku(newTransaction, "#sfaQueuingModalTable");
         }
     });
-
 
 $(document).on('click', '.toggle-item-table', function () {
     const $container = $(this).siblings('#infoWindowTableContainer');
@@ -1460,11 +1533,32 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
     $(this).removeClass("font-bold");
 });
 
+// function updateStoreNavButtons() {
+//     const activeSalesman = currentInfoSalesman ?? rowData;
+//     if (!activeSalesman) return;
+
+//     const lastIndex = (activeSalesman.transactions?.length ?? 1) - 1;
+
+//     $(".side_Prev, #infoPrev")
+//         .prop("disabled", storeIndex <= 0)
+//         .toggleClass("nav-disabled", storeIndex <= 0);
+
+//     $(".side_Next, #infoNext")
+//         .prop("disabled", storeIndex >= lastIndex)
+//         .toggleClass("nav-disabled", storeIndex >= lastIndex);
+
+//     refreshSelectedSalesmanSummary();
+// }
+
 function updateStoreNavButtons() {
-    const activeSalesman = currentInfoSalesman ?? rowData;
+    const activeSalesman = currentInfoSalesman;
     if (!activeSalesman) return;
 
-    const lastIndex = (activeSalesman.transactions?.length ?? 1) - 1;
+    const salesmanTransactions = array.filter(
+        t => t.transaction_salesman?.id === activeSalesman.id
+    );
+
+    const lastIndex = salesmanTransactions.length - 1;
 
     $(".side_Prev, #infoPrev")
         .prop("disabled", storeIndex <= 0)
@@ -1573,7 +1667,7 @@ function getSku(data, tableId) {
 }
 
 function getSidePanelContent(transaction) {
-
+    console.log("sdd",transaction);
     if (!transaction) return;
 
     rowData = transaction;
@@ -1673,14 +1767,16 @@ function formatCurrency(value) {
 }
 
 function refreshSelectedSalesmanSummary() {
-    if (!rowData?.id || !selectedDashboardDate) return;
+    // if (!rowData?.id || !selectedDashboardDate) return;
+    if (!rowData?.salesman_id || !selectedDashboardDate) return;
 
     const requestVersion = ++summaryRequestVersion;
 
     Api.get({
-        url: "dashboard/getSalesmanInfo",
+        // url: "dashboard/getSalesmanInfo",
+        url: "transaction/getSalesmanTransaction",
         data: {
-            salesman_id: rowData.id,
+            salesman_id: rowData.salesman_id,
             date: selectedDashboardDate,
             period: overviewPeriod,
         },
@@ -1728,6 +1824,8 @@ function refreshSelectedSalesmanSummary() {
 
                 return;
             }
+
+            console.log("llpa",skuCount);
 
             $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
