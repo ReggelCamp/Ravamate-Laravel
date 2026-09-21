@@ -2,6 +2,7 @@ import TableLoader from "../../../helper/TableLoader.js";
 import DatePicker from "../../../helper/datePicker.js";
 import "../../../helper/exportDataTable.js";
 import Api from "../../../helper/Api.js";
+import ComponentHelper from "../../../helper/ComponentHelper.js";
 
 const SalesmanMaintenanceTable = [
     {
@@ -54,6 +55,29 @@ function DisplaySalesman() {
         scrollX: false,
     });
 }
+
+ComponentHelper.dropdown().loadByApi({
+    // url: "/salesmen",
+    url: "salesman/getSalesmanNames",
+    dropdownId: "salesmanMaintenanceDropDown",
+    noDataText: "No SalesMan Found",
+    displayField: "name",
+    dataField: "id",
+});
+
+    $(document)
+        .off("click.salesmanSelect", "#salesmanMaintenanceDropDown .dropdown-item")
+        .on("click.salesmanSelect", "#salesmanMaintenanceDropDown .dropdown-item", function (e) {
+        e.preventDefault();
+
+        const name = $(this).data("value");
+        const id = $(this).data("id");
+
+        $("#selectedSalesmanText").text(name);
+        $("#selectedSalesmanId").val(id);
+
+        console.log
+    });
 
 $(document).ready(function () {
     DatePicker.init();

@@ -530,7 +530,7 @@ function displayInfoWindow() {
     }
 
     console.log("row data from display info window", array);
-
+    console.log("displayInfoWindow: window.dashboardMap =", window.dashboardMap); // <-- add this
     map = window.dashboardMap;
 
     // Close both InfoWindows when clicking on the map
@@ -614,7 +614,7 @@ function displayInfoWindow() {
         const isLatestTransaction =
         String(transaction.transaction_id) ===
         String(latest?.transaction_id);
-   
+        
         const marker = new google.maps.Marker({
             position: {
                 lat: Number(store.latitude),
@@ -720,8 +720,6 @@ function displayInfoWindow() {
                     Number(detail.quantity ?? 0) *
                     Number(detail.current_price ?? 0);
             }, 0);
-
-            console.log("latest info", latestStore);
 
             latestMarker = marker;
 
@@ -878,19 +876,33 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
         url: "dashboard/getLatestTransaction",
         data: date ? { date } : undefined,
 
+        // onSuccess: (data) => {
+        //     if (loadVersion !== dashboardLoadVersion) return;
+
+        //     console.log("Latest transaction response:", data);
+
+        //     latest = Array.isArray(data)
+        //         ? data[0]
+        //         : data?.data ?? data;
+
+        //     console.log("Latest normalized:", latest);
+
+        //     displayInfoWindow();
+        // },
+
         onSuccess: (data) => {
-            if (loadVersion !== dashboardLoadVersion) return;
+    if (loadVersion !== dashboardLoadVersion) return;
 
-            console.log("Latest transaction response:", data);
+    console.log("RAW latest transaction response:", data); // <-- add this, log the untouched payload
 
-            latest = Array.isArray(data)
-                ? data[0]
-                : data?.data ?? data;
+    latest = Array.isArray(data) ? data[0] : data?.data ?? data;
 
-            console.log("Latest normalized:", latest);
+    console.log("latest normalized:", latest);
+    console.log("latest keys:", latest ? Object.keys(latest) : "null/undefined");
 
-            displayInfoWindow();
-        },
+    displayInfoWindow();
+},
+
     });
 }
 
@@ -1586,11 +1598,18 @@ function getTableLength(tableId) {
 }
 
 
+// $(document)
+//     .off("click.table", "#InfoTableContainer")
+//     .on("click.table", "#InfoTableContainer", function () {
+//         getSku(currentInfoSalesman ?? rowData, "#infoWindowTableContent");
+//     });
+
 $(document)
     .off("click.table", "#InfoTableContainer")
     .on("click.table", "#InfoTableContainer", function () {
-        getSku(currentInfoSalesman ?? rowData, "#infoWindowTableContent");
+        getSku(rowData, "#infoWindowTableContent");
     });
+
 
 function DateFormatter(transactionDate, type = "datetime") {
     const date = new Date(transactionDate);

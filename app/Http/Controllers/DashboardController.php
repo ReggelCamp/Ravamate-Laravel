@@ -29,30 +29,52 @@ class DashboardController extends Controller
         return response()->json($salesmen);
     }
 
-    public function getLatest(Request $request){
-        $date = $request->validate([
-            'date' => ['nullable', 'date_format:Y-m-d'],
-        ])['date'] ?? null;
+    // public function getLatest(Request $request){
+    //     $date = $request->validate([
+    //         'date' => ['nullable', 'date_format:Y-m-d'],
+    //     ])['date'] ?? null;
 
-        // The business day is determined by the transaction model's date
-        // (transaction.transaction_date), not the store-row date.
-        $latestTransaction = DashboardModel::latest()
-            ->when($date, function ($query) use ($date) {
-                $query->whereHas('transactions', function ($transactionQuery) use ($date) {
-                    $transactionQuery->whereDate('transaction_date', $date);
-                });
-            })
-            ->with(['stores' => function ($query) use ($date) {
-                if ($date) {
-                    $query->whereHas('transactions', function ($transactionQuery) use ($date) {
-                        $transactionQuery->whereDate('transaction_date', $date);
-                    });
-                }
-            }])
-            ->first();
+    //     // The business day is determined by the transaction model's date
+    //     // (transaction.transaction_date), not the store-row date.
+    //     $latestTransaction = DashboardModel::latest()
+    //         ->when($date, function ($query) use ($date) {
+    //             $query->whereHas('transactions', function ($transactionQuery) use ($date) {
+    //                 $transactionQuery->whereDate('transaction_date', $date);
+    //             });
+    //         })
+    //         ->with(['stores' => function ($query) use ($date) {
+    //             if ($date) {
+    //                 $query->whereHas('transactions', function ($transactionQuery) use ($date) {
+    //                     $transactionQuery->whereDate('transaction_date', $date);
+    //                 });
+    //             }
+    //         }])
+    //         ->first();
 
-        return response()->json($latestTransaction);
-    }
+    //     return response()->json($latestTransaction);
+    // }
+
+    public function getLatest(Request $request)
+{
+    $date = $request->validate([
+        'date' => ['nullable', 'date_format:Y-m-d'],
+    ])['date'] ?? null;
+
+    $latestTransaction = Transaction::query()
+        ->when($date, function ($query) use ($date) {
+            $query->whereDate('transaction_date', $date);
+        })
+        ->with([
+            'TransactionSalesman',
+            'TransactionStore',
+            'transactionDetails.productDetails',
+        ])
+        ->orderByDesc('transaction_date')
+        ->orderByDesc('transaction_id')
+        ->first();
+
+    return response()->json($latestTransaction);
+}
 
     public function getSalesmanInfo(Request $request){
     $date = $request->validate([

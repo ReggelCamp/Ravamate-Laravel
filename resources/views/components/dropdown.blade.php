@@ -13,7 +13,8 @@
     <div
         tabindex="0"
         role="button"
-        class="h-[30px] flex justify-between  items-center {{ $buttonClass }}"
+        {{-- class="h-[30px] flex justify-between  items-center {{ $buttonClass }}" --}}
+        class="flex justify-between  items-center {{ $buttonClass }}"
     >
         <span class="dropdownName w-full">
             {{ $dropdownName }}

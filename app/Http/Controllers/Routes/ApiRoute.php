@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesmanModelController;
+use App\Http\Controllers\SalesmanNamesController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailsController;
@@ -29,6 +30,9 @@ class ApiRoute extends Controller
             Route::get('/getSalesman',[SalesmanModelController::class, 'getSalesman']);
             Route::post('/createSalesman',[SalesmanModelController::class, 'CreateSalesman']);
             Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
+
+            Route::get('/getSalesmanNames',[SalesmanNamesController::class, 'getSalesmanNames']);
+
         });
         
         Route::prefix('store')->group(function () {

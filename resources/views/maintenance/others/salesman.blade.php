@@ -4,10 +4,11 @@
 @section('title', 'SALESMAN')
 
     <style>
-        .border{
-            border-color:#ebe6e6;
+        .border {
+            border-color: #ebe6e6;
         }
-        .Salesman_Card{
+
+        .Salesman_Card {
             box-shadow: 2px 2px 10px #949494;
         }
     </style>
@@ -25,7 +26,8 @@
                 </div>
             </div>
             <div class="w-full items-center h-full bg-grey-500 flex flex-col px-5">
-                <div class="flex md:items-center items-start w-full h-fit py-3 md:flex-row flex-col-reverse my-5 md:my-0 gap-3">
+                <div
+                    class="flex md:items-center items-start w-full h-fit py-3 md:flex-row flex-col-reverse my-5 md:my-0 gap-3">
                     <div class="flex gap-5 w-full">
                         <div class="flex rounded-2xl gap-3 h-[25px]">
                             <button class="btn border sheenFilterBtn rounded-xl w-fit px-5 text-[12px] h-[30px]"
@@ -63,13 +65,30 @@
 
                 <div class="flex justify-between items-center">
                     <span> Name </span>
-                    <input type="text" name="salesman_name" required placeholder="Type here" class="input input-bordered w-[350px]" />
+                    {{-- <input type="text" name="salesman_name" required placeholder="Type here"
+                        class="input input-bordered w-[350px]" /> --}}
+                    <x-dropdown class="">
+                        <x-slot:dropdownName class="">
+                            <span
+                                class="flex font-medium text-[14px] justify-between w-[350px] h-[40px] select-bordered items-center border px-5 whitespace-nowrap ">
+                                <span id="selectedSalesmanText">Select Salesman</span>
+                                <i class="fa-solid fa-caret-down"></i>
+                            </span>
+                            <input type="hidden" id="selectedSalesmanId" name="salesman_id" />
+                        </x-slot:dropdownName>
+                        <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border "
+                            id="salesmanMaintenanceDropDown">
+                            {{-- <x-searchbar id="dcrSearch" class="w-[300px]" /> --}}
+                        </ul>
+                    </x-dropdown>
+
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Password </span>
-                    <input type="password" name="password" required minlength="8" placeholder="At least 8 characters" class="input input-bordered w-[350px]" />
+                    <input type="password" name="password" required minlength="8" placeholder="At least 8 characters"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
@@ -93,7 +112,8 @@
 
                 <div class="flex justify-between items-center">
                     <span> Loading Capacity (₱) </span>
-                    <input type="number" name="loading_capacity" value="0" min="0" step="0.01" class="input input-bordered w-[350px]" />
+                    <input type="number" name="loading_capacity" value="0" min="0" step="0.01"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
@@ -105,25 +125,29 @@
 
                 <div class="flex justify-between items-center">
                     <span> Contact No. </span>
-                    <input type="tel" name="contact_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="contact_no" placeholder="11 digit number format"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Cashier(Mobile #) </span>
-                    <input type="tel" name="cashier_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="cashier_no" placeholder="11 digit number format"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Supervisor Name </span>
-                    <input type="text" name="supervisor_name" placeholder="Supervisor name" class="input input-bordered w-[350px]" />
+                    <input type="text" name="supervisor_name" placeholder="Supervisor name"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
                     <span> Supervisor (Mobile #) </span>
-                    <input type="tel" name="supervisor_no" placeholder="11 digit number format" class="input input-bordered w-[350px]" />
+                    <input type="tel" name="supervisor_no" placeholder="11 digit number format"
+                        class="input input-bordered w-[350px]" />
                 </div>
                 <div class="divider my-0"></div>
 
@@ -136,254 +160,289 @@
     </dialog>
 
     <dialog id="SalesmanInfo_Modal" class="modal">
-    <div class="modal-box w-full max-w-none h-[calc(100vh-80px)] md:h-[calc(100vh-140px)] mt-[80px] md:mt-[140px] rounded-none p-0 pb-10 overflow-y-auto">
+        <div
+            class="modal-box w-full max-w-none h-[calc(100vh-80px)] md:h-[calc(100vh-140px)] mt-[80px] md:mt-[140px] rounded-none p-0 pb-10 overflow-y-auto">
 
-        <form method="dialog"
-            class="flex font-bold report_title h-[50px]">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
+            <form method="dialog" class="flex font-bold report_title h-[50px]">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
 
-        <div class="flex flex-col w-full">
-            <div class="flex flex-col sm:flex-row w-full p-5 gap-3 text-center ">
-                <div class="flex flex-1 flex-wrap gap-3 sm:gap-5 justify-center px-4 sm:justify-start">
-                    <button type="button" id="salesmanInfo_HoldAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
-                        <i class="fa-solid fa-user-lock"></i> Hold Account
-                    </button>
+            <div class="flex flex-col w-full">
+                <div class="flex flex-col sm:flex-row w-full p-5 gap-3 text-center ">
+                    <div class="flex flex-1 flex-wrap gap-3 sm:gap-5 justify-center px-4 sm:justify-start">
+                        <button type="button" id="salesmanInfo_HoldAccount"
+                            class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
+                            <i class="fa-solid fa-user-lock"></i> Hold Account
+                        </button>
 
-                    <button type="button" id="salesmanInfo_ResetAccount"
-                        class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
-                        <i class="fa-solid fa-rotate"></i> Reset Account
-                    </button>
+                        <button type="button" id="salesmanInfo_ResetAccount"
+                            class="btn rounded-full border sheenFilterBtn text-[13px] font-medium h-[38px] text-black">
+                            <i class="fa-solid fa-rotate"></i> Reset Account
+                        </button>
+                    </div>
+                    <div class="flex flex-1 justify-center  sm:justify-end px-4">
+                        <button type="button" id="salesmanInfo_SaveChanges"
+                            class="btn rounded-full border text-[13px] text-black font-medium h-[38px] w-full sheenFilterBtn sm:w-auto">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                        </button>
+                    </div>
                 </div>
-                <div class="flex flex-1 justify-center  sm:justify-end px-4">
-                    <button type="button" id="salesmanInfo_SaveChanges"
-                        class="btn rounded-full border text-[13px] text-black font-medium h-[38px] w-full sheenFilterBtn sm:w-auto">
-                        <i class="fa-solid fa-floppy-disk"></i> Save Changes
-                    </button>
-                </div>
-            </div>
 
-            <div class="flex flex-col lg:flex-row w-full justify-center items-stretch gap-4 px-4">
+                <div class="flex flex-col lg:flex-row w-full justify-center items-stretch gap-4 px-4">
 
-                <!-- ID Card -->
-                <div class="rounded-2xl overflow-auto w-full lg:w-[400px] lg:shrink-0 Salesman_Card">
-                    <div class="flex-1 bg-white rounded-2xl overflow-hidden">
-                        <div class="report_title shadow-[2px_2px_10px_#949494] relative pb-5">
-                            <div class="flex flex-col items-center w-full">
-                                <div class="absolute inset-0 overflow-hidden opacity-20">
-                                    <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
-                                    <div class="w-16 h-16 rounded-full bg-white absolute top-10 right-0"></div>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 mt-4 relative">
-                                    <div
-                                        class="w-16 h-16 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden shrink-0">
-                                        <i class="fa-solid fa-user text-gray-400 text-2xl"></i>
+                    <!-- ID Card -->
+                    <div class="rounded-2xl overflow-auto w-full lg:w-[400px] lg:shrink-0 Salesman_Card">
+                        <div class="flex-1 bg-white rounded-2xl overflow-hidden">
+                            <div class="report_title shadow-[2px_2px_10px_#949494] relative pb-5">
+                                <div class="flex flex-col items-center w-full">
+                                    <div class="absolute inset-0 overflow-hidden opacity-20">
+                                        <div class="w-24 h-24 rounded-full bg-white absolute -top-5 right-10"></div>
+                                        <div class="w-16 h-16 rounded-full bg-white absolute top-10 right-0"></div>
                                     </div>
-                                    <div class="text-white leading-tight">
-                                        <span class="text-[10px] opacity-80 block">Salesman</span>
-                                        <span id="salesmanName" class="font-bold"></span>
+
+                                    <div class="flex items-center gap-3 mt-4 relative">
+                                        <div
+                                            class="w-16 h-16 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center overflow-hidden shrink-0">
+                                            <i class="fa-solid fa-user text-gray-400 text-2xl"></i>
+                                        </div>
+                                        <div class="text-white leading-tight">
+                                            <span class="text-[10px] opacity-80 block">Salesman</span>
+                                            <span id="salesmanName" class="font-bold"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center w-[150px]">
+                                        <span class="text-[10px] text-gray-500 block">Md Code</span>
+                                        <span id="mdCode" class="font-bold text-sm text-gray-600">
+
+                                        </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex justify-end">
-                                <div class="bg-white rounded-tl-xl px-5 py-1 -mb-5 text-center w-[150px]">
-                                    <span class="text-[10px] text-gray-500 block">Md Code</span>
-                                    <span id="mdCode" class="font-bold text-sm text-gray-600">
-                                        
-                                    </span>
+                            <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Contact
+                                        No.</span>
+                                    <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
+                                        class="input input-bordered input-sm rounded-full w-full text-[13px] font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Md
+                                        Password</span>
+                                    <div class="join w-full">
+                                        <input type="password" id="salesmanInfo_MdPassword" value="password123"
+                                            class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-medium" />
+                                        <button type="button" onclick="toggleSalesmanPassword(this)"
+                                            class="btn btn-sm btn-ghost join-item -ml-10 z-10">
+                                            <i class="fa-solid fa-eye-slash text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Call
+                                        Time</span>
+                                    <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Cashier
+                                        No.</span>
+                                    <input type="text" id="salesmanInfo_CashierNo" value="09"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor
+                                        Name</span>
+                                    <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor
+                                        No.</span>
+                                    <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Geolocking</span>
+                                    <input type="text" id="salesmanInfo_Geolocking" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Price
+                                        Code</span>
+                                    <input type="text" id="salesmanInfo_PriceCode" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
+                                </div>
+
+                                <div
+                                    class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
+                                    <span
+                                        class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Loading
+                                        Capacity</span>
+                                    <input type="text" id="salesmanInfo_LoadingCapacity" value="50"
+                                        class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
                                 </div>
                             </div>
                         </div>
-
-                        <div class="flex flex-col gap-3 px-4 pt-7 pb-4">
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Contact No.</span>
-                                <input type="text" id="salesmanInfo_ContactNo" value="09295980904"
-                                    class="input input-bordered input-sm rounded-full w-full text-[13px] font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Md Password</span>
-                                <div class="join w-full">
-                                    <input type="password" id="salesmanInfo_MdPassword" value="password123"
-                                        class="input input-bordered input-sm join-item w-full rounded-full text-[13px] font-medium" />
-                                    <button type="button" onclick="toggleSalesmanPassword(this)"
-                                        class="btn btn-sm btn-ghost join-item -ml-10 z-10">
-                                        <i class="fa-solid fa-eye-slash text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Call Time</span>
-                                <input type="text" id="salesmanInfo_CallTime" value="07:00:00"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Cashier No.</span>
-                                <input type="text" id="salesmanInfo_CashierNo" value="09"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor Name</span>
-                                <input type="text" id="salesmanInfo_SupervisorName" value="Ronald Boleche"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Supervisor No.</span>
-                                <input type="text" id="salesmanInfo_SupervisorNo" value="09918334860"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Geolocking</span>
-                                <input type="text" id="salesmanInfo_Geolocking" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                           </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Price Code</span>
-                                <input type="text" id="salesmanInfo_PriceCode" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-
-                            <div class="flex w-full shadow-[2px_2px_10px_#949494] rounded-full items-center p-2 inset-shadow-sm h-[55px]">
-                                <span class="label-text text-[11px] font-medium whitespace-nowrap w-full text-gray-500 ">Loading
-                                    Capacity</span>
-                                <input type="text" id="salesmanInfo_LoadingCapacity" value="50"
-                                    class="input input-bordered input-sm rounded-full text-[13px] w-full font-medium" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Setting --}}
-                <div class="rounded-2xl border shadow-[2px_2px_10px_#949494] w-full lg:w-[400px] lg:shrink-0 p-5 h-fit gap-3 flex flex-col Salesman_Card">
-                    <div class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
-                        <span class="text-[11px] font-medium text-gray-500 w-full">Default ORD Type</span>
-                        <select id="salesmanInfo_DefaultOrdType"
-                            class="select select-bordered select-sm rounded-full w-full text-[13px] font-medium ">
-                            <option>BOOKING</option>
-                            <option>VAN SELLING</option>
-                            <option>PRE BOOKING</option>
-                            <option>LOGISTICS</option>
-                            <option>HYBRID</option>
-                        </select>
                     </div>
 
-                    <div class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 w-full">Warehouse Code</span>
-                        <select id="salesmanInfo_WarehouseCode"
-                            class="select select-bordered select-sm rounded-full text-[13px] w-full font-medium">
-                            <option value="">Select</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 w-full">Bad Order Warehouse</span>
-                        <span id="salesmanInfo_BadOrderWarehouse" disabled
-                            class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
-                            BO
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 w-full">Good Stock Return Warehouse</span>
-                        <span id="salesmanInfo_GoodStockReturnWarehouse"disabled
-                            class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
-                            HO
-                        </span>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">OSA Checking</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_OsaChecking_state"
-                                class="text-[12px] font-medium text-[#e6231e]">NO</span>
-                            <input type="checkbox" id="salesmanInfo_OsaChecking" data-off-text="NO" data-on-text="YES"
-                                class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">EOD</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_Eod_state"
-                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_Eod" data-off-text="DISABLED" data-on-text="ENABLED"
-                                class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Is Hybrid</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_IsHybrid_state"
-                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_IsHybrid" data-off-text="DISABLED"
-                                data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Restrict New Customer</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_RestrictNewCustomer_state"
-                                class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
-                            <input type="checkbox" id="salesmanInfo_RestrictNewCustomer" data-off-text="DISABLED"
-                                data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
-                        <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Disable OTP</span>
-                        <div class="flex items-center gap-2">
-                            <span id="salesmanInfo_DisableOtp_state"
-                                class="text-[12px] font-medium text-[#e6231e]">NO</span>
-                            <input type="checkbox" id="salesmanInfo_DisableOtp" data-off-text="NO" data-on-text="YES"
-                                class="toggle toggle-error salesman-toggle " />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Color code panel -->
-                <div class="rounded-2xl shadow-[2px_2px_10px_#949494]  overflow-hidden w-full lg:w-[631px] lg:shrink-0 h-fit Salesman_Card">
+                    {{-- Setting --}}
                     <div
-                        class="report_title text-center py-7 text-[20px] font-medium tracking-wide">
-                        SALESMAN COLOR CODE
-                    </div>
-                    <div class="p-6 text-center">
-                        <p class="text-[13px] font-bold text-gray-700 mb-4">Click here to change color</p>
+                        class="rounded-2xl border shadow-[2px_2px_10px_#949494] w-full lg:w-[400px] lg:shrink-0 p-5 h-fit gap-3 flex flex-col Salesman_Card">
+                        <div
+                            class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
+                            <span class="text-[11px] font-medium text-gray-500 w-full">Default ORD Type</span>
+                            <select id="salesmanInfo_DefaultOrdType"
+                                class="select select-bordered select-sm rounded-full w-full text-[13px] font-medium ">
+                                <option>BOOKING</option>
+                                <option>VAN SELLING</option>
+                                <option>PRE BOOKING</option>
+                                <option>LOGISTICS</option>
+                                <option>HYBRID</option>
+                            </select>
+                        </div>
 
-                        <input type="color" id="salesmanInfo_ColorPicker" value="#ff0000" class="hidden"
-                            onchange="document.getElementById('salesmanInfo_Swatch').style.background = this.value" />
+                        <div
+                            class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 w-full">Warehouse Code</span>
+                            <select id="salesmanInfo_WarehouseCode"
+                                class="select select-bordered select-sm rounded-full text-[13px] w-full font-medium">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div
+                            class="flex items-center justify-between py-2 shadow-[2px_2px_10px_#949494] rounded-full px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 w-full">Bad Order Warehouse</span>
+                            <span id="salesmanInfo_BadOrderWarehouse" disabled
+                                class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
+                                BO
+                            </span>
+                        </div>
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 w-full">Good Stock Return Warehouse</span>
+                            <span id="salesmanInfo_GoodStockReturnWarehouse" disabled
+                                class="justify-end flex py-1.5 px-2 rounded-full text-[13px] font-medium w-full bg-gray-300">
+                                HO
+                            </span>
+                        </div>
 
-                        <div id="salesmanInfo_Swatch"
-                            class="w-full max-w-[220px] aspect-square mx-auto rounded border cursor-pointer"
-                            style="background:#ff0000"
-                            onclick="document.getElementById('salesmanInfo_ColorPicker').click()">
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">OSA Checking</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_OsaChecking_state"
+                                    class="text-[12px] font-medium text-[#e6231e]">NO</span>
+                                <input type="checkbox" id="salesmanInfo_OsaChecking" data-off-text="NO" data-on-text="YES"
+                                    class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">EOD</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_Eod_state"
+                                    class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_Eod" data-off-text="DISABLED" data-on-text="ENABLED"
+                                    class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Is Hybrid</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_IsHybrid_state"
+                                    class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_IsHybrid" data-off-text="DISABLED"
+                                    data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Restrict New Customer</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_RestrictNewCustomer_state"
+                                    class="text-[12px] font-medium text-[#e6231e]">DISABLED</span>
+                                <input type="checkbox" id="salesmanInfo_RestrictNewCustomer" data-off-text="DISABLED"
+                                    data-on-text="ENABLED" class="toggle toggle-error salesman-toggle" />
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between py-2 rounded-full shadow-[2px_2px_10px_#949494] px-2 h-[55px]">
+                            <span class="text-[13px] font-medium text-gray-500 max-w-[55%]">Disable OTP</span>
+                            <div class="flex items-center gap-2">
+                                <span id="salesmanInfo_DisableOtp_state"
+                                    class="text-[12px] font-medium text-[#e6231e]">NO</span>
+                                <input type="checkbox" id="salesmanInfo_DisableOtp" data-off-text="NO" data-on-text="YES"
+                                    class="toggle toggle-error salesman-toggle " />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col w-full items-center px-4 pb-4 text-center">
-                        <span class="text-red-500 font-bold">
-                            NOTE
-                        </span>
-                        <p class="flex items-center justify-center w-full text-center">
-                            Hold accounts continue to incur charges. If you want to stop charges,
-                             Please email us to permanently disabled the account.
-                        </p>
-                    </div>
-                </div>
+                    <!-- Color code panel -->
+                    <div
+                        class="rounded-2xl shadow-[2px_2px_10px_#949494]  overflow-hidden w-full lg:w-[631px] lg:shrink-0 h-fit Salesman_Card">
+                        <div class="report_title text-center py-7 text-[20px] font-medium tracking-wide">
+                            SALESMAN COLOR CODE
+                        </div>
+                        <div class="p-6 text-center">
+                            <p class="text-[13px] font-bold text-gray-700 mb-4">Click here to change color</p>
 
+                            <input type="color" id="salesmanInfo_ColorPicker" value="#ff0000" class="hidden"
+                                onchange="document.getElementById('salesmanInfo_Swatch').style.background = this.value" />
+
+                            <div id="salesmanInfo_Swatch"
+                                class="w-full max-w-[220px] aspect-square mx-auto rounded border cursor-pointer"
+                                style="background:#ff0000"
+                                onclick="document.getElementById('salesmanInfo_ColorPicker').click()">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col w-full items-center px-4 pb-4 text-center">
+                            <span class="text-red-500 font-bold">
+                                NOTE
+                            </span>
+                            <p class="flex items-center justify-center w-full text-center">
+                                Hold accounts continue to incur charges. If you want to stop charges,
+                                Please email us to permanently disabled the account.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
 @endsection
 
