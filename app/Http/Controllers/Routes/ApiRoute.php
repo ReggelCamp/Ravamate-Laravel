@@ -28,6 +28,7 @@ class ApiRoute extends Controller
 
         Route::prefix('salesman')->group(function () {
             Route::get('/getSalesman',[SalesmanModelController::class, 'getSalesman']);
+            Route::get('/getSalesmanWithTransaction',[SalesmanModelController::class, 'getSalesmanWithTransaction']);
             Route::post('/createSalesman',[SalesmanModelController::class, 'CreateSalesman']);
             Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
 

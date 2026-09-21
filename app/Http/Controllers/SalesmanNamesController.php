@@ -21,9 +21,16 @@ class SalesmanNamesController extends Controller
         ],200);
     }
 
-    public function getSalesmanNames(){
-        $salesmanNames = SalesmanNamesModel::all();
+public function getSalesmanNames(){
+    $salesmanNames = SalesmanNamesModel::select(
+        'id',
+        'name',
+        'last_name'
+    )
+    ->selectRaw("CONCAT(name, ' ', last_name) AS salesman_name")
+    ->get();
 
-        return response()->json($salesmanNames);
-    }
+    return response()->json($salesmanNames);
+}
+
 }

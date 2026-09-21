@@ -167,13 +167,28 @@ class SalesmanModelController extends Controller
         ], 200);
     }
 
-//     public function updateSalesman(Request $request)
-// {
-//     dd([
-//         'request_all' => $request->all(),
-//         'request_id' => $request->input('id'),
-//         'request_method' => $request->method(),
-//         'content_type' => $request->header('Content-Type'),
-//     ]);
-// }
+public function getSalesmanWithTransaction(Request $request){
+    $date = $request->input('date');
+
+    $query = SalesmanModel::with([
+        'salesmanTransaction' => function ($q) use ($date) {
+            if ($date) {
+                $q->whereDate('transaction_date', $date);
+            }
+        },
+        'salesmanTransaction.transactionDetails.productDetails',
+        'salesmanTransaction.TransactionStore',
+    ]);
+
+    if ($date) {
+        $query->whereHas('salesmanTransaction', function ($q) use ($date) {
+            $q->whereDate('transaction_date', $date);
+        });
+    }
+
+    $salesman = $query->get();
+
+    return response()->json($salesman);
+}
+
 }

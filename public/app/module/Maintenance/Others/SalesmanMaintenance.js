@@ -7,50 +7,50 @@ import ComponentHelper from "../../../helper/ComponentHelper.js";
 const SalesmanMaintenanceTable = [
     {
         title: "Md Code",
-        data: "md_code"
+        data: "md_code",
     },
     {
         title: "Name",
-        data: "salesman_name"
+        data: "salesman_name",
     },
     {
         title: "Salesman Contact No.",
-        data: "contact_no"
+        data: "contact_no",
     },
     {
         title: "Cashier Contact No.",
-        data: "cashier_no"
+        data: "cashier_no",
     },
     {
         title: "Supervisor Contact No.",
-        data: "supervisor_no"
+        data: "supervisor_no",
     },
     {
         title: "Date Created",
         data: null,
-        render: function(row){
+        render: function (row) {
             const date = moment(row.created_at).format("MMM DD, YYYY h:mm A");
             return date;
-        }
+        },
     },
     {
         title: "Geo Locking",
-        data: "geo_locking"
+        data: "geo_locking",
     },
     {
         title: "Salesman Type",
-        data: "default_ord_type"
+        data: "default_ord_type",
     },
     {
         title: "Status",
-        data: "status"
-    }
+        data: "status",
+    },
 ];
 
 function DisplaySalesman() {
     TableLoader.loadTable({
-        url: "salesman/getSalesman", 
-        tableId:"#salesmanMaintenanceTable",
+        url: "salesman/getSalesman",
+        tableId: "#salesmanMaintenanceTable",
         columns: SalesmanMaintenanceTable,
         scrollX: false,
     });
@@ -61,23 +61,26 @@ ComponentHelper.dropdown().loadByApi({
     url: "salesman/getSalesmanNames",
     dropdownId: "salesmanMaintenanceDropDown",
     noDataText: "No SalesMan Found",
-    displayField: "name",
+    displayField: "salesman_name", 
     dataField: "id",
 });
 
-    $(document)
-        .off("click.salesmanSelect", "#salesmanMaintenanceDropDown .dropdown-item")
-        .on("click.salesmanSelect", "#salesmanMaintenanceDropDown .dropdown-item", function (e) {
-        e.preventDefault();
+$(document)
+    .off("click.salesmanSelect", "#salesmanMaintenanceDropDown .dropdown-item")
+    .on(
+        "click.salesmanSelect",
+        "#salesmanMaintenanceDropDown .dropdown-item",
+        function (e) {
+            e.preventDefault();
 
-        const name = $(this).data("value");
-        const id = $(this).data("id");
+            const name = $(this).data("value");
+            const id = $(this).data("id");
 
-        $("#selectedSalesmanText").text(name);
-        $("#selectedSalesmanId").val(id);
-
-        console.log
-    });
+            $("#selectedSalesmanText").text(name);
+            $("#selectedSalesmanId").val(id);
+            $("#selectedSalesmanNameText").val(name); // <-- new: actual text sent to backend
+        },
+    );
 
 $(document).ready(function () {
     DatePicker.init();
@@ -85,23 +88,33 @@ $(document).ready(function () {
 });
 
 $(document)
-    .off("click.salesmanMaintenanceTableRow", "#salesmanMaintenanceTable tbody tr")
-    .on("click.salesmanMaintenanceTableRow", "#salesmanMaintenanceTable tbody tr", function () {
-        // salesman.js loads the data asynchronously; ensure DataTable is ready
-        if (!$.fn.DataTable.isDataTable("#salesmanMaintenanceTable")) return;
+    .off(
+        "click.salesmanMaintenanceTableRow",
+        "#salesmanMaintenanceTable tbody tr",
+    )
+    .on(
+        "click.salesmanMaintenanceTableRow",
+        "#salesmanMaintenanceTable tbody tr",
+        function () {
+            // salesman.js loads the data asynchronously; ensure DataTable is ready
+            if (!$.fn.DataTable.isDataTable("#salesmanMaintenanceTable"))
+                return;
 
-        const salesmanMaintenanceTable = $("#salesmanMaintenanceTable").DataTable();
-        const rowData = salesmanMaintenanceTable.row(this).data();
+            const salesmanMaintenanceTable = $(
+                "#salesmanMaintenanceTable",
+            ).DataTable();
+            const rowData = salesmanMaintenanceTable.row(this).data();
 
-        if (!rowData) return;
+            if (!rowData) return;
 
-        console.log("Clicked row:", rowData);
+            console.log("Clicked row:", rowData);
 
-        DisplaySalesmanInfo(rowData);
-    });
+            DisplaySalesmanInfo(rowData);
+        },
+    );
 
 function DisplaySalesmanInfo(rowData) {
-    console.log("hhh",rowData);
+    console.log("hhh", rowData);
     // --- ID card fields ---
     $("#salesmanName").text(rowData.salesman_name ?? "");
     $("#mdCode").text(rowData.md_code ?? "");
@@ -125,20 +138,29 @@ function DisplaySalesmanInfo(rowData) {
     // --- Middle panel selects ---
     // salesman_type in sampleData is "Booking" / "Van Sales" — map to the select's option text
     const ordTypeMap = {
-        "Booking": "BOOKING",
-        "Van Sales": "VAN SELLING"
+        Booking: "BOOKING",
+        "Van Sales": "VAN SELLING",
     };
-    $("#salesmanInfo_DefaultOrdType").val(ordTypeMap[rowData.salesman_type] ?? "BOOKING");
+    $("#salesmanInfo_DefaultOrdType").val(
+        ordTypeMap[rowData.salesman_type] ?? "BOOKING",
+    );
 
     $("#salesmanInfo_WarehouseCode").val(rowData.warehouse_code ?? "");
-    $("#salesmanInfo_BadOrderWarehouse").val(rowData.bad_order_warehouse ?? "BO");
-    $("#salesmanInfo_GoodStockReturnWarehouse").val(rowData.good_stock_return_warehouse ?? "HO");
+    $("#salesmanInfo_BadOrderWarehouse").val(
+        rowData.bad_order_warehouse ?? "BO",
+    );
+    $("#salesmanInfo_GoodStockReturnWarehouse").val(
+        rowData.good_stock_return_warehouse ?? "HO",
+    );
 
     // --- Toggles (not in sampleData yet — defaults to OFF until backend sends these) ---
     setSalesmanToggle("salesmanInfo_OsaChecking", rowData.osa_checking);
     setSalesmanToggle("salesmanInfo_Eod", rowData.eod);
     setSalesmanToggle("salesmanInfo_IsHybrid", rowData.is_hybrid);
-    setSalesmanToggle("salesmanInfo_RestrictNewCustomer", rowData.restrict_new_customer);
+    setSalesmanToggle(
+        "salesmanInfo_RestrictNewCustomer",
+        rowData.restrict_new_customer,
+    );
     setSalesmanToggle("salesmanInfo_DisableOtp", rowData.disable_otp);
 
     // --- Color swatch ---
@@ -168,10 +190,10 @@ function setSalesmanToggle(id, isOn) {
 // Fire once here too, since toggles inside a <dialog> may not exist yet at initial page load
 // depending on when the modal partial is injected — safe to leave alongside the earlier binding.
 $(document).on("change", ".salesman-toggle", function () {
-    const stateEl = document.getElementById(`${this.id}_state`);    
+    const stateEl = document.getElementById(`${this.id}_state`);
     const offText = this.dataset.offText;
     const onText = this.dataset.onText;
-    
+
     stateEl.textContent = this.checked ? onText : offText;
 
     stateEl.classList.toggle("text-[#e6231e]", !this.checked);
@@ -191,16 +213,21 @@ function toggleSalesmanPassword(btn) {
 }
 
 $("#AddSalesmanForm").on("submit", function (e) {
-    
     e.preventDefault();
-    document.getElementById('AddSalesman')?.close();
+    document.getElementById("AddSalesman")?.close();
     Swal.fire({
-        title: 'Creating',
-        text: 'Creating salesman, please wait.',
+        title: "Creating",
+        text: "Creating salesman, please wait.",
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
     });
-    
+
+    if (!$("#selectedSalesmanId").val()) {
+        e.preventDefault();
+        alert("Please select a salesman."); // or show inline error near the dropdown
+        return false;
+    }
+
     Api.post({
         url: "/salesman/createSalesman",
         data: $(this).serialize(),
@@ -214,31 +241,33 @@ $("#AddSalesmanForm").on("submit", function (e) {
             DisplaySalesman();
         },
         on422: (xhr) => {
-            const errors = Object.values(xhr.responseJSON.errors ?? {}).flat().join("\n");
+            const errors = Object.values(xhr.responseJSON.errors ?? {})
+                .flat()
+                .join("\n");
             alert(errors || "Please check the salesman details.");
         },
-        onError: () => alert("Unable to create the salesman. Please try again.")
+        onError: () =>
+            alert("Unable to create the salesman. Please try again."),
     });
 });
 
 $(document).on("click", "#salesmanInfo_SaveChanges", function () {
-
     const id = $("#SalesmanInfo_Modal").data("id");
     console.log("ID being updated:", id);
 
-    document.getElementById('SalesmanInfo_Modal')?.close();
-    
+    document.getElementById("SalesmanInfo_Modal")?.close();
+
     Swal.fire({
-        title: 'Updating',
-        text: 'Updating salesman, please wait.',
+        title: "Updating",
+        text: "Updating salesman, please wait.",
         allowOutsideClick: false,
         didOpen: () => Swal.showLoading(),
     });
 
     Api.post({
         url: "salesman/updateSalesman",
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: {
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: {
             id: id,
             salesman_name: $("#salesmanName").text(),
             call_time: $("#salesmanInfo_CallTime").val(),
@@ -252,12 +281,17 @@ $(document).on("click", "#salesmanInfo_SaveChanges", function () {
             geolocking: $("#salesmanInfo_Geolocking").val() || null,
             price_code: $("#salesmanInfo_PriceCode").val() || null,
             bo_warehouse: $("#salesmanInfo_BadOrderWarehouse").val() || null,
-            gs_warehouse: $("#salesmanInfo_GoodStockReturnWarehouse").val() || null,
+            gs_warehouse:
+                $("#salesmanInfo_GoodStockReturnWarehouse").val() || null,
 
             osa_checking: $("#salesmanInfo_OsaChecking").is(":checked") ? 1 : 0,
             eod: $("#salesmanInfo_Eod").is(":checked") ? 1 : 0,
             is_hybrid: $("#salesmanInfo_IsHybrid").is(":checked") ? 1 : 0,
-            restrict_customer: $("#salesmanInfo_RestrictNewCustomer").is(":checked") ? 1 : 0,
+            restrict_customer: $("#salesmanInfo_RestrictNewCustomer").is(
+                ":checked",
+            )
+                ? 1
+                : 0,
             disable_otp: $("#salesmanInfo_DisableOtp").is(":checked") ? 1 : 0,
         },
         onSuccess: function (response) {
@@ -282,6 +316,6 @@ $(document).on("click", "#salesmanInfo_SaveChanges", function () {
                 text: error?.message ?? "Failed to save salesman.",
                 icon: "error",
             });
-        }
+        },
     });
 });

@@ -61,7 +61,7 @@
 
             <div class="flex w-full border-t-1 text-gray-400"></div>
 
-            <form id="AddSalesmanForm" class="flex w-full flex-col p-5">
+            <form id="AddSalesmanForm" novalidate class="flex w-full flex-col p-5">
 
                 <div class="flex justify-between items-center">
                     <span> Name </span>
@@ -75,6 +75,7 @@
                                 <i class="fa-solid fa-caret-down"></i>
                             </span>
                             <input type="hidden" id="selectedSalesmanId" name="salesman_id" />
+                            <input type="hidden" id="selectedSalesmanNameText" name="salesman_name" />
                         </x-slot:dropdownName>
                         <ul class="dropdown_item border w-[300px] max-h-[300px] overflow-auto rounded-2xl p-2 bg-white border "
                             id="salesmanMaintenanceDropDown">

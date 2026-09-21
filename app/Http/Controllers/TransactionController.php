@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Http;
 
 class TransactionController extends Controller
 {
-public function getSalesmanTransaction(){
-    $salesmanTransaction = Transaction::with([
-        'TransactionSalesman',
-        'transactionDetails.productDetails',
-        'TransactionStore',
-    ])->get();
+    public function getSalesmanTransaction(){
+        $salesmanTransaction = Transaction::with([
+            'TransactionSalesman',
+            'transactionDetails.productDetails',
+            'TransactionStore',
+        ])->get();
 
-    return response()->json($salesmanTransaction);
-}
+        return response()->json($salesmanTransaction);
+    }
     public function getStoreTransaction(){
         $storeTransaction = Transaction::with('TransactionStore')->get();
         return response()->json($storeTransaction);
