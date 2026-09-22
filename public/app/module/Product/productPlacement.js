@@ -1,38 +1,8 @@
-// import TableLoader from "../../helper/TableLoader.js";
-
-// const PlacementProductColumns = [
-//     {
-//         title: "Type",
-//         data: "type"
-//     },
-//     {
-//         title: "Customer Class",
-//         data: "customer_class"
-//     },
-//     {
-//         title: "Item Number",
-//         data: "item_number"
-//     },
-//     {
-//         title: "Item Description",
-//         data: "item_description"
-//     },
-//     {
-//         title: "Placement",
-//         data: "placement"
-//     },
-//     {
-//         title: "Last Updated",
-//         data: "last_updated"
-//     }
-// ];
-
-// TableLoader.loadTable
-
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
 import ComponentHelper from "../../helper/ComponentHelper.js";
+import Api from "../../helper/Api.js";
 
 const PlacementProductColumns = [
     {
@@ -58,49 +28,6 @@ const PlacementProductColumns = [
     {
         title: "Last Updated",
         data: "last_updated"
-    }
-];
-
-const sampleData = [
-    {
-        type: "Beverage",
-        customer_class: "Supermarket",
-        item_number: "ITM-1001",
-        item_description: "Coca-Cola 1.5L",
-        placement: "Aisle 1 - Top Shelf",
-        last_updated: "2026-08-07"
-    },
-    {
-        type: "Snack",
-        customer_class: "Convenience Store",
-        item_number: "ITM-1002",
-        item_description: "Lay's Classic 150g",
-        placement: "Checkout Counter",
-        last_updated: "2026-08-06"
-    },
-    {
-        type: "Dairy",
-        customer_class: "Hypermarket",
-        item_number: "ITM-1003",
-        item_description: "Fresh Milk 1L",
-        placement: "Refrigerated Section",
-        last_updated: "2026-08-05"
-    },
-    {
-        type: "Personal Care",
-        customer_class: "Drugstore",
-        item_number: "ITM-1004",
-        item_description: "Shampoo 340ml",
-        placement: "Aisle 5 - Middle Shelf",
-        last_updated: "2026-08-04"
-    },
-    {
-        type: "Household",
-        customer_class: "Wholesale",
-        item_number: "ITM-1005",
-        item_description: "Dishwashing Liquid 500ml",
-        placement: "Cleaning Supplies Section",
-        last_updated: "2026-08-03"
     }
 ];
 
@@ -150,34 +77,31 @@ const Placement = [
     },
 ];
 
-TableLoader.tableData(
-    "#productPlacementTable", // Replace with your actual table ID
-    sampleData,
-    PlacementProductColumns,
-    {
-
-    }
-);
+TableLoader.loadTable({
+    url: "product/getAllProductPlacement",
+    tableId: "#productPlacementTable", 
+    columns: PlacementProductColumns,
+});
 
 ComponentHelper.select().LoadSelectItems({
     id: "custClass",
     items: CustClassOptions
 });
 
-ComponentHelper.dropdown().load({
-    json: ProductOptions,
+ComponentHelper.dropdown().loadByApi({
+    url:"product/getProductTable",
     dropdownId: "productPlacement",
     noDataText: "No SalesMan Found",
-    displayField: "title",
-    dataField: "data",
+    displayField: "description",
+    dataField: "id",
 });
 
-ComponentHelper.dropdown().load({
-    json: ProductOptions,
+ComponentHelper.dropdown().loadByApi({
+    url:"product/getProductTable",
     dropdownId: "addProductPlacement",
     noDataText: "No SalesMan Found",
-    displayField: "title",
-    dataField: "data",
+    displayField: "description",
+    dataField: "id",
 });
 
 ComponentHelper.select().LoadSelectItems({
@@ -251,4 +175,58 @@ $(document).on("click", "#updatePlacementBtn", function () {
 
     // Api.put({ url: `/placements/${record.item_number}`, data: payload, ... })
     console.log("Updating placement:", payload);
+});
+
+$(document)
+    .off("click.productPlacementSelect", "#addProductPlacement .dropdown-item")
+    .on("click.productPlacementSelect", "#addProductPlacement .dropdown-item", function (e) {
+        e.preventDefault();
+
+        const productId = $(this).data("id");
+        const itemDescription = $(this).data("value");
+
+        console.log("Product ID:", productId);
+        console.log("Item Description:", itemDescription);
+
+        // Store them on the dropdown
+        $("#addProductPlacement").data("product-id", productId);
+        $("#addProductPlacement").data("item-description", itemDescription);
+
+        // Display description
+        $("#addProductPlacementText").text(itemDescription);
+    });
+
+$(document).on("click", "#SubmitPlacement", function () {
+
+       console.log("Customer Class:", $("#custClass").val());
+    console.log("Placement Type:", $("#placementType").val());
+    console.log("Placement:", $("#placement").val());
+
+    const payload = {
+        type: $("#placementType").val(),
+        customer_class: $("#custClass").val(),
+        placement: $("#placement").val(),
+        product_id: $("#addProductPlacement").data("product-id"),
+        item_description: $("#addProductPlacement").data("item-description")
+    };
+
+    console.log("Payload:", payload);
+
+    Api.post({
+        url: "product/createPlacement",
+        data: payload,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        processData: true,
+
+        onSuccess: function (response) {
+            console.log("CREATE RESPONSE:", response);
+            console.log("CREATED DATA:", response.data);
+
+            TableLoader.loadTable({
+                url: "product/getAllProductPlacement",
+                tableId: "#productPlacementTable",
+                columns: PlacementProductColumns,
+            });
+        }
+    });
 });

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class product extends Model
+class productPlacementModel extends Model
 {
     use HasFactory;
-    protected $table = 'product';
+    protected $table = 'product_placement';
     protected $guarded = ['id'];
 
     // public function transaction(){
@@ -19,12 +19,12 @@ class product extends Model
     //     return $this->hasMany(StoreModel::class,'store_id','id');
     // }
 
-    public function transactionDetails(){
-        return $this->hasMany(
-            transactionDetails::class,
-            'product_id',
-            'id'
-        );
-    }
+    // public function transactionDetails(){
+    //     return $this->hasMany(
+    //         transactionDetails::class,
+    //         'product_id',
+    //         'id'
+    //     );
+    // }
 
 }

@@ -14,6 +14,8 @@ class SalesmanNamesController extends Controller
         $salesmanName = SalesmanNamesModel::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
+            'isNew_salesman' => $request->isNew_salesman ?? 0,
+            'isNoMcp_layout' => $request->isNoMcp_layout ?? 0
         ]);
         return response()->json([
             'message' => 'Salesman name created successfully',
@@ -28,6 +30,7 @@ public function getSalesmanNames(){
         'last_name'
     )
     ->selectRaw("CONCAT(name, ' ', last_name) AS salesman_name")
+    ->where('isNew_salesman', 0)
     ->get();
 
     return response()->json($salesmanNames);

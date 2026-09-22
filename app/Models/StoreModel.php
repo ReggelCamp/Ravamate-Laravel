@@ -14,10 +14,14 @@ class StoreModel extends Model
     protected $guarded = ['store_id'];
 
     public function salesman(){
-        return $this->belongsTo(DashboardModel::class, 'salesman_id');
+        return $this->belongsTo(SalesmanModel::class, 'salesman_id', 'id');
     }
 
     public function transactions(){
         return $this->hasMany(Transaction::class, 'store_id', 'store_id');
     }
+
+    // public function perSalesman(){
+    //     return $this->hasOne(SalesmanModel::class, )
+    // }
 }

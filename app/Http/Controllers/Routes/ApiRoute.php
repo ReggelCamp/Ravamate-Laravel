@@ -6,6 +6,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\SalesmanNamesController;
 use App\Http\Controllers\StoreController;
@@ -38,6 +39,7 @@ class ApiRoute extends Controller
         
         Route::prefix('store')->group(function () {
             Route::post('/createStore',[StoreController::class, 'createStore']);
+            Route::get('/getStore',[StoreController::class, 'getStore']);
         });
         
         Route::prefix('transaction')->group(function () {
@@ -76,6 +78,10 @@ class ApiRoute extends Controller
         Route::prefix('product')->group(function () {
             Route::get('/getProduct',[ProductController::class, 'getAllProduct']);
             Route::get('/getProductDetails',[ProductController::class, 'getProductDetails']);
+            Route::get('/getProductTable',[ProductController::class, 'getProductsTable']);
+
+            Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);
+            Route::get('/getAllProductPlacement',[productPlacementController::class, 'getAllProductPlacement']);
         });
 
         Route::prefix('bank')->group(function () {

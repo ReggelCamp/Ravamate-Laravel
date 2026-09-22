@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\product;
+use App\Models\productPlacementModel;
 use App\Models\transactionDetails;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    function getProductsTable(){
+        $products = product::get();
+
+        return response()->json($products);
+    }
+
     function getAllProduct(Request $request){
         $validated = $request->validate([
             'transaction_id' => ['required'],

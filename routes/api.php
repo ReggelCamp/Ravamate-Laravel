@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
 use App\Http\Controllers\SalesmanNamesController;
 use App\Http\Controllers\StoreController;
@@ -44,3 +46,4 @@ Route::post('/retryTransaction',[TransactionController::class, 'retryTransaction
 Route::post('/createBank',[BankController::class, 'createBank']);
 Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
 Route::post('/createSalesmanName',[SalesmanNamesController::class, 'createSalesmanName']);
+Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);

@@ -36,7 +36,7 @@ class TransactionController extends Controller
             'latitude'         => $request->latitude,
 
             'document_no'      => $request->document_no,
-            'customercode'     => 'CC0' . $request->store_id,
+            // 'customercode'     => 'CC0' . $request->store_id,
             'invoice_no'       => $request->invoice_no,
             'site'             => $request->site,
             'item_no'          => $request->item_no,

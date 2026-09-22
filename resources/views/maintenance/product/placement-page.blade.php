@@ -48,81 +48,92 @@
 
     <dialog id="AddPlacement" class="modal">
         <div class="modal-box p-0 overflow-visible">
+
             <form method="dialog">
-                <button class=" btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    ✕
+                </button>
             </form>
 
-            <h3 class="text-lg font-bold p-5">New Product Placement</h3>
+            <h3 class="text-lg font-bold p-5">
+                New Product Placement
+            </h3>
 
             <div class="flex w-full border-t-1 text-gray-400"></div>
-
             <div class="flex w-full flex-col p-5">
+                <div class="flex justify-between items-center">
+                    <span>Type</span>
+
+                    <select id="placementType" class="select w-[350px]">
+                        <option disabled selected>
+                            Choose Type
+                        </option>
+                    </select>
+                </div>
+
+                <div class="divider my-0"></div>
 
                 <div class="flex justify-between items-center">
-                    <span> Type </span>
-                    <select class="select w-[350px]">
-                        <option disabled selected>Choose Type</option>
-                        <option>CORE</option>
-                        <option>NON-CORE</option>
+                    <span>Customer Class</span>
+
+                    <select id="custClass" class="select w-[350px]">
+                        <option disabled selected>
+                            Choose Class
+                        </option>
                     </select>
                 </div>
+
                 <div class="divider my-0"></div>
-
-                <div class="flex justify-between items-center ">
-                    <span> Customer Class </span>
-                    <select class="select w-[350px]">
-                        <option disabled selected>Choose Class</option>
-                        <option value="CONVENIENCE" store="">CONVENIENCE STORE</option>
-                        <option value="GROCERY">GROCERY</option>
-                        <option value="OTHERS">OTHERS</option>
-                        <option value="SUPERMARKET">SUPERMARKET</option>
-                        <option value="MARKET" stall="" dry="">MARKET STALL DRY</option>
-                        <option value="DRUGSTORE">DRUGSTORE</option>
-                        <option value="SARISARI" store="">SARISARI STORE</option>
-                        <option value="MARKET" stall="" wet="">MARKET STALL WET</option>
-                    </select>
-                </div>
-                <div class="divider my-0"></div>
-
-
                 <div class="flex justify-between w-full items-center gap-5">
-                    <span class="flex whitespace-nowrap "> Select Product </span>
-                    <div class="w-full ">
+                    <span class="flex whitespace-nowrap">
+                        Select Product
+                    </span>
+                    <div class="w-full">
                         <x-dropdown class="w-full"
-                            buttonClass="border  px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
+                            buttonClass="border px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
+
+                                <span class="w-full" id="update_weekVisited_label">
+                                    Select
+                                </span>
+
                                 <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+
                             </x-slot:dropdownName>
 
                             <ul id="addProductPlacement"
                                 class="border w-fit px-1 max-h-[300px] overflow-auto rounded-lg z-[9999] bg-white shadow-lg p-0">
-
                             </ul>
                         </x-dropdown>
                     </div>
                 </div>
+
                 <div class="divider my-0"></div>
 
-                <div class="flex justify-between items-center ">
-                    <span> Placement </span>
-                    <select class="select w-[350px]">
-                        <option disabled selected>Choose Here</option>
-                        <option>CORE</option>
-                        <option>Oppurtunity</option>
-                        <option>Dev Core</option>
+                <!-- Placement -->
+                <div class="flex justify-between items-center">
+                    <span>Placement</span>
+
+                    <select id="placement" class="select w-[350px]">
+                        <option disabled selected>
+                            Choose Here
+                        </option>
                     </select>
                 </div>
-                <div class="divider my-0"></div>
 
+                <div class="divider my-0"></div>
+                <!-- Buttons -->
                 <div class="justify-end flex w-full gap-3">
                     <form method="dialog">
-                        <button class="btn btn-default">Close</button>
+                        <button class="btn btn-default">
+                            Close
+                        </button>
                     </form>
-                    <button class="btn btn-primary">Add</button>
+                    <button id="SubmitPlacement" class="btn btn-primary">
+                        Add
+                    </button>
                 </div>
             </div>
-
         </div>
     </dialog>
 

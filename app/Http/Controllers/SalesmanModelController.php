@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SalesmanModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -168,22 +169,51 @@ class SalesmanModelController extends Controller
     }
 
 public function getSalesmanWithTransaction(Request $request){
-    $date = $request->input('date');
+    $validated = $request->validate([
+        'date'        => ['nullable', 'date_format:Y-m-d'],
+        'salesman_id' => ['nullable', 'integer', 'exists:salesman,id'],
+        'period'      => ['nullable', 'in:day,mtd'],
+    ]);
+
+    $date = $validated['date'] ?? null;
+    $salesmanId = $validated['salesman_id'] ?? null;
+    $period = $validated['period'] ?? 'day';
+
+    $rangeStart = null;
+    $rangeEnd = null;
+
+    if ($date) {
+        $businessDate = Carbon::createFromFormat('Y-m-d', $date);
+
+        $rangeStart = $period === 'mtd'
+            ? $businessDate->copy()->startOfMonth()
+            : $businessDate->copy()->startOfDay();
+
+        $rangeEnd = $businessDate->copy()->endOfDay();
+    }
+
+    $applyDateRange = function ($query) use ($rangeStart, $rangeEnd) {
+        if ($rangeStart && $rangeEnd) {
+            $query->whereBetween('transaction_date', [$rangeStart, $rangeEnd]);
+        }
+    };
 
     $query = SalesmanModel::with([
-        'salesmanTransaction' => function ($q) use ($date) {
-            if ($date) {
-                $q->whereDate('transaction_date', $date);
-            }
+        'salesmanTransaction' => function ($q) use ($applyDateRange) {
+            $applyDateRange($q);
         },
         'salesmanTransaction.transactionDetails.productDetails',
         'salesmanTransaction.TransactionStore',
     ]);
 
-    if ($date) {
-        $query->whereHas('salesmanTransaction', function ($q) use ($date) {
-            $q->whereDate('transaction_date', $date);
+    if ($rangeStart) {
+        $query->whereHas('salesmanTransaction', function ($q) use ($applyDateRange) {
+            $applyDateRange($q);
         });
+    }
+
+    if ($salesmanId) {
+        $query->whereKey($salesmanId);
     }
 
     $salesman = $query->get();

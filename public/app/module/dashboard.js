@@ -59,7 +59,20 @@ const SalesmanColumns = [
 
         render: function(data, type, row) {
             console.log("kkk",row);
-            const transaction = row.salesman_transaction?.[0];
+            // Attendance must use the salesman's own transaction for the
+            // selected business day — the API does not order/guarantee
+            // that index 0 is that transaction.
+            const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
+
+            const dailyTransactions = (row.salesman_transaction ?? [])
+                .filter(daily => moment(
+                    daily.transaction_date,
+                    "YYYY-MM-DD HH:mm:ss"
+                ).isSame(filterDay, "day"))
+                .sort((a, b) => moment(a.transaction_date, "YYYY-MM-DD HH:mm:ss")
+                    .diff(moment(b.transaction_date, "YYYY-MM-DD HH:mm:ss")));
+
+            const transaction = dailyTransactions[0];
 
             if (!transaction?.transaction_date || !row.call_time) {
                 return "N/A";
@@ -123,30 +136,29 @@ const SalesmanColumns = [
 
             const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
 
-            row.stores?.forEach(store => {
+            // salesman/getSalesmanWithTransaction returns the salesman's own
+            // transactions at row.salesman_transaction — there is no row.stores
+            // in that payload.
+            row.salesman_transaction?.forEach(transaction => {
 
-                store.transactions?.forEach(transaction => {
+                const dailyTransaction = moment(
+                    transaction.transaction_date,
+                    "YYYY-MM-DD HH:mm:ss"
+                );
 
-                    const dailyTransaction = moment(
-                        transaction.transaction_date,
-                        "YYYY-MM-DD HH:mm:ss"
+                if (!dailyTransaction.isSame(filterDay, "day")) {
+                    return;
+                }
+
+                transaction.transaction_details?.forEach(detail => {
+
+                    const quantity = Number(detail.quantity ?? 0);
+
+                    const price = Number(
+                        detail.current_price ?? 0
                     );
 
-                    if (!dailyTransaction.isSame(filterDay, "day")) {
-                        return;
-                    }
-
-                    transaction.transaction_details?.forEach(detail => {
-
-                        const quantity = Number(detail.quantity ?? 0);
-
-                        const price = Number(
-                            detail.current_price ?? 0
-                        );
-
-                        totalSales += quantity * price;
-                    });
-
+                    totalSales += quantity * price;
                 });
 
             });
@@ -277,8 +289,8 @@ $(document)
         if (!firstTransaction) {
             console.log("This salesman has no transaction on the selected date.");
             showRowDetails(rowData);
-            getSidePanelContent(rowData);
             getSku(null, "#sfaQueuingModalTable");
+            getSidePanelContent(rowData);
             return;
         }
 
@@ -450,6 +462,17 @@ function loadDashboardData(date = null) {
         $("#dashboardDataTable").DataTable().destroy();
     }
 
+        Swal.fire({
+        title: "Fetching data",
+        text: "Please wait",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+
     TableLoader.loadTable({
         url: "salesman/getSalesmanWithTransaction",
         filters: { date: selectedDashboardDate }, // always send a real date, never undefined
@@ -463,6 +486,7 @@ function loadDashboardData(date = null) {
         filterRows: (rows) => rows,
 
         onSuccess: (data) => {
+            swal.close();
             if (loadVersion !== dashboardLoadVersion) return;
 
             console.log("Dashboard data (salesman with filtered transactions):", data);
@@ -529,7 +553,7 @@ function displayInfoWindow() {
         const transactions = salesman.salesman_transaction ?? [];
 
         // Inner loop: each salesman can have multiple transactions/stores
-        transactions.forEach((transaction) => {
+        transactions.forEach((transaction, transactionIndex) => {
             const store = transaction.transaction_store;
 
             if (!salesman || !store) {
@@ -593,10 +617,10 @@ function displayInfoWindow() {
                 currentInfoSalesman = salesman;
                 rowData = salesman; // keep the salesman as rowData (matches getSidePanelContent's expected shape)
 
-                storeIndex = 0;
+                storeIndex = transactionIndex;
                 window.storeIndex = storeIndex;
 
-                openInfoWindowFor(salesman, marker, 0); // pass salesman, not transaction — see note below
+                openInfoWindowFor(salesman, marker, transactionIndex); // pass salesman, not transaction — see note below
 
                 showRowDetails(salesman);
                 getSidePanelContent(salesman);
@@ -651,20 +675,20 @@ function displayInfoWindow() {
                             currentMarker = marker;
                             currentInfoSalesman = salesman;
 
-                            storeIndex = 0;
+                            storeIndex = transactionIndex;
                             window.storeIndex = storeIndex;
 
                             showRowDetails(salesman);
                             getSidePanelContent(salesman);
                             getSku(transaction, "#sfaQueuingModalTable");
 
-                            infoWindow.setContent(InfoWindowContent(salesman));
+                            infoWindow.setContent(InfoWindowContent(salesman, storeIndex));
 
                             marker.setAnimation(google.maps.Animation.BOUNCE);
                             infoWindow.open(map, marker);
                         });
                 });
-
+                
                 latestInfoWindow.open(map, marker);
             }
         });
@@ -717,17 +741,17 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
         // },
 
         onSuccess: (data) => {
-    if (loadVersion !== dashboardLoadVersion) return;
+            if (loadVersion !== dashboardLoadVersion) return;
 
-    console.log("RAW latest transaction response:", data); // <-- add this, log the untouched payload
+            console.log("RAW latest transaction response:", data); // <-- add this, log the untouched payload
 
-    latest = Array.isArray(data) ? data[0] : data?.data ?? data;
+            latest = Array.isArray(data) ? data[0] : data?.data ?? data;
 
-    console.log("latest normalized:", latest);
-    console.log("latest keys:", latest ? Object.keys(latest) : "null/undefined");
+            console.log("latest normalized:", latest);
+            console.log("latest keys:", latest ? Object.keys(latest) : "null/undefined");
 
-    displayInfoWindow();
-},
+            displayInfoWindow();
+        },
 
     });
 }
@@ -954,6 +978,7 @@ $(document).ready(function () {
         .off("apply.daterangepicker.dashboard")
         .on("apply.daterangepicker.dashboard", function (event, picker) {
             loadDashboardData(picker.startDate.format("YYYY-MM-DD"));
+            DisplayCarousel();
         });
 
     $("#dashboardDatePicker")
@@ -1018,7 +1043,7 @@ function loadFitScreenTable(date = null) {
     }
 
     TableLoader.loadTable({
-        url: "dashboard/getDashboardTable",
+        url: "salesman/getSalesmanWithTransaction",
         filters: date ? { date } : undefined,
         tableId: "#fitScreenTable",
         columns: SalesmanColumns,
@@ -1184,23 +1209,6 @@ $(document).on("mouseleave", ".Transaction_Container", function(){
     $(this).removeClass("font-bold");
 });
 
-// function updateStoreNavButtons() {
-//     const activeSalesman = currentInfoSalesman ?? rowData;
-//     if (!activeSalesman) return;
-
-//     const lastIndex = (activeSalesman.transactions?.length ?? 1) - 1;
-
-//     $(".side_Prev, #infoPrev")
-//         .prop("disabled", storeIndex <= 0)
-//         .toggleClass("nav-disabled", storeIndex <= 0);
-
-//     $(".side_Next, #infoNext")
-//         .prop("disabled", storeIndex >= lastIndex)
-//         .toggleClass("nav-disabled", storeIndex >= lastIndex);
-
-//     refreshSelectedSalesmanSummary();
-// }
-
 function updateStoreNavButtons() {
     const activeSalesman = currentInfoSalesman;
     if (!activeSalesman) return;
@@ -1233,13 +1241,6 @@ function getTableLength(tableId) {
 
     return length;
 }
-
-
-// $(document)
-//     .off("click.table", "#InfoTableContainer")
-//     .on("click.table", "#InfoTableContainer", function () {
-//         getSku(currentInfoSalesman ?? rowData, "#infoWindowTableContent");
-//     });
 
 $(document)
     .off("click.table", "#InfoTableContainer")
@@ -1313,7 +1314,7 @@ function getSku(data, tableId) {
         });
 
     globalSkuCount = productRows.length;
-
+    
     globalTotalSku = productRows.reduce(
         (sum, item) => sum + item.amount,
         0
@@ -1327,19 +1328,25 @@ function getSku(data, tableId) {
 }
 
 function getSidePanelContent(transaction) {
+    
     console.log("sdd", transaction);
     if (!transaction) return;
 
     rowData = transaction;
-
+    //const countSku = rowData.salesman_transaction.length
     const salesman = transaction;
-    const firstTransaction = transaction.salesman_transaction?.[0];
-    const store = firstTransaction?.transaction_store; // keep as object, not string
 
-    console.log("sdf", salesman);
+    // Callers (marker click / latest-transaction popup) set storeIndex to the
+    // transaction that was actually opened, so show that one and fall back to
+    // the first transaction only when the index is missing/out of range.
+    const transactions = transaction.salesman_transaction ?? [];
+    const selectedTransaction = transactions[storeIndex] ?? transactions[0];
+    const store = selectedTransaction?.transaction_store; // keep as object, not string
+
+    console.log("selected trans", selectedTransaction, "storeIndex", storeIndex);
 
     // Transaction date
-    const transactionDate = firstTransaction?.transaction_date;
+    const transactionDate = selectedTransaction?.transaction_date;
 
     const formattedDate = transactionDate
         ? moment(transactionDate, "YYYY-MM-DD HH:mm:ss").format("MMM DD, YYYY")
@@ -1390,30 +1397,6 @@ function getSidePanelContent(transaction) {
     // Transaction date
     $(".TransactionDate").text(formattedDate);
 
-    // let _data = {
-    //     sales: 0,
-    //     skus: 0  
-    // };
-
-    // rowData.salesman_transaction.forEach(item => {
-    //      _data.skus += item.transaction_details.length;
-
-    //     item.transaction_details.forEach(item => {
-    //         _data.sales += item.quantity * item.current_price;
-    //     });
-    // });
-
-    // $('#sku_sales').text(
-    //     `
-    //         Total Sales P${ _data.sales }
-    //     `
-    // );
-    //  $('#SkuCount').text(
-    //     `
-    //         Skus (${ _data.skus })
-    //     `
-    // );
-
     refreshSelectedSalesmanSummary();
 }
 
@@ -1426,19 +1409,21 @@ function formatCurrency(value) {
 
 function refreshSelectedSalesmanSummary() {
     // if (!rowData?.id || !selectedDashboardDate) return;
-    if (!rowData?.salesman_id || !selectedDashboardDate) return;
-
+    console.log("hhh",globalSkuCount);
+    if (!rowData?.id || !selectedDashboardDate) return;
     const requestVersion = ++summaryRequestVersion;
 
     Api.get({
         // url: "dashboard/getSalesmanInfo",
         url: "salesman/getSalesmanWithTransaction",
         data: {
-            salesman_id: rowData.salesman_id,
+            salesman_id: rowData.id,
             date: selectedDashboardDate,
             period: overviewPeriod,
         },
         onSuccess: (summary) => {
+
+            console.log("summary",summary);
             if (requestVersion !== summaryRequestVersion) return;
 
             console.log("few", globalTotalSku);
@@ -1449,36 +1434,51 @@ function refreshSelectedSalesmanSummary() {
 
             if (overviewPeriod === "mtd") {
                 let MonthtotalSales = 0;
+                let MonthSkuCount = 0;
 
                 const filterMonth = moment(
                     selectedDashboardDate,
                     "YYYY-MM-DD"
                 );
 
-                // New API returns transactions directly
-                summary?.forEach(transaction => {
-                    const transactionMonth = moment(
-                        transaction.transaction_date,
-                        "YYYY-MM-DD HH:mm:ss"
-                    );
+                summary?.forEach(salesman => {
 
-                    if (!transactionMonth.isSame(filterMonth, "month")) {
+                    if (String(salesman.id) !== String(rowData.id)) {
                         return;
                     }
 
-                    transaction.transaction_details?.forEach(detail => {
-                        const quantity = Number(detail.quantity ?? 0);
-                        const price = Number(detail.current_price ?? 0);
+                    const transactions = salesman.salesman_transaction ?? [];
 
-                        MonthtotalSales += quantity * price;
+                    transactions.forEach(transaction => {
+
+                        const transactionMonth = moment(
+                            transaction.transaction_date,
+                            "YYYY-MM-DD HH:mm:ss"
+                        );
+
+                        if (!transactionMonth.isSame(filterMonth, "month")) {
+                            return;
+                        }
+
+                        const details = transaction.transaction_details ?? [];
+
+                        MonthSkuCount += details.length;
+
+                        details.forEach(detail => {
+
+                            const quantity = Number(detail.quantity ?? 0);
+                            const price = Number(detail.current_price ?? 0);
+
+                            MonthtotalSales += quantity * price;
+                        });
                     });
                 });
 
                 const formattedTotal = formatCurrency(MonthtotalSales);
 
                 $("#MtdSalesmanTotal_Sales").text(formattedTotal);
-                $("#MtdSku").text(skuCount);
-                $("#MtdValue").text(MonthtotalSales);
+                $("#MtdSku").text(MonthSkuCount);
+                $("#MtdValue").text(formattedTotal);
 
                 return;
             }

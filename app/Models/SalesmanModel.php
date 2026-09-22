@@ -19,6 +19,6 @@ class SalesmanModel extends Model
     }
 
     public function salesmanTransaction(){
-        return $this->hasMany(Transaction::class,'transaction_id');
+        return $this->hasMany(Transaction::class,'salesman_id');
     }
 }

@@ -5,19 +5,26 @@ import "../../../helper/exportDataTable.js";
 const CustomerTaggingColumns = [
     {
         title: "Salesperson",
-        data: "salesperson"
+        data: null,
+        render: function(row) {
+            const salesman = row.salesman;
+
+            console.log("we0", salesman?.salesman_name);
+
+            return salesman?.salesman_name ?? "No Salesman Assigned";
+        }
     },
     {
         title: "CustCode",
-        data: "cust_code"
+        data: "customercode"
     },
     {
         title: "CustName",
-        data: "cust_name"
+        data: "store_name"
     },
     {
         title: "Contact CellNumber",
-        data: "contact_cellnumber"
+        data: "contact_no"
     },
     {
         title: "Longitude",
@@ -37,167 +44,164 @@ const CustomerTaggingColumns = [
     },
 ];
 
-const CustomerTaggingSampleData = [
-    {
-        salesperson: "Juan Dela Cruz",
-        cust_code: "CUST001",
-        cust_name: "ABC Trading",
-        contact_cellnumber: "09171234567",
-        longitude: "123.8982",
-        latitude: "10.3297",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Maria Santos",
-        cust_code: "CUST002",
-        cust_name: "XYZ Enterprises",
-        contact_cellnumber: "09281234567",
-        longitude: "123.9186",
-        latitude: "10.3496",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Carlos Reyes",
-        cust_code: "CUST003",
-        cust_name: "Sunrise Supermarket",
-        contact_cellnumber: "09391234567",
-        longitude: "124.0100",
-        latitude: "10.3077",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Angela Cruz",
-        cust_code: "CUST004",
-        cust_name: "Metro General Store",
-        contact_cellnumber: "09481234567",
-        longitude: "123.9578",
-        latitude: "10.3766",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Robert Garcia",
-        cust_code: "CUST005",
-        cust_name: "Golden Harvest Foods",
-        contact_cellnumber: "09591234567",
-        longitude: "123.8419",
-        latitude: "10.2447",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Juan Dela Cruz",
-        cust_code: "CUST001",
-        cust_name: "ABC Trading",
-        contact_cellnumber: "09171234567",
-        longitude: "123.8982",
-        latitude: "10.3297",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Maria Santos",
-        cust_code: "CUST002",
-        cust_name: "XYZ Enterprises",
-        contact_cellnumber: "09281234567",
-        longitude: "123.9186",
-        latitude: "10.3496",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Carlos Reyes",
-        cust_code: "CUST003",
-        cust_name: "Sunrise Supermarket",
-        contact_cellnumber: "09391234567",
-        longitude: "124.0100",
-        latitude: "10.3077",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Angela Cruz",
-        cust_code: "CUST004",
-        cust_name: "Metro General Store",
-        contact_cellnumber: "09481234567",
-        longitude: "123.9578",
-        latitude: "10.3766",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Robert Garcia",
-        cust_code: "CUST005",
-        cust_name: "Golden Harvest Foods",
-        contact_cellnumber: "09591234567",
-        longitude: "123.8419",
-        latitude: "10.2447",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Juan Dela Cruz",
-        cust_code: "CUST001",
-        cust_name: "ABC Trading",
-        contact_cellnumber: "09171234567",
-        longitude: "123.8982",
-        latitude: "10.3297",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Maria Santos",
-        cust_code: "CUST002",
-        cust_name: "XYZ Enterprises",
-        contact_cellnumber: "09281234567",
-        longitude: "123.9186",
-        latitude: "10.3496",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Carlos Reyes",
-        cust_code: "CUST003",
-        cust_name: "Sunrise Supermarket",
-        contact_cellnumber: "09391234567",
-        longitude: "124.0100",
-        latitude: "10.3077",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-    {
-        salesperson: "Angela Cruz",
-        cust_code: "CUST004",
-        cust_name: "Metro General Store",
-        contact_cellnumber: "09481234567",
-        longitude: "123.9578",
-        latitude: "10.3766",
-        tagging_completed: "No",
-        action: "View"
-    },
-    {
-        salesperson: "Robert Garcia",
-        cust_code: "CUST005",
-        cust_name: "Golden Harvest Foods",
-        contact_cellnumber: "09591234567",
-        longitude: "123.8419",
-        latitude: "10.2447",
-        tagging_completed: "Yes",
-        action: "View"
-    },
-];
+// const CustomerTaggingSampleData = [
+//     {
+//         salesperson: "Juan Dela Cruz",
+//         cust_code: "CUST001",
+//         cust_name: "ABC Trading",
+//         contact_cellnumber: "09171234567",
+//         longitude: "123.8982",
+//         latitude: "10.3297",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Maria Santos",
+//         cust_code: "CUST002",
+//         cust_name: "XYZ Enterprises",
+//         contact_cellnumber: "09281234567",
+//         longitude: "123.9186",
+//         latitude: "10.3496",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Carlos Reyes",
+//         cust_code: "CUST003",
+//         cust_name: "Sunrise Supermarket",
+//         contact_cellnumber: "09391234567",
+//         longitude: "124.0100",
+//         latitude: "10.3077",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Angela Cruz",
+//         cust_code: "CUST004",
+//         cust_name: "Metro General Store",
+//         contact_cellnumber: "09481234567",
+//         longitude: "123.9578",
+//         latitude: "10.3766",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Robert Garcia",
+//         cust_code: "CUST005",
+//         cust_name: "Golden Harvest Foods",
+//         contact_cellnumber: "09591234567",
+//         longitude: "123.8419",
+//         latitude: "10.2447",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Juan Dela Cruz",
+//         cust_code: "CUST001",
+//         cust_name: "ABC Trading",
+//         contact_cellnumber: "09171234567",
+//         longitude: "123.8982",
+//         latitude: "10.3297",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Maria Santos",
+//         cust_code: "CUST002",
+//         cust_name: "XYZ Enterprises",
+//         contact_cellnumber: "09281234567",
+//         longitude: "123.9186",
+//         latitude: "10.3496",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Carlos Reyes",
+//         cust_code: "CUST003",
+//         cust_name: "Sunrise Supermarket",
+//         contact_cellnumber: "09391234567",
+//         longitude: "124.0100",
+//         latitude: "10.3077",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Angela Cruz",
+//         cust_code: "CUST004",
+//         cust_name: "Metro General Store",
+//         contact_cellnumber: "09481234567",
+//         longitude: "123.9578",
+//         latitude: "10.3766",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Robert Garcia",
+//         cust_code: "CUST005",
+//         cust_name: "Golden Harvest Foods",
+//         contact_cellnumber: "09591234567",
+//         longitude: "123.8419",
+//         latitude: "10.2447",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Juan Dela Cruz",
+//         cust_code: "CUST001",
+//         cust_name: "ABC Trading",
+//         contact_cellnumber: "09171234567",
+//         longitude: "123.8982",
+//         latitude: "10.3297",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Maria Santos",
+//         cust_code: "CUST002",
+//         cust_name: "XYZ Enterprises",
+//         contact_cellnumber: "09281234567",
+//         longitude: "123.9186",
+//         latitude: "10.3496",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Carlos Reyes",
+//         cust_code: "CUST003",
+//         cust_name: "Sunrise Supermarket",
+//         contact_cellnumber: "09391234567",
+//         longitude: "124.0100",
+//         latitude: "10.3077",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Angela Cruz",
+//         cust_code: "CUST004",
+//         cust_name: "Metro General Store",
+//         contact_cellnumber: "09481234567",
+//         longitude: "123.9578",
+//         latitude: "10.3766",
+//         tagging_completed: "No",
+//         action: "View"
+//     },
+//     {
+//         salesperson: "Robert Garcia",
+//         cust_code: "CUST005",
+//         cust_name: "Golden Harvest Foods",
+//         contact_cellnumber: "09591234567",
+//         longitude: "123.8419",
+//         latitude: "10.2447",
+//         tagging_completed: "Yes",
+//         action: "View"
+//     },
+// ];
 
-TableLoader.tableData(
-    "#customerTaggingTable",
-    CustomerTaggingSampleData,
-    CustomerTaggingColumns,
-    {
-
-    }
-);
+TableLoader.loadTable({
+    url: "store/getStore",
+    tableId: "#customerTaggingTable",
+    columns: CustomerTaggingColumns,
+});
 
 $(document).ready(function () {
     DatePicker.init();

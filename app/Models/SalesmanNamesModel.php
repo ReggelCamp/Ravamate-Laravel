@@ -11,7 +11,7 @@ class SalesmanNamesModel extends Model
 
     protected $table = 'Salesman_names';
     protected $guarded = ['id'];
-    public $timestamps = false; // <-- tells Eloquent not to manage created_at/updated_at
+    public $timestamps = false; 
     // public function salesman(){
     //     return $this->belongsTo(DashboardModel::class, 'salesman_id');
     // }
