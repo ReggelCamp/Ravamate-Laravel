@@ -13,7 +13,7 @@ const ProductListColumns = [
     },
     {
         title: "Stock Code",
-        data: "stock_code"
+        data: "StockCode"
     },
     {
         title: "Supplier",
