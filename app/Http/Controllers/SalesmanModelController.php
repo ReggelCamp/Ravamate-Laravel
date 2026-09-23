@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Helpers\DistanceHelper;
 use App\Models\SalesmanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -220,5 +221,104 @@ public function getSalesmanWithTransaction(Request $request){
 
     return response()->json($salesman);
 }
+
+
+// public function getSalesmanWithTransaction(Request $request)
+// {
+//     $date = $request->input('date');
+
+//     $salesmen = SalesmanModel::with([
+//         'salesmanTransaction' => function ($query) use ($date) {
+
+//             // Only apply the date filter when a date was provided.
+//             if ($date) {
+//                 $query->whereDate('transaction_date', $date);
+//             }
+
+//             $query->with([
+//                 'transactionStore',
+//                 'transactionDetails.productDetails',
+//             ])
+//             ->orderBy('transaction_date')
+//             ->orderBy('transaction_id');
+//         }
+//     ])->get();
+
+//     foreach ($salesmen as $salesman) {
+
+//         $transactions = $salesman->salesmanTransaction;
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | Marker 1
+//         |--------------------------------------------------------------------------
+//         | The first marker has no previous marker,
+//         | so it has no distance.
+//         */
+//         if ($transactions->isNotEmpty()) {
+//             $transactions[0]->distance_travel_km = null;
+//         }
+
+//         /*
+//         |--------------------------------------------------------------------------
+//         | Sequential distance calculation
+//         |--------------------------------------------------------------------------
+//         |
+//         | Marker 1 → Marker 2
+//         | Marker 2 → Marker 3
+//         | Marker 3 → Marker 4
+//         | ...
+//         |
+//         */
+//         for ($i = 1; $i < $transactions->count(); $i++) {
+
+//             $previousTransaction = $transactions[$i - 1];
+//             $currentTransaction = $transactions[$i];
+
+//             $previousStore = $previousTransaction->transactionStore;
+//             $currentStore = $currentTransaction->transactionStore;
+
+//             if (!$previousStore || !$currentStore) {
+//                 $currentTransaction->distance_travel_km = null;
+//                 continue;
+//             }
+
+//             if (
+//                 $previousStore->latitude === null ||
+//                 $previousStore->longitude === null ||
+//                 $currentStore->latitude === null ||
+//                 $currentStore->longitude === null
+//             ) {
+//                 $currentTransaction->distance_travel_km = null;
+//                 continue;
+//             }
+
+//             $previousLatitude = (float) $previousStore->latitude;
+//             $previousLongitude = (float) $previousStore->longitude;
+
+//             $currentLatitude = (float) $currentStore->latitude;
+//             $currentLongitude = (float) $currentStore->longitude;
+
+//             if (
+//                 $previousLatitude === $currentLatitude &&
+//                 $previousLongitude === $currentLongitude
+//             ) {
+//                 $currentTransaction->distance_travel_km = 0;
+//                 continue;
+//             }
+
+//             $distanceKm = DistanceHelper::haversineKm(
+//                 $previousLatitude,
+//                 $previousLongitude,
+//                 $currentLatitude,
+//                 $currentLongitude
+//             );
+
+//             $currentTransaction->distance_travel_km = round($distanceKm, 2);
+//         }
+//     }
+
+//     return response()->json($salesmen);
+// }
 
 }

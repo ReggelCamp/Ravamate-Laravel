@@ -321,10 +321,11 @@
                                     <i class="fa-solid fa-calendar-days mr-1"></i>
                                    <span class="TransactionDate"></span>
                                 </div>
-                                <span>
+                                <div>
+                                    
                                     <i class="fa-solid fa-location-dot mr-1"></i>
-                                    {{ $store->distance ?? '0 km in 0 min' }}
-                                </span>
+                                    <span id="DistanceTravel"></span>
+                                </div>
                             </div>
 
                             <button
@@ -488,7 +489,7 @@
                                                 <span>Time Spent</span>
                                                 <span class="text-[8px]">(Minutes)</span>
                                             </div>
-                                            <span class="font-semibold">{{ $stats->time_spent ?? 2.47 }}</span>
+                                            <span id="TimeSpent" class="font-semibold"></span>
                                         </div>
                                     </div>
                                 </div>
