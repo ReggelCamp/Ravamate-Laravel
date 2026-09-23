@@ -486,7 +486,7 @@ function loadDashboardData(date = null) {
         filterRows: (rows) => rows,
 
         onSuccess: (data) => {
-            swal.close();
+            // swal.close();
             if (loadVersion !== dashboardLoadVersion) return;
 
             console.log("Dashboard data (salesman with filtered transactions):", data);
@@ -495,9 +495,10 @@ function loadDashboardData(date = null) {
                 console.log("no data");
                 Swal.fire("No data available on selected date");
                 array = [];
+                
                 return;
             }
-
+            swal.close();
             array = data;
             getlatestTransaction(date, loadVersion);
         },

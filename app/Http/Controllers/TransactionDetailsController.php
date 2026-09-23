@@ -24,6 +24,11 @@ class TransactionDetailsController extends Controller
             'quantity'       => $request->quantity,
             'current_price'  => $request->current_price,
             'u_m'            => $request->u_m,
+            'payment_method' => $request-> payment_method ?? null,
+            'bank_code'      => $request-> bank_code ?? null,
+            'check_no'       => $request-> check_no ?? null,
+            'bank_name'      => $request-> bank_name ?? null,
+            'check_date'     => $request-> check_date ?? null,
             'export_status'  => $request->export_status ?? null,
         ]);
 

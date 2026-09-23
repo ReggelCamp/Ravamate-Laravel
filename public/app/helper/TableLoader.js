@@ -216,34 +216,18 @@ export default class TableLoader {
 
         // Flatten transaction_details
         if (options.flattenDetails) {
+            const field = options.flattenField ?? "transaction_details";
 
-            tableRows = json.flatMap(transaction => {
+            tableRows = json.flatMap(parent => {
+                const details = parent[field] ?? [];
 
-                const details = transaction.transaction_details ?? [];
-
-                // No details
                 if (details.length === 0) {
-                    return [{
-                        ...transaction,
-                        detail_id: null,
-                        product_id: null,
-                        detail_quantity: null,
-                        detail_um: null,
-                    }];
+                    return [{ ...parent }];
                 }
 
-                // One DataTable row per detail
                 return details.map(detail => ({
-                    ...transaction,
-
-                    // Keep parent transaction ID
-                    transaction_id: transaction.transaction_id,
-
-                    // Detail values
-                    detail_id: detail.id,
-                    product_id: detail.product_id,
-                    detail_quantity: detail.quantity,
-                    detail_um: detail.u_m,
+                    ...parent,
+                    ...detail,
                 }));
             });
         }
@@ -344,6 +328,7 @@ export default class TableLoader {
                         scrollY: config.scrollY ?? getResponsiveScrollY(),
                         searchInput: config.searchInput,
                         flattenDetails: config.flattenDetails ?? false,
+                        flattenField: config.flattenField,
                     },
                 );
 

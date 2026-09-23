@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\DashboardModel;
+use App\Models\SalesmanModel;
+use App\Models\StoreModel;
 use App\Models\SyncData;
 use App\Models\Transaction;
 use App\Models\transactionDetails;
@@ -25,42 +27,99 @@ class TransactionController extends Controller
         return response()->json($storeTransaction);
     }
 
-    public function createTransaction(Request $request){
-        $transaction = Transaction::create([
-            'transaction_date' => $request->transaction_date,
-            'salesman_id'      => $request->salesman_id,
-            'store_id'         => $request->store_id,
-            // 'sales'            => $request->sales ?? null,
+    // public function createTransaction(Request $request){
+    //     $transaction = Transaction::create([
+    //         'transaction_date' => $request->transaction_date,
+    //         'salesman_id'      => $request->salesman_id,
+    //         'store_id'         => $request->store_id,
+    //         // 'sales'            => $request->sales ?? null,
 
-            'longitude'        => $request->longitude,
-            'latitude'         => $request->latitude,
+    //         'longitude'        => $request->longitude,
+    //         'latitude'         => $request->latitude,
 
-            'document_no'      => $request->document_no,
-            // 'customercode'     => 'CC0' . $request->store_id,
-            'invoice_no'       => $request->invoice_no,
-            'site'             => $request->site,
-            'item_no'          => $request->item_no,
-            'um'               => $request->um,
-            // 'quantity'         => $request->quantity ?? null,
-            'reason_code'      => $request->reason_code,
+    //         'document_no'      => $request->document_no,
+    //         // 'customercode'     => 'CC0' . $request->store_id,
+    //         'invoice_no'       => $request->invoice_no,
+    //         'site'             => $request->site,
+    //         'item_no'          => $request->item_no,
+    //         'um'               => $request->um,
+    //         // 'quantity'         => $request->quantity ?? null,
+    //         'reason_code'      => $request->reason_code,
             
-            'remarks'          => $request->remarks,
-            'payment_type'     => $request->payment_type,
+    //         'remarks'          => $request->remarks,
+    //         'payment_type'     => $request->payment_type,
 
-            'api_status'       => $request->api_status ?? "PENDING",
-            'api_response'     => $request->api_response ?? null,
+    //         'api_status'       => $request->api_status ?? "PENDING",
+    //         'api_response'     => $request->api_response ?? null,
 
-            'created_at'     => $request->created_at ?? now(),
-            'updated_at'     => $request->updated_at ?? now(),
+    //         'created_at'     => $request->created_at ?? now(),
+    //         'updated_at'     => $request->updated_at ?? now(),
 
-            //'api_status' => $request->api_status ?? 'PENDING',
-        ]);
+    //         //'api_status' => $request->api_status ?? 'PENDING',
+    //     ]);
 
+    //     return response()->json([
+    //         'message' => 'Transaction created successfully',
+    //         'data' => $transaction
+    //     ], 201);
+    // }
+
+    
+    public function createTransaction(Request $request){
+
+    $salesman = SalesmanModel::find($request->salesman_id);
+    $store = StoreModel::find($request->store_id);
+
+    if (!$salesman) {
         return response()->json([
-            'message' => 'Transaction created successfully',
-            'data' => $transaction
-        ], 201);
+            'message' => 'Salesman not found.'
+        ], 404);
     }
+
+    if (!$store) {
+        return response()->json([
+            'message' => 'Store not found.'
+        ], 404);
+    }
+
+    if ($salesman->default_ord_type !== $store->order_type) {
+        return response()->json([
+            'message' => 'Order type mismatch: salesman is assigned to ' . $salesman->default_ord_type .
+                          ' but store ' . $store->store_id . ' is ' . $store->order_type . '.'
+        ], 422);
+    }
+
+    $transaction = Transaction::create([
+        'transaction_date' => $request->transaction_date,
+        'salesman_id'      => $request->salesman_id,
+        'store_id'         => $request->store_id,
+
+        'longitude'        => $request->longitude,
+        'latitude'         => $request->latitude,
+
+        'document_no'      => $request->document_no,
+        'invoice_no'       => $request->invoice_no,
+        'site'             => $request->site,
+        'item_no'          => $request->item_no,
+        'um'               => $request->um,
+        'reason_code'      => $request->reason_code,
+
+        'remarks'          => $request->remarks,
+        'order_type'       => $salesman->default_ord_type,
+        'payment_type'     => $request->payment_type,
+
+        'api_status'       => $request->api_status ?? "PENDING",
+        'api_response'     => $request->api_response ?? null,
+
+        'created_at'       => $request->created_at ?? now(),
+        'updated_at'       => $request->updated_at ?? now(),
+    ]);
+
+    return response()->json([
+        'message' => 'Transaction created successfully',
+        'data' => $transaction
+    ], 201);
+}
 
     public function TransactionSalesman(){
         return $this->belongsTo(

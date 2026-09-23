@@ -1,28 +1,3 @@
-// import TableLoader from "../../helper/TableLoader.js";
-
-// const MustCarryColumns = [
-//     {
-//         title: "Customer Type",
-//         data: "customer_type"
-//     },
-//     {
-//         title: "Item Number",
-//         data: "item_number"
-//     },
-//     {
-//         title: "Description",
-//         data: "description"
-//     },
-//     {
-//         title: "IsActive",
-//         data: "is_active"
-//     },
-//     {
-//         title: "Date Created",
-//         data: "date_created"
-//     }
-// ];
-
 import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
@@ -104,7 +79,7 @@ const ProductOptions = [
 ];
 
 TableLoader.tableData(
-    "#mustCarryTable", // Replace with your actual table ID
+    "#mustCarryTable",
     sampleData,
     MustCarryColumns,
     {
@@ -116,11 +91,11 @@ $(document).ready(function () {
     DatePicker.init();
 });
 
-ComponentHelper.dropdown().load({
-    json: ProductOptions,
+ComponentHelper.dropdown().loadByApi({
+    url:"product/getProductTable",
     dropdownId: "addMustCarry",
-    displayField: "title",
-    dataField:"data"
+    displayField: "description",
+    dataField:"id"
 });
 
 $(document)

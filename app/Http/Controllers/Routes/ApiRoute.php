@@ -81,6 +81,7 @@ class ApiRoute extends Controller
             Route::get('/getProductTable',[ProductController::class, 'getProductsTable']);
 
             Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);
+            Route::post('/updateProductPlacement',[productPlacementController::class, 'updateProductPlacement']);
             Route::get('/getAllProductPlacement',[productPlacementController::class, 'getAllProductPlacement']);
         });
 

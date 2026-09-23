@@ -47,3 +47,4 @@ Route::post('/createBank',[BankController::class, 'createBank']);
 Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
 Route::post('/createSalesmanName',[SalesmanNamesController::class, 'createSalesmanName']);
 Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);
+Route::post('/updateProductPlacement',[productPlacementController::class, 'updateProductPlacement']);

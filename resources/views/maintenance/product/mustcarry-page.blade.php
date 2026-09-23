@@ -71,10 +71,9 @@
                     <span class="flex whitespace-nowrap "> Select Product </span>
                     <div class="w-[350px]">
                         <x-dropdown class="w-[350px]"
-                            buttonClass="border  px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
+                            buttonClass="border select px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
                                 <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
                             </x-slot:dropdownName>
 
                             <ul id="addMustCarry"

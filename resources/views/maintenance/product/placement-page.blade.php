@@ -93,7 +93,7 @@
                             buttonClass="border px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
 
-                                <span class="w-full" id="update_weekVisited_label">
+                                <span class="w-full" id="SelectedProduct">
                                     Select
                                 </span>
 
@@ -156,30 +156,32 @@
                 <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
                     <label for="placementType" class="font-bold w-40 shrink-0">Type</label>
                     <div class="relative w-full ">
-                        <select id="placementType" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                        <select id="UpdatePlacementType" name="product_id" class="select w-full border h-[40px] rounded-md px-5">
                         </select>
                     </div>
                 </div>
 
                 <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
-                    <label for="placementCustomerClass" class="font-bold w-40 shrink-0">Customer Class</label>
+                    <label for="UpdatePlacementCustomerClass" class="font-bold w-40 shrink-0">Customer Class</label>
                     <div class="relative w-full ">
-                        <select id="custClass" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                        <select id="UpdateCustClass" name="product_id" class="w-full select border h-[40px] rounded-md px-5">
                         </select>
                     </div>
                 </div>
 
                 <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
-                    <label for="placementProduct" class="font-bold w-40 shrink-0">Select Product</label>
+                    <label for="UpdatePlacementProduct" class="font-bold w-40 shrink-0">Select Product</label>
                     <div class="w-full">
                         <x-dropdown class="w-full"
                             buttonClass="border rounded-lg px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+                                <div class="w-full justify-between items-center flex">
+                                    <span class="w-full" id="update_weekVisited_label">Select</span>
+                                    <i class="fa-solid fa-chevron-down justify-center flex text-xs text-gray-400"></i>
+                                </div>
                             </x-slot:dropdownName>
 
-                            <ul id="productPlacement"
+                            <ul id="UpdateProductPlacement"
                                 class="border w-full max-h-[300px] overflow-auto rounded-lg z-[9999] bg-white shadow-lg p-0">
 
                             </ul>
@@ -188,9 +190,9 @@
                 </div>
 
                 <div class="flex items-center px-6 py-3 border-b border-gray-300 gap-5">
-                    <label for="placementValue" class="font-bold w-40 shrink-0">Placement</label>
+                    <label for="UpdatePlacementValue" class="font-bold w-40 shrink-0">Placement</label>
                     <div class="relative w-full ">
-                        <select id="placement" name="product_id" class="w-full border h-[40px] rounded-md px-5">
+                        <select id="UpdatePlacement" name="product_id" class="select w-full border h-[40px] rounded-md px-5">
                         </select>
                     </div>
                 </div>

@@ -7,56 +7,123 @@ import "../../helper/exportDataTable.js";
 const SearchedWord = "";
 
 const DcrColumns = [
+    {
+        title: "Salesman",
+        data: "salesman_name",
+    },
+    {
+        title: "O.R",
+        data: "or_no",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "CUSTOMER",
+        data: "transaction_store.store_name",
+        defaultContent: "N/A"
+    },
+    {
+        title: "S.I NO.",
+        data: "invoice_no",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "S.I AMT",
+        data: "transaction_amt",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "CHECK DATE",
+        data: "check_date",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "BANK CODE",
+        data: "bank_code",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "CHECK NO.",
+        data: "check_no",
+        render: function (data) {
+            return data ? data : "N/A";
+        }
+    },
+    {
+        title: "AMOUNT",
+        data: null,
+        render: function (data, type, row) {
+            const price = row.product_details?.price;
+            const quantity = row.quantity;
 
-            {
-                title: "Salesman",
-                data: "salesman_name",
-            },
-            {
-                title: "O.R",
-                data: "or_no",
-            },
-            {
-                title: "CUSTOMER",
-                data: "customer",
-            },
-            {
-                title: "S.I NO.",
-                data: "si_no",
-            },
-            {
-                title: "S.I AMT",
-                data: "si_amount",
-            },
-            {
-                title: "CHECK DATE",
-                data: "check_date",
-            },
-            {
-                title: "BANK CODE",
-                data: "bank_code",
-            },
-            {
-                title: "CHECK NO.",
-                data: "check_no",
-            },
-            {
-                title: "AMOUNT",
-                data: "amount",
-            },
-        ]
+            if (price == null || quantity == null) return "N/A";
+
+            return price * quantity;
+        }
+    }
+];
+
+// TableLoader.loadTable({
+//     url: "salesman/getSalesmanWithTransaction",
+//     tableId: "#DcrDataTable",
+//     columns: DcrColumns,
+//     flattenDetails: true,
+//     flattenField: "salesman_transaction",
+//     onSuccess: (data) => {
+//         console.log(data.length);
+//         console.log("dcr",data);
+//     }
+// });
 
 TableLoader.loadTable({
-    url: "getDCRtable",
+    url: "salesman/getSalesmanWithTransaction",
     tableId: "#DcrDataTable",
     columns: DcrColumns,
-    // pageLength: (getPageLength()-1),
 
-    // scrollY: "40vh",
+    filterRows: (rows) => {
+        return rows.flatMap(salesman => {
+            const transactions = salesman.salesman_transaction ?? [];
+
+            if (transactions.length === 0) {
+                return [{
+                    salesman_name: salesman.salesman_name,
+                    salesman_id: salesman.salesman_id,
+                }];
+            }
+
+            return transactions.flatMap(txn => {
+                const details = txn.transaction_details ?? [];
+
+                if (details.length === 0) {
+                    return [{
+                        salesman_name: salesman.salesman_name,
+                        salesman_id: salesman.salesman_id,
+                        ...txn,
+                    }];
+                }
+
+                return details.map(detail => ({
+                    salesman_name: salesman.salesman_name,
+                    salesman_id: salesman.salesman_id,
+                    ...txn,
+                    ...detail,
+                }));
+            });
+        });
+    },
 
     onSuccess: (data) => {
         console.log(data.length);
-        console.log("dcr");
+        console.log("dcr", data);
     }
 });
 

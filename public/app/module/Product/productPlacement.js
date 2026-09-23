@@ -27,7 +27,10 @@ const PlacementProductColumns = [
     },
     {
         title: "Last Updated",
-        data: "last_updated"
+        data: "updated_at",
+        render: function (data) {
+            return data ? moment(data).format("MMM DD, YYYY hh:mm A") : "";
+        }
     }
 ];
 
@@ -41,19 +44,6 @@ const CustClassOptions = [
     { data: "SARISARI", title: "SARISARI STORE" },
     { data: "FOODSERVICE", title: "FOODSERVICE" },
     { data: "MARKET", title: "MARKET STALL  WET" },
-];
-
-const ProductOptions = [
-    { data: "ITM-1001", title: "Coca-Cola 1.5L" },
-    { data: "ITM-1002", title: "Pepsi 1.5L" },
-    { data: "ITM-1003", title: "Nescafe 3-in-1 Original" },
-    { data: "ITM-1004", title: "Lucky Me Pancit Canton" },
-    { data: "ITM-1005", title: "Milo Chocolate Drink 300g" },
-    { data: "ITM-1006", title: "Colgate Toothpaste 150g" },
-    { data: "ITM-1007", title: "Palmolive Shampoo 350ml" },
-    { data: "ITM-1008", title: "Century Tuna Flakes 155g" },
-    { data: "ITM-1009", title: "Piattos Cheese 85g" },
-    { data: "ITM-1010", title: "Bear Brand Powdered Milk 300g" },
 ];
 
 const PlacementType = [
@@ -90,8 +80,8 @@ ComponentHelper.select().LoadSelectItems({
 
 ComponentHelper.dropdown().loadByApi({
     url:"product/getProductTable",
-    dropdownId: "productPlacement",
-    noDataText: "No SalesMan Found",
+    dropdownId: "UpdateProductPlacement",
+    noDataText: "No Product Found",
     displayField: "description",
     dataField: "id",
 });
@@ -99,7 +89,7 @@ ComponentHelper.dropdown().loadByApi({
 ComponentHelper.dropdown().loadByApi({
     url:"product/getProductTable",
     dropdownId: "addProductPlacement",
-    noDataText: "No SalesMan Found",
+    noDataText: "No Product Found",
     displayField: "description",
     dataField: "id",
 });
@@ -114,6 +104,21 @@ ComponentHelper.select().LoadSelectItems({
     items: Placement
 });
 
+ComponentHelper.select().LoadSelectItems({
+    id: "UpdatePlacementType",
+    items: PlacementType
+});
+
+ComponentHelper.select().LoadSelectItems({
+    id: "UpdateCustClass",
+    items: CustClassOptions
+});
+
+ComponentHelper.select().LoadSelectItems({
+    id: "UpdatePlacement",
+    items: Placement
+});
+
 $(document).ready(function () {
     DatePicker.init();
 });
@@ -124,33 +129,31 @@ $(document)
         // salesman.js loads the data asynchronously; ensure DataTable is ready
         if (!$.fn.DataTable.isDataTable("#productPlacementTable")) return;
 
+
         const productPlacementTable = $("#productPlacementTable").DataTable();
         const rowData = productPlacementTable.row(this).data();
-
+        
         if (!rowData) return;
 
         console.log("Clicked row:", rowData);
 
         DisplayPlacementInfo(rowData);
-    });
+});
 
-    function DisplayPlacementInfo(rowData) {
+function DisplayPlacementInfo(rowData) {
     if (!rowData) return;
 
-    $("#placementType").val(rowData.type ?? "");
-    $("#placementCustomerClass").val(rowData.customer_class ?? "");
-    $("#placementValue").val(rowData.placement ?? "");
+    console.log("ffa",rowData.type);
 
-    // Store the current record for update/delete actions
+    $("#UpdatePlacementType").val(rowData.type ?? "");
+    $("#UpdateCustClass").val(rowData.custclass ?? rowData.customer_class ?? "");
+    $("#UpdatePlacement").val(rowData.placement ?? "");
+
+    $("#update_weekVisited_label").text(rowData.item_description ?? "Select");
+    $("#UpdateProductPlacement").data("product-id", rowData.item_number ?? rowData.product_id ?? "");
+    $("#UpdateProductPlacement").data("item-description", rowData.item_description ?? "");
+
     $("#PlacementModal").data("record", rowData);
-
-    // Select Product — now driven by item_description
-    if ($("#placementProduct")[0]?.tomselect) {
-        $("#placementProduct")[0].tomselect.setValue(rowData.item_description);
-    } else {
-        $("#placementProduct").val(rowData.item_description ?? "");
-    }
-
     document.getElementById("PlacementModal").showModal();
 }
 
@@ -163,17 +166,58 @@ $(document).on("click", "#deletePlacementBtn", function () {
     console.log("Deleting placement:", record);
 });
 
+$(document)
+    .off("click.updateProductPlacementSelect", "#UpdateProductPlacement .dropdown-item")
+    .on("click.updateProductPlacementSelect", "#UpdateProductPlacement .dropdown-item", function (e) {
+        e.preventDefault();
+        const productId = $(this).data("id");
+        const itemDescription = $(this).data("value");
+        $("#UpdateProductPlacement").data("product-id", productId);
+        $("#UpdateProductPlacement").data("item-description", itemDescription);
+        $("#update_weekVisited_label").text(itemDescription);
+    });
+
 $(document).on("click", "#updatePlacementBtn", function () {
+    
+    document.getElementById("PlacementModal")?.close();
+
     const record = $("#PlacementModal").data("record");
     const payload = {
+        id: record?.id, 
         item_number: record?.item_number,
-        type: $("#placementType").val(),
-        customer_class: $("#placementCustomerClass").val(),
-        item_description: $("#placementProduct").val(),
-        placement: $("#placementValue").val(),
+        type: $("#UpdatePlacementType").val(),
+        product_id: $("#UpdateProductPlacement").data("product-id"),
+        customer_class: $("#UpdateCustClass").val(),
+        item_description: $("#UpdateProductPlacement").data("item-description"),
+        placement: $("#UpdatePlacement").val(),
     };
 
-    // Api.put({ url: `/placements/${record.item_number}`, data: payload, ... })
+    console.log("ggg",payload);
+
+    Swal.fire({
+        text: "Updating Placement, please wait.",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    Api.post({
+        url: "product/updateProductPlacement",
+        data: payload,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        processData: true,
+
+        onSuccess: function (response) {
+
+            swal.close();
+
+            TableLoader.loadTable({
+                url: "product/getAllProductPlacement",
+                tableId: "#productPlacementTable",
+                columns: PlacementProductColumns,
+            });
+        }
+    });
+
     console.log("Updating placement:", payload);
 });
 
@@ -181,7 +225,7 @@ $(document)
     .off("click.productPlacementSelect", "#addProductPlacement .dropdown-item")
     .on("click.productPlacementSelect", "#addProductPlacement .dropdown-item", function (e) {
         e.preventDefault();
-
+        
         const productId = $(this).data("id");
         const itemDescription = $(this).data("value");
 
@@ -194,11 +238,13 @@ $(document)
 
         // Display description
         $("#addProductPlacementText").text(itemDescription);
+        $("#SelectedProduct").text(itemDescription);
     });
 
 $(document).on("click", "#SubmitPlacement", function () {
-
-       console.log("Customer Class:", $("#custClass").val());
+    document.getElementById("AddPlacement")?.close();
+    
+    console.log("Customer Class:", $("#custClass").val());
     console.log("Placement Type:", $("#placementType").val());
     console.log("Placement:", $("#placement").val());
 
@@ -211,6 +257,13 @@ $(document).on("click", "#SubmitPlacement", function () {
     };
 
     console.log("Payload:", payload);
+    
+    Swal.fire({
+        // title: "Creating Placement",
+        text: "Creating Placement, please wait.",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
 
     Api.post({
         url: "product/createPlacement",
@@ -219,6 +272,9 @@ $(document).on("click", "#SubmitPlacement", function () {
         processData: true,
 
         onSuccess: function (response) {
+
+            swal.close();
+
             console.log("CREATE RESPONSE:", response);
             console.log("CREATED DATA:", response.data);
 

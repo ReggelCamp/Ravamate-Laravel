@@ -314,33 +314,28 @@ function loadSoTables() {
 
     TableLoader.loadTable({
         url: "transaction/getSoPendingTransaction",
-        tableId:"#SOPendingLogs",
+        tableId: "#SOPendingLogs",
         columns: SoToFdisColumns,
         flattenDetails: true,
-        onSuccess: function (response) {
-            const count = response.count ?? 0;
+        onSuccess: function (rows, table) {
+            const count = table.rows().count();
 
-            $("#SOPendingLogsTab").attr(
-                "aria-label",
-                `Pending Logs (${count})`
-            );
+            $("#SOPendingLogsTab").attr("aria-label", `Pending Logs (${count})`);
         }
-    })
+    });
+
     TableLoader.loadTable({
         url: "transaction/getSoFailedTransaction",
-        tableId:"#SOFailedLogs",
+        tableId: "#SOFailedLogs",
         columns: SoToFdisColumns,
         flattenDetails: true,
-        onSuccess: function (response) {
+        onSuccess: function (rows, table) {
+            const count = table.rows().count();
 
-            const count = response.count ?? 0;
-
-            $("#SOFailedLogsTab").attr(
-                "aria-label",
-                `Failed Logs (${count})`
-            );
+            $("#SOFailedLogsTab").attr("aria-label", `Failed Logs (${count})`);
         }
-    })
+    });
+
     TableLoader.loadTable({
         url: "transaction/getSoSuccessTransaction",
         tableId:"#SOSuccessLogs",
