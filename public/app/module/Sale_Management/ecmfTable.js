@@ -1,203 +1,182 @@
-// import TableLoader from "../../helper/TableLoader.js";
-// import ComponentHelper from "../../helper/ComponentHelper.js";
-
-// const EcmfColumns = [
-//     {
-//         title: "Status",
-//         data: "status",
-//     },
-//     {
-//         title: "Salesperson",
-//         data: "salesperson",
-//     },
-//     {
-//         title: "Customer Code",
-//         data: "customer_code",
-//     },
-//     {
-//         title: "Sold To Name",
-//         data: "sold_to_name",
-//     },
-//     {
-//         title: "Contact Person",
-//         data: "contact_person",
-//     },
-//     {
-//         title: "Contact Number",
-//         data: "contact_number",
-//     },
-//     {
-//         title: "Email",
-//         data: "email",
-//     },
-//     {
-//         title: "Geo Area",
-//         data: "geo_area",
-//     },
-//     {
-//         title: "Chain",
-//         data: "chain",
-//     },
-//     {
-//         title: "Coverage Day",
-//         data: "coverage_day",
-//     },
-//     {
-//         title: "TIN",
-//         data: "tin",
-//     },
-//     {
-//         title: "Postal Code",
-//         data: "postal_code",
-//     },
-//     {
-//         title: "Municipality",
-//         data: "municipality",
-//     },
-//     {
-//         title: "Barangay",
-//         data: "barangay",
-//     },
-//     {
-//         title: "Longitude",
-//         data: "longitude",
-//     },
-//     {
-//         title: "Latitude",
-//         data: "latitude",
-//     },
-//     {
-//         title: "Other Info(Ship To)",
-//         data: "other_info_ship",
-//     },
-//     {
-//         title: "Other Info(Sold To)",
-//         data: "other_info_sold",
-//     },
-//     {
-//         title: "Customer Class",
-//         data: "customer_class",
-//     },
-//     {
-//         title: "Frequency",
-//         data: "frequency",
-//     },
-//     {
-//         title: "Request Date",
-//         data: "request_date",
-//     },
-//     {
-//         title: "Service Type",
-//         data: "service_type",
-//     },
-// ];
-
-// TableLoader.tableData(
-//     "#EcmfTable",
-//     [],
-//     EcmfColumns,
-// );
-
-// ComponentHelper.select().loadByApi({
-//     url: "/salesmen",
-//     selectID: "select_items",
-//     noDataText: "No salesman Found"
-// });
-
-
 import TableLoader from "../../helper/TableLoader.js";
 import ComponentHelper from "../../helper/ComponentHelper.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
+import Api from "../../helper/Api.js";
+
+let selectedEcmfId = null;
 
 const EcmfColumns = [
     {
         title: "Status",
         data: "status",
+        defaultContent: "---",
     },
+
     {
         title: "Salesperson",
-        data: "salesperson",
+        data: null,
+        render: function (row) {
+            return row.transaction_salesman?.salesman_name ?? "---";
+        }
     },
+
     {
         title: "Customer Code",
-        data: "customer_code",
+        data: "customercode",
+        defaultContent: "---",
     },
+
     {
         title: "Sold To Name",
-        data: "sold_to_name",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.store_name ?? "---";
+        }
     },
+
     {
         title: "Contact Person",
-        data: "contact_person",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.contact_person ?? "---";
+        }
     },
+
     {
         title: "Contact Number",
-        data: "contact_number",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.contact_no ?? "---";
+        }
     },
+
     {
         title: "Email",
-        data: "email",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.email_address ?? "---";
+        }
     },
+
     {
         title: "Geo Area",
-        data: "geo_area",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.geo_area ?? "---";
+        }
     },
+
     {
         title: "Chain",
-        data: "chain",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.chain ?? "---";
+        }
     },
+
     {
         title: "Coverage Day",
-        data: "coverage_day",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.coverage ?? "---";
+        }
     },
+
     {
         title: "TIN",
-        data: "tin",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.tin ?? "---";
+        }
     },
+
     {
         title: "Postal Code",
-        data: "postal_code",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.postal_code ?? "---";
+        }
     },
+
     {
         title: "Municipality",
-        data: "municipality",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.municipality ?? "---";
+        }
     },
+
     {
         title: "Barangay",
-        data: "barangay",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.barangay ?? "---";
+        }
     },
+
     {
         title: "Longitude",
-        data: "longitude",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.longitude ?? "---";
+        }
     },
+
     {
         title: "Latitude",
-        data: "latitude",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.latitude ?? "---";
+        }
     },
+
     {
         title: "Other Info(Ship To)",
-        data: "other_info_ship",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.ship_to ?? "---";
+        }
     },
+
     {
         title: "Other Info(Sold To)",
-        data: "other_info_sold",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.sold_to ?? "---";
+        }
     },
+
     {
         title: "Customer Class",
-        data: "customer_class",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.customer_class ?? "---";
+        }
     },
+
     {
         title: "Frequency",
-        data: "frequency",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.frequency ?? "---";
+        }
     },
+
     {
         title: "Request Date",
-        data: "request_date",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.request_date ?? "---";
+        }
     },
+
     {
         title: "Service Type",
-        data: "service_type",
+        data: null,
+        render: function (row) {
+            return row.transaction_store?.service_type ?? "---";
+        }
     },
 ];
 
@@ -691,17 +670,16 @@ const GroupItems = [
         data: "nogroup"
     }
 ]
+function loadTable(){
+    TableLoader.loadTable({
+        url:"transaction/getStoreTransaction",
+        tableId: "#EcmfTable",
+        columns: EcmfColumns,
+        
+    });
+}
 
-TableLoader.tableData(
-    "#EcmfTable",
-    EcmfSampleData,
-    EcmfColumns,
-    {
-        //pageLength: getPageLength(),
-
-        scrollX: true,
-    }
-);
+loadTable();
 
 ComponentHelper.select().loadByApi({
     url: "/salesmen",
@@ -741,31 +719,37 @@ $(document)
     });
 
 function DisplayEcmfInfo(rowData) {
+    console.log("fvcd",rowData);
+    const transaction = rowData.transaction_salesman;
+    const store = rowData.transaction_store;
+    selectedEcmfId = store?.store_id ?? null;
+
     // Header
     $("#ecmfModal_Id").text(rowData.customer_code ?? "---");
     $("#ecmfModal_RequestedOn").text(rowData.request_date ?? "---");
     setEcmfStatusBadge(rowData.status);
 
     // General Information
-    $("#ecmfModal_SoldToName").val(rowData.sold_to_name ?? "");
-    $("#ecmfModal_CustomerCode").val(rowData.customer_code ?? "---");
-    $("#ecmfModal_SalesPerson").val(rowData.salesperson ?? "");
+    $("#ecmfModal_SoldToName").val(store.store_name ?? "");
+    $("#ecmfModal_CustomerCode").val(transaction.customercode ?? "---");
+    $("#ecmfModal_SalesPerson").val(store.salesperson ?? "");
     $("#ecmfModal_GeoArea").val(rowData.geo_area ?? "");
     $("#ecmfModal_Chain").val(rowData.chain ?? "");
     $("#ecmfModal_CustomerClass").val(rowData.customer_class ?? "");
     $("#ecmfModal_Frequency").val(rowData.frequency ?? "");
-    $("#ecmfModal_CoverageDay").val(rowData.coverage_day ?? "");
+    $("#ecmfModal_CoverageDay").val(store.coverage ?? "");
     $("#ecmfModal_ServiceType").val(rowData.service_type ?? "");
 
     // Contact Details
-    $("#ecmfModal_ContactPerson").val(rowData.contact_person ?? "");
-    $("#ecmfModal_ContactNumber").val(rowData.contact_number ?? "");
-    $("#ecmfModal_Email").val(rowData.email ?? "");
+    $("#ecmfModal_ContactPerson").val(store.contact_person ?? "");
+    $("#ecmfModal_ContactNumber").val(store.contact_no ?? "");
+    $("#ecmfModal_EmailAddress").val(store.email_address ?? "");
 
     // Location & Address
-    $("#ecmfModal_Municipality").val(rowData.municipality ?? "");
-    $("#ecmfModal_Barangay").val(rowData.barangay ?? "");
-    $("#ecmfModal_PostalCode").val(rowData.postal_code ?? "");
+    selectOptionByText("#ecmfModal_Province", store.province);
+    selectOptionByText("#ecmfModal_Municipality", store.municipality);
+    selectOptionByText("#ecmfModal_Barangay", store.barangay);;
+    $("#ecmfModal_PostalCode").val(store.postal_code ?? "");
     $("#ecmfModal_Tin").val(rowData.tin ?? "");
     $("#ecmfModal_Longitude").val(rowData.longitude ?? "");
     $("#ecmfModal_Latitude").val(rowData.latitude ?? "");
@@ -796,6 +780,13 @@ function setEcmfStatusBadge(status) {
         default:
             $badge.addClass("bg-gray-100 text-gray-700");
     }
+}
+
+function selectOptionByText(selector, value) {
+    $(selector + " option").filter(function () {
+        return $(this).text().trim().toLowerCase() ===
+               String(value ?? "").trim().toLowerCase();
+    }).prop("selected", true);
 }
 
 // --- Address Cascade: Province -> Municipality -> Barangay ---
@@ -872,3 +863,53 @@ $(document)
     });
 
 loadProvinces();
+
+$("#updateBtn").on("click", function () {
+    if (!selectedEcmfId) {
+        console.log("No record selected — cannot update.");
+        return;
+    }
+
+    const payload = {
+        id: selectedEcmfId,
+
+        store_name:      $("#ecmfModal_SoldToName").val(),
+        customer_code:   $("#ecmfModal_CustomerCode").val(),
+        trade_channel:   $("#ecmfModal_TradeChannel").val(),
+        customer_group:  $("#ecmfModal_CustomerGroup").val(),
+        contact_person:  $("#ecmfModal_ContactPerson").val(),
+        contact_no:      $("#ecmfModal_ContactNumber").val(),
+        email_address:   $("#ecmfModal_EmailAddress").val(),
+        province:        $("#ecmfModal_Province option:selected").text(),
+        municipality:    $("#ecmfModal_Municipality option:selected").text(),
+        barangay:        $("#ecmfModal_Barangay option:selected").text(),
+        postal_code:     $("#ecmfModal_PostalCode").val(),
+        tin:              $("#ecmfModal_Tin").val(),
+        longitude:       $("#ecmfModal_Longitude").val(),
+        latitude:        $("#ecmfModal_Latitude").val(),
+        other_info_ship: $("#ecmfModal_OtherInfoShip").val(),
+        other_info_sold: $("#ecmfModal_OtherInfoSold").val(),
+        customer_class:  $("#ecmfModal_CustomerClass").val(),
+        frequency:       $("#ecmfModal_Frequency").val(),
+        coverage:        $("#ecmfModal_CoverageDay").val(),
+        service_type:    $("#ecmfModal_ServiceType").val(),
+        geo_area:        $("#ecmfModal_GeoArea").val(),
+        chain:           $("#ecmfModal_Chain").val(),
+    };
+
+    console.log("Submitting update:", payload);
+
+    Api.post({
+        url: "store/updateEcmftable",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: payload,
+        onSuccess: (response) => {
+            console.log("Update successful:", response);
+            $("#EcmfModal")[0].close();
+            loadTable(); // refresh the table so the row reflects the update
+        },
+        onError: (error) => {
+            console.log("Update failed:", error);
+        },
+    });
+});

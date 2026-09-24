@@ -23,7 +23,10 @@ class TransactionController extends Controller
         return response()->json($salesmanTransaction);
     }
     public function getStoreTransaction(){
-        $storeTransaction = Transaction::with('TransactionStore')->get();
+        $storeTransaction = Transaction::with([
+        'TransactionStore',
+        'TransactionSalesman'
+        ])->get();
         return response()->json($storeTransaction);
     }
 

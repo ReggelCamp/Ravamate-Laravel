@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Routes;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EcmfController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -39,6 +40,7 @@ class ApiRoute extends Controller
         
         Route::prefix('store')->group(function () {
             Route::post('/createStore',[StoreController::class, 'createStore']);
+            Route::post('/updateEcmftable', [EcmfController::class, 'updateEcmftable']);
             Route::get('/getStore',[StoreController::class, 'getStore']);
         });
         

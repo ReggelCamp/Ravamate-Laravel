@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\EcmfController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -48,3 +49,4 @@ Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']
 Route::post('/createSalesmanName',[SalesmanNamesController::class, 'createSalesmanName']);
 Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);
 Route::post('/updateProductPlacement',[productPlacementController::class, 'updateProductPlacement']);
+Route::post('/updateEcmf',[EcmfController::class, 'updateEcmftable']);

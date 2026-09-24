@@ -193,7 +193,7 @@
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">MOBILE NUMBER</span>
-                            <input type="text" id="ecmfModal_MobileNumber" value="09462750792"
+                            <input type="text" id="ecmfModal_ContactNumber" value="09462750792"
                                 class="input input-bordered text-[15px] font-semibold rounded-lg" />
                         </label>
 
@@ -221,11 +221,12 @@
                         <input type="text" id="ecmfModal_CustomerAddressRef" readonly
                             class="input input-bordered text-[15px] font-semibold bg-gray-100 rounded-lg" />
                     </label>
+                    
                     <div class="flex flex-col md:flex-row w-full justify-between gap-5">
                         <label class="form-control w-full">
                             <span class="label-text text-[11px] font-bold text-gray-500 mb-1">PROVINCE</span>
                             <select id="ecmfModal_Province" class="select select-bordered text-[15px] font-semibold rounded-lg">
-                                <option>Choose here</option>
+                                <option >Choose here</option>
                             </select>
                         </label>
 
@@ -319,13 +320,13 @@
 
                 <div class="flex w-full pt-5 justify-between">
                     <div class="flex gap-5">
-                        {{-- <button class="btn bg-amber-500 rounded-lg">Update</button> --}}
+                        <button id="updateBtn" class="btn bg-amber-500 rounded-lg">Update</button>
                         <button class="bg-[#0dcaf0]  font-medium btn rounded-lg">Print</button>
                     </div>
-                    {{-- <div class="flex gap-5">
+                    <div class="flex gap-5">
                         <button class="btn bg-blue-500 rounded-lg">Approved</button>
                         <button class="btn bg-red-500 rounded-lg">Disapproved</button>
-                    </div> --}}
+                    </div>
                 </div>
 
             </div>

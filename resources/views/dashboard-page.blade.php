@@ -329,10 +329,14 @@
                             </div>
 
                             <button
+                                id="LocateStore"
                                 class="btn btn-xs salemanInfoCard rounded-full border-none gap-1 relative">
                                 Locate Store
                                 <span
-                                    class="absolute -right-2 -top-2 salemanInfoCard rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-bold">1</span>
+                                    id="storeId"
+                                    class="absolute -right-2 -top-2 salemanInfoCard rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-bold">
+                                    1
+                                </span>
                             </button>
                         </div>
 
@@ -545,11 +549,11 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Onsite</span>
-                                            <span class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
+                                            <span id="onSiteTransCount" class="font-semibold">{{ $stats->onsite ?? 0 }}</span>
                                         </div>
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Offsite</span>
-                                            <span class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
+                                            <span id="offSiteTransCount" class="font-semibold">{{ $stats->offsite ?? 0 }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Unproductive</span>
@@ -689,11 +693,11 @@
                                     <div class="flex flex-col leading-5 border-l  border-[#c2c5c9]  w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Onsite</span>
-                                            <span class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
+                                            <span id="MtdOnSiteTransCount" class="font-semibold">{{ $mtd->onsite ?? 1 }}</span>
                                         </div>
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Offsite</span>
-                                            <span class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
+                                            <span id="MtdOutsideTransCount" class="font-semibold">{{ $mtd->offsite ?? 118 }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Unproductive</span>

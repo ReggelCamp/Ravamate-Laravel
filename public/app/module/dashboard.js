@@ -521,7 +521,50 @@ function haversineDistanceKm(lat1, lng1, lat2, lng2) {
     return R * c;
 }
 
+function calculateTransactionToStoreDistance(transactions, salesman) {
+    let insideCount = 0;
+    let outsideCount = 0;
+
+    transactions.forEach((transaction, index) => {
+        const store = transaction.transaction_store;
+
+        if (!store || store.latitude == null || store.longitude == null) {
+            console.log(
+                `Transaction ${index + 1}: No store coordinates`,
+                store,
+            );
+            outsideCount++;
+            return;
+        }
+
+        const distanceKm = haversineDistanceKm(
+            Number(transaction.latitude),
+            Number(transaction.longitude),
+            Number(store.latitude),
+            Number(store.longitude),
+        );
+
+        const distanceMeters = distanceKm * 1000;
+        const radiusMeters = Number(salesman.geo_locking);
+
+        const isInside = distanceMeters <= radiusMeters;
+
+        if (isInside) {
+            insideCount++;
+        } else {
+            outsideCount++;
+        }
+    });
+
+    return {
+        total: transactions.length,
+        insideCount,
+        outsideCount,
+    };
+}
+
 function calculateTransactionDistances(transactions) {
+    console.log("feq", transactions);
     if (!Array.isArray(transactions)) return;
 
     transactions.forEach((transaction, index) => {
@@ -599,7 +642,7 @@ function displayInfoWindow() {
         if (latestInfoWindow) latestInfoWindow.close();
         if (infoWindow) {
             infoWindow.close();
-            DisplayCarousel();
+            // DisplayCarousel();
         }
         currentMarker = null;
     });
@@ -627,22 +670,30 @@ function displayInfoWindow() {
     });
 
     const salesmanTransactionCount = {};
+    const seenPositions = {}; // NEW: tracks how many markers already exist at a given coordinate
 
-    // Outer loop: each item is a SALESMAN
     array.forEach((salesman) => {
         const transactions = salesman.salesman_transaction ?? [];
 
-        // Calculate Marker 1 → 2 → 3 → 4...
         calculateTransactionDistances(transactions);
 
         transactions.forEach((transaction, transactionIndex) => {
             const store = transaction.transaction_store;
+            console.log("ffedc",salesman.color);
 
             if (!salesman || !store) {
                 console.log(
                     "Missing salesman or store:",
                     salesman,
                     transaction,
+                );
+                return;
+            }
+
+            if (transaction.latitude == null || transaction.longitude == null) {
+                console.log(
+                    "Skipping transaction with no GPS:",
+                    transaction.transaction_id,
                 );
                 return;
             }
@@ -656,10 +707,30 @@ function displayInfoWindow() {
                 String(transaction.transaction_id) ===
                 String(latest?.transaction_id);
 
+            const baseLat = Number(transaction.latitude);
+            const baseLng = Number(transaction.longitude);
+
+            const posKey = `${baseLat.toFixed(6)},${baseLng.toFixed(6)}`;
+
+            const duplicateIndex = seenPositions[posKey] || 0;
+            seenPositions[posKey] = duplicateIndex + 1;
+
+            let markerLat = baseLat;
+            let markerLng = baseLng;
+
+            if (duplicateIndex > 0) {
+                const offsetDistance = 0.00006 * duplicateIndex;
+                const angle = (duplicateIndex * 137.5 * Math.PI) / 180;
+
+                markerLat = baseLat + offsetDistance * Math.cos(angle);
+                markerLng = baseLng + offsetDistance * Math.sin(angle);
+            }
+            const pinColor = salesman.color;
+            console.log("bvc",pinColor);
             const marker = new google.maps.Marker({
                 position: {
-                    lat: Number(store.latitude),
-                    lng: Number(store.longitude),
+                    lat: markerLat,
+                    lng: markerLng,
                 },
                 map: window.dashboardMap,
                 title: salesman.salesman_name,
@@ -668,33 +739,19 @@ function displayInfoWindow() {
                     url:
                         "data:image/svg+xml;charset=UTF-8," +
                         encodeURIComponent(`
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="60" viewBox="0 0 50 60">
-                                <path
-                                    d="M25 58 C25 58 5 36 5 23 C5 10 14 2 25 2 C36 2 45 10 45 23 C45 36 25 58 25 58Z"
-                                    fill="#ef4444" stroke="white" stroke-width="3" />
-                                <text x="25" y="29" text-anchor="middle" font-family="Arial"
-                                    font-size="16" font-weight="bold" fill="white">
-                                    ${markerNumber}
-                                </text>
-                            </svg>
-                        `),
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="60" viewBox="0 0 50 60">
+                            <path
+                                d="M25 58 C25 58 5 36 5 23 C5 10 14 2 25 2 C36 2 45 10 45 23 C45 36 25 58 25 58Z"
+                                fill="${pinColor}" stroke="white" stroke-width="3" />
+                            <text x="25" y="29" text-anchor="middle" font-family="Arial"
+                                font-size="16" font-weight="bold" fill="white">
+                                ${markerNumber}
+                            </text>
+                        </svg>
+                    `),
                     scaledSize: new google.maps.Size(40, 48),
                     anchor: new google.maps.Point(20, 48),
                 },
-            });
-
-            const radiusCircle = new google.maps.Circle({
-                map: window.dashboardMap,
-                center: {
-                    lat: Number(store.latitude),
-                    lng: Number(store.longitude),
-                },
-                radius: 100,
-                strokeColor: "#ef4444",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#ef4444",
-                fillOpacity: 0.15,
             });
 
             if (!markersById[salesman.id]) {
@@ -1142,8 +1199,6 @@ TableLoader.tableData("#fitScreenTable", [], OperationColumns, {
     pageLength: 10,
 });
 
-// Loads the real dashboard (salesman) data into the fit-to-screen table so it
-// reflects the same data as the main dashboard table for the selected date.
 function loadFitScreenTable(date = null) {
     $("#fitScreenSalesmanToolbar").removeClass("hidden");
     $("#fitScreenHeader").addClass("hidden");
@@ -1176,8 +1231,6 @@ function loadFitScreenTable(date = null) {
     });
 }
 
-// fit to screen table: clicking the fit-screen table switches to the salesman
-// view and (re)loads the real dashboard data.
 $(document).on("click", "#fitScreenTable", function () {
     loadFitScreenTable(selectedDashboardDate);
 });
@@ -1442,6 +1495,19 @@ function getSidePanelContent(transaction) {
     const transactions = transaction.salesman_transaction ?? [];
     const selectedTransaction = transactions[storeIndex] ?? transactions[0];
     const store = selectedTransaction?.transaction_store;
+    console.log("llods", salesman);
+
+    const markerNumber = (storeIndex ?? 0) + 1;
+
+    // calculateTransactionToStoreDistance(transactions,store,salesman);
+    const dayResult = calculateTransactionToStoreDistance(
+        transactions,
+        salesman,
+    );
+
+    // These values belong to the salesman
+    $("#onSiteTransCount").text(dayResult.insideCount);
+    $("#offSiteTransCount").text(dayResult.outsideCount);
 
     const distanceTravel = selectedTransaction?.distance_travel ?? "0 Km";
 
@@ -1509,7 +1575,7 @@ function getSidePanelContent(transaction) {
     } else {
         $("#Attendance").text("No Transaction");
     }
-
+    $("#storeId").text(markerNumber);
     $("#Salesman_Name").text(salesman?.salesman_name ?? "No Salesman");
     $("#VisitedStore").text(VisitedStore);
     $("#call_time").text(salesman.call_time ?? "NULL");
@@ -1531,13 +1597,10 @@ function formatCurrency(value) {
 }
 
 function refreshSelectedSalesmanSummary() {
-    // if (!rowData?.id || !selectedDashboardDate) return;
-    console.log("hhh", globalSkuCount);
     if (!rowData?.id || !selectedDashboardDate) return;
     const requestVersion = ++summaryRequestVersion;
 
     Api.get({
-        // url: "dashboard/getSalesmanInfo",
         url: "salesman/getSalesmanWithTransaction",
         data: {
             salesman_id: rowData.id,
@@ -1545,12 +1608,8 @@ function refreshSelectedSalesmanSummary() {
             period: overviewPeriod,
         },
         onSuccess: (summary) => {
-            console.log("summary", summary);
             if (requestVersion !== summaryRequestVersion) return;
-
-            console.log("few", globalTotalSku);
-            console.log("fewqw", summary);
-
+            console.log("gfcv",summary);
             const sales = formatCurrency(globalTotalSku);
             const skuCount = Number(globalSkuCount ?? 0);
 
@@ -1560,54 +1619,56 @@ function refreshSelectedSalesmanSummary() {
 
                 const filterMonth = moment(selectedDashboardDate, "YYYY-MM-DD");
 
-                summary?.forEach((salesman) => {
-                    if (String(salesman.id) !== String(rowData.id)) {
-                        return;
-                    }
+                const salesmanRecord = summary?.find(
+                    (salesman) => String(salesman.id) === String(rowData.id),
+                );
 
-                    const transactions = salesman.salesman_transaction ?? [];
+                const monthTransactions = (
+                    salesmanRecord?.salesman_transaction ?? []
+                ).filter((transaction) =>
+                    moment(
+                        transaction.transaction_date,
+                        "YYYY-MM-DD HH:mm:ss",
+                    ).isSame(filterMonth, "month"),
+                );
 
-                    transactions.forEach((transaction) => {
-                        const transactionMonth = moment(
-                            transaction.transaction_date,
-                            "YYYY-MM-DD HH:mm:ss",
-                        );
+                monthTransactions.forEach((transaction) => {
+                    const details = transaction.transaction_details ?? [];
+                    MonthSkuCount += details.length;
 
-                        if (!transactionMonth.isSame(filterMonth, "month")) {
-                            return;
-                        }
-
-                        const details = transaction.transaction_details ?? [];
-
-                        MonthSkuCount += details.length;
-
-                        details.forEach((detail) => {
-                            const quantity = Number(detail.quantity ?? 0);
-                            const price = Number(detail.current_price ?? 0);
-
-                            MonthtotalSales += quantity * price;
-                        });
+                    details.forEach((detail) => {
+                        const quantity = Number(detail.quantity ?? 0);
+                        const price = Number(detail.current_price ?? 0);
+                        MonthtotalSales += quantity * price;
                     });
                 });
+
+                const mtdRadiusResult = salesmanRecord
+                    ? calculateTransactionToStoreDistance(
+                          monthTransactions,
+                          salesmanRecord,
+                      )
+                    : { insideCount: 0, outsideCount: 0 };
+
+                $("#MtdOnSiteTransCount").text(mtdRadiusResult.insideCount);
+                $("#MtdOutsideTransCount").text(mtdRadiusResult.outsideCount);
 
                 const formattedTotal = formatCurrency(MonthtotalSales);
 
                 $("#MtdSalesmanTotal_Sales").text(formattedTotal);
                 $("#MtdSku").text(MonthSkuCount);
                 $("#MtdValue").text(formattedTotal);
+                // $("#SkuCount").text(`(${MonthSkuCount} SKU)`);
+                // $("#sku_sales").text(formattedTotal);
 
                 return;
             }
-
-            console.log("llpa", skuCount);
 
             $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
             $("#SideSku").text(skuCount);
             $("#CurrentDayValue").text(sales);
             $("#sku_sales").text(sales ?? 0);
-
-            //$('#salesCollapse')
         },
     });
 }
@@ -1628,3 +1689,32 @@ function renderProductTable(tableId, products) {
         scrollX: false,
     });
 }
+
+$("#LocateStore").on("click", function () {
+    const activeSalesman = currentInfoSalesman ?? rowData;
+
+    if (!activeSalesman) {
+        console.log("No salesman/transaction currently selected.");
+        return;
+    }
+
+    const transactions = activeSalesman.salesman_transaction ?? [];
+    const selectedTransaction = transactions[storeIndex ?? 0];
+
+    if (!selectedTransaction) {
+        console.log("No transaction found at storeIndex:", storeIndex);
+        return;
+    }
+
+    const entry = markersById[String(selectedTransaction.transaction_id)];
+
+    if (!entry) {
+        console.log(
+            "No marker found for transaction:",
+            selectedTransaction.transaction_id,
+        );
+        return;
+    }
+
+    openInfoWindowFor(activeSalesman, entry.marker, storeIndex ?? 0);
+});

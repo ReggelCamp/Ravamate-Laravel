@@ -12,7 +12,7 @@ function initMap() {
 
     map = new google.maps.Map(container, {
         center: { lat: 10.55, lng: 124.05 },
-        zoom: 8,
+        zoom: 10,
         cameraControl: false,
         zoomControl: false,
         mapTypeControl: false,
