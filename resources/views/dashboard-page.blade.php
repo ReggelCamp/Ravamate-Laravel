@@ -891,10 +891,10 @@
                                                         <x-dropdown  id="OperationTypefitScreen" class="w-full !h-[25px]"
                                                             buttonClass="!h-[25px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                                             <x-slot:dropdownName>
-                                                                <span class="text-[10px]  font-semibold gap-5 h-[25px]">
-                                                                    Operation Type
+                                                                <div class="text-[10px] items-center flex font-semibold gap-5 h-[25px]">
+                                                                    <span id="operationType"></span>
                                                                     <i class="fa-solid fa-angle-down text-[8px]"></i>
-                                                                </span>
+                                                                </div>
                                                             </x-slot:dropdownName>
 
                                                             <ul id="OperationTypefitScreen"
@@ -1127,10 +1127,12 @@
                         <div
                             class="flex flex-1 justify-end items-end flex-col-reverse sm:flex-row gap-2 w-full lg:items-center h-full md:w-auto">
 
-                            <span
-                                class="text-black border bg-white h-[30px] text-[12px] w-fit items-center px-5 flex rounded-2xl">
-                                Total (6) : ₱455,064.59
-                            </span>
+                            <div
+                                class="text-black border gap-1 bg-white h-[30px] text-[12px] w-fit items-center px-5 flex rounded-2xl">
+                                Total 
+                                <span id="numOfSalesman"></span>
+                                <span id="SaleOfSalesman"></span>
+                            </div>
 
                             <div class="w-full h-[30px] sm:w-auto">
                                 <x-searchbar id="customSearch" placeholder="Search Salesman"

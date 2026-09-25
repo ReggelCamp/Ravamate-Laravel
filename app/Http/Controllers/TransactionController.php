@@ -9,6 +9,7 @@ use App\Models\SyncData;
 use App\Models\Transaction;
 use App\Models\transactionDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class TransactionController extends Controller
@@ -29,6 +30,69 @@ class TransactionController extends Controller
         ])->get();
         return response()->json($storeTransaction);
     }
+
+public function getFitScreenData(Request $request){
+    $validated = $request->validate([
+        'date' => ['nullable', 'date_format:Y-m-d'],
+    ]);
+
+    $date = $validated['date'] ?? null;
+
+    $rangeStart = null;
+    $rangeEnd = null;
+
+    if ($date) {
+        $businessDate = Carbon::createFromFormat('Y-m-d', $date);
+
+        $rangeStart = $businessDate->copy()->startOfDay();
+        $rangeEnd = $businessDate->copy()->endOfDay();
+    }
+
+    $fitScreenData = transactionDetails::selectRaw('
+        transaction.order_type,
+        salesman.id AS salesman_id,
+        salesman.salesman_name,
+
+        SUM(
+            transaction_details.quantity *
+            transaction_details.current_price
+        ) AS total_sale,
+        SUM(salesman.target_mcp) AS target_mcp,
+        SUM(salesman.productive) AS productive,
+        SUM(salesman.unproductive) AS unproductive,
+        AVG(salesman.strike_rate) AS strike_rate
+    ')
+    ->join(
+        'transaction',
+        'transaction.transaction_id',
+        '=',
+        'transaction_details.transaction_id'
+    )
+    ->join(
+        'salesman',
+        'salesman.id',
+        '=',
+        'transaction.salesman_id'
+    );
+
+if ($rangeStart && $rangeEnd) {
+    $fitScreenData->whereBetween(
+        'transaction.transaction_date',
+        [$rangeStart, $rangeEnd]
+    );
+}
+
+$fitScreenData = $fitScreenData
+    ->groupBy(
+        'transaction.order_type',
+        'salesman.id',
+        'salesman.salesman_name',
+        'salesman.target_mcp'
+    )
+    ->get();
+
+    return response()->json($fitScreenData);
+}
 
     // public function createTransaction(Request $request){
     //     $transaction = Transaction::create([

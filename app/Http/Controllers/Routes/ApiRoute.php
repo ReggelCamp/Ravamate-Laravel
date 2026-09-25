@@ -49,6 +49,9 @@ class ApiRoute extends Controller
             Route::get('/getTransactionDetails',[TransactionDetailsController::class, 'getTransactionDetails']);
 
             Route::get('/getSalesmanTransaction',[TransactionController::class, 'getSalesmanTransaction']);
+            
+            Route::get('/getFitScreenData',[TransactionController::class, 'getFitScreenData']);
+
             Route::get('/getStoreTransaction',[TransactionController::class, 'getStoreTransaction']);
             Route::get('/DisplayTransactionDetailsById',[TransactionController::class, 'TransactionDetails']);
 

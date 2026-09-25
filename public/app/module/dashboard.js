@@ -35,6 +35,8 @@ let selectedDashboardDate;
 let overviewPeriod = "day";
 let summaryRequestVersion = 0;
 
+let selectedOperationType = "all_type";
+
 // The dashboard opens with the last completed business day selected.
 // Clone before subtracting so the current moment is never mutated.
 const defaultDashboardDate = moment().subtract(1, "day").format("YYYY-MM-DD");
@@ -235,7 +237,7 @@ const MinutesDropdown = [
 const OperationColumns = [
     {
         title: "Operation Type",
-        data: "operation_type",
+        data: "order_type",
         className: "text-nowrap",
     },
     {
@@ -260,14 +262,10 @@ const OperationColumns = [
     },
     {
         title: "Sales",
-        data: "sales",
+        data: "total_sale",
         className: "text-nowrap",
     },
 ];
-
-// Total amount
-const TotalAmount = "₱79,209.90";
-// let _mm = [];
 
 $(document)
     .off("click.dashboardRow", "#dashboardDataTable tbody tr")
@@ -311,6 +309,24 @@ $(document)
 
         getSidePanelContent(rowData);
         getSku(firstTransaction, "#sfaQueuingModalTable");
+    });
+
+// for fitscreen table
+$(document)
+    .off("click.dashboardModalRow", "#fitScreenTable tbody tr")
+    .on("click.dashboardModalRow", "#fitScreenTable tbody tr", function () {
+        if (!$.fn.DataTable.isDataTable("#fitScreenTable")) return;
+
+        const dashboardModalTable = $("#fitScreenTable").DataTable();
+        const clickedRow = dashboardModalTable.row(this).data();
+
+        if (!clickedRow) return;
+
+        console.log("mnv",clickedRow.order_type);
+        // clickedRow.order_type is "BOOKING" or "VAN SELLING" from OperationColumns
+        loadFitScreenTable(selectedDashboardDate, clickedRow.order_type);
+        $("#operationType").text(`${clickedRow.order_type} salesman`);
+        $("#OperationTypefitScreen").removeClass('hidden');
     });
 
 // Date BTN
@@ -447,6 +463,7 @@ function clearDashboardMarkers() {
 }
 
 function loadDashboardData(date = null) {
+    console.log("wowowoowssss");
     const loadVersion = ++dashboardLoadVersion;
     selectedDashboardDate = date ?? moment().format("YYYY-MM-DD");
 
@@ -469,7 +486,7 @@ function loadDashboardData(date = null) {
 
     TableLoader.loadTable({
         url: "salesman/getSalesmanWithTransaction",
-        filters: { date: selectedDashboardDate }, // always send a real date, never undefined
+        filters: { date: selectedDashboardDate },
         tableId: "#dashboardDataTable",
         columns: SalesmanColumns,
         scrollY: "200px",
@@ -477,26 +494,74 @@ function loadDashboardData(date = null) {
         searchInput: "#customSearch",
         isCurrent: () => loadVersion === dashboardLoadVersion,
 
-        filterRows: (rows) => rows,
+        filterRows: (rows) => {
+            const operationTypeMap = {
+                van_sales: "VAN SELLING",
+                booking: "BOOKING",
+            };
+
+            const selectedOrderType = operationTypeMap[selectedOperationType];
+
+            return rows
+                .map((salesman) => {
+                    const transactions = salesman.salesman_transaction ?? [];
+
+                    const filteredTransactions =
+                        selectedOperationType === "all_type"
+                            ? transactions
+                            : transactions.filter(
+                                  (transaction) =>
+                                      transaction.order_type ===
+                                      selectedOrderType,
+                              );
+
+                    return {
+                        ...salesman,
+                        salesman_transaction: filteredTransactions,
+                    };
+                })
+                .filter((salesman) => salesman.salesman_transaction.length > 0);
+        },
 
         onSuccess: (data) => {
-            // swal.close();
             if (loadVersion !== dashboardLoadVersion) return;
-
-            console.log(
-                "Dashboard data (salesman with filtered transactions):",
-                data,
-            );
 
             if (!Array.isArray(data) || data.length === 0) {
                 console.log("no data");
                 Swal.fire("No data available on selected date");
                 array = [];
-
                 return;
             }
+
             swal.close();
-            array = data;
+
+            const operationTypeMap = {
+                van_sales: "VAN SELLING",
+                booking: "BOOKING",
+            };
+
+            const selectedOrderType = operationTypeMap[selectedOperationType];
+
+            array = data
+                .map((salesman) => {
+                    const transactions = salesman.salesman_transaction ?? [];
+
+                    const filteredTransactions =
+                        selectedOperationType === "all_type"
+                            ? transactions
+                            : transactions.filter(
+                                  (transaction) =>
+                                      transaction.order_type ===
+                                      selectedOrderType,
+                              );
+
+                    return {
+                        ...salesman,
+                        salesman_transaction: filteredTransactions,
+                    };
+                })
+                .filter((salesman) => salesman.salesman_transaction.length > 0);
+            getTotalSales(data);
             getlatestTransaction(date, loadVersion);
         },
     });
@@ -670,7 +735,7 @@ function displayInfoWindow() {
     });
 
     const salesmanTransactionCount = {};
-    const seenPositions = {}; // NEW: tracks how many markers already exist at a given coordinate
+    const seenPositions = {};
 
     array.forEach((salesman) => {
         const transactions = salesman.salesman_transaction ?? [];
@@ -679,7 +744,7 @@ function displayInfoWindow() {
 
         transactions.forEach((transaction, transactionIndex) => {
             const store = transaction.transaction_store;
-            console.log("ffedc",salesman.color);
+            console.log("ffedc", salesman.color);
 
             if (!salesman || !store) {
                 console.log(
@@ -726,7 +791,7 @@ function displayInfoWindow() {
                 markerLng = baseLng + offsetDistance * Math.sin(angle);
             }
             const pinColor = salesman.color;
-            console.log("bvc",pinColor);
+            console.log("bvc", pinColor);
             const marker = new google.maps.Marker({
                 position: {
                     lat: markerLat,
@@ -1136,9 +1201,7 @@ $(document).ready(function () {
 
     // The picker starts at today even though the initial dashboard data uses
     // the last completed business day.
-    const dashboardDatePicker = $("#dashboardDatePicker").data(
-        "daterangepicker",
-    );
+    const dashboardDatePicker = $("#dashboardDatePicker").data("daterangepicker",);
     if (dashboardDatePicker) {
         const today = moment();
         dashboardDatePicker.setStartDate(today);
@@ -1149,7 +1212,19 @@ $(document).ready(function () {
     $("#dashboardDatePicker")
         .off("apply.daterangepicker.dashboard")
         .on("apply.daterangepicker.dashboard", function (event, picker) {
-            loadDashboardData(picker.startDate.format("YYYY-MM-DD"));
+            const selectedDate = picker.startDate.format("YYYY-MM-DD");
+
+            // Clear old Fit Screen data
+            clearFitScreenTable();
+
+            // Reload dashboard using new date
+            loadDashboardData(selectedDate);
+
+            // If currently in fullscreen, reload Fit Screen
+            if (document.fullscreenElement) {
+                loadOperationColumns(selectedDate);
+            }
+
             DisplayCarousel();
         });
 
@@ -1157,10 +1232,18 @@ $(document).ready(function () {
         .off("cancel.daterangepicker.dashboard")
         .on("cancel.daterangepicker.dashboard", function () {
             const today = moment();
+            const todayDate = today.format("YYYY-MM-DD");
 
             dashboardDatePicker?.setStartDate(today);
             dashboardDatePicker?.setEndDate(today);
-            loadDashboardData(today.format("YYYY-MM-DD"));
+
+            clearFitScreenTable();
+
+            loadDashboardData(todayDate);
+
+            if (document.fullscreenElement) {
+                loadOperationColumns(todayDate);
+            }
         });
 });
 
@@ -1185,6 +1268,7 @@ $("#liveDateFilter").on("click", function () {
 $(document).on("click", "#fitToScreen", function () {
     if (!document.fullscreenElement) {
         mapContainer.requestFullscreen();
+
     } else {
         document.exitFullscreen();
     }
@@ -1194,12 +1278,32 @@ document.addEventListener("fullscreenchange", function () {
     $("#fitScreenInfo").toggleClass("hidden", !document.fullscreenElement);
 });
 
-TableLoader.tableData("#fitScreenTable", [], OperationColumns, {
-    scrollY: "400px",
-    pageLength: 10,
-});
+function loadOperationColumns(date = null) {
+    clearFitScreenTable();
 
-function loadFitScreenTable(date = null) {
+    TableLoader.loadTable({
+        url: "transaction/getFitScreenData",
+        filters: date ? { date } : undefined,
+        tableId: "#fitScreenTable",
+        columns: OperationColumns,
+
+        onSuccess: (data) => {
+            console.log("Fit Screen data:", data);
+
+            requestAnimationFrame(() => {
+                if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
+                    $("#fitScreenTable")
+                        .DataTable()
+                        .columns.adjust()
+                        .draw(false);
+                }
+            });
+        },
+    });
+}
+
+function loadFitScreenTable(date = null, orderType = null) {
+    console.log("deyms");
     $("#fitScreenSalesmanToolbar").removeClass("hidden");
     $("#fitScreenHeader").addClass("hidden");
 
@@ -1217,8 +1321,27 @@ function loadFitScreenTable(date = null) {
         pageLength: 10,
         searchInput: "#customSearch",
 
-        onSuccess: () => {
-            // Force DataTables to recalculate widths once the data has rendered.
+        filterRows: (rows) => {
+            if (!orderType) return rows; // no filter = show everyone
+
+            return rows
+                .map((salesman) => {
+                    const transactions = salesman.salesman_transaction ?? [];
+
+                    const filteredTransactions = transactions.filter(
+                        (transaction) => transaction.order_type === orderType
+                    );
+
+                    return {
+                        ...salesman,
+                        salesman_transaction: filteredTransactions,
+                    };
+                })
+                .filter((salesman) => salesman.salesman_transaction.length > 0);
+        },
+
+        onSuccess: (data) => {
+            console.log("response", data);
             setTimeout(() => {
                 if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
                     $("#fitScreenTable")
@@ -1231,12 +1354,9 @@ function loadFitScreenTable(date = null) {
     });
 }
 
-$(document).on("click", "#fitScreenTable", function () {
-    loadFitScreenTable(selectedDashboardDate);
-});
-
 $("#displayTable").on("click", function () {
     $("#fitScreenSalesmanToolbar").addClass("hidden");
+
     $("#fitScreenHeader").removeClass("hidden");
 
     if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
@@ -1245,32 +1365,17 @@ $("#displayTable").on("click", function () {
 
     // Remove old DataTable content
     $("#fitScreenTable").empty();
-
-    // Rebuild the operation-type view (no fake data; the salesman data is
-    // (re)loaded when the fit-screen table is clicked).
-    TableLoader.tableData("#fitScreenTable", [], OperationColumns, {
-        scrollY: "400px",
-        pageLength: 10,
-        autoWidth: false,
-        scrollX: true,
-    });
+    loadOperationColumns(selectedDashboardDate);
 });
 
 document.addEventListener("fullscreenchange", function () {
     const isFull = !!document.fullscreenElement;
+
     $("#fitScreenInfo").toggleClass("hidden", !isFull);
+    $("#OperationTypefitScreen").addClass("hidden");
 
     if (isFull) {
-        // Reflect the dashboard data as soon as the fit-screen is shown.
-        loadFitScreenTable(selectedDashboardDate);
-    }
-
-    if (isFull && $.fn.DataTable.isDataTable("#fitScreenTable")) {
-        // wait one frame so the container has its real width first
-        requestAnimationFrame(() => {
-            $("#fitScreenTable").DataTable().columns.adjust().draw(false);
-            $("#fitScreenTable_wrapper .dt-scroll-body").scrollLeft(0); // reset horizontal scroll
-        });
+        loadOperationColumns(selectedDashboardDate);
     }
 });
 
@@ -1609,7 +1714,7 @@ function refreshSelectedSalesmanSummary() {
         },
         onSuccess: (summary) => {
             if (requestVersion !== summaryRequestVersion) return;
-            console.log("gfcv",summary);
+            console.log("gfcv", summary);
             const sales = formatCurrency(globalTotalSku);
             const skuCount = Number(globalSkuCount ?? 0);
 
@@ -1718,3 +1823,56 @@ $("#LocateStore").on("click", function () {
 
     openInfoWindowFor(activeSalesman, entry.marker, storeIndex ?? 0);
 });
+
+$(document).on("click", "#OperationTypeItems .dropdown-item", function () {
+    selectedOperationType = $(this).data("value");
+
+    console.log("Selected operation:", selectedOperationType);
+
+    // Reload/filter dashboard
+    loadDashboardData(selectedDashboardDate);
+    // loadFitScreenTable(selectedDashboardDate);
+});
+
+// Fullscreen Fit Screen operation dropdown
+$(document).on("click","#OperationTypefitScreen .dropdown-item",
+    function () {
+
+        selectedOperationType = $(this).data("value");
+
+        console.error(
+            "Selected Fit Screen Operation:",
+            selectedOperationType
+        );
+
+        //loadDashboardData(selectedDashboardDate);
+        loadFitScreenTable(selectedDashboardDate);
+    }
+);
+
+function getTotalSales(data) {
+    let sumOfSale = 0;
+    console.log("bbv", data);
+    data.forEach((transaction) => {
+        const salesmanTransactions = transaction.salesman_transaction;
+
+        salesmanTransactions.forEach((sale) => {
+            const transactionDetails = sale.transaction_details;
+            transactionDetails.forEach((detail) => {
+                const sales = detail.quantity * detail.current_price;
+                sumOfSale += sales;
+            });
+        });
+    });
+    console.log("gbv", sumOfSale);
+    $("#numOfSalesman").text(`(${data.length}):`);
+    $("#SaleOfSalesman").text(formatCurrency(sumOfSale));
+}
+
+function clearFitScreenTable() {
+    if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
+        $("#fitScreenTable").DataTable().clear().destroy();
+    }
+
+    $("#fitScreenTable").empty();
+}
