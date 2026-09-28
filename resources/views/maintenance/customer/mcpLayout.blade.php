@@ -398,7 +398,7 @@
             </div>
 
             <div class="flex w-full justify-end p-5 gap-3 border-t border-gray-300">
-                <button type="button" class="btn bg-red-900 hover:bg-red-800 text-white border-none">Update</button>
+                <button type="button" id="UpdateMcpBtn" class="btn bg-red-900 hover:bg-red-800 text-white border-none">Update</button>
                 <form method="dialog">
                     <button type="submit" class="btn btn-outline">Close</button>
                 </form>

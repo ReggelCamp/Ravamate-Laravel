@@ -11,12 +11,22 @@ class McpLayout extends Model
     protected $guarded = ['id'];
 
     
-    public function StoresDetails(){
-        return $this->hasOne(StoreModel::class,'store_id','id');
+   public function SalesmanDetails()
+    {
+        return $this->belongsTo(
+            SalesmanModel::class,
+            'salesman_id',
+            'id'
+        );
     }
 
-    public function SalesmanDetails(){
-        return $this->hasOne(SalesmanModel::class,'id');
+    public function StoreDetails()
+    {
+        return $this->belongsTo(
+            StoreModel::class,
+            'store_id',
+            'store_id'
+        );
     }
 
 }

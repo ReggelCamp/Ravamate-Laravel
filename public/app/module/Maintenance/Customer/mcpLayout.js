@@ -3,6 +3,7 @@ import "../../../helper/exportDataTable.js";
 import DatePicker from "../../../helper/datePicker.js";
 import ComponentHelper from "../../../helper/ComponentHelper.js";
 
+let getsalesmanId = null;
 
 const MCPColumns = [
     {
@@ -101,7 +102,7 @@ const MCPColumns = [
                 return "---";
             }
 
-            return data;
+            return moment(data).format("MMM DD, YYYY");
         },
     },
     {
@@ -127,243 +128,6 @@ const MCPColumns = [
         },
     },
 ];
-
-// const MCPSampleData = [
-//     {
-//         salesman_code: "SM001",
-//         frequency: "Weekly",
-//         days_of_visit: "Monday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:00 AM - 10:00 AM",
-//         cust_code: "CUST001",
-//         cust_name: "ABC Trading",
-//         address: "123 Rizal St., Cebu City",
-//         last_updated: "Aug 05, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM002",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Tuesday",
-//         week_visited: "Week 1 & 3",
-//         time_of_visit: "09:00 AM - 11:00 AM",
-//         cust_code: "CUST002",
-//         cust_name: "XYZ Enterprises",
-//         address: "45 Mango Ave., Mandaue City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM003",
-//         frequency: "Weekly",
-//         days_of_visit: "Wednesday",
-//         week_visited: "Every Week",
-//         time_of_visit: "10:00 AM - 12:00 PM",
-//         cust_code: "CUST003",
-//         cust_name: "Sunrise Supermarket",
-//         address: "78 Colon St., Cebu City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM004",
-//         frequency: "Monthly",
-//         days_of_visit: "Thursday",
-//         week_visited: "Week 2",
-//         time_of_visit: "01:00 PM - 03:00 PM",
-//         cust_code: "CUST004",
-//         cust_name: "Metro General Store",
-//         address: "21 Osmeña Blvd., Cebu City",
-//         last_updated: "Aug 07, 2026",
-//         mcp_status: "Inactive",
-//         active_flags: "N"
-//     },
-//     {
-//         salesman_code: "SM005",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Friday",
-//         week_visited: "Week 2 & 4",
-//         time_of_visit: "02:00 PM - 04:00 PM",
-//         cust_code: "CUST005",
-//         cust_name: "Golden Harvest Foods",
-//         address: "56 Lahug Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM006",
-//         frequency: "Weekly",
-//         days_of_visit: "Saturday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:30 AM - 10:30 AM",
-//         cust_code: "CUST006",
-//         cust_name: "Cebu Prime Mart",
-//         address: "15 Banilad Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Pending",
-//         active_flags: "N"
-//     },
-//     {
-//         salesman_code: "SM001",
-//         frequency: "Weekly",
-//         days_of_visit: "Monday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:00 AM - 10:00 AM",
-//         cust_code: "CUST001",
-//         cust_name: "ABC Trading",
-//         address: "123 Rizal St., Cebu City",
-//         last_updated: "Aug 05, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM002",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Tuesday",
-//         week_visited: "Week 1 & 3",
-//         time_of_visit: "09:00 AM - 11:00 AM",
-//         cust_code: "CUST002",
-//         cust_name: "XYZ Enterprises",
-//         address: "45 Mango Ave., Mandaue City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM003",
-//         frequency: "Weekly",
-//         days_of_visit: "Wednesday",
-//         week_visited: "Every Week",
-//         time_of_visit: "10:00 AM - 12:00 PM",
-//         cust_code: "CUST003",
-//         cust_name: "Sunrise Supermarket",
-//         address: "78 Colon St., Cebu City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM004",
-//         frequency: "Monthly",
-//         days_of_visit: "Thursday",
-//         week_visited: "Week 2",
-//         time_of_visit: "01:00 PM - 03:00 PM",
-//         cust_code: "CUST004",
-//         cust_name: "Metro General Store",
-//         address: "21 Osmeña Blvd., Cebu City",
-//         last_updated: "Aug 07, 2026",
-//         mcp_status: "Inactive",
-//         active_flags: "N"
-//     },
-//     {
-//         salesman_code: "SM005",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Friday",
-//         week_visited: "Week 2 & 4",
-//         time_of_visit: "02:00 PM - 04:00 PM",
-//         cust_code: "CUST005",
-//         cust_name: "Golden Harvest Foods",
-//         address: "56 Lahug Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM006",
-//         frequency: "Weekly",
-//         days_of_visit: "Saturday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:30 AM - 10:30 AM",
-//         cust_code: "CUST006",
-//         cust_name: "Cebu Prime Mart",
-//         address: "15 Banilad Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Pending",
-//         active_flags: "N"
-//     },
-//     {
-//         salesman_code: "SM001",
-//         frequency: "Weekly",
-//         days_of_visit: "Monday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:00 AM - 10:00 AM",
-//         cust_code: "CUST001",
-//         cust_name: "ABC Trading",
-//         address: "123 Rizal St., Cebu City",
-//         last_updated: "Aug 05, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM002",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Tuesday",
-//         week_visited: "Week 1 & 3",
-//         time_of_visit: "09:00 AM - 11:00 AM",
-//         cust_code: "CUST002",
-//         cust_name: "XYZ Enterprises",
-//         address: "45 Mango Ave., Mandaue City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM003",
-//         frequency: "Weekly",
-//         days_of_visit: "Wednesday",
-//         week_visited: "Every Week",
-//         time_of_visit: "10:00 AM - 12:00 PM",
-//         cust_code: "CUST003",
-//         cust_name: "Sunrise Supermarket",
-//         address: "78 Colon St., Cebu City",
-//         last_updated: "Aug 06, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM004",
-//         frequency: "Monthly",
-//         days_of_visit: "Thursday",
-//         week_visited: "Week 2",
-//         time_of_visit: "01:00 PM - 03:00 PM",
-//         cust_code: "CUST004",
-//         cust_name: "Metro General Store",
-//         address: "21 Osmeña Blvd., Cebu City",
-//         last_updated: "Aug 07, 2026",
-//         mcp_status: "Inactive",
-//         active_flags: "N"
-//     },
-//     {
-//         salesman_code: "SM005",
-//         frequency: "Bi-Weekly",
-//         days_of_visit: "Friday",
-//         week_visited: "Week 2 & 4",
-//         time_of_visit: "02:00 PM - 04:00 PM",
-//         cust_code: "CUST005",
-//         cust_name: "Golden Harvest Foods",
-//         address: "56 Lahug Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Active",
-//         active_flags: "Y"
-//     },
-//     {
-//         salesman_code: "SM006",
-//         frequency: "Weekly",
-//         days_of_visit: "Saturday",
-//         week_visited: "Every Week",
-//         time_of_visit: "08:30 AM - 10:30 AM",
-//         cust_code: "CUST006",
-//         cust_name: "Cebu Prime Mart",
-//         address: "15 Banilad Rd., Cebu City",
-//         last_updated: "Aug 08, 2026",
-//         mcp_status: "Pending",
-//         active_flags: "N"
-//     },
-// ];
 
 const FrequencyItems = [
     {
@@ -407,33 +171,49 @@ const DaysOfVisit = [
     },
 ]
 
-function DisplayMcpTable(salesmanId) {
+function DisplayMcpTable(salesmanId = null) {
+    console.log("Loading MCP table for:", salesmanId);
+
     if ($.fn.DataTable.isDataTable("#mcpTable")) {
         $("#mcpTable").DataTable().destroy();
     }
 
     TableLoader.loadTable({
-        url: "store/getStoreSalesman",     // the endpoint that reads salesman_id
-        filters: { salesman_id: salesmanId },
+        url: "mcp/getSalesmanMcp",
+
+        filters: salesmanId
+            ? { salesman_id: salesmanId }
+            : {},
+
         tableId: "#mcpTable",
         columns: MCPColumns,
 
         onSuccess: (data) => {
-            console.log("stores for salesman", salesmanId, data);
+            console.log("MCP data:", data);
         },
     });
 }
-
-$(document).ready(function () {
-    DatePicker.init();
-});
 
 ComponentHelper.dropdown().loadByApi({
     url: "salesman/getSalesmanStore",
     dropdownId: "mcpItems",
     noDataText: "No SalesMan Found",
     displayField: "salesman_name",
-    dataField: "salesman_id",
+    dataField: "id",
+});
+
+DisplayMcpTable();
+
+$(document).on("click", "#mcpItems .dropdown-item", function (e) {
+    e.preventDefault();
+
+    getsalesmanId = $(this).data("id");
+
+    console.log("Selected salesman ID:", getsalesmanId);
+
+    
+    DisplayMcpTable(getsalesmanId);
+
 });
 
 ComponentHelper.dropdown().load({
@@ -499,4 +279,12 @@ function DisplayMcpLayout(rowData) {
 
 $('#update_timeOfVisit').on('click', function () {
     this.showPicker();
+});
+
+$(document).ready(function () {
+    DatePicker.init();
+});
+
+$("#UpdateMcpBtn").on("click",function(){
+    // freqDropdown
 });

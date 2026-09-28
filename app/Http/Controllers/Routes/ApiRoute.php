@@ -98,8 +98,9 @@ class ApiRoute extends Controller
         });
 
         Route::prefix('mcp')->group(function () {
-            Route::get('/getSalesmanMcp',[McpController::class, 'getMcpLayout']);
+            Route::get('/getSalesmanMcp',[McpController::class, 'getSalesmanMcp']);
             Route::post('/createMcp',[McpController::class, 'createMcpController']);
+            Route::post('/updateMcpTable',[McpController::class, 'updateMcpTable']);
         });
         
     }

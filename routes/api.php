@@ -52,3 +52,4 @@ Route::post('/createPlacement',[productPlacementController::class, 'createPlacem
 Route::post('/updateProductPlacement',[productPlacementController::class, 'updateProductPlacement']);
 Route::post('/updateEcmf',[EcmfController::class, 'updateEcmftable']);
 Route::post('/createMcp',[McpController::class, 'createMcpController']);
+Route::post('/updateMcpTable',[McpController::class, 'updateMcpTable']);
