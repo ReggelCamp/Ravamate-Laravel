@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\EcmfController;
+use App\Http\Controllers\McpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -50,3 +51,4 @@ Route::post('/createSalesmanName',[SalesmanNamesController::class, 'createSalesm
 Route::post('/createPlacement',[productPlacementController::class, 'createPlacement']);
 Route::post('/updateProductPlacement',[productPlacementController::class, 'updateProductPlacement']);
 Route::post('/updateEcmf',[EcmfController::class, 'updateEcmftable']);
+Route::post('/createMcp',[McpController::class, 'createMcpController']);

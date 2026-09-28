@@ -888,7 +888,7 @@
                                                     </div>
 
                                                     <div class="sm:text-[10px] h-[25px] whitespace-nowrap sm:w-fit">
-                                                        <x-dropdown  id="OperationTypefitScreen" class="w-full !h-[25px]"
+                                                        <x-dropdown  id="OperationTypefitdropDown" class="w-full !h-[25px]"
                                                             buttonClass="!h-[25px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                                             <x-slot:dropdownName>
                                                                 <div class="text-[10px] items-center flex font-semibold gap-5 h-[25px]">
@@ -898,7 +898,7 @@
                                                             </x-slot:dropdownName>
 
                                                             <ul id="OperationTypefitScreen"
-                                                                class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                                                class="dropdown_item OperationTypeItems w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                                             </ul>
                                                         </x-dropdown>
                                                     </div>
@@ -1081,7 +1081,7 @@
                                     </x-slot:dropdownName>
 
                                     <ul id="OperationTypeItems"
-                                        class="dropdown_item  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
+                                        class="dropdown_item OperationTypeItems  w-fit min-w-[150px] px-2 py-1 text-[13px] rounded-lg bg-white whitespace-nowrap">
                                     </ul>
                                 </x-dropdown>
                             </div>

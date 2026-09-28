@@ -10,30 +10,43 @@ class StoreController extends Controller
 {
     public function getStore(){
         $stores = StoreModel::with('salesman')->get();
-        //dd($stores);
+
         return response()->json($stores);
-        
     }
 
-public function createStore(Request $request){
-    $store = StoreModel::create([
-        'store_name'        => $request->store_name,
-        'longitude'         => $request->longitude,
-        'latitude'          => $request->latitude,
-        'customercode'      => 'TEMP',
-        'salesman_id'       => $request->salesman_id,
-        'transaction_sales' => $request->transaction_sales ?? null,
-        'transaction_date'  => $request->transaction_date,
-        'contact_person'    => $request->contact_person ?? null,
-    ]);
+public function getStoreSalesman(Request $request){
+    $stores = StoreModel::where('salesman_id',$request->salesman_id)
+    ->get();
 
-    $store->customercode = 'CC0' . $store->store_id;
-    $store->save();
-
-    return response()->json([
-        'message' => 'Store created successfully',
-        'data' => $store
-    ], 200);
+    return response()->json($stores);
 }
+
+// public function getStoreSalesman(Request $request)
+// {
+//     $stores = StoreModel::where('salesman_id', 1)->get();
+
+//     return response()->json($stores);
+// }
+
+    public function createStore(Request $request){
+        $store = StoreModel::create([
+            'store_name'        => $request->store_name,
+            'longitude'         => $request->longitude,
+            'latitude'          => $request->latitude,
+            'customercode'      => 'TEMP',
+            'salesman_id'       => $request->salesman_id,
+            'transaction_sales' => $request->transaction_sales ?? null,
+            'transaction_date'  => $request->transaction_date,
+            'contact_person'    => $request->contact_person ?? null,
+        ]);
+
+        $store->customercode = 'CC0' . $store->store_id;
+        $store->save();
+
+        return response()->json([
+            'message' => 'Store created successfully',
+            'data' => $store
+        ], 200);
+    }
 
 }

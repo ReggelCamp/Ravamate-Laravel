@@ -6,6 +6,7 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EcmfController;
+use App\Http\Controllers\McpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -30,6 +31,7 @@ class ApiRoute extends Controller
 
         Route::prefix('salesman')->group(function () {
             Route::get('/getSalesman',[SalesmanModelController::class, 'getSalesman']);
+            Route::get('/getSalesmanStore',[SalesmanModelController::class, 'getSalesmanStore']);
             Route::get('/getSalesmanWithTransaction',[SalesmanModelController::class, 'getSalesmanWithTransaction']);
             Route::post('/createSalesman',[SalesmanModelController::class, 'CreateSalesman']);
             Route::post('/updateSalesman',[SalesmanModelController::class, 'updateSalesman']);
@@ -42,6 +44,7 @@ class ApiRoute extends Controller
             Route::post('/createStore',[StoreController::class, 'createStore']);
             Route::post('/updateEcmftable', [EcmfController::class, 'updateEcmftable']);
             Route::get('/getStore',[StoreController::class, 'getStore']);
+            Route::get('/getStoreSalesman',[StoreController::class, 'getStoreSalesman']);
         });
         
         Route::prefix('transaction')->group(function () {
@@ -92,6 +95,11 @@ class ApiRoute extends Controller
 
         Route::prefix('bank')->group(function () {
             Route::post('/createBank',[BankController::class, 'createBank']);
+        });
+
+        Route::prefix('mcp')->group(function () {
+            Route::get('/getSalesmanMcp',[McpController::class, 'getMcpLayout']);
+            Route::post('/createMcp',[McpController::class, 'createMcpController']);
         });
         
     }

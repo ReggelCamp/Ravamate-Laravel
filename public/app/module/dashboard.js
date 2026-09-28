@@ -37,8 +37,6 @@ let summaryRequestVersion = 0;
 
 let selectedOperationType = "all_type";
 
-// The dashboard opens with the last completed business day selected.
-// Clone before subtracting so the current moment is never mutated.
 const defaultDashboardDate = moment().subtract(1, "day").format("YYYY-MM-DD");
 
 const SalesmanColumns = [
@@ -56,10 +54,7 @@ const SalesmanColumns = [
         className: "text-center",
 
         render: function (data, type, row) {
-            console.log("kkk", row);
-            // Attendance must use the salesman's own transaction for the
-            // selected business day — the API does not order/guarantee
-            // that index 0 is that transaction.
+            
             const filterDay = moment(selectedDashboardDate, "YYYY-MM-DD");
 
             const dailyTransactions = (row.salesman_transaction ?? [])
@@ -102,7 +97,9 @@ const SalesmanColumns = [
         data: null,
         className: "text-center dt-type-numeric",
         render: function (row) {
-            return row.productive;
+            console.log("mnvc0",row);
+            const transaction = row.salesman_transaction
+            return transaction.productive;
         },
     },
     {
@@ -126,8 +123,36 @@ const SalesmanColumns = [
         data: null,
         className: "text-center dt-type-numeric",
         render: function (row) {
-            return row.selling_hrs;
-        },
+            const selling_hrs = row.salesman_transaction;
+
+            let firstTime = null;
+            let lastTime = null;
+
+            selling_hrs.forEach(Hours => {
+
+                const transactionTime = moment( Hours.transaction_date,"YYYY-MM-DD HH:mm:ss");
+
+                if (!firstTime) { 
+                    firstTime = transactionTime;
+                }
+
+                lastTime = transactionTime;
+
+            });
+
+            if (!firstTime || !lastTime) {
+                return "0h 0m";
+            }
+
+            const duration = moment.duration(
+                lastTime.diff(firstTime)
+            );
+
+            const hours = Math.floor(duration.asHours());
+            const minutes = duration.minutes();
+
+            return `${hours}h ${minutes}m`;
+        }       
     },
     {
         title: "Sales",
@@ -693,6 +718,7 @@ function calculateTransactionDistances(transactions) {
 }
 
 function displayInfoWindow() {
+
     if (!array || array.length === 0) {
         console.log("No salesman data.");
         return;
@@ -738,8 +764,9 @@ function displayInfoWindow() {
     const seenPositions = {};
 
     array.forEach((salesman) => {
+        console.error("bdfc",selectedOperationType);
         const transactions = salesman.salesman_transaction ?? [];
-
+        
         calculateTransactionDistances(transactions);
 
         transactions.forEach((transaction, transactionIndex) => {
@@ -819,16 +846,16 @@ function displayInfoWindow() {
                 },
             });
 
-            if (!markersById[salesman.id]) {
-                markersById[salesman.id] = [];
-            }
+            // if (!markersById[salesman.id]) {
+            //     markersById[salesman.id] = [];
+            // }
 
             markersById[String(transaction.transaction_id)] = {
                 marker,
                 salesman,
                 store,
                 transaction,
-                storeIndex: 0,
+                storeIndex: transactionIndex,
             };
 
             marker.addListener("click", () => {
@@ -1329,7 +1356,7 @@ function loadFitScreenTable(date = null, orderType = null) {
                     const transactions = salesman.salesman_transaction ?? [];
 
                     const filteredTransactions = transactions.filter(
-                        (transaction) => transaction.order_type === orderType
+                        (transaction) => transaction.order_type === orderType,
                     );
 
                     return {
@@ -1342,6 +1369,7 @@ function loadFitScreenTable(date = null, orderType = null) {
 
         onSuccess: (data) => {
             console.log("response", data);
+
             setTimeout(() => {
                 if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
                     $("#fitScreenTable")
@@ -1350,6 +1378,31 @@ function loadFitScreenTable(date = null, orderType = null) {
                         .draw(false);
                 }
             }, 300);
+
+            array = data
+                .map((salesman) => {
+                    const transactions = salesman.salesman_transaction ?? [];
+
+                    const filteredTransactions = !orderType
+                        ? transactions
+                        : transactions.filter(
+                              (transaction) =>
+                                  transaction.order_type === orderType,
+                          );
+
+                    console.log(salesman.salesman_name, filteredTransactions);
+
+                    return {
+                        ...salesman,
+                        salesman_transaction: filteredTransactions,
+                    };
+                })
+                .filter((salesman) => salesman.salesman_transaction.length > 0);
+
+            console.log("FINAL ARRAY FOR MARKERS:", array);
+
+            clearDashboardMarkers();
+            displayInfoWindow();
         },
     });
 }
@@ -1831,22 +1884,32 @@ $(document).on("click", "#OperationTypeItems .dropdown-item", function () {
 
     // Reload/filter dashboard
     loadDashboardData(selectedDashboardDate);
-    // loadFitScreenTable(selectedDashboardDate);
 });
 
 // Fullscreen Fit Screen operation dropdown
-$(document).on("click","#OperationTypefitScreen .dropdown-item",
-    function () {
+$(document).on("click","#OperationTypefitScreen .dropdown-item",function () {
 
         selectedOperationType = $(this).data("value");
 
-        console.error(
-            "Selected Fit Screen Operation:",
-            selectedOperationType
-        );
+        console.log("Selected Fit Screen Operation:",selectedOperationType);
 
-        //loadDashboardData(selectedDashboardDate);
-        loadFitScreenTable(selectedDashboardDate);
+        const operationTypeMap = {
+            van_sales: "VAN SELLING",
+            booking: "BOOKING",
+        };
+
+        const orderType = operationTypeMap[selectedOperationType] ?? null;
+        
+        const label = orderType
+            ? `${orderType} salesman`
+            : "All salesman";
+        
+        $("#operationType").text(label);
+
+        loadFitScreenTable(
+            selectedDashboardDate,
+            orderType
+        );
     }
 );
 

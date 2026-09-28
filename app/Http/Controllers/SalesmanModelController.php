@@ -222,6 +222,11 @@ public function getSalesmanWithTransaction(Request $request){
     return response()->json($salesman);
 }
 
+    public function getSalesmanStore(){
+        $stores = SalesmanModel::with('SalesmanStore')->get();
+
+        return response()->json($stores);
+    }
 
 // public function getSalesmanWithTransaction(Request $request)
 // {

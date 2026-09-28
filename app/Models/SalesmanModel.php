@@ -21,4 +21,8 @@ class SalesmanModel extends Model
     public function salesmanTransaction(){
         return $this->hasMany(Transaction::class,'salesman_id');
     }
+
+    public function SalesmanStore(){
+        return $this->hasMany(StoreModel::class, 'salesman_id', 'id');  
+    }
 }
