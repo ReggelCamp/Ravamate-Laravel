@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StoreModel extends Model
 {
@@ -19,6 +20,15 @@ class StoreModel extends Model
 
     public function transactions(){
         return $this->hasMany(Transaction::class, 'store_id', 'store_id');
+    }
+
+    // public function mcpLayout(){
+    //     return $this->HasOne(McpLayout::class,'store_id','id');
+    // }
+
+    public function mcpLayout()
+    {
+        return $this->hasOne(McpLayout::class, 'store_id', 'store_id');
     }
 
     // public function perSalesman(){

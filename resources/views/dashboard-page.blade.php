@@ -557,7 +557,7 @@
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Unproductive</span>
-                                            <span class="primary_color font-semibold">{{ $stats->unproductive ?? 6 }}</span>
+                                            <span id="currentUnproductive" class="primary_color font-semibold">{{ $stats->unproductive ?? 6 }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -620,11 +620,11 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9] w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Active Buying</span>
-                                            <span class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
+                                            <span id="ActiveBuying" class="font-semibold">{{ $mtd->active_buying ?? 0 }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Unique Buying</span>
-                                            <span class="font-semibold">{{ $mtd->unique_buying ?? 0 }}</span>
+                                            <span id="uniqueBuying" class="font-semibold">{{ $mtd->unique_buying ?? 0 }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -658,7 +658,7 @@
                                     <div class="flex flex-col leading-5 border-l border-[#c2c5c9]  w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Productive Call</span>
-                                            <span class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
+                                            <span id="ProductiveCallCount" class="font-semibold">{{ $mtd->productive_call ?? 0 }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Balance</span>
@@ -701,7 +701,7 @@
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Unproductive</span>
-                                            <span class="primary_color font-semibold">{{ $mtd->unproductive ?? 11 }}</span>
+                                            <span id="unProductiveCount" class="primary_color font-semibold">{{ $mtd->unproductive ?? 11 }}</span>
                                         </div>
                                     </div>
                                 </div>

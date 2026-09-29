@@ -2,8 +2,10 @@ import TableLoader from "../../../helper/TableLoader.js";
 import "../../../helper/exportDataTable.js";
 import DatePicker from "../../../helper/datePicker.js";
 import ComponentHelper from "../../../helper/ComponentHelper.js";
+import Api from "../../../helper/Api.js";
 
 let getsalesmanId = null;
+let store_id = null;
 
 const MCPColumns = [
     {
@@ -19,46 +21,38 @@ const MCPColumns = [
     },
     {
         title: "Frequency",
-        data: "frequency",
-        render: function (data) {
-            if (!data) {
-                return "---";
-            }
+        data: null,
+        render: function (row) {
+            const frequency = row.mcp_layout;
 
-            return data;
+            return frequency?.call_frequency ?? "---";
         },
     },
     {
         title: "Days of Visit",
-        data: "days_of_visit",
-        render: function (data) {
-            if (!data) {
-                return "---";
-            }
+        data: null,
+        render: function (row) {
+            const DaysOfVisit = row.mcp_layout;
 
-            return data;
+            return DaysOfVisit?.days ?? "---";
         },
     },
     {
         title: "Week Visited",
-        data: "week_visited",
-        render: function (data) {
-            if (!data) {
-                return "---";
-            }
+        data: null,
+        render: function (row) {
+            const WeekOfVisit = row.mcp_layout;
 
-            return data;
+            return WeekOfVisit?.week ?? "---";
         },
     },
     {
         title: "Time of Visit",
-        data: "time_of_visit",
-        render: function (data) {
-            if (!data) {
-                return "---";
-            }
+        data: null,
+        render: function (row) {
+            const timeOfVisit = row.mcp_layout;
 
-            return data;
+            return timeOfVisit?.call_time ?? "---";
         },
     },
     {
@@ -179,7 +173,7 @@ function DisplayMcpTable(salesmanId = null) {
     }
 
     TableLoader.loadTable({
-        url: "mcp/getSalesmanMcp",
+        url: "store/getStoreSalesman",
 
         filters: salesmanId
             ? { salesman_id: salesmanId }
@@ -265,15 +259,44 @@ $(document)
         const mcpLayoutTable = $("#mcpTable").DataTable();
         const rowData = mcpLayoutTable.row(this).data();
 
+        store_id = rowData.store_id;
+
         if (!rowData) return;
 
-        console.log("Clicked row:", rowData);
+        console.log("Clicked row:", store_id);
 
         DisplayMcpLayout(rowData);
+
     });
 
 function DisplayMcpLayout(rowData) {
-    // Open modal
+    const mcp = rowData.mcp_layout ?? {};   // null when the store has no layout row yet
+
+    // state
+    selectedFrequency = mcp.call_frequency ?? null;
+    selectedDayOfWeek = mcp.days ?? null;
+    weekVisited = mcp.week ? mcp.week.split(",") : [];
+    timeOfVisit = mcp.call_time ? mcp.call_time.substring(0, 5) : null;
+
+    // labels
+    $("#update_frequency_label").text(selectedFrequency ? selectedFrequency.toUpperCase() : "Select");
+    $("#update_daysOfVisit_label").text(selectedDayOfWeek ? selectedDayOfWeek.toUpperCase() : "Select");
+    $("#update_weekVisited_label").text(weekVisited.length ? weekVisited.join(", ").toUpperCase() : "Select");
+    $("#update_timeOfVisit").val(timeOfVisit ?? "");
+
+    // tick the saved week checkboxes
+    $("#weekVisitedTable input[type='checkbox']").each(function () {
+        const val = $(this).data("id") || $(this).val();
+        $(this).prop("checked", weekVisited.includes(val));
+    });
+
+    // info fields (unchanged)
+    $("#salesmanCode").text(`GP0_${rowData.salesman_id}`);
+    $("#CustCode").text(`${rowData.store_id}_GP`);
+    $("#CustomerName").text(rowData.store_name);
+    $("#Address").text(rowData.address);
+    $("#lastUpdated").text(rowData.updated_at);
+
     $("#mcpLayoutModal")[0].showModal();
 }
 
@@ -285,6 +308,79 @@ $(document).ready(function () {
     DatePicker.init();
 });
 
-$("#UpdateMcpBtn").on("click",function(){
-    // freqDropdown
+let selectedFrequency = null;
+let timeOfVisit = null;
+let weekVisited = [];
+let selectedDayOfWeek = null;
+
+$(document).on("click", "#freqDropdown .dropdown-item", function (e) {
+    e.preventDefault();
+    selectedFrequency = $(this).data("id");
+    $("#update_frequency_label").text($(this).text().trim());
+    document.activeElement.blur(); // closes the DaisyUI dropdown
+});
+
+$(document).on("click", "#dayOfWeekTable .dropdown-item", function (e) {
+    e.preventDefault();
+    selectedDayOfWeek = $(this).data("id");  
+    console.log("gvb",selectedDayOfWeek);
+    $("#update_daysOfVisit_label").text($(this).text().trim());
+    document.activeElement.blur(); // closes the DaisyUI dropdown 
+});
+
+$(document).on("change","#weekVisitedTable input[type='checkbox']",function () {
+
+        weekVisited = $("#weekVisitedTable input[type='checkbox']:checked")
+            .map(function () {
+                return $(this).data("id") || $(this).val();
+            })
+            .get();
+            
+            $("#update_weekVisited_label").text(
+            weekVisited.length
+                ? weekVisited.join(", ").toUpperCase()
+                : "---"
+        );
+        console.log("Week Visited:", weekVisited);
+        // $("#update_weekVisited_label").text($(this).text().trim());
+        // document.activeElement.blur(); // closes the DaisyUI dropdown 
+    }
+);
+
+$("#update_timeOfVisit").on("change", function () {
+    timeOfVisit = $(this).val();
+
+    console.log("Selected time:", timeOfVisit);
+});
+
+$("#UpdateMcpBtn").on("click", function () {
+    $("#mcpLayoutModal")[0].close();
+    if (!selectedFrequency) {
+        alert("Please select a frequency first.");
+        return;
+    }
+
+    Swal.fire({
+        title: 'Syncing…',
+        text: 'Syncing transactions, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    Api.post({
+        url: "mcp/updateMcpTable",
+        data: {
+            store_id: store_id,
+            call_frequency: selectedFrequency,
+            week: weekVisited.join(","),
+            days: selectedDayOfWeek ,
+            call_time: timeOfVisit
+        },
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        onSuccess: (response) => {
+            
+            DisplayMcpTable(getsalesmanId);
+            Swal.close();
+        },
+    });
 });

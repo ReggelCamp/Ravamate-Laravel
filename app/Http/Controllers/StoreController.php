@@ -15,7 +15,8 @@ class StoreController extends Controller
     }
 
 public function getStoreSalesman(Request $request){
-    $stores = StoreModel::where('salesman_id',$request->salesman_id)
+    $stores = StoreModel::with('mcpLayout')
+    ->where('salesman_id',$request->salesman_id)
     ->get();
 
     return response()->json($stores);

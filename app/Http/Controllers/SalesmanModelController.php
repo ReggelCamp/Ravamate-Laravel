@@ -205,6 +205,7 @@ public function getSalesmanWithTransaction(Request $request){
         },
         'salesmanTransaction.transactionDetails.productDetails',
         'salesmanTransaction.TransactionStore',
+        'SalesmanStore'
     ]);
 
     if ($rangeStart) {

@@ -61,19 +61,46 @@ public function getSalesmanMcp(Request $request){
         'data' => $query->get()
     ], 200);
 }
+// public function updateMcpTable(Request $request)
+//     {
+//         $store = StoreModel::find($request->store_id);
+
+//         $store->update([
+//             'call_frequency' => $request->call_frequency,
+//             'week' => $request->week,
+//             'day' => $request->days,
+//         ]);
+
+//         return response()->json([
+//             'message' => 'success',
+//             'data' => $store
+//         ], 200);
+//     }
+// }
+
 public function updateMcpTable(Request $request)
-    {
-        $store = StoreModel::find($request->store_id);
+{
+    $request->validate([
+        'store_id'       => 'required|exists:store,store_id',
+        'call_frequency' => 'required|string',
+    ]);
 
-        $store->update([
+    $store = StoreModel::findOrFail($request->store_id);
+
+    $mcp = McpLayout::updateOrCreate(
+        ['store_id' => $store->store_id],
+        array_filter([
+            'salesman_id'    => $store->salesman_id,
             'call_frequency' => $request->call_frequency,
-            'week' => $request->week,
-            'day' => $request->days,
-        ]);
+            'week'           => $request->week,
+            'days'           => $request->days,
+            'call_time'      => $request->call_time,
+        ], fn ($v) => $v !== null)
+    );
 
-        return response()->json([
-            'message' => 'success',
-            'data' => $store
-        ], 200);
-    }
+    return response()->json([
+        'message' => 'success',
+        'data'    => $mcp
+    ], 200);
+}
 }

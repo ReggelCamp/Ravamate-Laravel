@@ -241,23 +241,23 @@
             <div class="flex flex-col px-5">
                 <div class="flex items-center border-b border-gray-300 py-3">
                     <span class="font-semibold flex-1 text-sm w-full">Salesman</span>
-                    <span class="text-sm w-full flex-2">{{ $mcp->salesman_code ?? 'GP_2' }}</span>
+                    <span id="salesmanCode" class="text-sm w-full flex-2">{{ $mcp->salesman_code ?? 'GP_2' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">CustCode</span>
-                    <span class="text-sm flex-2">{{ $mcp->cust_code ?? '16_GP' }}</span>
+                    <span id="CustCode" class="text-sm flex-2">{{ $mcp->cust_code ?? '16_GP' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Customer</span>
-                    <span class="text-sm flex-2">{{ $mcp->cust_name ?? 'SEVEN BROTHERS' }}</span>
+                    <span id="CustomerName" class="text-sm flex-2">{{ $mcp->cust_name ?? 'SEVEN BROTHERS' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Address</span>
-                    <span class="text-sm flex-2">{{ $mcp->address ?? 'null' }}</span>
+                    <span id="Address" class="text-sm flex-2">{{ $mcp->address ?? 'null' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Last Updated</span>
-                    <span class="text-sm flex-2">{{ $mcp->last_updated ?? '2026-07-13 14:07:28.260' }}</span>
+                    <span id="lastUpdated" class="text-sm flex-2">{{ $mcp->last_updated ?? '2026-07-13 14:07:28.260' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Status</span>
@@ -265,19 +265,19 @@
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Frequency</span>
-                    <span class="text-sm flex-2 text-gray-400">{{ $mcp->frequency ?? '---' }}</span>
+                    <span id="Frequency" class="text-sm flex-2 text-gray-400">{{ $mcp->frequency ?? '---' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Days of Visit</span>
-                    <span class="text-sm flex-2 text-gray-400">{{ $mcp->days_of_visit ?? '---' }}</span>
+                    <span id="DaysOfVisit" class="text-sm flex-2 text-gray-400">{{ $mcp->days_of_visit ?? '---' }}</span>
                 </div>
                 <div class="flex items-center justify-between border-b border-gray-300 py-3">
                     <span class="font-semibold text-sm flex-1">Week Visited</span>
-                    <span class="text-sm flex-2 text-gray-400">{{ $mcp->week_visited ?? '---' }}</span>
+                    <span id="WeekVisit" class="text-sm flex-2 text-gray-400">{{ $mcp->week_visited ?? '---' }}</span>
                 </div>
                 <div class="flex items-center justify-between py-3 border-b border-gray-300">
                     <span class="font-semibold text-sm flex-1">Time of Visit</span>
-                    <span class="text-sm flex-2 text-gray-400">{{ $mcp->time_of_visit ?? '---' }}</span>
+                    <span id="TimeVisit" class="text-sm flex-2 text-gray-400">{{ $mcp->time_of_visit ?? '---' }}</span>
                 </div>
             </div>
 
