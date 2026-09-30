@@ -720,15 +720,15 @@
                                     <div class="flex flex-col leading-5 border-l  border-[#c2c5c9]  w-full text-gray-600">
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Item</span>
-                                            <span id="MtdSku" class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
+                                            <span id="MtdAveItem" class="font-semibold">{{ $mtd->item_count ?? 13 }}</span>
                                         </div>
                                         <div class="flex justify-between border-b border-[#c2c5c9] pb-1">
                                             <span class="pl-2">Value</span>
-                                            <span id="MtdValue" class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
+                                            <span id="MtdAveValue" class="font-semibold">₱{{ number_format($mtd->value ?? 44207.87, 2) }}</span>
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Time Spent</span>
-                                            <span class="font-semibold">{{ $mtd->time_spent ?? 5.89 }}</span>
+                                            <span id="MtdAveTimeSpent" class="font-semibold">{{ $mtd->time_spent ?? 5.89 }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -950,8 +950,8 @@
                                         
                                         <div class="flex w-full pt-3 justify-between">
                                             <div class="flex flex-col w-full">
-                                                <span class="font-semibold text-[12px]">MTD SALES</span>
-                                                <span class="font-semibold text-[12px]">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                                <span class="font-semibold text-[12px] whitespace-nowrap">MTD SALES</span>
+                                                <span id="mtdTotalSales" class="font-semibold text-[12px]">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
                                             </div> 
                                             <div class="flex w-full justify-end"> 
                                                 <span class="rounded-full bg-amber-200 w-10 h-10"></span>    
@@ -977,7 +977,7 @@
                                                 src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
                                             <div class="flex flex-col">
                                                 <span class="text-[8px]">Total</span>
-                                                <span class="text-[10px]">11</span>
+                                                <span id="" class="text-[10px]">11</span>
                                             </div>
                                         </div>
                                         <div class="flex flex-col">
@@ -993,7 +993,7 @@
                                         <div class="flex w-full pt-3 justify-between">
                                             <div class="flex flex-col w-full leading-4">
                                                 <span class="font-semibold text-[12px] whitespace-nowrap">DAILY SALES</span>
-                                                <span class="font-semibold text-[12px]">₱{{ number_format($stats->sales ?? 165143.86, 2) }}</span>
+                                                <span id="dailySales" class="font-semibold text-[12px]"></span>
                                             </div> 
                                             <div class="flex w-full justify-end"> 
                                                 <span class="rounded-full bg-amber-200 w-10 h-10"></span>    
@@ -1019,7 +1019,7 @@
                                                 src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
                                             <div class="flex flex-col">
                                                 <span class="text-[8px]">Total</span>
-                                                <span class="text-[10px]">11</span>
+                                                <span id="TotalSalesmanFS" class="text-[10px]">11</span>
                                             </div>
                                         </div>
                                         <div class="flex flex-col">

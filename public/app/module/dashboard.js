@@ -5,6 +5,8 @@ import DatePicker from "../helper/datePicker.js";
 
 let rows = [];
 let array = [];
+let monthArray = [];
+
 let map;
 let currentSalesman = null;
 let latest = [];
@@ -575,6 +577,7 @@ function loadDashboardData(date = null) {
         },
 
         onSuccess: (data) => {
+            
             if (loadVersion !== dashboardLoadVersion) return;
 
             if (!Array.isArray(data) || data.length === 0) {
@@ -1305,6 +1308,7 @@ $("#liveDateFilter").on("click", function () {
 });
 
 $(document).on("click", "#fitToScreen", function () {
+    // loadMonthlySalesmanData();
     if (!document.fullscreenElement) {
         mapContainer.requestFullscreen();
 
@@ -1320,6 +1324,8 @@ document.addEventListener("fullscreenchange", function () {
 function loadOperationColumns(date = null) {
     clearFitScreenTable();
 
+    loadMonthlySalesmanData();
+
     TableLoader.loadTable({
         url: "transaction/getFitScreenData",
         filters: date ? { date } : undefined,
@@ -1327,7 +1333,8 @@ function loadOperationColumns(date = null) {
         columns: OperationColumns,
 
         onSuccess: (data) => {
-            console.log("Fit Screen data:", data);
+            let TotalSales = 0;
+            let totalMtdSales = 0;
 
             requestAnimationFrame(() => {
                 if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
@@ -1337,6 +1344,33 @@ function loadOperationColumns(date = null) {
                         .draw(false);
                 }
             });
+
+            // DAILY SALES
+            array.forEach((salesman) => {
+                const transactions = salesman.salesman_transaction ?? [];
+
+                transactions.forEach((transaction) => {
+                    const details = transaction.transaction_details ?? [];
+                    details.forEach((item) => {
+                        TotalSales += Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+                    });
+                });
+            });
+
+            // MTD SALES
+            monthArray.forEach((salesman) => {
+                const transactions = salesman.salesman_transaction ?? [];
+                transactions.forEach((transaction) => {
+                    const details = transaction.transaction_details ?? [];
+                    details.forEach((item) => {
+                        totalMtdSales += Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+                    });
+                });
+            });
+
+            $("#dailySales").text(formatCurrency(TotalSales));
+            $("#TotalSalesmanFS").text(array.length);
+            $("#mtdTotalSales").text(formatCurrency(totalMtdSales));
         },
     });
 }
@@ -1362,7 +1396,7 @@ function loadFitScreenTable(date = null, orderType = null) {
 
         filterRows: (rows) => {
             if (!orderType) return rows; // no filter = show everyone
-
+            
             return rows
                 .map((salesman) => {
                     const transactions = salesman.salesman_transaction ?? [];
@@ -1665,8 +1699,13 @@ function getSidePanelContent(transaction) {
     const transactions = transaction.salesman_transaction ?? [];
     const selectedTransaction = transactions[storeIndex] ?? transactions[0];
     const store = selectedTransaction?.transaction_store;
+    const StartTime = moment(selectedTransaction.transaction_date);
+    const EndTime = moment( `${StartTime.format("YYYY-MM-DD")} ${selectedTransaction.end_transaction}`,
+        "YYYY-MM-DD HH:mm:ss"
+    );
 
-    console.log("llods", transactions);
+    const TimeSpent = EndTime.diff(StartTime, "minutes");
+
     let countUnproductive = 0;
     transactions.forEach(UnProductive => {
         if(UnProductive.transaction_details.length == 0){
@@ -1676,19 +1715,15 @@ function getSidePanelContent(transaction) {
 
     const markerNumber = (storeIndex ?? 0) + 1;
 
-    // calculateTransactionToStoreDistance(transactions,store,salesman);
     const dayResult = calculateTransactionToStoreDistance(
         transactions,
         salesman,
     );
 
-    // These values belong to the salesman
-    $("#onSiteTransCount").text(dayResult.insideCount);
-    $("#offSiteTransCount").text(dayResult.outsideCount);
-
     const distanceTravel = selectedTransaction?.distance_travel ?? "0 Km";
 
     console.log("pa", transaction);
+
     const VisitedStore = transaction.salesman_transaction.length;
 
     const transactionDate = selectedTransaction?.transaction_date;
@@ -1704,7 +1739,6 @@ function getSidePanelContent(transaction) {
         ? transTimeMoment.format("h:mm:ss A")
         : "----";
 
-    // --- Attendance: first transaction of the SAME DAY as the selected transaction ---
     const sameDayTransactions = transTimeMoment
         ? transactions.filter((t) =>
               moment(t.transaction_date, "YYYY-MM-DD HH:mm:ss").isSame(
@@ -1728,18 +1762,6 @@ function getSidePanelContent(transaction) {
         ? attendanceMoment.format("h:mm:ss A")
         : "----";
 
-    // --- Time Spent: selected transaction time minus attendance (first transaction) ---
-    let timeSpent = "N/A";
-    if (attendanceMoment && transTimeMoment) {
-        const duration = moment.duration(
-            transTimeMoment.diff(attendanceMoment),
-        );
-        const hours = Math.floor(duration.asHours());
-        const minutes = duration.minutes();
-        timeSpent = `${hours}h ${minutes}m`;
-    }
-
-    // Attendance Early/Late (unchanged)
     if (transTimeMoment) {
         const cutoff = moment(transTimeMoment).set({
             hour: 8,
@@ -1759,10 +1781,13 @@ function getSidePanelContent(transaction) {
     $("#storeName").text(store?.store_name ?? "No Store");
     $("#time_in").text(timeIn); // now = actual attendance time, not duplicate of transaction time
     $("#transaction_time").text(TransactionTime);
-    $("#TimeSpent").text(timeSpent); // ← new field
+    $("#TimeSpent").text(`${TimeSpent} Mins`); // ← new field
     $(".TransactionDate").text(formattedDate);
     $("#DistanceTravel").text(distanceTravel);
     $("#currentUnproductive").text(countUnproductive);
+        // These values belong to the salesman
+    $("#onSiteTransCount").text(dayResult.insideCount);
+    $("#offSiteTransCount").text(dayResult.outsideCount);
 
     refreshSelectedSalesmanSummary();
 }
@@ -1795,10 +1820,34 @@ function refreshSelectedSalesmanSummary() {
                 let MonthtotalSales = 0;
                 let MonthSkuCount = 0;
                 let MtdProductiveCall = 0;
+                let storeCount = 0;
+                let countMtdUnproductive = 0;
+                let transaction = [];
+                let salesmanTransaction = [];
+                let QuantityInTransaction = 0;
+                let averageItem;
+                let SumOfprice = 0
+                let averageValue = 0;
+                let TotalTimeSpent = 0;
                 
-                let buying_store = summary.salesman_store;
-                const unique_transaction = summary.salesman_transaction;
-                
+                summary.forEach(salesman => {
+                    transaction = salesman.salesman_transaction ?? [];
+                    transaction.forEach(perTransaction => {
+                        salesmanTransaction.push(
+                            ...(perTransaction.transaction_details ?? [])
+                        );
+                    });
+                });
+
+                salesmanTransaction.forEach(totalQuantity => {
+                    if(totalQuantity.quantity){
+                        QuantityInTransaction += totalQuantity.quantity
+                        SumOfprice += (totalQuantity.quantity * totalQuantity.current_price);
+                    }
+                });
+                averageValue = SumOfprice / transaction.length;
+                averageItem = QuantityInTransaction / transaction.length;
+            
                 const filterMonth = moment(selectedDashboardDate, "YYYY-MM-DD");
 
                 const salesmanRecord = summary?.find(
@@ -1808,6 +1857,19 @@ function refreshSelectedSalesmanSummary() {
                 const monthTransactions = (salesmanRecord?.salesman_transaction ?? [] ).filter((transaction) =>
                     moment(transaction.transaction_date,"YYYY-MM-DD HH:mm:ss",).isSame(filterMonth, "month"),
                 );
+                
+                // for getting timespent
+                monthTransactions.forEach(transaction => {
+                    const StartTime = moment(transaction.transaction_date);
+
+                    const EndTime = moment(
+                        `${StartTime.format("YYYY-MM-DD")} ${transaction.end_transaction}`,
+                        "YYYY-MM-DD HH:mm:ss"
+                    );
+
+                    const TimeSpent = EndTime.diff(StartTime, "minutes");
+                    TotalTimeSpent += TimeSpent;
+                });
 
                 monthTransactions.forEach((transaction) => {
                     const details = transaction.transaction_details ?? [];
@@ -1820,8 +1882,6 @@ function refreshSelectedSalesmanSummary() {
                     });
                 });
 
-                let countMtdUnproductive = 0;
-
                 monthTransactions.forEach((transaction) => {
                     const details = transaction.transaction_details ?? [];
 
@@ -1832,7 +1892,7 @@ function refreshSelectedSalesmanSummary() {
 
                 const mtdRadiusResult = salesmanRecord ? calculateTransactionToStoreDistance( monthTransactions,salesmanRecord )
                     : { insideCount: 0, outsideCount: 0 };
-
+                
                 $("#MtdOnSiteTransCount").text(mtdRadiusResult.insideCount);
                 $("#MtdOutsideTransCount").text(mtdRadiusResult.outsideCount);
 
@@ -1841,7 +1901,6 @@ function refreshSelectedSalesmanSummary() {
 
                 const formattedTotal = formatCurrency(MonthtotalSales);
                 
-                let storeCount = 0;
                 summary.forEach(store => {
                     storeCount = store.salesman_store.length;
                 });
@@ -1858,18 +1917,18 @@ function refreshSelectedSalesmanSummary() {
                         }
                    });
                 })
-                
+                const hours = Math.floor(TotalTimeSpent / 60);
+                const minutes = TotalTimeSpent % 60;
                 const CountUnique = uniqueStores.size;
-                console.log("Unique buying stores:", CountUnique);
 
                 $("#MtdSalesmanTotal_Sales").text(formattedTotal);
                 $("#MtdSku").text(MonthSkuCount);
-                $("#MtdValue").text(formattedTotal);
                 $("#unProductiveCount").text(countMtdUnproductive);
                 $("#ActiveBuying").text(storeCount);
                 $("#uniqueBuying").text(CountUnique);
-                // $("#SkuCount").text(`(${MonthSkuCount} SKU)`);
-                // $("#sku_sales").text(formattedTotal);
+                $("#MtdAveItem").text(Math.round(averageItem));
+                $("#MtdAveValue").text(Math.round(averageValue));
+                $("#MtdAveTimeSpent").text(`${hours}h ${minutes}m`);
 
                 return;
             }
@@ -1991,3 +2050,26 @@ function clearFitScreenTable() {
 
     $("#fitScreenTable").empty();
 }
+
+function loadMonthlySalesmanData() {
+        Api.get({
+            url: "salesman/getSalesmanWithTransaction",
+            data: {
+                date: selectedDashboardDate,
+                period: "mtd"
+            },
+            onSuccess: (data) => {
+                monthArray = Array.isArray(data) ? data : [];
+
+                console.log("MONTH ARRAY:");
+
+                // resolve(monthArray);
+            },
+            onError: (error) => {
+                console.error("Failed to load monthly data:", error);
+                reject(error);
+            },
+        });
+}
+
+loadMonthlySalesmanData();

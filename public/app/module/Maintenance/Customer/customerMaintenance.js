@@ -141,16 +141,30 @@ $(document)
     });
 
 function DisplayCustomerInfo(rowData) {
-    const fields = [
-        "salesman_name", "customer_name", "contact", "landline",
-        "contact_person", "address", "customer_type", "mcp_day",
-        "freq_cat", "mcp_schedule", "price_code"
-    ];
+    const salesman = rowData?.salesman_details ?? {};
+    const store = rowData?.store_details ?? {};
+    console.log("ges",salesman);
+    const fields = {
+        salesman_name: salesman?.salesman_name,
+        customer_name: store?.store_name,
+        contact: store?.mobile_no,
+        landline: store?.landline_no,
+        contact_person: store?.contact_person,
+        address: store?.address,
+        customer_type: store?.order_type,
+        mcp_day: rowData?.days,
+        freq_cat: rowData?.call_frequency,
+        mcp_schedule: rowData?.week,
+        price_code: rowData?.price_code,
+    };
 
-    fields.forEach((field) => {
-        const value = rowData[field];
+    Object.entries(fields).forEach(([field, value]) => {
         $(`#customerModalBody [data-field="${field}"]`).text(
-            value !== undefined && value !== null && value !== "" ? value : "—"
+            value !== undefined &&
+            value !== null &&
+            value !== ""
+                ? value
+                : "—"
         );
     });
 

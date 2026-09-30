@@ -187,8 +187,6 @@ function setSalesmanToggle(id, isOn) {
     $state.toggleClass("text-green-600", checked);
 }
 
-// Fire once here too, since toggles inside a <dialog> may not exist yet at initial page load
-// depending on when the modal partial is injected — safe to leave alongside the earlier binding.
 $(document).on("change", ".salesman-toggle", function () {
     const stateEl = document.getElementById(`${this.id}_state`);
     const offText = this.dataset.offText;

@@ -174,6 +174,7 @@ $fitScreenData = $fitScreenData
         'remarks'          => $request->remarks,
         'order_type'       => $salesman->default_ord_type,
         'payment_type'     => $request->payment_type,
+        'end_transction'   => $request->end_transaction,
 
         'api_status'       => $request->api_status ?? "PENDING",
         'api_response'     => $request->api_response ?? null,
