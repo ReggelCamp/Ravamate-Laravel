@@ -11,6 +11,18 @@
         .Salesman_Card {
             box-shadow: 2px 2px 10px #949494;
         }
+
+        .salesman-toggle {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            color: #ffffff;  
+        }
+
+        .salesman-toggle:checked {
+            background-color: #22c55e;
+            border-color: #22c55e;
+            color: #ffffff;  
+        }
     </style>
 
     <div class="flex w-full h-full pb-20 pt-5 px-3">

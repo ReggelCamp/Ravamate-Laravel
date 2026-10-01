@@ -25,21 +25,25 @@ let storeLength = 0;
 let InfoStoreLength = 0;
 let currentInfoSalesman = null;
 
-let tableLength;
 let dashboardLoadVersion = 0;
 
 let globalSkuCount = 0;
 let globalTotalSku = 0;
-
-let TableTotalSku = 0;
-
+let selectedMinute = 0;
+let refreshTimer = null;
 let selectedDashboardDate;
 let overviewPeriod = "day";
 let summaryRequestVersion = 0;
 
 let selectedOperationType = "all_type";
-
+let yesterdaySalesmen = [];
+let prevMonthSalesmen = [];
+let prevMonthArray = [];
+let prevMonthTotalSales = 0;
 const defaultDashboardDate = moment().subtract(1, "day").format("YYYY-MM-DD");
+
+//side panel
+let TimeSpent = 0;
 
 const SalesmanColumns = [
     {
@@ -458,10 +462,44 @@ ComponentHelper.dropdown().LoadDropdownItems({
     items: MinutesDropdown,
 });
 
-$("#MinDropdown").on("click", ".dropdown-item", function () {
-    let data = $(this).data("value");
+function startRefreshTimer() {
+    if (refreshTimer) {
+        clearInterval(refreshTimer);
+        refreshTimer = null;
+    }
 
-    $("#selectedMinute").text(data);
+    if (selectedMinute <= 0) {
+        console.log("Auto refresh OFF");
+        return;
+    }
+
+    console.log(`Auto refresh every ${selectedMinute} minute(s)`);
+
+    refreshTimer = setInterval(() => {
+        console.log("Refreshing dashboard...");
+        loadDashboardData(selectedDashboardDate);
+    }, selectedMinute * 60 * 1000);
+}
+
+$(document).on(
+    "click",
+    "#MinDropdown .dropdown-item, #MinDropdownMainScreen .dropdown-item, #MinDropdownFitScreen .dropdown-item, #MinDropdownInfoTable .dropdown-item",
+    function () {
+        const value = $(this).data("value");
+
+        selectedMinute = value === "off" ? 0 : parseInt(value);
+
+        console.log("Selected minute:", selectedMinute);
+
+        startRefreshTimer();
+    }
+);
+
+$(document).on("click", "#FitScreenRefreshBtn, #MainScreenRefreshBtn , #InfoTableRefreshBtn", function (e) {
+    e.preventDefault();
+    console.log("Dashboard refreshed manually.");
+    // location.reload();
+    loadDashboardData(selectedDashboardDate);
 });
 
 function showRowDetails(rowData) {
@@ -502,14 +540,31 @@ TableLoader.tableData("#sfaQueuingModalTable", [], ProductColumns, {
     scrollY: "500px",
 });
 
+// function clearDashboardMarkers() {
+//     Object.values(markersById)
+//         .flat()
+//         .forEach(({ marker }) => marker.setMap(null));
+//     markersById = {};
+
+//     latestInfoWindow?.close();
+//     infoWindow?.close();
+//     latestInfoWindow = null;
+//     latestMarker = null;
+//     currentMarker = null;
+// }
+
 function clearDashboardMarkers() {
+    stopBouncingMarker();
+
     Object.values(markersById)
         .flat()
         .forEach(({ marker }) => marker.setMap(null));
+
     markersById = {};
 
     latestInfoWindow?.close();
     infoWindow?.close();
+
     latestInfoWindow = null;
     latestMarker = null;
     currentMarker = null;
@@ -582,7 +637,7 @@ function loadDashboardData(date = null) {
 
             if (!Array.isArray(data) || data.length === 0) {
                 console.log("no data");
-                Swal.fire("No data available on selected date");
+                Swal.fire("No data available for selected date");
                 array = [];
                 return;
             }
@@ -759,11 +814,16 @@ function displayInfoWindow() {
     google.maps.event.clearListeners(map, "click");
 
     map.addListener("click", () => {
-        if (latestInfoWindow) latestInfoWindow.close();
+        if (latestInfoWindow) {
+            latestInfoWindow.close();
+        }
+
         if (infoWindow) {
             infoWindow.close();
-            // DisplayCarousel();
         }
+
+        stopBouncingMarker();
+
         currentMarker = null;
     });
 
@@ -786,7 +846,11 @@ function displayInfoWindow() {
     });
 
     google.maps.event.addListener(infoWindow, "close", () => {
-        if (latestInfoWindow) latestInfoWindow.open(map, latestMarker);
+        currentMarker = null;
+
+        if (latestInfoWindow) {
+            latestInfoWindow.open(map, latestMarker);
+        }
     });
 
     const salesmanTransactionCount = {};
@@ -831,21 +895,24 @@ function displayInfoWindow() {
             const baseLat = Number(transaction.latitude);
             const baseLng = Number(transaction.longitude);
 
-            const posKey = `${baseLat.toFixed(6)},${baseLng.toFixed(6)}`;
+            // const posKey = `${baseLat.toFixed(6)},${baseLng.toFixed(6)}`;
 
-            const duplicateIndex = seenPositions[posKey] || 0;
-            seenPositions[posKey] = duplicateIndex + 1;
+            // const duplicateIndex = seenPositions[posKey] || 0;
+            // seenPositions[posKey] = duplicateIndex + 1;
 
-            let markerLat = baseLat;
-            let markerLng = baseLng;
+            // let markerLat = baseLat;
+            // let markerLng = baseLng;
 
-            if (duplicateIndex > 0) {
-                const offsetDistance = 0.00006 * duplicateIndex;
-                const angle = (duplicateIndex * 137.5 * Math.PI) / 180;
+            // if (duplicateIndex > 0) {
+            //     const offsetDistance = 0.00006 * duplicateIndex;
+            //     const angle = (duplicateIndex * 137.5 * Math.PI) / 180;
 
-                markerLat = baseLat + offsetDistance * Math.cos(angle);
-                markerLng = baseLng + offsetDistance * Math.sin(angle);
-            }
+            //     markerLat = baseLat + offsetDistance * Math.cos(angle);
+            //     markerLng = baseLng + offsetDistance * Math.sin(angle);
+            // }
+            const markerLat = baseLat;
+            const markerLng = baseLng;
+            
             const pinColor = salesman.color;
             console.log("bvc", pinColor);
             const marker = new google.maps.Marker({
@@ -885,6 +952,7 @@ function displayInfoWindow() {
                 store,
                 transaction,
                 storeIndex: transactionIndex,
+                // markerNumber: markerNumber,
             };
 
             marker.addListener("click", () => {
@@ -1038,6 +1106,7 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
 function InfoWindowContent(salesman, targetIndex = 0) {
     const transaction = salesman.salesman_transaction?.[targetIndex] ?? {};
 
+    const transactionTimeSpent = calculateTimeSpent(transaction);
     console.log("salesman infoWindow", salesman);
     console.log("transaction infoWindow", transaction);
     console.log("transaction storeIndex", storeIndex);
@@ -1140,7 +1209,7 @@ function InfoWindowContent(salesman, targetIndex = 0) {
                             <div class="flex justify-between pt-3">
                                 <div class="w-full">
                                     <span class="text-gray-400 block">Time Spent:</span>
-                                    <span class="font-normal text-[11px]">${transaction.time_spent ?? "N/A"}</span>
+                                    <span class="font-normal text-[11px]">${transactionTimeSpent ?? "N/A"} Mins</span>
                                 </div>
                                 <div class="flex flex-col justify-start w-full">
                                     <span class="text-gray-400 block">Distance Travel:</span>
@@ -1201,7 +1270,45 @@ function InfoWindowContent(salesman, targetIndex = 0) {
     `;
 }
 
+// function openInfoWindowFor(salesman, marker, targetIndex = 0) {
+//     currentInfoSalesman = salesman;
+//     rowData = salesman;
+//     storeIndex = targetIndex;
+
+//     updateStoreNavButtons();
+
+//     console.log(
+//         "Opening InfoWindow for:",
+//         salesman.salesman_name,
+//         "Store index:",
+//         storeIndex,
+//     );
+
+//     currentMarker = marker;
+
+//     if (latestInfoWindow) {
+//         latestInfoWindow.close();
+//     }
+
+//     marker.setAnimation(google.maps.Animation.BOUNCE);
+//     bouncingMarker = marker;
+
+//     setTimeout(() => {
+//         marker.setAnimation(null);
+//         if (bouncingMarker === marker) {
+//             bouncingMarker = null;
+//         }
+//     }, 2400);
+
+//     map.panTo(marker.getPosition());
+//     map.setZoom(17);
+
+//     infoWindow.setContent(InfoWindowContent(salesman, targetIndex));
+//     infoWindow.open(map, marker);
+// }
+
 function openInfoWindowFor(salesman, marker, targetIndex = 0) {
+    stopBouncingMarker();
     currentInfoSalesman = salesman;
     rowData = salesman;
     storeIndex = targetIndex;
@@ -1221,28 +1328,21 @@ function openInfoWindowFor(salesman, marker, targetIndex = 0) {
         latestInfoWindow.close();
     }
 
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    bouncingMarker = marker;
-
-    setTimeout(() => {
-        marker.setAnimation(null);
-        if (bouncingMarker === marker) {
-            bouncingMarker = null;
-        }
-    }, 2400);
+    bounceMarker(marker);
 
     map.panTo(marker.getPosition());
     map.setZoom(17);
 
-    infoWindow.setContent(InfoWindowContent(salesman, targetIndex));
+    infoWindow.setContent(
+        InfoWindowContent(salesman, targetIndex)
+    );
+
     infoWindow.open(map, marker);
 }
 
 $(document).ready(function () {
     DatePicker.init();
 
-    // The picker starts at today even though the initial dashboard data uses
-    // the last completed business day.
     const dashboardDatePicker = $("#dashboardDatePicker").data("daterangepicker",);
     if (dashboardDatePicker) {
         const today = moment();
@@ -1255,7 +1355,8 @@ $(document).ready(function () {
         .off("apply.daterangepicker.dashboard")
         .on("apply.daterangepicker.dashboard", function (event, picker) {
             const selectedDate = picker.startDate.format("YYYY-MM-DD");
-
+            yesterdaySalesmen = [];
+            prevMonthTotalSales = 0;
             // Clear old Fit Screen data
             clearFitScreenTable();
 
@@ -1291,12 +1392,18 @@ $(document).ready(function () {
 
 function updateLiveDateTime() {
     const now = moment();
+
+    const selectedDate = selectedDashboardDate
+        ? moment(selectedDashboardDate).format("YYYY-MM-DD")
+        : now.format("YYYY-MM-DD");
+
     const formatted =
-        now.format("ddd").toUpperCase() +
+        moment(selectedDate).format("ddd").toUpperCase() +
         " | " +
-        now.format("YYYY-MM-DD") +
+        selectedDate +
         " | " +
         now.format("hh:mm:ss A");
+
     $("#liveDateTimeText").text(formatted);
 }
 
@@ -1335,6 +1442,10 @@ function loadOperationColumns(date = null) {
         onSuccess: (data) => {
             let TotalSales = 0;
             let totalMtdSales = 0;
+            let yesterdaySales = 0;
+            let TargetTotalSales = 0;
+            let prevMonthTotalSales = 0;
+            let DailyTotalSales = 0;
 
             requestAnimationFrame(() => {
                 if ($.fn.DataTable.isDataTable("#fitScreenTable")) {
@@ -1345,10 +1456,13 @@ function loadOperationColumns(date = null) {
                 }
             });
 
+            console.log("fit screen data", prevMonthArray);
+            console.log("fit  data", monthArray);
+
             // DAILY SALES
             array.forEach((salesman) => {
                 const transactions = salesman.salesman_transaction ?? [];
-
+                DailyTotalSales += Number(salesman.sales_target ?? 0);
                 transactions.forEach((transaction) => {
                     const details = transaction.transaction_details ?? [];
                     details.forEach((item) => {
@@ -1357,9 +1471,12 @@ function loadOperationColumns(date = null) {
                 });
             });
 
+            console.log("TargetTotalSales",DailyTotalSales);
+
             // MTD SALES
             monthArray.forEach((salesman) => {
                 const transactions = salesman.salesman_transaction ?? [];
+                TargetTotalSales += Number(salesman.sales_target ?? 0);
                 transactions.forEach((transaction) => {
                     const details = transaction.transaction_details ?? [];
                     details.forEach((item) => {
@@ -1368,9 +1485,30 @@ function loadOperationColumns(date = null) {
                 });
             });
 
+            yesterdaySalesmen.forEach((salesman) => {
+                const transactions = salesman.salesman_transaction ?? [];
+                console.log("trans",transactions);
+                transactions.forEach((transaction) => {
+                    
+                    const details = transaction.transaction_details ?? [];
+                    details.forEach((item) => {
+                        yesterdaySales += Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+                    });
+                });
+            });
+            console.log("yesterdaySales",yesterdaySales);
             $("#dailySales").text(formatCurrency(TotalSales));
             $("#TotalSalesmanFS").text(array.length);
+            $("#FsDailyTarget").text(formatCurrency(monthArray.sales_target));
             $("#mtdTotalSales").text(formatCurrency(totalMtdSales));
+            $("#prevDaySalesman").text(yesterdaySalesmen.length);
+            $("#prevDaysTotalSales").text(formatCurrency(yesterdaySales));
+            $("#prevMonthMtdSales").text(formatCurrency(prevMonthTotalSales));
+            $("#currentMonthSalesman").text(monthArray.length);
+            $("#prevMtdSalesman").text(prevMonthSalesmen.length);
+            $("#FsMtdSalesTarget").text(formatCurrency(TargetTotalSales));
+
+            
         },
     });
 }
@@ -1504,11 +1642,15 @@ $(document)
 
             if (entry) {
                 currentMarker = entry.marker;
+
+                bounceMarker(entry.marker);
+
                 map.panTo(entry.marker.getPosition());
                 map.setZoom(17);
+
                 infoWindow.open(map, entry.marker);
             }
-
+            
             $("#InfoStoreName").text(newStore?.store_name ?? "No Store");
             $("#storeName").text(newStore?.store_name ?? "No Store");
 
@@ -1545,8 +1687,12 @@ $(document)
 
             if (entry) {
                 currentMarker = entry.marker;
+
+                bounceMarker(entry.marker);
+
                 map.panTo(entry.marker.getPosition());
                 map.setZoom(17);
+
                 infoWindow.open(map, entry.marker);
             }
 
@@ -1596,19 +1742,6 @@ function updateStoreNavButtons() {
         .toggleClass("nav-disabled", storeIndex >= lastIndex);
 
     refreshSelectedSalesmanSummary();
-}
-
-function getTableLength(tableId) {
-    if (!$.fn.DataTable.isDataTable("#" + tableId)) {
-        console.log("DataTable not initialized:", tableId);
-        return 0;
-    }
-
-    const table = $("#" + tableId).DataTable();
-
-    const length = table.rows().count();
-
-    return length;
 }
 
 $(document)
@@ -1699,12 +1832,7 @@ function getSidePanelContent(transaction) {
     const transactions = transaction.salesman_transaction ?? [];
     const selectedTransaction = transactions[storeIndex] ?? transactions[0];
     const store = selectedTransaction?.transaction_store;
-    const StartTime = moment(selectedTransaction.transaction_date);
-    const EndTime = moment( `${StartTime.format("YYYY-MM-DD")} ${selectedTransaction.end_transaction}`,
-        "YYYY-MM-DD HH:mm:ss"
-    );
-
-    const TimeSpent = EndTime.diff(StartTime, "minutes");
+    TimeSpent = calculateTimeSpent(selectedTransaction);
 
     let countUnproductive = 0;
     transactions.forEach(UnProductive => {
@@ -1779,16 +1907,15 @@ function getSidePanelContent(transaction) {
     $("#VisitedStore").text(VisitedStore);
     $("#call_time").text(salesman.call_time ?? "NULL");
     $("#storeName").text(store?.store_name ?? "No Store");
-    $("#time_in").text(timeIn); // now = actual attendance time, not duplicate of transaction time
+    $("#time_in").text(timeIn); 
     $("#transaction_time").text(TransactionTime);
-    $("#TimeSpent").text(`${TimeSpent} Mins`); // ← new field
+    $("#TimeSpent").text(TimeSpent != null ? `${TimeSpent} Mins` : "N/A");
     $(".TransactionDate").text(formattedDate);
     $("#DistanceTravel").text(distanceTravel);
     $("#currentUnproductive").text(countUnproductive);
-        // These values belong to the salesman
     $("#onSiteTransCount").text(dayResult.insideCount);
     $("#offSiteTransCount").text(dayResult.outsideCount);
-
+    $("#SalesmanDailyTarget").text(formatCurrency(transaction.sales_target ?? 0));
     refreshSelectedSalesmanSummary();
 }
 
@@ -1995,6 +2122,13 @@ $(document).on("click", "#OperationTypeItems .dropdown-item", function () {
 
     // Reload/filter dashboard
     loadDashboardData(selectedDashboardDate);
+    $("#FilterOperation").text(
+    selectedOperationType
+        ? selectedOperationType
+              .replace(/_/g, " ")
+              .replace(/\b\w/g, (char) => char.toUpperCase())
+        : "All Operation"
+);
 });
 
 // Fullscreen Fit Screen operation dropdown
@@ -2052,24 +2186,130 @@ function clearFitScreenTable() {
 }
 
 function loadMonthlySalesmanData() {
-        Api.get({
-            url: "salesman/getSalesmanWithTransaction",
-            data: {
-                date: selectedDashboardDate,
-                period: "mtd"
-            },
-            onSuccess: (data) => {
-                monthArray = Array.isArray(data) ? data : [];
 
-                console.log("MONTH ARRAY:");
+    const prevMonthDate = moment(selectedDashboardDate)
+        .subtract(1, "month")
+        .endOf("month")
+        .format("YYYY-MM-DD");
 
-                // resolve(monthArray);
-            },
-            onError: (error) => {
-                console.error("Failed to load monthly data:", error);
-                reject(error);
-            },
-        });
+    console.log("Selected date:", selectedDashboardDate);
+    console.log("Previous month date:", prevMonthDate);
+
+    // Current selected month
+    Api.get({
+        url: "salesman/getSalesmanWithTransaction",
+        data: {
+            date: selectedDashboardDate,
+            period: "mtd",
+        },
+        onSuccess: (data) => {
+
+            monthArray = Array.isArray(data) ? data : [];
+
+            console.log("Current month data:", monthArray);
+
+            countYesterdaySalesman(monthArray);
+        },
+        onError: (error) => {
+            console.error("Failed to load current monthly data:", error);
+        },
+    });
+
+    // Previous month
+    Api.get({
+        url: "salesman/getSalesmanWithTransaction",
+        data: {
+            date: prevMonthDate,
+            period: "mtd",
+        },
+        onSuccess: (data) => {
+
+            prevMonthArray  = Array.isArray(data) ? data : [];
+
+            countPrevMonth(prevMonthArray);
+        },
+        onError: (error) => {
+            console.error("Failed to load previous month data:", error);
+        },
+    });
 }
 
-loadMonthlySalesmanData();
+function countYesterdaySalesman(data) {
+    yesterdaySalesmen = [];
+
+    const yesterday = moment(selectedDashboardDate)
+        .subtract(1, "day")
+        .format("YYYY-MM-DD");
+
+    data.forEach((salesman) => {
+        const transactions = salesman.salesman_transaction ?? [];
+
+        const yesterdayTransactions = transactions.filter((transaction) => {
+            const transactionDate = moment(
+                transaction.transaction_date,
+                "YYYY-MM-DD HH:mm:ss"
+            ).format("YYYY-MM-DD");
+
+            return transactionDate === yesterday;
+        });
+
+        if (yesterdayTransactions.length > 0) {
+            yesterdaySalesmen.push({
+                ...salesman,
+                salesman_transaction: yesterdayTransactions
+            });
+        }
+    });
+}
+
+function countPrevMonth(data) {
+    data.forEach((salesman) => {
+        const transactions = salesman.salesman_transaction ?? [];
+        prevMonthSalesmen.push({
+            ...salesman,
+            salesman_transaction: transactions
+        });
+        transactions.forEach((transaction) => {
+            const details = transaction.transaction_details ?? [];
+            details.forEach((item) => {
+                const sales = Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+                prevMonthTotalSales += sales;
+            });
+        });
+    });
+}
+
+function calculateTimeSpent(transaction) {
+    if (!transaction?.transaction_date || !transaction?.end_transaction) {
+        return null;
+    }
+
+    const startTime = moment(
+        transaction.transaction_date,
+        "YYYY-MM-DD HH:mm:ss"
+    );
+
+    const endTime = moment(
+        `${startTime.format("YYYY-MM-DD")} ${transaction.end_transaction}`,
+        "YYYY-MM-DD HH:mm:ss"
+    );
+
+    return endTime.diff(startTime, "minutes");
+}
+
+function bounceMarker(marker) {
+    if (!marker) return;
+ 
+    // Stop whatever marker is currently bouncing
+    stopBouncingMarker();
+    marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    bouncingMarker = marker;
+}
+
+function stopBouncingMarker() {
+    if (bouncingMarker) {
+        bouncingMarker.setAnimation(null);
+        bouncingMarker = null;
+    }
+}

@@ -446,7 +446,7 @@
                                             <span class="font-bold text-sm">{{ $stats->sales_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target</span>
-                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                                <span id="SalesmanDailyTarget" class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -855,7 +855,7 @@
                                                         <span
                                                             class="flex items-center gap-2 text-[11.2px] justify-evenly w-full h-full font-semibold">
                                                             <i class="fa-regular fa-clock"></i>
-                                                            <span id="selectedMinute">OFF</span>
+                                                            <span id="selectedMinuteMain">OFF</span>
                                                             <i class="fa-solid fa-angle-down text-[8px]"></i>
                                                         </span>
                                                     </x-slot:dropdownName>
@@ -868,8 +868,9 @@
                                             </div>
 
                                             <div
+                                                id="FitScreenRefreshBtn"
                                                 class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
-                                                <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
+                                                <i  class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                                             </div>
                                         </div>
                                         <div class="w-full h-[30px] sm:w-auto">
@@ -923,6 +924,7 @@
                                                         </div>
 
                                                         <div
+                                                            id="MainScreenRefreshBtn"
                                                             class="w-fit px-2 h-[25px] shine-bgBtn rounded-full flex justify-center items-center ">
                                                             <i class="fa-solid fa-arrow-rotate-right text-[10px] "></i>
                                                         </div>
@@ -960,14 +962,12 @@
                                         
                                         <div class="flex flex-col w-full">
                                             <span class="text-[8px]">Target</span>
-                                            <span class="text-[10px]">0.00</span>
+                                            <span id="FsMtdSalesTarget" class="text-[10px]">0.00</span>
                                         </div>
 
                                         <div class="flex flex-col w-full">
                                             <span class="text-[8px]">Previous Month MTD Sales</span>
-                                            <span class="text-[10px]">
-                                                50,000.00
-                                            </span>
+                                            <span class="text-[10px]" id="prevMonthMtdSales">0.00</span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col w-full px-2 pt-3 gap-2">
@@ -977,12 +977,12 @@
                                                 src="https://cdo.sfa-plus.com/SFA/v2/img/salesmanPic6.svg" />
                                             <div class="flex flex-col">
                                                 <span class="text-[8px]">Total</span>
-                                                <span id="" class="text-[10px]">11</span>
+                                                <span id="currentMonthSalesman" class="text-[10px]">11</span>
                                             </div>
                                         </div>
                                         <div class="flex flex-col">
                                             <span class="text-[8px]">Previous Month Salesman</span>
-                                            <span class="text-[10px]">50,000.00</span>
+                                            <span id="prevMtdSalesman" class="text-[10px]">50,000.00</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1002,14 +1002,12 @@
                                         
                                         <div class="flex flex-col w-full">
                                             <span class="text-[8px]">Target</span>
-                                            <span class="text-[10px]">0.00</span>
+                                            <span id="FsDailyTarget" class="text-[10px]">0.00</span>
                                         </div>
 
                                         <div class="flex flex-col w-full">
                                             <span class="text-[8px]">Previous Day Sales</span>
-                                            <span class="text-[10px]">
-                                                50,000.00
-                                            </span>
+                                            <span id="prevDaysTotalSales" class="text-[10px]">50,000.00</span>
                                         </div>
                                     </div>
                                     <div class="flex flex-col w-full px-2 pt-3 gap-2">
@@ -1024,7 +1022,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <span class="text-[8px]">Previous Day Salesman</span>
-                                            <span class="text-[10px]">50,000.00</span>
+                                            <span id="prevDaySalesman" class="text-[10px]">50,000.00</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1074,7 +1072,7 @@
                                 <x-dropdown id="OperationTypeDropdown" class="w-full"
                                     buttonClass="h-[30px] w-fit px-5 items-center  flex justify-center rounded-2xl px-3 shine-bgBtn">
                                     <x-slot:dropdownName>
-                                        <span class="text-[11.2px]  font-semibold gap-5">
+                                        <span id="FilterOperation" class="text-[11.2px]  font-semibold gap-5">
                                             Operation Type
                                             <i class="fa-solid fa-angle-down text-[8px]"></i>
                                         </span>
@@ -1118,7 +1116,7 @@
                                     </x-dropdown>
                                 </div>
 
-                                <div class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
+                                <div id="InfoTableRefreshBtn" class="w-fit px-2 h-[30px] shine-bgBtn rounded-full flex justify-center items-center ">
                                     <i class="fa-solid fa-arrow-rotate-right text-[13px] "></i>
                                 </div>
                             </div>

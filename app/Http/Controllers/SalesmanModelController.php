@@ -133,95 +133,138 @@ class SalesmanModelController extends Controller
         });
     }
 
-    public function updateSalesman(Request $request){
-        $salesman = SalesmanModel::find($request->id);
+    // public function updateSalesman(Request $request){
+    //     $salesman = SalesmanModel::find($request->id);
 
-        if (!$salesman) {
-            return response()->json([
-                'message' => 'Salesman not found.'
-            ], 404);
-        }
+    //     if (!$salesman) {
+    //         return response()->json([
+    //             'message' => 'Salesman not found.'
+    //         ], 404);
+    //     }
 
-        $salesman->update([
-            'salesman_name'      => $request->salesman_name,
-            'call_time'          => $request->call_time,
-            'default_ord_type'   => $request->default_ord_type,
-            'loading_capacity'   => $request->loading_capacity,
-            'color'              => $request->color,
-            'contact_no'         => $request->contact_no,
-            'cashier_no'         => $request->cashier_no,
-            'supervisor_name'    => $request->supervisor_name,
-            'supervisor_no'      => $request->supervisor_no,
-            'geolocking'         => $request->geolocking,
-            'price_code'         => $request->price_code,
-            'bo_warehouse'       => $request->bo_warehouse,
-            'gs_warehouse'       => $request->gs_warehouse,
-            'osa_checking'       => $request->osa_checking,
-            'eod'                => $request->eod,
-            'is_hybrid'          => $request->is_hybrid,
-            'restrict_customer'  => $request->restrict_customer,
-            'disable_otp'        => $request->disable_otp,
+    //     $salesman->update ([
+    //         'salesman_name'      => $request->salesman_name,
+    //         'call_time'          => $request->call_time,
+    //         'default_ord_type'   => $request->default_ord_type,
+    //         'loading_capacity'   => $request->loading_capacity,
+    //         'color'              => $request->color,
+    //         'contact_no'         => $request->contact_no,
+    //         'cashier_no'         => $request->cashier_no,
+    //         'supervisor_name'    => $request->supervisor_name,
+    //         'supervisor_no'      => $request->supervisor_no,
+    //         'geolocking'         => $request->geolocking,
+    //         'price_code'         => $request->price_code,
+    //         'bo_warehouse'       => $request->bo_warehouse,
+    //         'gs_warehouse'       => $request->gs_warehouse,
+    //         'osa_checking'       => $request->osa_checking,
+    //         'eod'                => $request->eod,
+    //         'is_hybrid'          => $request->is_hybrid,
+    //         'restrict_customer'  => $request->restrict_customer,
+    //         'disable_otp'        => $request->disable_otp,
+    //         'sales_target'        => $request->sales_target,
+    //         'markup'              => $request->markup,
+    //     ]);
+
+    //     return response()->json([
+    //         'message' => 'Salesman saved successfully.',
+    //         'salesman' => $salesman->fresh(),
+    //     ], 200);
+    // }
+
+    
+    public function updateSalesman(Request $request)
+{
+    $salesman = SalesmanModel::find($request->id);
+
+    if (!$salesman) {
+        return response()->json([
+            'message' => 'Salesman not found.'
+        ], 404);
+    }
+
+    $data = $request->only([
+        'salesman_name',
+        'call_time',
+        'default_ord_type',
+        'loading_capacity',
+        'color',
+        'contact_no',
+        'cashier_no',
+        'supervisor_name',
+        'supervisor_no',
+        'geolocking',
+        'price_code',
+        'bo_warehouse',
+        'gs_warehouse',
+        'osa_checking',
+        'eod',
+        'is_hybrid',
+        'restrict_customer',
+        'disable_otp',
+        'sales_target',
+        'markup',
+    ]);
+
+    $salesman->update($data);
+
+    return response()->json([
+        'message' => 'Salesman saved successfully.',
+        'salesman' => $salesman->fresh(),
+    ], 200);
+}
+    public function getSalesmanWithTransaction(Request $request){
+        $validated = $request->validate([
+            'date'        => ['nullable', 'date_format:Y-m-d'],
+            'salesman_id' => ['nullable', 'integer', 'exists:salesman,id'],
+            'period'      => ['nullable', 'in:day,mtd'],
         ]);
 
-        return response()->json([
-            'message' => 'Salesman saved successfully.',
-            'salesman' => $salesman->fresh(),
-        ], 200);
-    }
+        $date = $validated['date'] ?? null;
+        $salesmanId = $validated['salesman_id'] ?? null;
+        $period = $validated['period'] ?? 'day';
 
-public function getSalesmanWithTransaction(Request $request){
-    $validated = $request->validate([
-        'date'        => ['nullable', 'date_format:Y-m-d'],
-        'salesman_id' => ['nullable', 'integer', 'exists:salesman,id'],
-        'period'      => ['nullable', 'in:day,mtd'],
-    ]);
+        $rangeStart = null;
+        $rangeEnd = null;
 
-    $date = $validated['date'] ?? null;
-    $salesmanId = $validated['salesman_id'] ?? null;
-    $period = $validated['period'] ?? 'day';
+        if ($date) {
+            $businessDate = Carbon::createFromFormat('Y-m-d', $date);
 
-    $rangeStart = null;
-    $rangeEnd = null;
+            $rangeStart = $period === 'mtd'
+                ? $businessDate->copy()->startOfMonth()
+                : $businessDate->copy()->startOfDay();
 
-    if ($date) {
-        $businessDate = Carbon::createFromFormat('Y-m-d', $date);
-
-        $rangeStart = $period === 'mtd'
-            ? $businessDate->copy()->startOfMonth()
-            : $businessDate->copy()->startOfDay();
-
-        $rangeEnd = $businessDate->copy()->endOfDay();
-    }
-
-    $applyDateRange = function ($query) use ($rangeStart, $rangeEnd) {
-        if ($rangeStart && $rangeEnd) {
-            $query->whereBetween('transaction_date', [$rangeStart, $rangeEnd]);
+            $rangeEnd = $businessDate->copy()->endOfDay();
         }
-    };
 
-    $query = SalesmanModel::with([
-        'salesmanTransaction' => function ($q) use ($applyDateRange) {
-            $applyDateRange($q);
-        },
-        'salesmanTransaction.transactionDetails.productDetails',
-        'salesmanTransaction.TransactionStore',
-        'SalesmanStore'
-    ]);
+        $applyDateRange = function ($query) use ($rangeStart, $rangeEnd) {
+            if ($rangeStart && $rangeEnd) {
+                $query->whereBetween('transaction_date', [$rangeStart, $rangeEnd]);
+            }
+        };
 
-    if ($rangeStart) {
-        $query->whereHas('salesmanTransaction', function ($q) use ($applyDateRange) {
-            $applyDateRange($q);
-        });
+        $query = SalesmanModel::with([
+            'salesmanTransaction' => function ($q) use ($applyDateRange) {
+                $applyDateRange($q);
+            },
+            'salesmanTransaction.transactionDetails.productDetails',
+            'salesmanTransaction.TransactionStore',
+            'SalesmanStore'
+        ]);
+
+        if ($rangeStart) {
+            $query->whereHas('salesmanTransaction', function ($q) use ($applyDateRange) {
+                $applyDateRange($q);
+            });
+        }
+
+        if ($salesmanId) {
+            $query->whereKey($salesmanId);
+        }
+
+        $salesman = $query->get();
+
+        return response()->json($salesman);
     }
-
-    if ($salesmanId) {
-        $query->whereKey($salesmanId);
-    }
-
-    $salesman = $query->get();
-
-    return response()->json($salesman);
-}
 
     public function getSalesmanStore(){
         $stores = SalesmanModel::with('SalesmanStore')->get();

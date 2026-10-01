@@ -56,6 +56,59 @@
         </div>
     </div>
 
+<dialog id="SalesTargetModal" class="modal">
+    <div class="modal-box p-0 w-11/12 max-w-3xl rounded-lg">
+
+        {{-- Header --}}
+        <div class="flex items-center justify-between px-6 py-4 border-b border-base-300">
+            <h3 class="text-2xl font-medium">Sales Target</h3>
+            <button type="button" class="btn btn-sm btn-circle btn-ghost text-xl"
+                onclick="SalesTargetModal.close()">✕</button>
+        </div>
+
+        {{-- Body --}}
+        <form id="SalesTargetForm" novalidate class="px-6 py-2">
+            <input type="hidden" id="salesTarget_Id" name="id" />
+
+            <div class="grid grid-cols-[200px_1fr] items-center py-3 border-b border-base-300">
+                <span class="font-semibold">Salesman</span>
+                <span id="salesTarget_Salesman" class="font-semibold"></span>
+            </div>
+
+            <div class="grid grid-cols-[200px_1fr] items-center py-3 border-b border-base-300">
+                <span class="font-semibold">Year</span>
+                <span id="salesTarget_Year" class="font-semibold"></span>
+            </div>
+
+            <div class="grid grid-cols-[200px_1fr] items-center py-3 border-b border-base-300">
+                <span class="font-semibold">Month</span>
+                <span id="salesTarget_Month" class="font-semibold"></span>
+            </div>
+
+            <div class="grid grid-cols-[200px_1fr] items-center py-3 border-b border-base-300">
+                <label for="salesTarget_Amount" class="font-semibold">Sales Target</label>
+                <input type="number" id="salesTarget_Amount" name="sales_target"
+                    min="0" step="0.0001" class="input input-bordered w-full" />
+            </div>
+
+            <div class="grid grid-cols-[200px_1fr] items-center py-3 border-b border-base-300">
+                <label for="salesTarget_Markup" class="font-semibold">Markup (%)</label>
+                <input type="number" id="salesTarget_Markup" name="markup"
+                    min="0" step="0.01" class="input input-bordered w-full" />
+            </div>
+        </form>
+
+        {{-- Footer --}}
+        <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-base-300">
+            <button id="updateSalesTarget" type="submit" form="SalesTargetForm" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-ghost" onclick="SalesTargetModal.close()">Close</button>
+        </div>
+    </div>
+
+    {{-- click on backdrop closes the modal --}}
+    <form method="dialog" class="modal-backdrop"><button>close</button></form>
+</dialog>
+
 @endsection
 
 <script type="module" src="/app/module/Maintenance/Others/SalesTarget.js"></script>

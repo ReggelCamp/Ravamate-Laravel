@@ -197,8 +197,8 @@ $(document).on("change", ".salesman-toggle", function () {
     stateEl.classList.toggle("text-[#e6231e]", !this.checked);
     stateEl.classList.toggle("text-green-600", this.checked);
 
-    this.classList.toggle("toggle-error", !this.checked);
-    this.classList.toggle("toggle-success", this.checked);
+    // this.classList.toggle("toggle-error", !this.checked);
+    // this.classList.toggle("toggle-success", this.checked);
 });
 
 function toggleSalesmanPassword(btn) {
