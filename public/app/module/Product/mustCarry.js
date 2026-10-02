@@ -2,7 +2,7 @@ import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
 import ComponentHelper from "../../helper/ComponentHelper.js";
-
+import Api from "../../helper/Api.js";
 
 const MustCarryColumns = [
     {
@@ -23,69 +23,28 @@ const MustCarryColumns = [
     },
     {
         title: "Date Created",
-        data: "date_created",
+        data: "created_at",
+        render: function (data) {
+            if (!data) return "—";
+
+            return moment(data).format("MMM DD, YYYY");
+        },
     },
 ];
 
-const sampleData = [
-    {
-        customer_type: "Supermarket",
-        item_number: "MC-1001",
-        description: "Coca-Cola 1.5L",
-        is_active: "Yes",
-        date_created: "2026-08-07",
-    },
-    {
-        customer_type: "Convenience Store",
-        item_number: "MC-1002",
-        description: "Lay's Classic 150g",
-        is_active: "Yes",
-        date_created: "2026-08-06",
-    },
-    {
-        customer_type: "Drugstore",
-        item_number: "MC-1003",
-        description: "Colgate Toothpaste 150g",
-        is_active: "No",
-        date_created: "2026-08-05",
-    },
-    {
-        customer_type: "Wholesale",
-        item_number: "MC-1004",
-        description: "Nescafé Classic 200g",
-        is_active: "Yes",
-        date_created: "2026-08-04",
-    },
-    {
-        customer_type: "Hypermarket",
-        item_number: "MC-1005",
-        description: "Fresh Milk 1L",
-        is_active: "Yes",
-        date_created: "2026-08-03",
-    },
-];
+let selectedId = null;
+let selectedValue = null;
+let selectedOrderType = null;
+let SelectedData = [];
 
-const ProductOptions = [
-    { data: "ITM-1001", title: "Coca-Cola 1.5L" },
-    { data: "ITM-1002", title: "Pepsi 1.5L" },
-    { data: "ITM-1003", title: "Nescafe 3-in-1 Original" },
-    { data: "ITM-1004", title: "Lucky Me Pancit Canton" },
-    { data: "ITM-1005", title: "Milo Chocolate Drink 300g" },
-    { data: "ITM-1006", title: "Colgate Toothpaste 150g" },
-    { data: "ITM-1007", title: "Palmolive Shampoo 350ml" },
-    { data: "ITM-1008", title: "Century Tuna Flakes 155g" },
-    { data: "ITM-1009", title: "Piattos Cheese 85g" },
-    { data: "ITM-1010", title: "Bear Brand Powdered Milk 300g" },
-];
-
-TableLoader.tableData(
-    "#mustCarryTable",
-    sampleData,
-    MustCarryColumns,
-    {
-
-    },
-);
+function DisplayMustCarryTable() {
+    TableLoader.loadTable({
+        url: "mustcarry/getMustCarryTable",
+        tableId: "#mustCarryTable",
+        columns: MustCarryColumns,
+    });
+}
+DisplayMustCarryTable();
 
 $(document).ready(function () {
     DatePicker.init();
@@ -121,23 +80,84 @@ function DisplayMustCarryInfo(rowData) {
         rowData.customer_type ?? "—",
     );
 
-    const itemLabel =
-        rowData.item_number && rowData.item_description
-            ? `${rowData.item_number} - ${rowData.item_description}`
-            : (rowData.must_carry_item ?? "—");
+    $("#DisplayedItem").text(
+        rowData.description ?? "—"
+    );
 
-    $('#mustCarryModalBody [data-field="must_carry_item"]').text(itemLabel);
+    // const itemLabel =
+    //     rowData.item_number && rowData.item_description
+    //         ? `${rowData.item_number} - ${rowData.item_description}`
+    //         : (rowData.must_carry_item ?? "—");
+
+    // $('#mustCarryModalBody [data-field="must_carry_item"]').text(itemLabel);
 
     $("#MustCarryModal").data("record", rowData);
 
     document.getElementById("MustCarryModal").showModal();
 }
 
-$(document).on("click", "#deleteMustCarryBtn", function () {
+$(document).on("click", "#deleteMustCarryBtn", function (e) {
+    e.preventDefault();
     const record = $("#MustCarryModal").data("record");
+     console.log("DELETE BUTTON CLICKED");
     if (!record) return;
-    if (!confirm(`Delete must carry item for ${record.customer_type}?`)) return;
+    if (!confirm(`Delete must carry item for ${record.customer_type}?`)) {
+        return;
+    }
 
-    // Api.delete({ url: `/mustCarry/${record.id}`, ... })
-    console.log("Deleting must carry item:", record);
+    Api.delete({
+        url: "mustcarry/deleteMustCarry",
+        data: {
+            id: record.id,
+        },
+
+        onSuccess: function (response) {
+            console.log("Deleted:", response);
+
+            document.getElementById("MustCarryModal")?.close();
+
+            DisplayMustCarryTable();
+        },
+
+        onError: function (error) {
+            console.error("Delete error:", error);
+        },
+    });
+});
+
+$(document).on("click", "#addMustCarry .dropdown-item", function (e) {
+    e.preventDefault();
+
+    SelectedData = {
+        item_number: $(this).data("id"),
+        description: $(this).data("value"),
+        customer_type: $("#orderType option:selected").text(),
+    };
+
+    console.log("fda", SelectedData.customer_type);
+    $("#selectedItem").text(SelectedData.description);
+});
+
+$(document).on("click", "#addMustCarryBtn", function (e) {
+    e.preventDefault();
+    document.getElementById("MustCarry")?.close();
+    console.log("Selected Data:", SelectedData);
+    Swal.fire({
+        title: "Creating",
+        text: "Creating must carry item, please wait.",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+    Api.post({
+        url: "mustcarry/createMustCarry",
+        data: SelectedData,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        onSuccess: function (response) {
+            Swal.close();
+            DisplayMustCarryTable();
+        },
+        error: function (error) {
+            console.error("Error adding must carry item:", error);
+        }
+    });
 });

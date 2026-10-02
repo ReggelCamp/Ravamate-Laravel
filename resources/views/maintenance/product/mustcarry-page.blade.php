@@ -52,7 +52,7 @@
                 
                 <div class="flex justify-between items-center ">
                     <span class="flex whitespace-nowrap "> Customer Class </span>
-                    <select class="select w-[350px]">
+                    <select id="orderType" class="select w-[350px]">
                         <option disabled selected>Choose Class</option>
                         <option value="CONVENIENCE" store="">CONVENIENCE STORE</option>
                         <option value="GROCERY">GROCERY</option>
@@ -73,7 +73,7 @@
                         <x-dropdown class="w-[350px]"
                             buttonClass="border select px-3 py-2 text-sm text-gray-500 w-full h-[40px] flex items-center justify-between">
                             <x-slot:dropdownName class="w-full flex items-center justify-between">
-                                <span class="w-full" id="update_weekVisited_label">Select</span>
+                                <span id="selectedItem" class="w-full" id="update_weekVisited_label">Select</span>
                             </x-slot:dropdownName>
 
                             <ul id="addMustCarry"
@@ -90,7 +90,7 @@
                     <form method="dialog">
                         <button class="btn btn-default">Close</button>
                     </form>
-                    <button class="btn btn-primary">Add</button>
+                    <button id="addMustCarryBtn" class="btn btn-primary">Add</button>
                 </div>
             </div>
            
@@ -121,7 +121,7 @@
 
             <div class="flex items-center px-6 py-3 border-b gap-5">
                 <label class="font-bold w-40 shrink-0">Must Carry Item</label>
-                <div class="bg-gray-100 rounded-md w-full px-4 py-2 text-gray-700"
+                <div id="DisplayedItem" class="bg-gray-100 rounded-md w-full px-4 py-2 text-gray-700"
                      data-field="must_carry_item">—</div>
             </div>
 

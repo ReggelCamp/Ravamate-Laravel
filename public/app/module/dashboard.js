@@ -1456,7 +1456,7 @@ function loadOperationColumns(date = null) {
                 }
             });
 
-            console.log("fit screen data", prevMonthArray);
+            console.log("fit screen data", data);
             console.log("fit  data", monthArray);
 
             // DAILY SALES
@@ -1499,7 +1499,7 @@ function loadOperationColumns(date = null) {
             console.log("yesterdaySales",yesterdaySales);
             $("#dailySales").text(formatCurrency(TotalSales));
             $("#TotalSalesmanFS").text(array.length);
-            $("#FsDailyTarget").text(formatCurrency(monthArray.sales_target));
+            $("#FsDailyTarget").text(formatCurrency(DailyTotalSales));
             $("#mtdTotalSales").text(formatCurrency(totalMtdSales));
             $("#prevDaySalesman").text(yesterdaySalesmen.length);
             $("#prevDaysTotalSales").text(formatCurrency(yesterdaySales));

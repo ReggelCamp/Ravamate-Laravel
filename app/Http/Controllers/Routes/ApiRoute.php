@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EcmfController;
 use App\Http\Controllers\McpController;
+use App\Http\Controllers\MustCarryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -103,5 +104,11 @@ class ApiRoute extends Controller
             Route::post('/updateMcpTable',[McpController::class, 'updateMcpTable']);
         });
         
+        Route::prefix('mustcarry')->group(function () {
+            Route::post('/createMustCarry',[MustCarryController::class, 'createMustCarry']);
+            Route::get('/getMustCarryTable',[MustCarryController::class, 'getMustCarry']);
+            Route::delete('/deleteMustCarry', [MustCarryController::class, 'deleteMustCarry']);
+        });
+
     }
 }

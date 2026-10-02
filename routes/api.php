@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\EcmfController;
 use App\Http\Controllers\McpController;
+use App\Http\Controllers\MustCarryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\productPlacementController;
 use App\Http\Controllers\SalesmanModelController;
@@ -53,3 +54,4 @@ Route::post('/updateProductPlacement',[productPlacementController::class, 'updat
 Route::post('/updateEcmf',[EcmfController::class, 'updateEcmftable']);
 Route::post('/createMcp',[McpController::class, 'createMcpController']);
 Route::post('/updateMcpTable',[McpController::class, 'updateMcpTable']);
+Route::post('/createMustCarry',[MustCarryController::class, 'createMustCarry']);

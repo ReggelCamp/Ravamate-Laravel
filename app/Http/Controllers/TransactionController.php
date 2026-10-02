@@ -52,7 +52,8 @@ public function getFitScreenData(Request $request){
         transaction.order_type,
         salesman.id AS salesman_id,
         salesman.salesman_name,
-
+        salesman.sales_target,
+        
         SUM(
             transaction_details.quantity *
             transaction_details.current_price
@@ -87,7 +88,8 @@ $fitScreenData = $fitScreenData
         'transaction.order_type',
         'salesman.id',
         'salesman.salesman_name',
-        'salesman.target_mcp'
+        'salesman.target_mcp',
+        'salesman.sales_target',
     )
     ->get();
 

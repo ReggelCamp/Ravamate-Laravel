@@ -88,7 +88,7 @@ ComponentHelper.dropdown().LoadCheckBoxByApi({
     dropdownId: "SalesmanCheckbox",
     noDataText: "No SalesMan Found",
     displayField: "salesman_name",
-    dataField: "salesman_id",
+    dataField: "id",
 });
 
 function DisplayModal(data) {
