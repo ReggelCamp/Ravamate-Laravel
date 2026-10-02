@@ -458,8 +458,9 @@
                                             </span>
                                         </div>
                                         <div class="flex justify-between pt-1">
-                                            <span id="SalesmanBalance" class="pl-2">Balance</span>
+                                            <span class="pl-2">Balance</span>
                                             <span
+                                                id="SalesmanBalance"
                                                 class="primary_color font-semibold">₱{{ number_format($stats->balance ?? 0, 2) }}</span>
                                         </div>
                                     </div>
@@ -525,6 +526,7 @@
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Balance</span>
                                             <span
+                                                id="ProductivityBalance"
                                                 class="primary_color font-semibold">{{ $stats->productivity_balance ?? 6 }}</span>
                                         </div>
                                     </div>

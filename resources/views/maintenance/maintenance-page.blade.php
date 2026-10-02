@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="flex justify-end gap-2">
-                    <button class="btn primary_color rounded-xl text-white report_title">
+                    <button id="GeoResetModalBtn" class="btn primary_color rounded-xl text-white report_title">
                         Reset
                     </button>
                 </div>
@@ -153,4 +153,5 @@
 @endsection
 
 <script type="module" src="/app/module/Maintenance/dataMaintenanceCard.js"></script>
+<script type="module" src="/app/module/Maintenance/customer/GeoReset.js"></script>
 <script type="module" src="/app/helper/dataMaintenanceModal.js"></script>

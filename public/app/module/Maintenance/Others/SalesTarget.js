@@ -46,7 +46,7 @@ const SalesTargetColumns = [
         data: null,
         render: function (data, type, row) {
             console.log("Row data:", row);
-            return row.markup_percentage ? row.markup_percentage : "N/A";
+            return row.markup ? row.markup + "%" : "N/A";
         }
     },
     {

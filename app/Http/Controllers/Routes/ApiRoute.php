@@ -43,6 +43,7 @@ class ApiRoute extends Controller
         
         Route::prefix('store')->group(function () {
             Route::post('/createStore',[StoreController::class, 'createStore']);
+            Route::post('/GeoReset',[StoreController::class, 'GeoReset']);
             Route::post('/updateEcmftable', [EcmfController::class, 'updateEcmftable']);
             Route::get('/getStore',[StoreController::class, 'getStore']);
             Route::get('/getStoreSalesman',[StoreController::class, 'getStoreSalesman']);

@@ -55,3 +55,4 @@ Route::post('/updateEcmf',[EcmfController::class, 'updateEcmftable']);
 Route::post('/createMcp',[McpController::class, 'createMcpController']);
 Route::post('/updateMcpTable',[McpController::class, 'updateMcpTable']);
 Route::post('/createMustCarry',[MustCarryController::class, 'createMustCarry']);
+Route::post('/GeoReset',[StoreController::class, 'GeoReset']);

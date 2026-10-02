@@ -21,8 +21,6 @@ let rowData;
 let storeNames = [];
 
 let storeIndex;
-let storeLength = 0;
-let InfoStoreLength = 0;
 let currentInfoSalesman = null;
 
 let dashboardLoadVersion = 0;
@@ -1832,6 +1830,10 @@ function getSidePanelContent(transaction) {
     const transactions = transaction.salesman_transaction ?? [];
     const selectedTransaction = transactions[storeIndex] ?? transactions[0];
     const store = selectedTransaction?.transaction_store;
+    const IdStoreList = new Set();
+    let total = 0;
+    
+    
     TimeSpent = calculateTimeSpent(selectedTransaction);
 
     let countUnproductive = 0;
@@ -1852,7 +1854,16 @@ function getSidePanelContent(transaction) {
 
     console.log("pa", transaction);
 
-    const VisitedStore = transaction.salesman_transaction.length;
+    // const VisitedStore = transaction.salesman_transaction.length;
+    const VisitedStore = transaction.salesman_transaction;
+
+    VisitedStore.forEach(r => {
+        if (IdStoreList.has(r.store_id)) return;   // skip repeats
+        IdStoreList.add(r.store_id);
+        total += Number(r.amount);
+    });
+
+    console.log("sssd",IdStoreList);
 
     const transactionDate = selectedTransaction?.transaction_date;
     const formattedDate = transactionDate
@@ -1904,7 +1915,7 @@ function getSidePanelContent(transaction) {
     }
     $("#storeId").text(markerNumber);
     $("#Salesman_Name").text(salesman?.salesman_name ?? "No Salesman");
-    $("#VisitedStore").text(VisitedStore);
+    $("#VisitedStore").text(IdStoreList.size);
     $("#call_time").text(salesman.call_time ?? "NULL");
     $("#storeName").text(store?.store_name ?? "No Store");
     $("#time_in").text(timeIn); 
@@ -1942,7 +1953,9 @@ function refreshSelectedSalesmanSummary() {
             console.log("gfcv", summary);
             const sales = formatCurrency(globalTotalSku);
             const skuCount = Number(globalSkuCount ?? 0);
-            
+            let balance = 0;
+            let AsignedStoreCount = 0;
+
             if (overviewPeriod === "mtd") {
                 let MonthtotalSales = 0;
                 let MonthSkuCount = 0;
@@ -1956,7 +1969,7 @@ function refreshSelectedSalesmanSummary() {
                 let SumOfprice = 0
                 let averageValue = 0;
                 let TotalTimeSpent = 0;
-                
+
                 summary.forEach(salesman => {
                     transaction = salesman.salesman_transaction ?? [];
                     transaction.forEach(perTransaction => {
@@ -2060,11 +2073,26 @@ function refreshSelectedSalesmanSummary() {
                 return;
             }
 
+            const salesmanRecord = summary.find(
+                salesman => String(salesman.id) === String(rowData.id)
+            );
+            balance = formatCurrency(
+                Number(salesmanRecord?.sales_target ?? 0) -
+                Number(sales.replace(/[₱,]/g, ""))
+            );
+            
+            summary.forEach(stores => {
+                AsignedStoreCount = stores.salesman_store.length;
+            });
+
             $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
             $("#SideSku").text(skuCount);
             $("#CurrentDayValue").text(sales);
             $("#sku_sales").text(sales ?? 0);
+            $("#SalesmanBalance").text(balance);
+            $("#ProductivityBalance").text(AsignedStoreCount);
+
         },
     });
 }
