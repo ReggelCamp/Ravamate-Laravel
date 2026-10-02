@@ -172,7 +172,7 @@ function LoadTable() {
         url: "transaction/getSalesmanTransaction",
         tableId: "#salesReportTable",
         columns: StockRequestColumns,
-        // flattenDetails: true,
+        // onRowClick
     });
 }
 

@@ -117,24 +117,24 @@ export default class TableLoader {
     // }
 
     static getTableId(TableId, table, onRowClick) {
-    $(document).off("click.tableRow", `${TableId} tbody tr`);
+        $(document).off("click.tableRow", `${TableId} tbody tr`);
 
-    if (typeof onRowClick !== "function") {
-        $(TableId).removeClass("table-clickable");
-        return;
+        if (typeof onRowClick !== "function") {
+            $(TableId).removeClass("table-clickable");
+            return;
+        }
+
+        $(TableId).addClass("table-clickable");
+
+        $(document)
+            .on("click.tableRow", `${TableId} tbody tr`, function () {
+                const row_data = table.row(this).data();
+
+                if (!row_data) return;
+
+                onRowClick(row_data, this);
+            });
     }
-
-    $(TableId).addClass("table-clickable");
-
-    $(document)
-        .on("click.tableRow", `${TableId} tbody tr`, function () {
-            const row_data = table.row(this).data();
-
-            if (!row_data) return;
-
-            onRowClick(row_data, this);
-        });
-}
 
     static loadTable(config) {
         Api.get({
