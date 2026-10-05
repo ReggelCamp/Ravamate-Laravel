@@ -32,6 +32,16 @@ $(document).on("click","#GeoResetModalBtn",function(e){
                 timer: 1500,
                 showConfirmButton: false,
             });
+        },
+        onError: (error) => {
+            Swal.close();
+            
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+            console.error("GeoReset error:", error);
         }
     });
 });
