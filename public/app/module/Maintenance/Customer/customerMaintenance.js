@@ -115,6 +115,11 @@ function Displaysalesman(){
         url: "mcp/getSalesmanMcp",
         tableId: "#customerMaintenance",
         columns:CustomerListColumns,
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplayCustomerInfo(rowData);
+        }
     });
 }
 
@@ -137,7 +142,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayCustomerInfo(rowData);
+        // DisplayCustomerInfo(rowData);
     });
 
 function DisplayCustomerInfo(rowData) {

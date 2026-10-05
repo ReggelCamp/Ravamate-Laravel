@@ -53,6 +53,11 @@ function DisplaySalesman() {
         tableId: "#salesmanMaintenanceTable",
         columns: SalesmanMaintenanceTable,
         scrollX: false,
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplaySalesmanInfo(rowData);
+        }
     });
 }
 

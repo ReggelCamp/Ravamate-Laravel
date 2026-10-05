@@ -3,6 +3,8 @@ import TableLoader from "../../helper/TableLoader.js";
 import DatePicker from "../../helper/datePicker.js";
 import "../../helper/exportDataTable.js";
 
+let totalSalesReport = 0;
+
 const StockRequestColumns = [
     {
         title: "Status",
@@ -49,7 +51,18 @@ const StockRequestColumns = [
     },
     {
         title: "Time Spent (Min.)",
-        data: "time_spent"
+        data: null,
+        render:function(row){
+            console.log("da",row);
+            const startTime = moment(row.transaction_date).format("HH:mm:ss");
+            const endTime = moment(row.end_transaction, "HH:mm:ss").format("HH:mm:ss");
+
+            const duration = moment(endTime, "HH:mm:ss").diff(
+                moment(startTime, "HH:mm:ss"),
+                "minutes"
+            );
+            return duration + " Minutes";
+        }
     },
     {
         title: "Geo Difference",
@@ -69,7 +82,15 @@ const StockRequestColumns = [
     },
     {
         title: "Payment Type",
-        data: "payment_type"
+        data: null,
+        render:function(row){
+            const payment = row.transaction_details;
+            let paymentType = null;
+            payment.forEach(details => {
+                paymentType = details.payment_method
+            });
+            return paymentType;
+        }
     },
     {
         title: "Sales",
@@ -81,11 +102,14 @@ const StockRequestColumns = [
                         (Number(detail.quantity ?? 0) *
                         Number(detail.current_price ?? 0));
                 }, 0);
-
+            
+            totalSalesReport += transactionSale;
+            
             return transactionSale.toFixed(2);
         }
     }
 ];
+console.log("gea",totalSalesReport);
 
 const salesReportsItems = [
     {
@@ -172,8 +196,15 @@ function LoadTable() {
         url: "transaction/getSalesmanTransaction",
         tableId: "#salesReportTable",
         columns: StockRequestColumns,
-        // onRowClick
+        clickable: true,
+        onRowClick: (rowData) => {
+            DisplayReport(rowData);
+        },
+        onSuccess(data){
+            countTotalSales(data);
+        }
     });
+    
 }
 
 LoadTable();
@@ -209,7 +240,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayReport(rowData);
+        // DisplayReport(rowData);
     });
 
 function DisplayReport(rowData) {
@@ -269,4 +300,24 @@ function DisplayReport(rowData) {
     });
 
     $("#reportModal")[0].showModal();
+}
+
+function formatCurrency(value) {
+    return `₱ ${Number(value ?? 0).toLocaleString("en-PH", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`;
+}
+
+function countTotalSales(rowData) {
+    let total = 0;
+    rowData.forEach(row => {
+        const transaction = row.transaction_details ?? [];
+        transaction.forEach(detail => {
+            total += Number(detail.quantity ?? 0) * Number(detail.current_price ?? 0);
+        });
+    });
+    $("#totalSales").text(formatCurrency(total));
+    console.log("Total Sales:", total);
+    return total;
 }

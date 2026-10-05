@@ -71,6 +71,11 @@ TableLoader.loadTable({
     url: "product/getAllProductPlacement",
     tableId: "#productPlacementTable", 
     columns: PlacementProductColumns,
+    clickable: true,
+
+    onRowClick: (rowData) => {
+        DisplayPlacementInfo(rowData);
+    }
 });
 
 ComponentHelper.select().LoadSelectItems({
@@ -137,7 +142,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayPlacementInfo(rowData);
+        // DisplayPlacementInfo(rowData);
 });
 
 function DisplayPlacementInfo(rowData) {

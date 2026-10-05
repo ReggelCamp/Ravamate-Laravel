@@ -303,21 +303,25 @@ const OperationColumns = [
         title: "Target MCP",
         data: "target_mcp",
         className: "text-center dt-type-numeric",
+        render: (data, type, row) => getOperationStats(row.order_type).target,
     },
     {
         title: "Productive",
         data: "productive",
         className: "text-center dt-type-numeric",
+        render: (data, type, row) => getOperationStats(row.order_type).productive,
     },
     {
         title: "Unproductive",
         data: "unproductive",
         className: "text-center dt-type-numeric",
+        render: (data, type, row) => getOperationStats(row.order_type).unproductive,
     },
     {
         title: "Strike Rate",
         data: "strike_rate",
         className: "text-center dt-type-numeric",
+        render: (data, type, row) => getOperationStats(row.order_type).strike + "%",
     },
     {
         title: "Sales",
@@ -1501,7 +1505,7 @@ function loadOperationColumns(date = null) {
             $("#mtdTotalSales").text(formatCurrency(totalMtdSales));
             $("#prevDaySalesman").text(yesterdaySalesmen.length);
             $("#prevDaysTotalSales").text(formatCurrency(yesterdaySales));
-            $("#prevMonthMtdSales").text(formatCurrency(prevMonthTotalSales));
+            // $("#prevMonthMtdSales").text(formatCurrency(prevMonthTotalSales));
             $("#currentMonthSalesman").text(monthArray.length);
             $("#prevMtdSalesman").text(prevMonthSalesmen.length);
             $("#FsMtdSalesTarget").text(formatCurrency(TargetTotalSales));
@@ -2213,7 +2217,60 @@ function clearFitScreenTable() {
     $("#fitScreenTable").empty();
 }
 
+// function loadMonthlySalesmanData() {
+
+//     const prevMonthDate = moment(selectedDashboardDate)
+//         .subtract(1, "month")
+//         .endOf("month")
+//         .format("YYYY-MM-DD");
+
+//     console.log("Selected date:", selectedDashboardDate);
+//     console.log("Previous month date:", prevMonthDate);
+
+//     // Current selected month
+//     Api.get({
+//         url: "salesman/getSalesmanWithTransaction",
+//         data: {
+//             date: selectedDashboardDate,
+//             period: "mtd",
+//         },
+//         onSuccess: (data) => {
+
+//             monthArray = Array.isArray(data) ? data : [];
+
+//             console.log("Current month data:", monthArray);
+
+//             countYesterdaySalesman(monthArray);
+//         },
+//         onError: (error) => {
+//             console.error("Failed to load current monthly data:", error);
+//         },
+//     });
+
+//     // Previous month
+//     Api.get({
+//         url: "salesman/getSalesmanWithTransaction",
+//         data: {
+//             date: prevMonthDate,
+//             period: "mtd",
+//         },
+//         onSuccess: (data) => {
+
+//             prevMonthArray  = Array.isArray(data) ? data : [];
+
+//             countPrevMonth(prevMonthArray);
+//         },
+//         onError: (error) => {
+//             console.error("Failed to load previous month data:", error);
+//         },
+//     });
+// }
+
 function loadMonthlySalesmanData() {
+
+    // Reset previous data before loading new date
+    prevMonthSalesmen = [];
+    prevMonthTotalSales = 0;
 
     const prevMonthDate = moment(selectedDashboardDate)
         .subtract(1, "month")
@@ -2252,7 +2309,7 @@ function loadMonthlySalesmanData() {
         },
         onSuccess: (data) => {
 
-            prevMonthArray  = Array.isArray(data) ? data : [];
+            prevMonthArray = Array.isArray(data) ? data : [];
 
             countPrevMonth(prevMonthArray);
         },
@@ -2290,21 +2347,50 @@ function countYesterdaySalesman(data) {
     });
 }
 
+// function countPrevMonth(data) {
+//     data.forEach((salesman) => {
+//         const transactions = salesman.salesman_transaction ?? [];
+//         prevMonthSalesmen.push({
+//             ...salesman,
+//             salesman_transaction: transactions
+//         });
+//         transactions.forEach((transaction) => {
+//             const details = transaction.transaction_details ?? [];
+//             details.forEach((item) => {
+//                 const sales = Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+//                 prevMonthTotalSales += sales;
+//             });
+//         });
+//     });
+// }
+
 function countPrevMonth(data) {
+    prevMonthSalesmen = [];
+
     data.forEach((salesman) => {
         const transactions = salesman.salesman_transaction ?? [];
+
         prevMonthSalesmen.push({
             ...salesman,
             salesman_transaction: transactions
         });
+
         transactions.forEach((transaction) => {
             const details = transaction.transaction_details ?? [];
+
             details.forEach((item) => {
-                const sales = Number(item.quantity ?? 0) * Number(item.current_price ?? 0);
+                const sales =
+                    Number(item.quantity ?? 0) *
+                    Number(item.current_price ?? 0);
+
                 prevMonthTotalSales += sales;
             });
         });
     });
+
+    // Update the UI after the new data is loaded
+    $("#prevMonthMtdSales").text(formatCurrency(prevMonthTotalSales));
+    $("#prevMtdSalesman").text(prevMonthSalesmen.length);
 }
 
 function calculateTimeSpent(transaction) {
@@ -2340,4 +2426,33 @@ function stopBouncingMarker() {
         bouncingMarker.setAnimation(null);
         bouncingMarker = null;
     }
+}
+
+function getOperationStats(orderType) {
+    let target = 0;
+    let productive = 0;
+    let unproductive = 0;
+
+    array.forEach((salesman) => {
+        const transactions = (salesman.salesman_transaction ?? []).filter(
+            (t) => t.order_type === orderType,
+        );
+        if (transactions.length === 0) return;
+
+        // same rule as the "Target MCP" column in SalesmanColumns
+        target += (salesman.salesman_store ?? []).filter(
+            (s) => s.store_name,
+        ).length;
+
+        transactions.forEach((t) => {
+            if ((t.transaction_details ?? []).length > 0) productive++;
+            else unproductive++;
+        });
+    });
+
+    const strike = target > 0
+        ? Math.round(((productive + unproductive) / target) * 100)
+        : 0;
+
+    return { target, productive, unproductive, strike };
 }

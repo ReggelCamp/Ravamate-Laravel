@@ -675,7 +675,11 @@ function loadTable(){
         url:"transaction/getStoreTransaction",
         tableId: "#EcmfTable",
         columns: EcmfColumns,
-        
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplayEcmfInfo(rowData);
+        }
     });
 }
 
@@ -715,7 +719,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayEcmfInfo(rowData);
+        // DisplayEcmfInfo(rowData);
     });
 
 function DisplayEcmfInfo(rowData) {

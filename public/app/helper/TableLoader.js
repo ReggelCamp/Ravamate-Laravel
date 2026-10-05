@@ -27,70 +27,138 @@ function getResponsiveScrollY() {
 
 export default class TableLoader {
 
+    // static tableData(id, json, columns, options = {}) {
+
+    //     if ($.fn.DataTable.isDataTable(id)) {
+    //         $(id).DataTable().destroy();
+    //         $(id).empty(); // clear old thead/tbody so re-init starts clean
+    //     }
+
+    //     let tableRows = json;
+
+    //     // Flatten transaction_details
+    //     if (options.flattenDetails) {
+    //         const field = options.flattenField ?? "transaction_details";
+
+    //         tableRows = json.flatMap(parent => {
+    //             const details = parent[field] ?? [];
+
+    //             if (details.length === 0) {
+    //                 return [{ ...parent }];
+    //             }
+
+    //             return details.map(detail => ({
+    //                 ...parent,
+    //                 ...detail,
+    //             }));
+    //         });
+    //     }
+
+    //     const table = $(id).DataTable({
+    //         data: tableRows,
+    //         searching: true,
+    //         lengthChange: false,
+    //         responsive: false,
+    //         autoWidth: true,
+    //         scrollY: options.scrollY ?? getResponsiveScrollY(),
+    //         scrollX: options.scrollX ?? true,
+    //         scrollCollapse: true,
+    //         pageLength: options.pageLength ?? getPageLength(),
+    //         dom: '<"top">rt<"dataTable-info"ip><"clear">',
+    //         buttons: [ /* keep your original buttons config here */ ],
+    //         columns: columns,
+    //         drawCallback: function () { /* keep your original drawCallback here */ },
+    //     });
+
+    //     // Re-measure once layout has settled
+    //     setTimeout(() => table.columns.adjust(), 250);
+    //     document.fonts?.ready.then(() => table.columns.adjust());
+
+    //     // Re-measure on window resize (namespaced so it never stacks)
+    //     $(window).off("resize.dtAdjust").on("resize.dtAdjust", () => {
+    //         table.columns.adjust();
+    //     });
+
+    //     const searchSelector =
+    //         options.searchInput || `[data-table-search="${id}"]`;
+
+    //     TableLoader.bindSearch(searchSelector, table);
+    //     TableLoader.getTableId(
+    //         id,
+    //         table,
+    //         options.onRowClick
+    //     );
+
+    //     return table;
+    // }
+
     static tableData(id, json, columns, options = {}) {
 
-        if ($.fn.DataTable.isDataTable(id)) {
-            $(id).DataTable().destroy();
-            $(id).empty(); // clear old thead/tbody so re-init starts clean
-        }
+    if ($.fn.DataTable.isDataTable(id)) {
+        $(id).DataTable().destroy();
+        $(id).empty();
+    }
 
-        let tableRows = json;
+    let tableRows = json;
 
-        // Flatten transaction_details
-        if (options.flattenDetails) {
-            const field = options.flattenField ?? "transaction_details";
+    if (options.flattenDetails) {
+        const field = options.flattenField ?? "transaction_details";
 
-            tableRows = json.flatMap(parent => {
-                const details = parent[field] ?? [];
+        tableRows = json.flatMap(parent => {
+            const details = parent[field] ?? [];
 
-                if (details.length === 0) {
-                    return [{ ...parent }];
-                }
+            if (details.length === 0) {
+                return [{ ...parent }];
+            }
 
-                return details.map(detail => ({
-                    ...parent,
-                    ...detail,
-                }));
-            });
-        }
-
-        const table = $(id).DataTable({
-            data: tableRows,
-            searching: true,
-            lengthChange: false,
-            responsive: false,
-            autoWidth: true,
-            scrollY: options.scrollY ?? getResponsiveScrollY(),
-            scrollX: options.scrollX ?? true,
-            scrollCollapse: true,
-            pageLength: options.pageLength ?? getPageLength(),
-            dom: '<"top">rt<"dataTable-info"ip><"clear">',
-            buttons: [ /* keep your original buttons config here */ ],
-            columns: columns,
-            drawCallback: function () { /* keep your original drawCallback here */ },
+            return details.map(detail => ({
+                ...parent,
+                ...detail,
+            }));
         });
+    }
 
-        // Re-measure once layout has settled
-        setTimeout(() => table.columns.adjust(), 250);
-        document.fonts?.ready.then(() => table.columns.adjust());
+    const table = $(id).DataTable({
+        data: tableRows,
+        searching: true,
+        lengthChange: false,
+        responsive: false,
+        autoWidth: true,
+        scrollY: options.scrollY ?? getResponsiveScrollY(),
+        scrollX: options.scrollX ?? true,
+        scrollCollapse: true,
+        pageLength: options.pageLength ?? getPageLength(),
+        dom: '<"top">rt<"dataTable-info"ip><"clear">',
+        buttons: [],
+        columns: columns,
+    });
 
-        // Re-measure on window resize (namespaced so it never stacks)
-        $(window).off("resize.dtAdjust").on("resize.dtAdjust", () => {
-            table.columns.adjust();
-        });
+    setTimeout(() => table.columns.adjust(), 250);
+    document.fonts?.ready.then(() => table.columns.adjust());
 
-        const searchSelector =
-            options.searchInput || `[data-table-search="${id}"]`;
+    $(window).off("resize.dtAdjust").on("resize.dtAdjust", () => {
+        table.columns.adjust();
+    });
 
-        TableLoader.bindSearch(searchSelector, table);
+    const searchSelector =
+        options.searchInput || `[data-table-search="${id}"]`;
+
+    TableLoader.bindSearch(searchSelector, table);
+
+    // Only bind row click if clickable
+    if (options.clickable) {
         TableLoader.getTableId(
             id,
             table,
             options.onRowClick
         );
-
-        return table;
+    } else {
+        TableLoader.getTableId(id, table, null);
     }
+
+    return table;
+}
+
 
     static bindSearch(selector, table) {
         $(document)
@@ -136,48 +204,113 @@ export default class TableLoader {
             });
     }
 
+    // static loadTable(config) {
+    //     Api.get({
+    //         url: config.url,
+    //         data: config.filters,
+
+    //         onSuccess: (data) => {
+
+    //             if (
+    //                 typeof config.isCurrent === "function" &&
+    //                 !config.isCurrent()
+    //             ) {
+    //                 return;
+    //             }
+
+    //             let rows = Array.isArray(data)
+    //                 ? data
+    //                 : (data?.data ?? []);
+
+    //             // Optional client-side filter hook, runs BEFORE render
+    //             if (typeof config.filterRows === "function") {
+    //                 rows = config.filterRows(rows);
+    //             }
+
+    //             const table = TableLoader.tableData(
+    //                 config.tableId,
+    //                 rows,
+    //                 config.columns,
+    //                 {
+    //                     pageLength: config.pageLength ?? getPageLength(),
+    //                     scrollY: config.scrollY ?? getResponsiveScrollY(),
+    //                     searchInput: config.searchInput,
+    //                     flattenDetails: config.flattenDetails ?? false,
+    //                     flattenField: config.flattenField,
+    //                 },
+    //             );
+
+    //             config.table = table;
+
+    //             if (config.onSuccess) {
+    //                 config.onSuccess(rows, table);
+    //             }
+    //         },
+    //     });
+    // }
+
     static loadTable(config) {
-        Api.get({
-            url: config.url,
-            data: config.filters,
 
-            onSuccess: (data) => {
+    Api.get({
+        url: config.url,
+        data: config.filters,
 
-                if (
-                    typeof config.isCurrent === "function" &&
-                    !config.isCurrent()
-                ) {
-                    return;
-                }
+        onSuccess: (data) => {
 
-                let rows = Array.isArray(data)
-                    ? data
-                    : (data?.data ?? []);
+            if (
+                typeof config.isCurrent === "function" &&
+                !config.isCurrent()
+            ) {
+                return;
+            }
 
-                // Optional client-side filter hook, runs BEFORE render
-                if (typeof config.filterRows === "function") {
-                    rows = config.filterRows(rows);
-                }
+            let rows = Array.isArray(data)
+                ? data
+                : (data?.data ?? []);
 
-                const table = TableLoader.tableData(
-                    config.tableId,
-                    rows,
-                    config.columns,
-                    {
-                        pageLength: config.pageLength ?? getPageLength(),
-                        scrollY: config.scrollY ?? getResponsiveScrollY(),
-                        searchInput: config.searchInput,
-                        flattenDetails: config.flattenDetails ?? false,
-                        flattenField: config.flattenField,
-                    },
-                );
+            // Optional client-side filter hook,
+            // runs BEFORE render
+            if (typeof config.filterRows === "function") {
+                rows = config.filterRows(rows);
+            }
 
-                config.table = table;
+            const table = TableLoader.tableData(
+                config.tableId,
+                rows,
+                config.columns,
+                {
+                    pageLength:
+                        config.pageLength ?? getPageLength(),
 
-                if (config.onSuccess) {
-                    config.onSuccess(rows, table);
-                }
-            },
-        });
-    }
+                    scrollY:
+                        config.scrollY ?? getResponsiveScrollY(),
+
+                    searchInput:
+                        config.searchInput,
+
+                    flattenDetails:
+                        config.flattenDetails ?? false,
+
+                    flattenField:
+                        config.flattenField,
+
+                    // NEW
+                    clickable:
+                        config.clickable ?? false,
+
+                    // Existing
+                    onRowClick:
+                        config.onRowClick,
+                },
+            );
+
+            config.table = table;
+
+            if (config.onSuccess) {
+                config.onSuccess(rows, table);
+            }
+        },
+    });
+}
+    
 }

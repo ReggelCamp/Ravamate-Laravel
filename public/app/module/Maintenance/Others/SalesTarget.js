@@ -65,7 +65,7 @@ $(document)
         if (!$.fn.DataTable.isDataTable("#SalesTargetDataTable")) return;
         const row = $("#SalesTargetDataTable").DataTable().row(this).data();
         
-        DisplayModal(row);
+        // DisplayModal(row);
         console.log("clicked row data:", row);
     });
 
@@ -74,6 +74,11 @@ function displaySalesTargetTable() {
         url: "salesman/getSalesmanStore",
         tableId: "#SalesTargetDataTable",
         columns:SalesTargetColumns,
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplayModal(rowData);
+        }
     });
 }
 

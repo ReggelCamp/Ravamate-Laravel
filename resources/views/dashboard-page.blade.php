@@ -984,7 +984,7 @@
                                         </div>
                                         <div class="flex flex-col">
                                             <span class="text-[8px]">Previous Month Salesman</span>
-                                            <span id="prevMtdSalesman" class="text-[10px]">50,000.00</span>
+                                            <span id="prevMtdSalesman" class="text-[10px]"></span>
                                         </div>
                                     </div>
                                 </div>

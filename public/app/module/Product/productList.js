@@ -96,6 +96,11 @@ TableLoader.loadTable({
     url: "product/getProductTable",
     tableId: "#producListTable",
     columns: ProductListColumns,
+    clickable: true,
+
+    onRowClick: (rowData) => {
+        DisplayProductInfo(rowData);
+    }
 });
 
 $(document).ready(function () {
@@ -115,7 +120,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayProductInfo(rowData);
+        // DisplayProductInfo(rowData);
     });
 
 function DisplayProductInfo(rowData) {

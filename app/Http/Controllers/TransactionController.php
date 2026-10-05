@@ -14,19 +14,28 @@ use Illuminate\Support\Facades\Http;
 
 class TransactionController extends Controller
 {
-    public function getSalesmanTransaction(){
-        $salesmanTransaction = Transaction::with([
+    public function getSalesmanTransaction(Request $request)
+    {
+        $query = Transaction::with([
             'TransactionSalesman',
             'transactionDetails.productDetails',
             'TransactionStore',
-        ])->get();
+        ]);
+
+        if ($request->filled('salesman_id')) {
+            $query->where('salesman_id', $request->salesman_id);
+        }
+
+        $salesmanTransaction = $query->get();
 
         return response()->json($salesmanTransaction);
     }
+
     public function getStoreTransaction(){
         $storeTransaction = Transaction::with([
         'TransactionStore',
-        'TransactionSalesman'
+        'TransactionSalesman',
+        'transactionDetails.productDetails',
         ])->get();
         return response()->json($storeTransaction);
     }

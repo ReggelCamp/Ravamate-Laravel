@@ -50,8 +50,8 @@
                             Total Sales:
                         </span>
 
-                        <span class="font-bold">
-                            ₱ 49,952.065 (₱ 14,310,712.915)
+                        <span id="totalSales" class="font-bold">
+            
                         </span>
                     </div>
                 </div>

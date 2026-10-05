@@ -185,6 +185,11 @@ function DisplayMcpTable(salesmanId = null) {
         onSuccess: (data) => {
             console.log("MCP data:", data);
         },
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplayMcpLayout(rowData);
+        }
     });
 }
 
@@ -265,7 +270,7 @@ $(document)
 
         console.log("Clicked row:", store_id);
 
-        DisplayMcpLayout(rowData);
+        // DisplayMcpLayout(rowData);
 
     });
 

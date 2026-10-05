@@ -65,8 +65,11 @@ div.dt-container table.dataTable tbody td {
     vertical-align: middle;
     white-space: nowrap;
 }
-div.dt-container table.dataTable tbody tr:hover {
-      background-color: #c13636 !important;
+
+/* for hover */
+div.dt-container table.dataTable.table-clickable tbody tr:hover {
+    background-color: var(--accent) !important;
+    color: var(--header-color) !important;
     cursor: pointer;
 }
 

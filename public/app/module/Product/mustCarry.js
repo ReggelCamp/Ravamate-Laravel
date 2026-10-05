@@ -42,6 +42,11 @@ function DisplayMustCarryTable() {
         url: "mustcarry/getMustCarryTable",
         tableId: "#mustCarryTable",
         columns: MustCarryColumns,
+        clickable: true,
+
+        onRowClick: (rowData) => {
+            DisplayMustCarryInfo(rowData);
+        }
     });
 }
 DisplayMustCarryTable();
@@ -70,7 +75,7 @@ $(document)
 
         console.log("Clicked row:", rowData);
 
-        DisplayMustCarryInfo(rowData);
+        // DisplayMustCarryInfo(rowData);
     });
 
 function DisplayMustCarryInfo(rowData) {
