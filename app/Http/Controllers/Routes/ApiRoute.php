@@ -23,9 +23,9 @@ class ApiRoute extends Controller
     public function __construct()
     {
         Route::prefix('dashboard')->group(function () {
-            Route::get('/getSalesman', [DashboardController::class, 'getSalesman']);
-            Route::get('/getSalesmanInfo', [DashboardController::class, 'getSalesmanInfo']);
-            Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
+            // Route::get('/getSalesman', [DashboardController::class, 'getSalesman']);
+            // Route::get('/getSalesmanInfo', [DashboardController::class, 'getSalesmanInfo']);
+            // Route::get('/getDashboardTable',[DashboardController::class,'getSalesmanTable']);
             Route::get('/getLatestTransaction',[DashboardController::class,'getLatest']);
             Route::get('/getSalesmanSummary', [DashboardController::class, 'getSalesmanSummary']);
         });

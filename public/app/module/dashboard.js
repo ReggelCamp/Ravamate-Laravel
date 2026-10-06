@@ -39,7 +39,7 @@ let prevMonthSalesmen = [];
 let prevMonthArray = [];
 let prevMonthTotalSales = 0;
 const defaultDashboardDate = moment().subtract(1, "day").format("YYYY-MM-DD");
-
+let transactionPath = [];
 //side panel
 let TimeSpent = 0;
 
@@ -543,13 +543,20 @@ TableLoader.tableData("#sfaQueuingModalTable", [], ProductColumns, {
 });
 
 // function clearDashboardMarkers() {
+//     stopBouncingMarker();
+//     if (transactionPath) {
+//         transactionPath.setMap(null);
+//         transactionPath = null;
+//     }
 //     Object.values(markersById)
 //         .flat()
 //         .forEach(({ marker }) => marker.setMap(null));
+
 //     markersById = {};
 
 //     latestInfoWindow?.close();
 //     infoWindow?.close();
+
 //     latestInfoWindow = null;
 //     latestMarker = null;
 //     currentMarker = null;
@@ -557,6 +564,8 @@ TableLoader.tableData("#sfaQueuingModalTable", [], ProductColumns, {
 
 function clearDashboardMarkers() {
     stopBouncingMarker();
+
+    clearTransactionPaths();
 
     Object.values(markersById)
         .flat()
@@ -572,8 +581,15 @@ function clearDashboardMarkers() {
     currentMarker = null;
 }
 
+function clearTransactionPaths() {
+    transactionPath.forEach((path) => {
+        path.setMap(null);
+    });
+
+    transactionPath = [];
+}
+
 function loadDashboardData(date = null) {
-    console.log("wowowoowssss");
     const loadVersion = ++dashboardLoadVersion;
     selectedDashboardDate = date ?? moment().format("YYYY-MM-DD");
 
@@ -604,6 +620,11 @@ function loadDashboardData(date = null) {
         searchInput: "#customSearch",
         isCurrent: () => loadVersion === dashboardLoadVersion,
 
+        /**
+         * Filters dashboard rows by operation type and route status.
+         * Removes transactions that do not match the current route condition
+         * and removes salesmen with no remaining transactions.
+         */
         filterRows: (rows) => {
             const operationTypeMap = {
                 van_sales: "VAN SELLING",
@@ -611,30 +632,44 @@ function loadDashboardData(date = null) {
             };
 
             const selectedOrderType = operationTypeMap[selectedOperationType];
-
+            const showUnvisitedStores = $('[data-action="unvisited"]').is(
+                ":checked",
+            );
             return rows
                 .map((salesman) => {
                     const transactions = salesman.salesman_transaction ?? [];
 
-                    const filteredTransactions =
-                        selectedOperationType === "all_type"
-                            ? transactions
-                            : transactions.filter(
-                                  (transaction) =>
-                                      transaction.order_type ===
-                                      selectedOrderType,
-                              );
+                    const filteredTransactions = transactions
+                        .filter((transaction) => {
+                            if (selectedOperationType === "all_type") {
+                                return true;
+                            }
+
+                            return transaction.order_type === selectedOrderType;
+                        })
+                        .filter((transaction) => {
+                            const details =
+                                transaction.transaction_details ?? [];
+
+                            /**toggle is on showing trasaction with no sales*/
+                            if (showUnvisitedStores) {
+
+                                return details.length === 0;
+                            }
+
+                            return details.length > 0;
+                        });
 
                     return {
                         ...salesman,
                         salesman_transaction: filteredTransactions,
                     };
                 })
+
                 .filter((salesman) => salesman.salesman_transaction.length > 0);
         },
 
         onSuccess: (data) => {
-            
             if (loadVersion !== dashboardLoadVersion) return;
 
             if (!Array.isArray(data) || data.length === 0) {
@@ -653,18 +688,35 @@ function loadDashboardData(date = null) {
 
             const selectedOrderType = operationTypeMap[selectedOperationType];
 
+            const showUnvisitedStores = $('[data-action="unvisited"]').is(
+                ":checked",
+            );
+
             array = data
                 .map((salesman) => {
                     const transactions = salesman.salesman_transaction ?? [];
 
-                    const filteredTransactions =
-                        selectedOperationType === "all_type"
-                            ? transactions
-                            : transactions.filter(
-                                  (transaction) =>
-                                      transaction.order_type ===
-                                      selectedOrderType,
-                              );
+                    const filteredTransactions = transactions
+                        .filter((transaction) => {
+                            // Operation type filter
+                            if (selectedOperationType === "all_type") {
+                                return true;
+                            }
+
+                            return transaction.order_type === selectedOrderType;
+                        })
+                        .filter((transaction) => {
+                            // Visited / Unvisited filter
+                            const details =
+                                transaction.transaction_details ?? [];
+
+                            /**toggle is on showing trasaction with no sales*/
+                            if (showUnvisitedStores) {
+                                return details.length === 0;
+                            }
+
+                            return details.length > 0;
+                        });
 
                     return {
                         ...salesman,
@@ -672,11 +724,20 @@ function loadDashboardData(date = null) {
                     };
                 })
                 .filter((salesman) => salesman.salesman_transaction.length > 0);
+
             getTotalSales(data);
             getlatestTransaction(date, loadVersion);
         },
     });
 }
+
+$(document).on(
+    "change",
+    '[data-action="unvisited"]',
+    function () {
+        loadDashboardData(selectedDashboardDate);
+    }
+);
 
 function haversineDistanceKm(lat1, lng1, lat2, lng2) {
     const R = 6371;
@@ -896,22 +957,6 @@ function displayInfoWindow() {
 
             const baseLat = Number(transaction.latitude);
             const baseLng = Number(transaction.longitude);
-
-            // const posKey = `${baseLat.toFixed(6)},${baseLng.toFixed(6)}`;
-
-            // const duplicateIndex = seenPositions[posKey] || 0;
-            // seenPositions[posKey] = duplicateIndex + 1;
-
-            // let markerLat = baseLat;
-            // let markerLng = baseLng;
-
-            // if (duplicateIndex > 0) {
-            //     const offsetDistance = 0.00006 * duplicateIndex;
-            //     const angle = (duplicateIndex * 137.5 * Math.PI) / 180;
-
-            //     markerLat = baseLat + offsetDistance * Math.cos(angle);
-            //     markerLng = baseLng + offsetDistance * Math.sin(angle);
-            // }
             const markerLat = baseLat;
             const markerLng = baseLng;
             
@@ -944,10 +989,6 @@ function displayInfoWindow() {
                 },
             });
 
-            // if (!markersById[salesman.id]) {
-            //     markersById[salesman.id] = [];
-            // }
-
             markersById[String(transaction.transaction_id)] = {
                 marker,
                 salesman,
@@ -970,7 +1011,7 @@ function displayInfoWindow() {
                 window.storeIndex = storeIndex;
 
                 openInfoWindowFor(salesman, marker, transactionIndex); // pass salesman, not transaction — see note below
-
+                // drawTransactionPath();
                 showRowDetails(salesman);
                 getSidePanelContent(salesman);
                 getSku(transaction, "#sfaQueuingModalTable"); // getSku still needs the specific transaction
@@ -1054,6 +1095,9 @@ function displayInfoWindow() {
             }
         });
     });
+    if ($('[data-action="route"]').is(":checked")) {
+    drawTransactionPath();
+}
 }
 
 function DisplayitemTable() {
@@ -1093,12 +1137,6 @@ function getlatestTransaction(date = null, loadVersion = dashboardLoadVersion) {
 
             latest = Array.isArray(data) ? data[0] : (data?.data ?? data);
 
-            console.log("latest normalized:", latest);
-            console.log(
-                "latest keys:",
-                latest ? Object.keys(latest) : "null/undefined",
-            );
-
             displayInfoWindow();
         },
     });
@@ -1109,9 +1147,6 @@ function InfoWindowContent(salesman, targetIndex = 0) {
     const transaction = salesman.salesman_transaction?.[targetIndex] ?? {};
 
     const transactionTimeSpent = calculateTimeSpent(transaction);
-    console.log("salesman infoWindow", salesman);
-    console.log("transaction infoWindow", transaction);
-    console.log("transaction storeIndex", storeIndex);
 
     let TotalSalesOnStore = 0;
 
@@ -1272,43 +1307,6 @@ function InfoWindowContent(salesman, targetIndex = 0) {
     `;
 }
 
-// function openInfoWindowFor(salesman, marker, targetIndex = 0) {
-//     currentInfoSalesman = salesman;
-//     rowData = salesman;
-//     storeIndex = targetIndex;
-
-//     updateStoreNavButtons();
-
-//     console.log(
-//         "Opening InfoWindow for:",
-//         salesman.salesman_name,
-//         "Store index:",
-//         storeIndex,
-//     );
-
-//     currentMarker = marker;
-
-//     if (latestInfoWindow) {
-//         latestInfoWindow.close();
-//     }
-
-//     marker.setAnimation(google.maps.Animation.BOUNCE);
-//     bouncingMarker = marker;
-
-//     setTimeout(() => {
-//         marker.setAnimation(null);
-//         if (bouncingMarker === marker) {
-//             bouncingMarker = null;
-//         }
-//     }, 2400);
-
-//     map.panTo(marker.getPosition());
-//     map.setZoom(17);
-
-//     infoWindow.setContent(InfoWindowContent(salesman, targetIndex));
-//     infoWindow.open(map, marker);
-// }
-
 function openInfoWindowFor(salesman, marker, targetIndex = 0) {
     stopBouncingMarker();
     currentInfoSalesman = salesman;
@@ -1316,13 +1314,6 @@ function openInfoWindowFor(salesman, marker, targetIndex = 0) {
     storeIndex = targetIndex;
 
     updateStoreNavButtons();
-
-    console.log(
-        "Opening InfoWindow for:",
-        salesman.salesman_name,
-        "Store index:",
-        storeIndex,
-    );
 
     currentMarker = marker;
 
@@ -1826,6 +1817,8 @@ function getSku(data, tableId) {
     $("#totalStoreDetails").text(formatCurrency(globalTotalSku));
 }
 
+/** Left Side data beside the map replacing the 
+ * carousel if row is clicked in the data table  */
 function getSidePanelContent(transaction) {
     if (!transaction) return;
 
@@ -1836,8 +1829,13 @@ function getSidePanelContent(transaction) {
     const store = selectedTransaction?.transaction_store;
     const IdStoreList = new Set();
     let total = 0;
-    
-    
+    const AssignedStore = transaction.salesman_store;
+    const markerNumber = (storeIndex ?? 0) + 1;
+    const distanceTravel = selectedTransaction?.distance_travel ?? "0 Km";
+    const VisitedStore = transaction.salesman_transaction;
+    let ProductivityPercentage = 0; 
+    let GeocallPercantage = 0;
+
     TimeSpent = calculateTimeSpent(selectedTransaction);
 
     let countUnproductive = 0;
@@ -1847,27 +1845,20 @@ function getSidePanelContent(transaction) {
         }
     });
 
-    const markerNumber = (storeIndex ?? 0) + 1;
-
     const dayResult = calculateTransactionToStoreDistance(
         transactions,
         salesman,
     );
 
-    const distanceTravel = selectedTransaction?.distance_travel ?? "0 Km";
-
-    console.log("pa", transaction);
-
-    // const VisitedStore = transaction.salesman_transaction.length;
-    const VisitedStore = transaction.salesman_transaction;
-
+    /** Count store on every transaction */
     VisitedStore.forEach(r => {
-        if (IdStoreList.has(r.store_id)) return;   // skip repeats
+        if (IdStoreList.has(r.store_id)) return;
         IdStoreList.add(r.store_id);
         total += Number(r.amount);
     });
 
-    console.log("sssd",IdStoreList);
+    // producivity percentage
+    ProductivityPercentage = (IdStoreList.size / AssignedStore.length) * 100;
 
     const transactionDate = selectedTransaction?.transaction_date;
     const formattedDate = transactionDate
@@ -1917,6 +1908,11 @@ function getSidePanelContent(transaction) {
     } else {
         $("#Attendance").text("No Transaction");
     }
+
+    const TargetCalls = dayResult.outsideCount + dayResult.insideCount;
+    GeocallPercantage = (dayResult.insideCount / TargetCalls) * 100;
+
+    $("#weekCount").text(getWeekofTheMonth());
     $("#storeId").text(markerNumber);
     $("#Salesman_Name").text(salesman?.salesman_name ?? "No Salesman");
     $("#VisitedStore").text(IdStoreList.size);
@@ -1931,6 +1927,10 @@ function getSidePanelContent(transaction) {
     $("#onSiteTransCount").text(dayResult.insideCount);
     $("#offSiteTransCount").text(dayResult.outsideCount);
     $("#SalesmanDailyTarget").text(formatCurrency(transaction.sales_target ?? 0));
+    $("#productivityPercentage").text(ProductivityPercentage + "%");
+    $("#TargetCallsCount").text(TargetCalls);
+    $("#GeoCallPercentage").text((GeocallPercantage.toFixed(2)) + "%");
+        
     refreshSelectedSalesmanSummary();
 }
 
@@ -1959,7 +1959,25 @@ function refreshSelectedSalesmanSummary() {
             const skuCount = Number(globalSkuCount ?? 0);
             let balance = 0;
             let AsignedStoreCount = 0;
+            let SalesPercentage = 0;
+            const IdStoreList = new Set();
 
+            const uniqueStores = new Set();
+
+            const salesmanRec = summary.find(
+                salesman => String(salesman.id) === String(rowData.id)
+            );
+
+            const transactions = salesmanRec?.salesman_transaction ?? [];
+
+            transactions.forEach(transaction => {
+                const storeName = transaction?.transaction_store?.store_name;
+
+                if (storeName) {
+                    uniqueStores.add(storeName);
+                }
+            });
+                
             if (overviewPeriod === "mtd") {
                 let MonthtotalSales = 0;
                 let MonthSkuCount = 0;
@@ -1973,6 +1991,7 @@ function refreshSelectedSalesmanSummary() {
                 let SumOfprice = 0
                 let averageValue = 0;
                 let TotalTimeSpent = 0;
+                let countMtdTarget = 0;
 
                 summary.forEach(salesman => {
                     transaction = salesman.salesman_transaction ?? [];
@@ -2002,6 +2021,9 @@ function refreshSelectedSalesmanSummary() {
                     moment(transaction.transaction_date,"YYYY-MM-DD HH:mm:ss",).isSame(filterMonth, "month"),
                 );
                 
+                //counting the target sales mtd
+                countMtdTarget = salesmanRecord.sales_target * monthTransactions.length;
+
                 // for getting timespent
                 monthTransactions.forEach(transaction => {
                     const StartTime = moment(transaction.transaction_date);
@@ -2039,16 +2061,20 @@ function refreshSelectedSalesmanSummary() {
                 
                 $("#MtdOnSiteTransCount").text(mtdRadiusResult.insideCount);
                 $("#MtdOutsideTransCount").text(mtdRadiusResult.outsideCount);
-
+                
                 MtdProductiveCall = mtdRadiusResult.insideCount + mtdRadiusResult.outsideCount;
                 $("#ProductiveCallCount").text(MtdProductiveCall);
 
+                //total sales
                 const formattedTotal = formatCurrency(MonthtotalSales);
-                
+
+                //counting the percentage of mtd total sales
+                let mtdSalesPercentage = (MonthtotalSales / countMtdTarget) * 100;
+                let totalGeotarget = mtdRadiusResult.insideCount + mtdRadiusResult.outsideCount;
                 summary.forEach(store => {
                     storeCount = store.salesman_store.length;
                 });
-
+                
                 const uniqueStores = new Set();
 
                 summary.forEach(stores => {
@@ -2065,6 +2091,19 @@ function refreshSelectedSalesmanSummary() {
                 const minutes = TotalTimeSpent % 60;
                 const CountUnique = uniqueStores.size;
 
+                let salesmanBalanceMcp = salesmanRecord.salesman_store.length - MtdProductiveCall ;
+                if(salesmanBalanceMcp <= 0){
+                    salesmanBalanceMcp = 0;
+                }
+
+                let BuyingPercentage = (CountUnique / storeCount) * 100;
+                console.log(BuyingPercentage,"lpa");
+
+                $('#totalMcp').text(salesmanRecord.salesman_store.length);
+                $('#balanceMcp').text(salesmanBalanceMcp);
+                $('#mtdTarget').text(formatCurrency(countMtdTarget));
+                $('#salesMtdBalance').text(formatCurrency((countMtdTarget - MonthtotalSales)));
+                $('#mtdSalesTargetPercentage').text((mtdSalesPercentage.toFixed(2)) + "%");
                 $("#MtdSalesmanTotal_Sales").text(formattedTotal);
                 $("#MtdSku").text(MonthSkuCount);
                 $("#unProductiveCount").text(countMtdUnproductive);
@@ -2073,30 +2112,54 @@ function refreshSelectedSalesmanSummary() {
                 $("#MtdAveItem").text(Math.round(averageItem));
                 $("#MtdAveValue").text(Math.round(averageValue));
                 $("#MtdAveTimeSpent").text(`${hours}h ${minutes}m`);
-
+                $("#mcpPercentage").text(((MtdProductiveCall/salesmanRecord.salesman_store.length)*100) + "%");
+                $("#mtdGeotarget").text(totalGeotarget);
+                $("#MtdGeocallPercentage").text(((mtdRadiusResult.insideCount / totalGeotarget) * 100).toFixed(2) + "%" );
+                $("#buyingTarget").text(salesmanRecord.salesman_store.length);
+                $("#buyingAccountPercent").text(BuyingPercentage + "%");
                 return;
             }
 
             const salesmanRecord = summary.find(
                 salesman => String(salesman.id) === String(rowData.id)
             );
+            
             balance = formatCurrency(
                 Number(salesmanRecord?.sales_target ?? 0) -
                 Number(sales.replace(/[₱,]/g, ""))
             );
+
+            if(balance<=0){
+                balance = 0;
+            }
             
+            const salesTarget = Number(salesmanRecord?.sales_target ?? 0);
+
             summary.forEach(stores => {
                 AsignedStoreCount = stores.salesman_store.length;
             });
 
+            let productivityBalance = salesmanRecord.salesman_store.length - uniqueStores.size;
+            
+            if(productivityBalance <= 0){
+                productivityBalance = 0;
+            }
+
+            console.log("record",salesmanRecord);
+
+            SalesPercentage = (globalTotalSku / salesTarget) * 100;
+
+            $("#mtdWeekCount").text(getWeekofTheMonth());
             $("#SalesmanTotal_Sales").text(sales);
             $("#SkuCount").text(`(${skuCount} SKU)`);
             $("#SideSku").text(skuCount);
             $("#CurrentDayValue").text(sales);
             $("#sku_sales").text(sales ?? 0);
             $("#SalesmanBalance").text(balance);
-            $("#ProductivityBalance").text(AsignedStoreCount);
-
+            $("#ProductivityBalance").text(productivityBalance);
+            $("#salesPercentage").text(SalesPercentage + "%");
+            $("#targetmcpCount").text(AsignedStoreCount);
+            
         },
     });
 }
@@ -2456,3 +2519,65 @@ function getOperationStats(orderType) {
 
     return { target, productive, unproductive, strike };
 }
+
+function getWeekofTheMonth(){
+    const date = moment(selectedDashboardDate);
+
+    const weekOfMonth = Math.ceil(date.date() / 7);
+
+    return weekOfMonth;
+}
+
+function drawTransactionPath() {
+    clearTransactionPaths();
+
+    const paths = [];
+
+    array.forEach((salesman) => {
+        const transactions =
+            salesman.salesman_transaction ?? [];
+
+        const salesmanPath = [];
+
+        transactions.forEach((transaction) => {
+            const lat = Number(transaction.latitude);
+            const lng = Number(transaction.longitude);
+
+            if (
+                !Number.isFinite(lat) ||
+                !Number.isFinite(lng)
+            ) {
+                return;
+            }
+
+            salesmanPath.push({
+                lat,
+                lng,
+            });
+        });
+
+        if (salesmanPath.length >= 2) {
+            paths.push(salesmanPath);
+        }
+    });
+
+    transactionPath = paths.map((path) => {
+        return new google.maps.Polyline({
+            path,
+            geodesic: true,
+            strokeOpacity: 1,
+            strokeWeight: 3,
+            map: window.dashboardMap,
+        });
+    });
+}
+
+$(document).on("change", '[data-action="route"]', function () {
+    const showRoute = $(this).is(":checked");
+
+    if (showRoute) {
+        drawTransactionPath();
+    } else {
+        clearTransactionPaths();
+    }
+});

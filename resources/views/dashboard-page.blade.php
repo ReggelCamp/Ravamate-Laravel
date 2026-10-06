@@ -236,18 +236,37 @@
                                 <i class="mdi mdi-refresh"></i>
                                 Refresh
                             </button>
-                            <div class="dropdown gap-2 relative z-[100]">
+                            <div class="dropdown dropdown-end gap-2 relative z-[100]">
                                 <div tabindex="0" role="button"
                                     class="w-fit whitespace-nowrap h-[17px] bg-white text-red-500 shine-bgBtn rounded-2xl px-5 border gap-2 flex items-center text-[10px] border-white/60">
                                     Other Actions
                                 </div>
 
-                                <ul tabindex="0"
-                                    class="dropdown-content menu bg-base-100 rounded-box
-                                        z-[999999] w-52 p-2 shadow">
-                                    <li><a>Refresh</a></li>
-                                    <li><a>View Details</a></li>
-                                    <li><a>Delete</a></li>
+                               <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[999999] w-fit text-[12px] p-2 shadow">
+                                    <li>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="whitespace-nowrap">View Route</span>
+                                            <input type="checkbox" class="toggle toggle-xs" data-action="route" />
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="whitespace-nowrap">View Unvisited Stores</span>
+                                            <input type="checkbox" class="toggle toggle-xs" data-action="unvisited" />
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="whitespace-nowrap">View Unproductive Stores</span>
+                                            <input type="checkbox" class="toggle toggle-xs" />
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="flex items-center justify-between cursor-pointer">
+                                            <span class="whitespace-nowrap">View Salesman eCMF</span>
+                                            <input type="checkbox" class="toggle toggle-xs" />
+                                        </label>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -439,11 +458,11 @@
                                             class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                             <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
                                             <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
-                                            <span class="text-xs font-bold">{{ $stats->week_no ?? 4 }}</span>
+                                            <span id="weekCount" class="text-xs font-bold">{{ $stats->week_no ?? 4 }}</span>
                                         </div>
                                         <div class="flex flex-col leading-5 w-full">
                                             <span class="text-gray-500">Sales for the Day</span>
-                                            <span class="font-bold text-sm">{{ $stats->sales_pct ?? 0 }}%</span>
+                                            <span id="salesPercentage" class="font-bold text-xs">{{ $stats->sales_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target</span>
                                                 <span id="SalesmanDailyTarget" class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
@@ -511,10 +530,10 @@
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">Productivity</span>
-                                            <span class="font-bold text-sm">{{ $stats->productivity_pct ?? 0 }}%</span>
+                                            <span id="productivityPercentage" class="font-bold text-xs">{{ $stats->productivity_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target MCP</span>
-                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                                <span id="targetmcpCount" class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -541,10 +560,10 @@
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">Geo Call Rate</span>
-                                            <span class="font-bold text-sm">{{ $stats->geo_pct ?? 0 }}%</span>
+                                            <span id="GeoCallPercentage" class="font-bold text-xs">{{ $stats->geo_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target Calls</span>
-                                                <span class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
+                                                <span id="TargetCallsCount" class="text-black "> {{ $stats->sales_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -577,14 +596,14 @@
                                             class="flex flex-col items-center justify-center w-12 h-12 rounded-lg bg-gray-100 shrink-0">
                                             <i class="fa-solid fa-calendar-week text-gray-500 text-xs"></i>
                                             <span class="text-[9px] font-semibold text-gray-500">Week No.</span>
-                                            <span class="text-xs font-bold primary_color">{{ $mtd->week_no ?? 4 }}</span>
+                                            <span id="mtdWeekCount" class="text-xs font-bold primary_color">{{ $mtd->week_no ?? 4 }}</span>
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">MTD Achievement</span>
-                                            <span class="font-bold text-sm">{{ $mtd->achievement_pct ?? 0 }}%</span>
+                                            <span id="mtdSalesTargetPercentage" class="font-bold text-xs">{{ $mtd->achievement_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target</span>
-                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                                <span id="mtdTarget" class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
                                             </div>
                                                 
                                         </div>
@@ -597,7 +616,7 @@
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Balance</span>
-                                            <span class="primary_color font-semibold">₱
+                                            <span id="salesMtdBalance" class="primary_color font-semibold">₱
                                                 {{ number_format($mtd->balance ?? 0, 2) }}</span>
                                         </div>
                                     </div>
@@ -612,10 +631,10 @@
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">Buying Accounts</span>
-                                            <span class="font-bold text-sm">{{ $mtd->buying_pct ?? 0 }}%</span>
+                                            <span id="buyingAccountPercent" class="font-bold text-xs">{{ $mtd->buying_pct ?? 0 }}%</span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target Accounts</span>
-                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                                <span id="buyingTarget" class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -643,7 +662,7 @@
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">MCP Productivity</span>
-                                            <span class="font-bold text-sm flex items-center gap-1">
+                                            <span id="mcpPercentage" class="font-bold text-xs flex items-center gap-1">
                                                 {{ $mtd->mcp_pct ?? 0 }}%
                                                 @if(($mtd->mcp_trend ?? 'down') === 'down')
                                                     <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
@@ -653,7 +672,7 @@
                                             </span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Total MCP</span>
-                                                <span class="text-black "> {{ $mtd->achievement_target ?? 0 }}</span>
+                                                <span id="totalMcp" class="text-black "> {{ $mtd->achievement_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -664,7 +683,7 @@
                                         </div>
                                         <div class="flex justify-between pt-1">
                                             <span class="pl-2">Balance</span>
-                                            <span class="primary_color font-semibold">{{ $mtd->mcp_balance ?? 208 }}</span>
+                                            <span id="balanceMcp" class="primary_color font-semibold">{{ $mtd->mcp_balance ?? 208 }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -678,7 +697,7 @@
                                         </div>
                                         <div class="flex flex-col leading-4 w-full">
                                             <span class="text-gray-500">Geo Call Rate</span>
-                                            <span class="font-bold text-sm flex items-center gap-1">
+                                            <span id="MtdGeocallPercentage" class="font-bold text-xs flex items-center gap-1">
                                                 {{ $mtd->geo_pct ?? 0 }}%
                                                 @if(($mtd->geo_trend ?? 'down') === 'down')
                                                     <i class="fa-solid fa-arrow-down text-red-500 text-[10px]"></i>
@@ -688,7 +707,7 @@
                                             </span>
                                             <div class="flex gap-1">
                                                 <span class="text-gray-400 text-[10px]">Target Calls</span>
-                                                <span class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
+                                                <span id="mtdGeotarget" class="text-black "> ₱{{ $mtd->achievement_target ?? 0 }}</span>
                                             </div>
                                         </div>
                                     </div>
